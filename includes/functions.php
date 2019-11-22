@@ -1,3 +1,5 @@
+
+
 <?php
 
 /**
@@ -77,4 +79,24 @@ function page_content()
 function init()
 {
     require config('template_path') . '/template.php';
+}
+
+function OpenCon()
+{
+    $dbhost = "db01";
+    $dbuser = "Wwi_Db_User_Read";
+    $dbpass = "Welkom#2019!";
+    $db = "test";
+    $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
+    if(!$connection) die("Unable to connect to MySQL: " . mysqli_error($connection));
+    return $connection;
+}
+function CloseCon($connection) {
+ mysqli_close($connection);
+}
+function Select($sql) {
+    $connection = OpenCon();
+    $result = mysqli_fetch_all(mysqli_query($connection, $sql),MYSQLI_ASSOC);
+    CloseCon($connection);
+    return $result;
 }
