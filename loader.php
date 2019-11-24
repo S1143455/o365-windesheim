@@ -4,3 +4,4 @@ spl_autoload_register(function ($class) {
 });
 $database = new Classes\Database();
 $authentication = new Classes\Authentication($database);
+$user = new Classes\User;
