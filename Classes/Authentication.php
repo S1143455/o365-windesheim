@@ -37,9 +37,9 @@ class Authentication
 
         if (isset($_SESSION['authenticated'])) {
             $user = new User();
-            echo "Welkom, " . $user->getUsername();
+            return "Welkom, " . $user->getUsername();
         } else {
-            echo "<a class='pull-right' href='/login.php'>Login</a> | <a class='pull-right'>Register</a>";
+            return "<a class='pull-right' href='/login.php'>Login</a> | <a class='pull-right'>Register</a>";
         }
     }
 }

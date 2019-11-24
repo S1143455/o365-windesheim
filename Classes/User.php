@@ -1,17 +1,14 @@
 <?php
 
 namespace classes;
-class User
+class User extends Authentication
 {
-    function __construct()
-    {
-    }
-
     public function getUsername()
     {
         if (isset($_SESSION['user']))
         {
             return $_SESSION['user']['name'];
         }
+        return 'Login';
     }
 }

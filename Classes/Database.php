@@ -14,7 +14,6 @@ class Database
         $this->database = getenv('DATABASE');
         $this->username = getenv('DATABASEUSERNAME');
         $this->password = getenv('DATABASEPASSWORD');
-        $this->testConn();
     }
 
     public function openConn()

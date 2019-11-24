@@ -16,12 +16,16 @@ $dotenv->load();
 require_once 'loader.php';
 
 
-require 'includes/config.php';
-require 'includes/functions.php';
+//$router->route('/', function(){
+//    include 'content/home.php';
+//});
+//
+//$router->route('/about', function(){
+//    return 'hello, world';
+//});
+//
+//$action = $_SERVER['REQUEST_URI'];
+//$router->dispatch($action);
 
 
-
-
-
-
-init();
+$main->init();
