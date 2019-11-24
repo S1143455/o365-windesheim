@@ -14,7 +14,12 @@
 					<header>
 				        <h1><?php site_name(); ?></h1>
 				        <nav class="menu">
-				            <?php nav_menu(); ?>
+				            <?php nav_menu();
+				                    $db =  new classes\Database();
+				                    $auth  = new classes\Authentication($db);
+				                    $auth->isAuthenticated();
+				            ?>
+
 				        </nav>
 				    </header>
 				</div>

@@ -1,10 +1,17 @@
 <?php
+
 namespace classes;
-class User{
+class User
+{
     function __construct()
     {
     }
-    public function getUsername(){
-        return 'test';
+
+    public function getUsername()
+    {
+        if (isset($_SESSION['user']))
+        {
+            return $_SESSION['user']['name'];
+        }
     }
 }
