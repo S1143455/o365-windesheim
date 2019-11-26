@@ -15,6 +15,8 @@ $router->route('/about', function(){
     return 'hello, world';
 });
 
+$router->resource('/product', 'product');
+
 
 /**
  *  Execute the route
