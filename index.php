@@ -21,7 +21,7 @@ $user = new Classes\User($database);
 
 
 //$router->route('/', function(){
-//    include 'content/home.phtml';
+//    include 'content/home.php';
 //});
 //
 //$router->route('/about', function(){

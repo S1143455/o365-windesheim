@@ -88,7 +88,7 @@ class Main
         $path = getcwd() . '/' . $this->contentPath . '/' . $page . '.phtml';
 
         if (!file_exists($path)) {
-            $path = getcwd() . '/' . $this->contentPath . '/404.phtml';
+            $path = getcwd() . '/' . $this->contentPath . '/404.php';
         }
         $this->page_title();
         return include_once $path;
