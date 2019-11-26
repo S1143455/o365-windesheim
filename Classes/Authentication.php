@@ -9,9 +9,6 @@ class Authentication
     function __construct($db)
     {
         $this->db = $db;
-        if (isset($_SESSION['authenticated'])) {
-            return 'Already authenticated';
-        }
     }
 
     function login($username, $password)

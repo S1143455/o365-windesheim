@@ -1,0 +1,11 @@
+$primary : black;
+$secondary : red;
+
+
+
+body{
+  color: $primary;
+  h1{
+    color: $secondary;
+  }
+}

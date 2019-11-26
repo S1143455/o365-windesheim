@@ -5,13 +5,14 @@ namespace Classes;
 class Main
 {
 
-    private $config;
 
+    private $templatePath;
+    private $contentPath;
     function __construct()
     {
+        $this->templatePath = getenv('TEMPLATEPATH');
+        $this->contentPath  = getenv('CONTENTPATH');
         $this->config = [
-            'name' => 'Simple PHP Website',
-            'site_url' => '',
             'pretty_uri' => true,
             'nav_menu' => [
                 '' => 'Home',
@@ -19,9 +20,6 @@ class Main
                 'products' => 'Products',
                 'contact' => 'Contact',
             ],
-            'template_path' => 'template',
-            'content_path' => 'content',
-            'version' => 'v3.0',
         ];
     }
 
@@ -30,7 +28,7 @@ class Main
      */
     function site_name()
     {
-        echo $this->getConfig('name');
+        return getenv('SITENAME');
     }
 
     /**
@@ -38,7 +36,7 @@ class Main
      */
     function site_url()
     {
-        echo $this->getConfig('site_url');
+        return getenv('SITEURL');
     }
 
     /**
@@ -46,7 +44,7 @@ class Main
      */
     function site_version()
     {
-        echo $this->getConfig('version');
+        return getenv('VERSION');
     }
 
     /**
@@ -58,12 +56,12 @@ class Main
         $nav_items = $this->getConfig('nav_menu');
         foreach ($nav_items as $uri => $name) {
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
-            $url = $this->getConfig('site_url') . '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
+            $url = $this->site_url() . '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
 
             $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="item ' . $class . '">' . $name . '</a>' . $sep;
         }
 
-        echo trim($nav_menu, $sep);
+        return trim($nav_menu, $sep);
     }
 
     /**
@@ -75,7 +73,7 @@ class Main
     {
         $page = isset($_GET['page']) ? htmlspecialchars($_GET['page']) : 'Home';
 
-        echo ucwords(str_replace('-', ' ', $page));
+        return ucwords(str_replace('-', ' ', $page));
     }
 
     /**
@@ -87,13 +85,13 @@ class Main
     {
         $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-        $path = getcwd() . '/' . $this->getConfig('content_path') . '/' . $page . '.phtml';
+        $path = getcwd() . '/' . $this->contentPath . '/' . $page . '.phtml';
 
         if (!file_exists($path)) {
-            $path = getcwd() . '/' . $this->getConfig('content_path') . '/404.phtml';
+            $path = getcwd() . '/' . $this->contentPath . '/404.phtml';
         }
         $this->page_title();
-        include_once $path;
+        return include_once $path;
     }
 
     /**
@@ -102,7 +100,7 @@ class Main
     function init()
     {
        $this->page_title();
-        include_once $this->getConfig('template_path') . '/template.php';
+        return  include_once $this->templatePath . '/template.php';
     }
 
     function OpenCon()
