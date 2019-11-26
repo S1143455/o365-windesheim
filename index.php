@@ -20,16 +20,4 @@ $authentication = new Classes\Authentication($database);
 $user = new Classes\User($database);
 
 
-//$router->route('/', function(){
-//    include 'content/home.php';
-//});
-//
-//$router->route('/about', function(){
-//    return 'hello, world';
-//});
-//
-//$action = $_SERVER['REQUEST_URI'];
-//$router->dispatch($action);
-
-
-$main->init();
+include_once 'Router/Routes.php';

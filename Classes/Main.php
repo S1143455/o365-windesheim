@@ -8,10 +8,11 @@ class Main
 
     private $templatePath;
     private $contentPath;
+
     function __construct()
     {
         $this->templatePath = getenv('TEMPLATEPATH');
-        $this->contentPath  = getenv('CONTENTPATH');
+        $this->contentPath = getenv('CONTENTPATH');
         $this->config = [
             'pretty_uri' => true,
             'nav_menu' => [
@@ -83,48 +84,7 @@ class Main
      */
     function page_content()
     {
-        $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-
-        $path = getcwd() . '/' . $this->contentPath . '/' . $page . '.phtml';
-
-        if (!file_exists($path)) {
-            $path = getcwd() . '/' . $this->contentPath . '/404.php';
-        }
-        $this->page_title();
-        return include_once $path;
-    }
-
-    /**
-     * Starts everything and displays the template.
-     */
-    function init()
-    {
-       $this->page_title();
-        return  include_once $this->templatePath . '/template.php';
-    }
-
-    function OpenCon()
-    {
-        $dbhost = "db01";
-        $dbuser = "Wwi_Db_User_Read";
-        $dbpass = "Welkom#2019!";
-        $db = "test";
-        $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
-        if (!$connection) die("Unable to connect to MySQL: " . mysqli_error($connection));
-        return $connection;
-    }
-
-    function CloseCon($connection)
-    {
-        mysqli_close($connection);
-    }
-
-    function Select($sql)
-    {
-        $connection = $this->OpenCon();
-        $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
-        $this->CloseCon($connection);
-        return $result;
+        //This needs to deliver page data that is requested by the ROUTE.
     }
 
     /**

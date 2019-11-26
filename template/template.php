@@ -11,7 +11,7 @@ $user = new Classes\User($database);
 	<head>
 	    <meta charset="utf-8" />
 	    <title><?php echo $main->page_title(); ?> | <?php echo $main->site_name(); ?></title>
-	    <link href="<?php echo $main->site_url(); ?>/template/style.css" rel="stylesheet" type="text/css" />
+	    <link href="<?php echo $main->site_url(); ?>/theme/css/style.css" rel="stylesheet" type="text/css" />
 	    <link href="<?php echo $main->site_url(); ?>/theme/css/custom.css" rel="stylesheet" type="text/css" />
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -37,7 +37,7 @@ $user = new Classes\User($database);
 			    <div class="col-sm">
 			      	<article>
 		        		<h2><?php echo $main->page_title(); ?></h2>
-		        		<?php $main->page_content(); ?>
+
 		    		</article>
 			    </div>
 			</div>

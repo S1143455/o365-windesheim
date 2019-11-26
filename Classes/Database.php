@@ -16,6 +16,10 @@ class Database
         $this->password = getenv('DATABASEPASSWORD');
     }
 
+    /**
+     * Opens a connection to the database.
+     * @return false|\mysqli
+     */
     public function openConn()
     {
         $connection = mysqli_connect($this->hostname, $this->username, $this->password, $this->database);
@@ -25,7 +29,32 @@ class Database
         return $connection;
     }
 
+    /**
+     * Closes the connection to the database.
+     * @param $connection
+     */
+    public function CloseCon($connection)
+    {
+        mysqli_close($connection);
+    }
 
+    /**
+     * Executes a SELECT statement.
+     * @param $sql
+     * @return array|null
+     */
+    public function Select($sql)
+    {
+        $connection = $this->OpenCon();
+        $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
+        $this->CloseCon($connection);
+        return $result;
+    }
+
+    /**
+     * Test the database connection.
+     * @return false|\mysqli
+     */
     public function testConn()
     {
         return $this->openConn();

@@ -5,11 +5,12 @@ namespace Router;
 class Router
 {
 
-    public $routes;
+    private $routes;
 
     function __construct()
     {
         $this->routes = [];
+
     }
 
     public function route($action, \Closure $callback)
