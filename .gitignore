@@ -2,5 +2,4 @@
 .php_cs.cache
 .env
 /vendor
-composer.json
 composer.lock
