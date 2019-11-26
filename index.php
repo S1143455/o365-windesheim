@@ -17,7 +17,7 @@ require_once 'loader.php';
 
 
 //$router->route('/', function(){
-//    include 'content/home.php';
+//    include 'content/home.phtml';
 //});
 //
 //$router->route('/about', function(){
