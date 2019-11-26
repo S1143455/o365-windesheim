@@ -15,6 +15,10 @@ $dotenv->load();
 //Initialize our classes
 require_once 'loader.php';
 
+$database = new Classes\Database();
+$authentication = new Classes\Authentication($database);
+$user = new Classes\User($database);
+
 
 //$router->route('/', function(){
 //    include 'content/home.phtml';

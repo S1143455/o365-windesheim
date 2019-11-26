@@ -26,7 +26,7 @@ class Database
     }
 
 
-    private function testConn()
+    public function testConn()
     {
         return $this->openConn();
     }

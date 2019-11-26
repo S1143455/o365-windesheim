@@ -101,7 +101,7 @@ class Main
      */
     function init()
     {
-        $this->page_title();
+       $this->page_title();
         include_once $this->getConfig('template_path') . '/template.php';
     }
 
