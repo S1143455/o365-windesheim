@@ -3,13 +3,14 @@ namespace Classes;
 
 Class Product{
 
+    private $viewPath = '../views/product/';
     /**
      * This should return the index page of the products.
      * So a list of products should be retrieved on this page.
      */
     public function Index()
     {
-        return include_once '../views/product/index.php';
+        return include_once $this->viewPath .'index.php';
     }
 
     /**
@@ -20,7 +21,7 @@ Class Product{
      */
     public function Create($newProduct)
     {
-      return include_once '../views/product/create.php';
+      return include_once $this->viewPath . 'create.php';
     }
 
     /**
@@ -30,7 +31,7 @@ Class Product{
      */
     public function Update($id)
     {
-        return include_once '../views/product/update.php';
+        return include_once $this->viewPath .'update.php';
     }
 
     /**
@@ -40,7 +41,7 @@ Class Product{
      */
     public function Delete($id)
     {
-        return include_once '../views/product/delete.php';
+        return include_once $this->viewPath .'delete.php';
     }
 
     /**
@@ -51,6 +52,6 @@ Class Product{
      */
     public function Show($id)
     {
-
+        return include_once $this->viewPath .'show.php';
     }
 }
