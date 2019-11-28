@@ -18,7 +18,7 @@ class Router
     {
         $action = trim($action, '/');
         $this->routes[$action] = $callback;
-        print_r($this->routes);
+//        print_r($this->routes);
     }
 
     public function dispatch($action)
@@ -37,10 +37,8 @@ class Router
 
     public function resource($action, $resource)
     {
-
-        echo $action;
         $action = preg_split('/[^\/].[^\/]+/',$action,1);
-        print_r([$action,$resource]);
+//        print_r([$action,$resource]);
 //        $action = trim ($resource[0]);
 //        $this->method = trim($resource[1]);
 //        $this->routes[$action][$this->method] = $callback;
