@@ -19,6 +19,13 @@ $router->route('/about-us', function(){
     return  include 'content/about-us.php';
 });
 
+$router->route('/login', function(){
+    return  include 'views/login/login.php';
+});
+
+$router->route('/register', function(){
+    return  include 'views/register.php';
+});
 
 
 
