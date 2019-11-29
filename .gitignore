@@ -6,3 +6,4 @@ composer.lock
 /node_modules
 /theme/css
 package-lock.json
+gulpfile.js
