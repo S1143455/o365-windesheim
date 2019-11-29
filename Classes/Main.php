@@ -2,6 +2,7 @@
 
 namespace Classes;
 
+
 class Main
 {
 
@@ -9,6 +10,7 @@ class Main
     private $templatePath;
     private $contentPath;
     private $root;
+    private $database;
 
     function __construct()
     {
@@ -24,6 +26,7 @@ class Main
             ],
         ];
         $this->root=getenv("ROOT");
+        $this->database=new Database();
     }
 
     /**
@@ -108,5 +111,15 @@ class Main
         return   $templatepath. '/theme/css/';
     }
 
-
+    /**
+     * Get HTML based on page_id and section
+     *
+     * @param $page_id
+     * @param $section
+     * @return string
+     */
+    function getContent($page_id,$section){
+        $result = $this->database->Select("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGE_ID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGE_ID = CON.PAGE_ID AND CONN.SECTION = CON.SECTION);");
+        return $result[0]['HTML'];
+    }
 }

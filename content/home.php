@@ -1,8 +1,7 @@
 <?php
 
 include_once 'content/header.php';
-
-
+$database = new Classes\Database();
 ?>
 
     <div class="container">

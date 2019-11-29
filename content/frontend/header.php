@@ -35,13 +35,11 @@ $user = new Classes\User($database);
             <header>
                 <h1><?php echo $main->site_name(); ?></h1>
                 <nav class="menu">
-                    <div id="navbar">
+
                         <?php echo $main->nav_menu();
 
                         echo $user->isAuthenticated();
                         ?>
-                    </div>
-
                 </nav>
             </header>
         </div>

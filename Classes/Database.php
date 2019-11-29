@@ -45,7 +45,7 @@ class Database
      */
     public function Select($sql)
     {
-        $connection = $this->OpenCon();
+        $connection = $this->OpenConn();
         $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
         $this->CloseCon($connection);
         return $result;
