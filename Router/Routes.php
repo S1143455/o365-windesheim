@@ -22,6 +22,10 @@ $router->route('/about-us', function(){
 $router->route('/product', function() use($product){
     return $product->Index();
 });
+$router->route('/product/create', function() use($product){
+    return $product->Create();
+});
+
 
 
 $router->resource('/product', 'product');

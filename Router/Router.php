@@ -19,7 +19,6 @@ class Router
     {
         $action = trim($action, '/');
         $this->routes[$action] = $callback;
-//        print_r($this->routes);
     }
 
     public function dispatch($action)
