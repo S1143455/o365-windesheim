@@ -36,7 +36,7 @@ class Authentication
             $user = new User();
             return "Welkom, " . $user->getUsername();
         } else {
-            return "<a class='pull-right' href='/login.php'>Login</a> | <a href='/content/account-toevoegen.php' class='pull-right'>Register</a>";
+            return "<a class='pull-right' href='/login'>Login</a> | <a href='/content/account-toevoegen.php' class='pull-right'>Register</a>";
         }
     }
 }

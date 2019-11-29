@@ -19,7 +19,7 @@ Class Product{
      * @param $newProduct
      * @return mixed
      */
-    public function create($newProduct)
+    public function create($newProduct = NULL)
     {
       return include_once $this->viewPath . 'create.php';
     }
