@@ -100,7 +100,12 @@ class Main
     }
     public function template_path()
     {
-      return  "/" . $this->root . '/theme/css/';
+        $templatepath = '';
+        if($this->root != ""){
+
+            $templatepath = "/" . $this->root ;
+        }
+        return   $templatepath. '/theme/css/';
     }
 
 
