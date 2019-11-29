@@ -1,11 +1,19 @@
 <?php
-if(isset($_POST['product']))
+if(isset($_POST['submit']))
 {
     include 'loader.php';
     $product = new Classes\Product();
-    $product->create($_POST['product']);
-
-    echo 'POST FOUND';
+    $product->store($_POST);
+    die();
 }
 
-echo "Create page";
+?>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="productname">Product</label>
+        <input type="text" class="form-control" name="productname" id="productname" aria-describedby="productnameSmall" placeholder="">
+    </div>
+    <input type="submit" name="submit" value="product" class="btn btn-primary">
+</form>
+
