@@ -8,7 +8,9 @@
 
 
 $router->route('/', function(){
+
     return include 'content/frontend/home.php';
+
 });
 
 $router->route('/about', function(){
@@ -16,7 +18,18 @@ $router->route('/about', function(){
 });
 
 $router->route('/about-us', function(){
+
     return include 'content/frontend/about-us.php';
+});
+
+/**
+ * Routes for the product
+ */
+$router->route('/product', function() use($product){
+    return $product->index();
+});
+$router->route('/product/create', function() use($product){
+    return $product->create();
 });
 
 $router->route('/admin', function(){
@@ -24,14 +37,11 @@ $router->route('/admin', function(){
 });
 
 
-
-
-$router->resource('/product', 'product');
-
 /**
  *  Execute the route
  */
 
-$action = $_SERVER['REQUEST_URI'];
+$action = preg_replace("/\?$/",'',$_SERVER['REQUEST_URI']);
+$_SERVER['currentRoute'] = 'test';
 $router->dispatch($action);
 

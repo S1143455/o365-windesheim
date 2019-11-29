@@ -1,16 +1,27 @@
 <?php
 namespace Classes;
 
-Class Product{
+use Classes\Database;
+Class Product
+{
 
-    private $viewPath = '../views/product/';
+    private $viewPath = 'views/product/';
+
+    private $database;
+    function __construct()
+    {
+        $this->database = new Database();
+    }
+
+
     /**
      * This should return the index page of the products.
      * So a list of products should be retrieved on this page.
      */
-    public function Index()
+
+    public function index()
     {
-        return include_once $this->viewPath .'index.php';
+        return include $this->viewPath . 'index.php';
     }
 
     /**
@@ -19,9 +30,38 @@ Class Product{
      * @param $newProduct
      * @return mixed
      */
-    public function Create($newProduct)
+    public function create()
     {
       return include_once $this->viewPath . 'create.php';
+    }
+
+    /**
+     * Stores the product in the database.
+     *
+     * @param $product
+     */
+    public function store($product)
+    {
+        if(!$this->validate($product))
+        {
+            return 'Product not valid.';
+        }
+        $this->database->create("INSERT INTO stockitem (stockitemname) VALUES ('".$product['productname']."')");
+        return "STORE FUNCTION EXECUTED";
+    }
+
+    /**
+     * Validation of the input.
+     * @param $product
+     * @return bool
+     */
+    private function validate($product)
+    {
+        if(!isset($product['productname']))
+        {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -29,7 +69,8 @@ Class Product{
      * @param $id
      * @return mixed
      */
-    public function Update($id)
+
+    public function update($id)
     {
         return include_once $this->viewPath .'update.php';
     }
@@ -39,7 +80,7 @@ Class Product{
      * @param $id
      * @return mixed
      */
-    public function Delete($id)
+    public function delete($id)
     {
         return include_once $this->viewPath .'delete.php';
     }
@@ -50,7 +91,7 @@ Class Product{
      *
      * @param $id
      */
-    public function Show($id)
+    public function show($id)
     {
         return include_once $this->viewPath .'show.php';
     }
