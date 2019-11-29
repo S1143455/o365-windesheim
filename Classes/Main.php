@@ -39,7 +39,7 @@ class Main
      */
     function site_url()
     {
-        return getenv('SITEURL');
+        return getenv('ROOT');
     }
 
     /**

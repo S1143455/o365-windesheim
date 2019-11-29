@@ -15,12 +15,19 @@ $router->route('/about', function(){
     return 'hello, world';
 });
 
-$router->resource('/product', 'product');
+$router->route('/about-us', function(){
+    return  include 'content/about-us.php';
+});
 
+
+
+
+$router->resource('/product', 'product');
 
 /**
  *  Execute the route
  */
+
 $action = $_SERVER['REQUEST_URI'];
 $router->dispatch($action);
 
