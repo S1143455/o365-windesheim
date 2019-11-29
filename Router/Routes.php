@@ -19,14 +19,9 @@ $router->route('/about-us', function(){
     return  include 'content/about-us.php';
 });
 
-$router->route('/login', function(){
-    return  include 'views/login/login.php';
+$router->route('/product', function() use($product){
+    return $product->Index();
 });
-
-$router->route('/register', function(){
-    return  include 'views/register.php';
-});
-
 
 
 $router->resource('/product', 'product');
