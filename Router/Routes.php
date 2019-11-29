@@ -23,6 +23,10 @@ $router->route('/product', function() use($product){
     return $product->Index();
 });
 
+$router->route('/account-toevoegen', function() {
+    return include 'content/account-toevoegen.php';
+});
+
 
 $router->resource('/product', 'product');
 

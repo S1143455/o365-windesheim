@@ -21,6 +21,7 @@ class Main
                 'about-us' => 'About Us',
                 'products' => 'Products',
                 'contact' => 'Contact',
+                'account-toevoegen' => 'Account toevoegen',
             ],
         ];
         $this->root=getenv("ROOT");

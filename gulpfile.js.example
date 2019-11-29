@@ -4,7 +4,7 @@ var sass        = require('gulp-sass');
 
 
 //Change this to your local development hostname.
-const hostname = 'yourhostname.local:port';
+const hostname = 'localhost';
 
 /**
  * DO NOT TOUCH PLEASE, OR MAYBE. JUST READ THE DOCUMENTATION ONLINE
