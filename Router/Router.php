@@ -7,10 +7,11 @@ class Router
 
     private $routes;
     private $method;
+    private $root;
     function __construct()
     {
         $this->routes = [];
-
+        $this->root = getenv('ROOT');
 
     }
 
@@ -23,6 +24,10 @@ class Router
 
     public function dispatch($action)
     {
+        if($this->root != ""){
+            $action = str_replace($this->root,'',$action);
+
+        }
         $action = trim($action, '/');
         if (array_key_exists($action, $this->routes)) {
             $callback = $this->routes[$action];
