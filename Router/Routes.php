@@ -8,7 +8,9 @@
 
 
 $router->route('/', function(){
-    return include 'content/home.php';
+
+    return include 'content/frontend/home.php';
+
 });
 
 $router->route('/about', function(){
@@ -16,7 +18,8 @@ $router->route('/about', function(){
 });
 
 $router->route('/about-us', function(){
-    return  include 'content/about-us.php';
+
+    return include 'content/frontend/about-us.php';
 });
 
 /**
@@ -29,9 +32,10 @@ $router->route('/product/create', function() use($product){
     return $product->create();
 });
 
+$router->route('/admin', function(){
+    return include 'content/backend/home-admin.php';
+});
 
-
-$router->resource('/product', 'product');
 
 /**
  *  Execute the route

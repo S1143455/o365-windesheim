@@ -1,7 +1,9 @@
 <?php
 namespace Classes;
+
 use Classes\Database;
-Class Product{
+Class Product
+{
 
     private $viewPath = 'views/product/';
 
@@ -11,13 +13,15 @@ Class Product{
         $this->database = new \Classes\Database();
     }
 
+
     /**
      * This should return the index page of the products.
      * So a list of products should be retrieved on this page.
      */
+
     public function index()
     {
-        return include $this->viewPath .'index.php';
+        return include $this->viewPath . 'index.php';
     }
 
     /**
@@ -30,17 +34,24 @@ Class Product{
     {
       return include_once $this->viewPath . 'create.php';
     }
+
+    /**
+     * Stores the product in the database
+     * @param $product
+     */
     public function store($product)
     {
 
         echo "STORE FUNCTION EXECUTED";
     }
 
+
     /**
      * This method should Update a Product in the database
      * @param $id
      * @return mixed
      */
+
     public function update($id)
     {
         return include_once $this->viewPath .'update.php';

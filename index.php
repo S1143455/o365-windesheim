@@ -18,18 +18,6 @@ require_once 'loader.php';
 $database = new Classes\Database();
 $authentication = new Classes\Authentication($database);
 $user = new Classes\User($database);
+$product = new Classes\Product();
 
-
-//$router->route('/', function(){
-//    include 'content/home.phtml';
-//});
-//
-//$router->route('/about', function(){
-//    return 'hello, world';
-//});
-//
-//$action = $_SERVER['REQUEST_URI'];
-//$router->dispatch($action);
-
-
-$main->init();
+include_once 'Router/Routes.php';

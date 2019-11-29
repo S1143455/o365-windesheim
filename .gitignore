@@ -6,3 +6,9 @@ composer.lock
 /node_modules
 /theme/css
 package-lock.json
+gulpfile.js
+dashboard/
+xammp
+bitnami.css
+applications.html
+index.html
