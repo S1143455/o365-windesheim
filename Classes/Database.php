@@ -26,8 +26,35 @@ class Database
     }
 
 
-    public function testConn()
+    /**
+     * Closes the connection to the database.
+     * @param $connection
+     */
+    public function CloseCon($connection)
     {
-        return $this->openConn();
+        mysqli_close($connection);
     }
+
+    /**
+     * Executes a SELECT statement.
+     * @param $sql
+     * @return array|null
+     */
+    public function Select($sql)
+    {
+        $connection = $this->OpenCon();
+        $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
+        $this->CloseCon($connection);
+        return $result;
+    }
+    public function create($sql)
+    {
+
+
+        $connection = $this->openConn();
+
+    }
+
+
+
 }
