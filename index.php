@@ -18,6 +18,6 @@ require_once 'loader.php';
 $database = new Classes\Database();
 $authentication = new Classes\Authentication($database);
 $user = new Classes\User($database);
-
+$product = new Classes\Product();
 
 include_once 'Router/Routes.php';

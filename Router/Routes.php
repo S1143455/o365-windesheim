@@ -19,7 +19,9 @@ $router->route('/about-us', function(){
     return  include 'content/about-us.php';
 });
 
-
+$router->route('/product', function() use($product){
+    return $product->Index();
+});
 
 
 $router->resource('/product', 'product');
