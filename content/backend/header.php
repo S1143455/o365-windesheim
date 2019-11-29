@@ -46,3 +46,4 @@ $user = new Classes\User($database);
             </header>
         </div>
     </div>
+</div>
