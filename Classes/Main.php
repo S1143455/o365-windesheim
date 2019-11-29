@@ -8,6 +8,7 @@ class Main
 
     private $templatePath;
     private $contentPath;
+    private $root;
 
     function __construct()
     {
@@ -22,6 +23,7 @@ class Main
                 'contact' => 'Contact',
             ],
         ];
+        $this->root=getenv("ROOT");
     }
 
     /**
@@ -98,7 +100,7 @@ class Main
     }
     public function template_path()
     {
-      return  $this->root . 'theme/css/';
+      return  "/" . $this->root . '/theme/css/';
     }
 
 
