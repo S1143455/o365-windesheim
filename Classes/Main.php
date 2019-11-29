@@ -96,6 +96,10 @@ class Main
     {
         return isset($this->config[$key]) ? $this->config[$key] : null;
     }
+    public function template_path()
+    {
+      return  $this->root . 'theme/css/';
+    }
 
 
 }
