@@ -10,7 +10,7 @@ Class Product
     private $database;
     function __construct()
     {
-        $this->database = new \Classes\Database();
+        $this->database = new Database();
     }
 
 
@@ -36,15 +36,33 @@ Class Product
     }
 
     /**
-     * Stores the product in the database
+     * Stores the product in the database.
+     *
      * @param $product
      */
     public function store($product)
     {
-
-        echo "STORE FUNCTION EXECUTED";
+        if(!$this->validate($product))
+        {
+            return 'Product not valid.';
+        }
+        $this->database->create("INSERT INTO stockitem (stockitemname) VALUES ('".$product['productname']."')");
+        return "STORE FUNCTION EXECUTED";
     }
 
+    /**
+     * Validation of the input.
+     * @param $product
+     * @return bool
+     */
+    private function validate($product)
+    {
+        if(!isset($product['productname']))
+        {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * This method should Update a Product in the database

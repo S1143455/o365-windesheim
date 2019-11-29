@@ -7,7 +7,6 @@ class Database
     private $hostname;
     private $username;
     private $password;
-
     function __construct()
     {
         $this->hostname = getenv('DATABASEHOSTNAME');
@@ -33,7 +32,7 @@ class Database
      * Closes the connection to the database.
      * @param $connection
      */
-    public function closeCon($connection)
+    public function closeConn($connection)
     {
         mysqli_close($connection);
     }
@@ -45,12 +44,33 @@ class Database
      */
     public function select($sql)
     {
-        $connection = $this->OpenCon();
+        $connection = $this->openConn();
         $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
-        $this->CloseCon($connection);
+        $this->closeConn($connection);
         return $result;
     }
+    /**
+     * Executes a sql query.
+     * @param $sql
+     * @return array|null
+     */
+    //WIP($table , $params = NULL) <- new parameters
+    public function create($sql)
+    {
+//        $keys = array_keys($params);
+        $connection = $this->openConn();
+        if(mysqli_query($connection,$sql))
+        {
+            echo "New record created successfully";
+        }
+        else
+            {
+                echo "error";
+                print_r(mysqli_error($connection));
+            }
+        $this->closeConn($connection);
 
+    }
     /**
      * Test the database connection.
      * @return false|\mysqli
@@ -60,16 +80,7 @@ class Database
         return;
     }
 
-    /**
-     * Executes a SELECT statement.
-     * @param $sql
-     * @return array|null
-     */
-    public function create($sql)
-    {
-        $connection = $this->openConn();
-        return;
-    }
+
 
 
 

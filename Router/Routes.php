@@ -41,6 +41,7 @@ $router->route('/admin', function(){
  *  Execute the route
  */
 
-$action = $_SERVER['REQUEST_URI'];
+$action = preg_replace("/\?$/",'',$_SERVER['REQUEST_URI']);
+$_SERVER['currentRoute'] = 'test';
 $router->dispatch($action);
 

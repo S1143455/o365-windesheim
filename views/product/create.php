@@ -1,20 +1,19 @@
 <?php
-if(isset($_POST['product']))
+if(isset($_POST['submit']))
 {
     include 'loader.php';
     $product = new Classes\Product();
-    $product->store($_POST['product']);
+    $product->store($_POST);
     die();
 }
 
 ?>
 
-<form>
+<form method="POST">
     <div class="form-group">
         <label for="productname">Product</label>
-        <input type="email" class="form-control" id="productname" aria-describedby="productnameSmall" placeholder="P">
-        <small id="productnameSmall" class="form-text text-muted">Small</small>
+        <input type="text" class="form-control" name="productname" id="productname" aria-describedby="productnameSmall" placeholder="">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <input type="submit" name="submit" value="product" class="btn btn-primary">
 </form>
 
