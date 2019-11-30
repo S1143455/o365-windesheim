@@ -23,6 +23,9 @@ $router->route('/product', function() use($product){
     return $product->Index();
 });
 
+$router->route('/login', function() {
+    return  include 'views/login/login.php';
+});
 
 $router->resource('/product', 'product');
 
