@@ -1,11 +1,7 @@
 <?php
-
-
 /**
  * ALL Routes the website uses will be defined here.
 */
-
-
 
 $router->route('/', function(){
     return include 'content/frontend/home.php';
