@@ -1,9 +1,9 @@
 <?php
 include 'loader.php';
-$database = new Classes\Database();
-$authentication = new Classes\Authentication('users');
-$user = new Classes\User($database);
-$admin = new Classes\Admin();
+$database = new Model\Database();
+$authentication = new Controller\Authentication('users');
+$user = new Controller\User($database);
+$admin = new Controller\Admin();
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Classes;
+namespace Model;
 class Database
 {
     private $database;
@@ -71,14 +71,26 @@ class Database
         $this->closeConn($connection);
 
     }
-    /**
-     * Test the database connection.
-     * @return false|\mysqli
-     */
-    public function testConn()
+
+    public function delete()
     {
-        return;
+
     }
+    public function save()
+    {
+
+    }
+    public function find($id)
+    {
+
+    }
+    public function findOrFail($id)
+    {
+        print_r($this);
+        print_r($id);
+    }
+
+
 
 
 

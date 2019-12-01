@@ -1,6 +1,6 @@
 <?php
 
-namespace classes;
+namespace Controller;
 class User extends Authentication
 {
     public function getUsername()
