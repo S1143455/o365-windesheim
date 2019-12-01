@@ -20,7 +20,7 @@ $router->route('/about-us', function(){
 });
 
 $router->route('/login', function(){
-    return include 'views/login/index.php';;
+    return include 'views/login/login.php';;
 });
 
 /**
