@@ -5,9 +5,9 @@ class User extends Authentication
 {
     public function getUsername()
     {
-        if (isset($_SESSION['user']))
+        if (isset($_SESSION['USER']))
         {
-            return $_SESSION['user']['name'];
+            return $_SESSION['USER']['name'];
         }
         return 'Login';
     }
