@@ -8,9 +8,7 @@
 
 
 $router->route('/', function(){
-
     return include 'content/frontend/home.php';
-
 });
 
 $router->route('/about', function(){
@@ -18,8 +16,11 @@ $router->route('/about', function(){
 });
 
 $router->route('/about-us', function(){
-
     return include 'content/frontend/about-us.php';
+});
+
+$router->route('/login', function(){
+    return include 'views/login/index.php';;
 });
 
 /**
