@@ -1,7 +1,7 @@
 <?php
 include 'loader.php';
 $database = new Classes\Database();
-$authentication = new Classes\Authentication($database);
+$authentication = new Classes\Authentication('users');
 $user = new Classes\User($database);
 $admin = new Classes\Admin();
 ?>
