@@ -75,7 +75,7 @@ class Database
 
     public function delete()
     {
-        print_r($this->table);
+        echo 'From table ' . $this->table . ' i deleted stuff , ' . print_r($this);
     }
     public function save()
     {
