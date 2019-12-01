@@ -32,13 +32,8 @@ $router->route('/product/create', function() use($product){
     return $product->create();
 });
 
-<<<<<<< HEAD
-$router->route('/login', function() {
-    return  include 'views/login/login.php';
-=======
 $router->route('/admin/onderhoud', function(){
     return include 'content/backend/onderhoud-admin.php';
->>>>>>> 56cf3759f2b0abd823106c11afaab329c913f5ee
 });
 
 $router->route('/admin/onderhoud-hoofdpagina', function(){
