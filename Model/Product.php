@@ -5,7 +5,6 @@ namespace Model;
 class Product extends Database
 {
 
-
     private $stockItemID;
     private $stockItemName;
     private $supplierID;
@@ -18,6 +17,13 @@ class Product extends Database
     private $marketingComments;
     private $categoryID;
     private $lastEditedBy;
+
+
+    function __construct()
+    {
+        $this->table = 'stockitem';
+    }
+
     /**
      * @return mixed
      */
@@ -209,17 +215,6 @@ class Product extends Database
     {
         $this->lastEditedBy = $lastEditedBy;
     }
-    public function retrieve($id)
-    {
 
-    }
-    public function delete()
-    {
-
-    }
-    public function validate()
-    {
-
-    }
 
 }

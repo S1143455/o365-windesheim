@@ -7,6 +7,7 @@ class Database
     private $hostname;
     private $username;
     private $password;
+    protected $table;
     function __construct()
     {
         $this->hostname = getenv('DATABASEHOSTNAME');
@@ -74,7 +75,7 @@ class Database
 
     public function delete()
     {
-
+        print_r($this->table);
     }
     public function save()
     {
@@ -86,8 +87,11 @@ class Database
     }
     public function findOrFail($id)
     {
-        print_r($this);
-        print_r($id);
+
+    }
+    protected function validate()
+    {
+
     }
 
 
