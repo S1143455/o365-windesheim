@@ -53,20 +53,20 @@ class Main
     /**
      * Website navigation.
      */
-    function nav_menu($sep = ' | ')
+    function nav_menu($sep = '')
     {
         $nav_menu = '';
         $nav_items = $this->getConfig('nav_menu');
         foreach ($nav_items as $uri => $name) {
+            $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = $this->site_url() . '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-
-            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="item ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" >' . $name . '</a>' . $sep;
+            $nav_menu .= '</li>';
         }
-
         return trim($nav_menu, $sep);
     }
-
+//class="item ' . $class . '"
     /**
      * Displays page title. It takes the data from
      * URL, it replaces the hyphens with spaces and
