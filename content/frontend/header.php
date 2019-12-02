@@ -16,72 +16,63 @@ $user = new Controller\User($database);
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
-
-
-
-    <!--
-
-
-     //<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-      //  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    -->
 </head>
 <body>
 <script>
-
     window.onscroll = function() {scrollFunction()};
-
     function scrollFunction() {
         var wscroll = $(this).scrollTop();
         if(wscroll > 100){
             $(".navbar").addClass("shrink-nav");
             $(".logo").addClass("shrink-logo");
+            $(".tekst").addClass("hide1");
+            $(".scroll-nav").removeClass("hide1");
+            $(".normalnav").addClass("hide1");
+
         }
         else{
             $(".navbar").removeClass("shrink-nav");
             $(".logo").removeClass("shrink-logo");
+            $(".tekst").removeClass("hide1");
+            $(".scroll-nav").addClass("hide1");
+            $(".normalnav").removeClass("hide1");
+
         }
     }
 </script>
 <nav class="navbar navbar-default navbar-fixed-top  my-nav">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="container navcontainer">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bas-navbar" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo"></a>
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <?php echo $main->nav_menu(); ?>
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <?php echo $main->nav_menu(); ?>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
-<div class="container">
-    <div class="row">
-        test
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo" ></img>
+                    </div>
+                    <div class="col-md-9 tekst">
+                        <h1>Oma's beste</h1>
+                        <h2>Producten zoals oma ze vroeger maakte! </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="hide1 scroll-nav">
+                    <?php $main->navigationalmenu(); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="height:1px;background-color:black;"> </div>
+        <div class="row">
+            <div class="col-md-8 normalnav">
+                <?php $main->navigationalmenu(); ?>
+            </div>
+        </div>
     </div>
-
-</div>
+</nav>
