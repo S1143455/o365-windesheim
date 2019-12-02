@@ -1,6 +1,6 @@
 <?php
 include 'loader.php';
-include 'header.js';
+include 'headerscript.php';
 $database = new Model\Database();
 $authentication = new Controller\Authentication('users');
 $user = new Controller\User($database);
@@ -19,7 +19,7 @@ $user = new Controller\User($database);
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top  my-nav">
+<nav class="navbar navbar-default navbar-static-top  my-nav">
     <div class="container navcontainer">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bas-navbar" aria-expanded="false">

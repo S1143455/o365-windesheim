@@ -1,3 +1,6 @@
+
+<script>
+
 window.onscroll = function() {scrollFunction()};
 function scrollFunction() {
     var wscroll = $(this).scrollTop();
@@ -7,9 +10,16 @@ function scrollFunction() {
         $(".tekst").addClass("hide1");
         $(".scroll-nav").removeClass("hide1");
         $(".normalnav").addClass("hide1");
+        $(".my-nav").removeClass("navbar-static-top");
+        $(".my-nav").addClass("navbar-fixed-top");
+
+
 
     }
     else{
+        $(".my-nav").addClass("navbar-static-top");
+        $(".my-nav").removeClass("navbar-fixed-top");
+
         $(".navbar").removeClass("shrink-nav");
         $(".logo").removeClass("shrink-logo");
         $(".tekst").removeClass("hide1");
@@ -18,3 +28,4 @@ function scrollFunction() {
 
     }
 }
+</script>
