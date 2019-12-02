@@ -12,7 +12,7 @@ $admin = new Controller\Admin();
 <html>
 <head>
     <meta charset="utf-8" />
-    <title><?php echo $main->page_title(); ?> | <?php echo $main->site_name(); ?></title>
+    <title><?php echo $admin->page_title(); ?> | <?php echo $admin->site_name(); ?></title>
     <link href="<?php echo $main->template_path() ?>style.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $main->template_path() ?>admin.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $main->template_path() ?>custom.css" rel="stylesheet" type="text/css" />
@@ -45,14 +45,14 @@ $admin = new Controller\Admin();
             </div>
             <div class="col-md-8">
                 <div class="hide1 scroll-nav">
-                    <?php $main->navigationalmenu(); ?>
+                    <?php $admin->navigationalmenu(); ?>
                 </div>
             </div>
         </div>
         <div class="row" style="height:1px;background-color:black;"> </div>
         <div class="row">
             <div class="col-md-8 normalnav">
-                <?php $main->navigationalmenu(); ?>
+                <?php $admin->navigationalmenu(); ?>
             </div>
         </div>
     </div>

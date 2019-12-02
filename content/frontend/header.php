@@ -11,7 +11,6 @@ $user = new Controller\User($database);
     <meta charset="utf-8" />
     <title><?php echo $main->page_title(); ?> | <?php echo $main->site_name(); ?></title>
     <link href="<?php echo $main->template_path() ?>style.css" rel="stylesheet" type="text/css" />
-    <link href="<?php echo $main->template_path() ?>admin.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $main->template_path() ?>custom.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
