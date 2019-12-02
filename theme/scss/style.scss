@@ -152,27 +152,8 @@ article {
   }
 }
 
-
-.container.headerfix {
-  margin-top: 136px;
-}
-@media (min-width: 768px){
-  .container.headerfix{
-    margin-top: 176px;
-  }
-}
-@media (min-width: 992px){
-  .container.headerfix{
-    margin-top: 126px !important;
-  }
-}
-
-@media (min-width: 1200px){
-  .container.headerfix{
-    margin-top: 126px !important;
-  }
-}
-
 .hide1{
   display: none !important;
 }
+
+

@@ -1,5 +1,6 @@
 <?php
 include 'loader.php';
+include 'header.js';
 $database = new Model\Database();
 $authentication = new Controller\Authentication('users');
 $user = new Controller\User($database);
@@ -18,28 +19,6 @@ $user = new Controller\User($database);
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<script>
-    window.onscroll = function() {scrollFunction()};
-    function scrollFunction() {
-        var wscroll = $(this).scrollTop();
-        if(wscroll > 100){
-            $(".navbar").addClass("shrink-nav");
-            $(".logo").addClass("shrink-logo");
-            $(".tekst").addClass("hide1");
-            $(".scroll-nav").removeClass("hide1");
-            $(".normalnav").addClass("hide1");
-
-        }
-        else{
-            $(".navbar").removeClass("shrink-nav");
-            $(".logo").removeClass("shrink-logo");
-            $(".tekst").removeClass("hide1");
-            $(".scroll-nav").addClass("hide1");
-            $(".normalnav").removeClass("hide1");
-
-        }
-    }
-</script>
 <nav class="navbar navbar-default navbar-fixed-top  my-nav">
     <div class="container navcontainer">
         <div class="navbar-header">

@@ -1,9 +1,9 @@
 <?php
 include 'loader.php';
+include 'header.php';
 $database = new Model\Database();
 $authentication = new Controller\Authentication('users');
 $user = new Controller\User($database);
-$admin = new Controller\Admin();
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,54 +14,46 @@ $admin = new Controller\Admin();
     <link href="<?php echo $main->template_path() ?>admin.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $main->template_path() ?>custom.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<script>
+<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+        <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <span class="menu-collapsed">My Bar</span>
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
 
-    window.onscroll = function() {scrollFunction()};
+            <!-- This menu is hidden in bigger devices with d-sm-none.
+           The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
+            <li class="nav-item dropdown d-sm-block d-md-none">
+                <a class="nav-link dropdown-toggle" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Menu
+                </a>
+                <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                    <a class="dropdown-item" href="#">Dashboard</a>
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Tasks</a>
+                    <a class="dropdown-item" href="#">Etc ...</a>
+                </div>
+            </li>
+            <!-- Smaller devices menu END -->
 
-    function scrollFunction() {
-        var wscroll = $(this).scrollTop();
-        if(wscroll > 100){
-            $(".navbar").addClass("shrink-nav");
-            $(".logo").addClass("shrink-logo");
-        }
-        else{
-            $(".navbar").removeClass("shrink-nav");
-            $(".logo").removeClass("shrink-logo");
-        }
-    }
-</script>
-<nav class="navbar navbar-default navbar-fixed-top  my-nav">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand logo" href="#"><img src="todo" alt="" /></a>
-            <h1><?php echo $main->site_name(); ?></h1>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <?php echo $main->nav_menu(); ?>
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <?php echo $main->nav_menu(); ?>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </ul>
+    </div>
 </nav>
