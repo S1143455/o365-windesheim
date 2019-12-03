@@ -47,6 +47,7 @@ class Database
         $connection = $this->openConn();
         $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
         $this->closeConn($connection);
+
         return $result;
     }
     /**

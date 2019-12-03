@@ -112,14 +112,55 @@ class Main
     }
 
     /**
-     * Get HTML based on page_id and section
+     * Get HTML based on page_id and section from Database
      *
      * @param $page_id
      * @param $section
      * @return string
      */
     function getContent($page_id,$section){
-        $result = $this->database->Select("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGE_ID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGE_ID = CON.PAGE_ID AND CONN.SECTION = CON.SECTION);");
-        return $result[0]['HTML'];
+        $result = $this->database->Select("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGEID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGEID = CON.PAGEID AND CONN.SECTION = CON.SECTION);");
+        if(empty($result)){
+            return "De selectie resulteert in een lege waarde.";
+        }else{
+            return $result[0]['HTML'];
+        }
+    }
+
+    /**
+     * echo HTML. It uses function getContent.
+     *
+     * @param $page_id
+     * @param $section
+     */
+    function showContent($page_id, $section){
+        echo $this->getContent($page_id,$section);
+    }
+
+    /**
+     * Display grid based on given array and class
+     * For example class: col-12 col-sm-6 col-md-4
+     * col-12 will show 1 column for the smallest screen
+     * col-sm-6 will show 2 columns for small screen
+     * col-md-4 will show 3 columns for medium screen
+     *
+     * @param $arr
+     * @param $class
+     */
+    function generateGrid($arr, $class){
+        if(empty($arr) or $class==''){
+            echo "Use valid values.";
+        }else{?>
+            <div class="container">
+                <div class="row">
+                    <?php for($i=1;$i<count($arr);$i++){ ?>
+                        <div class=<?php $class;?>>
+                            test;
+                        </div>
+                    <?php };?>
+                </div>
+            </div>
+        <?php }
     }
 }
+?>
