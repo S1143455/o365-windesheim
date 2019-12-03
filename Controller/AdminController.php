@@ -1,8 +1,9 @@
 <?php
 
 namespace Controller;
+use Model\Admin;
 
-class Main
+class AdminController
 {
 
 
@@ -17,13 +18,17 @@ class Main
         $this->config = [
             'pretty_uri' => true,
             'nav_menu' => [
-                '' => 'Home',
-                'about-us' => 'About Us',
-                'products' => 'Products',
-                'contact' => 'Contact',
+                'onderhoud-hoofdpagina' => 'Onderhoud Hoofdpagina',
+                'onderhoud-categorieen' => 'Onderhoud Categorieën',
+                'onderhoud-producten' => 'Onderhoud Producten',
+                'onderhoud-klanten' => 'Onderhoud Klanten',
+                'onderhoud-korting' => 'Onderhoud Korting',
+                'onderhoud-nieuwsbrief' => 'Onderhoud Nieuwsbrief',
+                'bestellingoverzicht' => 'Bestellingoverzicht',
+
             ],
         ];
-        $this->root=getenv("ROOT");
+        $this->root=getenv("ROOTAdmin");
     }
 
     /**
@@ -39,7 +44,7 @@ class Main
      */
     function site_url()
     {
-        return getenv('ROOT');
+        return getenv('ROOTAdmin');
     }
 
     /**
@@ -59,9 +64,9 @@ class Main
         $nav_items = $this->getConfig('nav_menu');
         foreach ($nav_items as $uri => $name) {
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
-            $url = $this->site_url() . '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
+            $url = '/' . $this->site_url() . '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
 
-            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="item ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
         }
 
         return trim($nav_menu, $sep);

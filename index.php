@@ -16,7 +16,7 @@ require_once 'loader.php';
 
 $database = new Model\Database();
 $authentication = new Controller\Authentication($database);
-$user = new Controller\User($database);
+$user = new Controller\UserController($database);
 $productController = new Controller\ProductController();
 
 include_once 'Router/Routes.php';

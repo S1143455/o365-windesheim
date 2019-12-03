@@ -2,7 +2,7 @@
 include 'loader.php';
 $database = new Model\Database();
 $authentication = new Controller\Authentication($database);
-$user = new Controller\User($database);
+$user = new Controller\UserController($database);
 
 
 ?>
