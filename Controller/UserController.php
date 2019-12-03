@@ -3,7 +3,7 @@
 namespace Controller;
 use Model\User;
 
-class UserController extends Authentication
+class UserController extends AuthenticationController
 {
     public function getUsername()
     {
