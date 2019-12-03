@@ -1,6 +1,8 @@
 <?php
 include 'loader.php';
 $admin = new controller\AdminController();
+include 'admin_scripts.php';
+
 ?>
 <!DOCTYPE html>
 <html>
