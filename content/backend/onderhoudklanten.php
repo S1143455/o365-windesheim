@@ -44,6 +44,18 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- modals (popups) -->
     <div class="modal fade" id="kortingEenmaal" tabindex="-1" role="dialog" aria-labelledby="kortingEenmaalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
