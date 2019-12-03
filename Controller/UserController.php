@@ -1,7 +1,9 @@
 <?php
 
-namespace classes;
-class User extends Authentication
+namespace Controller;
+use Model\User;
+
+class UserController extends Authentication
 {
     public function getUsername()
     {
@@ -11,4 +13,5 @@ class User extends Authentication
         }
         return 'Login';
     }
+
 }

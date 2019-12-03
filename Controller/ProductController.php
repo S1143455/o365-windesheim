@@ -1,19 +1,14 @@
 <?php
-namespace Classes;
+namespace Controller;
 
-use Classes\Database;
-Class Product
+use Model\Database;
+use Model\Product;
+
+
+Class ProductController
 {
 
     private $viewPath = 'views/product/';
-
-    private $database;
-    function __construct()
-    {
-        $this->database = new Database();
-    }
-
-
     /**
      * This should return the index page of the products.
      * So a list of products should be retrieved on this page.
@@ -21,6 +16,20 @@ Class Product
 
     public function index()
     {
+        $product1 = new Product();
+        $product1->setStockItemID(1);
+        $product2 = new Product();
+        $product2->setStockItemID(2);
+        $product3 = new Product();
+        $product3->setStockItemID(3);
+        $product4 = new Product();
+        $product4->setStockItemID(4);
+        $product5 = new Product();
+        $product5->setStockItemID(5);
+
+        $products = [$product1,$product2,$product3,$product4, $product5];
+        $this->products = [$product1,$product2,$product3,$product4, $product5];
+        echo 'index';
         return include $this->viewPath . 'index.php';
     }
 
@@ -32,7 +41,11 @@ Class Product
      */
     public function create()
     {
-      return include_once $this->viewPath . 'create.php';
+
+        echo 'Controller??';
+        $this->product = new Product();
+        $this->product->setStockItemID(10);
+        include $this->viewPath . 'create.php';
     }
 
     /**
@@ -46,7 +59,7 @@ Class Product
         {
             return 'Product not valid.';
         }
-        $this->database->create("INSERT INTO stockitem (stockitemname) VALUES ('".$product['productname']."')");
+
         return "STORE FUNCTION EXECUTED";
     }
 

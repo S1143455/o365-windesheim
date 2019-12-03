@@ -3,8 +3,6 @@
 
 
     <?php
-    echo $admin->nav_menu();
-
+    echo $admin->nav_menu_side();
     ?>
 </div>
-

@@ -14,21 +14,29 @@ $router->route('/about', function(){
 $router->route('/about-us', function(){
     return include 'content/frontend/about-us.php';
 });
-
+/**
+ * Login route
+ */
 $router->route('/login', function(){
     return include 'views/login/login.php';;
 });
 
 /**
- * Routes for the product
+ * Begin product routes
  */
-$router->route('/product', function() use($product){
-    return $product->index();
+$router->route('/product', function() use($productController){
+    return $productController->index();
 });
-$router->route('/product/create', function() use($product){
-    return $product->create();
+$router->route('/product/create', function() use($productController){
+    return $productController->create();
 });
+/**
+ * End product routes
+ */
 
+/**
+ * Begin admin routes
+ */
 $router->route('/admin/onderhoud', function(){
     return include 'content/backend/onderhoud-admin.php';
 });
@@ -65,10 +73,14 @@ $router->route('/admin/bestellingoverzicht', function(){
     return include 'content/backend/bestellingoverzicht.php';
 });
 /**
+ * End AdminController routes
+ */
+
+
+/**
  *  Execute the route
  */
 
 $action = preg_replace("/\?$/",'',$_SERVER['REQUEST_URI']);
-$_SERVER['currentRoute'] = 'test';
 $router->dispatch($action);
 

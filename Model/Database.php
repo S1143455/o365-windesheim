@@ -1,12 +1,13 @@
 <?php
 
-namespace Classes;
+namespace Model;
 class Database
 {
     private $database;
     private $hostname;
     private $username;
     private $password;
+    protected $table;
     function __construct()
     {
         $this->hostname = getenv('DATABASEHOSTNAME');
@@ -72,14 +73,29 @@ class Database
         $this->closeConn($connection);
 
     }
-    /**
-     * Test the database connection.
-     * @return false|\mysqli
-     */
-    public function testConn()
+
+    public function delete()
     {
-        return;
+        echo 'From table ' . $this->table . ' i deleted stuff , ' . print_r($this);
     }
+    public function save()
+    {
+
+    }
+    public function find($id)
+    {
+
+    }
+    public function findOrFail($id)
+    {
+
+    }
+    protected function validate()
+    {
+
+    }
+
+
 
 
 

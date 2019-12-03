@@ -1,8 +1,8 @@
 <?php
 include 'loader.php';
-$database = new Classes\Database();
-$authentication = new Classes\Authentication($database);
-$user = new Classes\User($database);
+$database = new Model\Database();
+$authentication = new Controller\Authentication($database);
+$user = new Controller\UserController($database);
 
 
 ?>

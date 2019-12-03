@@ -1,9 +1,11 @@
 <?php
+
+
+echo 'test';
+
 if(isset($_POST['submit']))
 {
     include 'loader.php';
-    $product = new Classes\Product();
-    $product->store($_POST);
     die();
 }
 
