@@ -19,7 +19,6 @@ switch ($authentication->role()){
         break;
 }
 $admin = new Controller\AdminController();
-
 $user = new Controller\UserController();
 $productController = new Controller\ProductController();
 
