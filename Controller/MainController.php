@@ -3,7 +3,7 @@
 namespace Controller;
 
 use Model\Database;
-
+use Model\category;
 class MainController
 
 {
@@ -29,6 +29,7 @@ class MainController
         ];
         $this->root=getenv("ROOT");
         $this->database=new Database();
+        $this->category = new category();
     }
 
     /**
@@ -144,11 +145,7 @@ class MainController
                                         ' . $this->nav_menu() .'
                                         <li role="separator" class="divider"></li>
                                         <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    ';
+                                    </ul>                                </li>                            </ul> </div>                ';
         echo $result;
 
     }
@@ -195,8 +192,9 @@ class MainController
      */
     function getGridCategories()
     {
-        $result = $this->database->Select("SELECT a.FileLocation FROM content CON INNER JOIN content_category cc on CON.PageID = cc.PageID and CON.Section = cc.Section INNER JOIN category c on cc.CategoryID = c.CategoryID INNER JOIN attachments a on c.CategoryID = a.CategoryID WHERE CON.PageID = 'Home.PHP' AND CON.Section = 'Categories' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_dt) FROM content CONN WHERE CONN.PageID = CON.PageID AND CONN.Section = CON.Section);");
-        $this->generateGrid($result,"col-12 col-sm-6 col-md-4");
+        
+        $categories = $this->category->Getcategories();
+        $this->generateGrid($categories,"col-12 col-sm-6 col-md-4");
     }
 }
 ?>
