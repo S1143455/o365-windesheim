@@ -9,53 +9,45 @@ class Database
     private $hostname;
     private $username;
     private $password;
-
+    private $connection;
     protected $table;
-
+    protected $column;
     function __construct()
     {
         $this->hostname = getenv('DATABASEHOSTNAME');
         $this->database = getenv('DATABASE');
         $this->username = getenv('DATABASEUSERNAME');
         $this->password = getenv('DATABASEPASSWORD');
+        $this->connection = $this->openConn();
     }
 
     /**
      * Opens a connection to the database.
-     * @return false|\mysqli
+     * @return false|mysqli
      */
     public function openConn()
     {
-        $connection = new \mysqli($this->hostname, $this->username, $this->password, $this->database);
-        if ($connection->connect_error)
+        /** @noinspection PhpComposerExtensionStubsInspection */
+        $this->connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
+        if ($this->connection->connect_error)
         {
             die('Connection refused');
 
         }
-        return $connection;
-    }
-
-    /**
-     * Closes the connection to the database.
-     * @param $connection
-     */
-    public function closeConn($connection)
-    {
-        mysqli_close($connection);
+        return $this->connection;
     }
 
     /**
      * Executes a SELECT statement.
      * @param $sql
-     * @return array|null
+     * @return $result
      */
     public function select($sql)
     {
-        $connection = $this->openConn();
-        $stmt = $connection->prepare($sql);
-        $stmt->execute();
-        $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
-        $this->closeConn($connection);
+
+        $stmt = $this->connection->prepare($sql);
+        $result  = $stmt->execute();
+        $this->connection->close();
 
         return $result;
     }
@@ -67,18 +59,10 @@ class Database
     //WIP($table , $params = NULL) <- new parameters
     public function create($sql)
     {
-//        $keys = array_keys($params);
-        $connection = $this->openConn();
-        if(mysqli_query($connection,$sql))
-        {
-            echo "New record created successfully";
-        }
-        else
-            {
-                echo "error";
-                print_r(mysqli_error($connection));
-            }
-        $this->closeConn($connection);
+
+        $id = $this->column['id'];
+
+        $this->findOrFail($id);
 
     }
 
@@ -88,6 +72,16 @@ class Database
     }
     public function save()
     {
+        $this->connection = $this->openConn();
+        $table = $this->table;
+
+        $id = $this->column['id']['value'];
+        
+        if(!$this->findOrFail($id))
+        {
+            $this->newRow();
+            return;
+        }
 
     }
     public function find($id)
@@ -95,6 +89,14 @@ class Database
 
     }
     public function findOrFail($id)
+    {
+        $connection = $this->connection;
+        $sql = "SELECT id FROM " . $this->table . " WHERE ".  $this->column['id'] . " = " . $id ;
+        $stmt = $connection->prepare($sql);
+        print_r($stmt->execute());
+
+    }
+    private function newRow()
     {
 
     }

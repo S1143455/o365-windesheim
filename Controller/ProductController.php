@@ -1,7 +1,7 @@
 <?php
 namespace Controller;
 
-use Model\Database;
+
 use Model\Product;
 
 
@@ -16,6 +16,12 @@ Class ProductController
 
     public function index()
     {
+
+        $product = new Product();
+        $product->setStockItemID(10);
+        $product->save();
+
+
         $product1 = new Product();
         $product1->setStockItemID(1);
         $product2 = new Product();
