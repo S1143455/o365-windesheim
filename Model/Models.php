@@ -13,14 +13,12 @@ namespace Model;
 class Models
 {
     protected $table;
-    private $column;
+    protected $column;
 
     protected function getColumns()
     {
-        print_r($this->table);
-        $this->column;
         switch ($this->table) {
-            case 'stockitem':
+            case "stockitem":
                 $this->getStockItem();
                 break;
             case 'category':
@@ -28,10 +26,10 @@ class Models
                 break;
             case 'attachment':
                 $this->getAttachments();
+                break;
             default:
                 die('Table not implemented');
         }
-
         return $this->column;
     }
 
@@ -41,8 +39,8 @@ class Models
     private function getStockItem()
     {
 
-        $column = array(
-            "StockItemID" => ['Integer', 'PrimaryKey', 'Required'],
+        $this->column = array(
+            "StockItemID" => ['Integer', 'PrimaryKey', 'Required' ],
             "StockItemName" => ['Varchar', 'Attribute', 'Required'],
             "SupplierID" => ['Supplier', 'HasOne', 'Required'],
             "Brand" => ['Varchar', 'Attribute', 'Required'],
@@ -56,29 +54,27 @@ class Models
             "CategoryID" => ['Category', 'HasMany', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
-        return $column;
     }
 
 
     private function getCategory()
     {
-        $column = array(
+        $this->column = array(
             "CategoryID" => ['Integer', 'PrimaryKey', 'Required'],
             "CategoryName" => ['Varchar', 'Attribute', 'Required'],
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
-        return $column;
     }
+
     private function getAttachments()
     {
-        $column = array(
+        $this->column = array(
             "AttachmentID" => ['Integer', 'PrimaryKey', 'Required'],
             "AlternateText" => ['Varchar', 'Attribute', 'Nullable'],
             "FileLocation" => ['Varchar', 'Attribute', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
             "StockItemID" => ['StockItem', 'HasOne', 'Nullable'],
         );
-        return $column;
     }
 }

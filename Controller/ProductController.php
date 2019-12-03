@@ -18,7 +18,7 @@ Class ProductController
     {
 
         $product = new Product();
-        $product->setStockItemID(10);
+        $product->setStockItemID(null);
         $product->save();
 
 
@@ -35,7 +35,7 @@ Class ProductController
 
         $products = [$product1,$product2,$product3,$product4, $product5];
         $this->products = [$product1,$product2,$product3,$product4, $product5];
-        echo 'index';
+
         return include $this->viewPath . 'index.php';
     }
 
