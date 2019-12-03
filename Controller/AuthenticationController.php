@@ -3,12 +3,9 @@
 namespace Controller;
 class AuthenticationController
 {
-
-    private $db;
-
-    function __construct($db)
+    function __construct()
     {
-        $this->db = $db;
+
     }
 
     function login($username, $password)
