@@ -7,7 +7,9 @@ class Database
     private $hostname;
     private $username;
     private $password;
+
     protected $table;
+
     function __construct()
     {
         $this->hostname = getenv('DATABASEHOSTNAME');
@@ -22,7 +24,7 @@ class Database
      */
     public function openConn()
     {
-        $connection = mysqli_connect($this->hostname, $this->username, $this->password, $this->database);
+        $connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
         if (!$connection) {
             die ("Unable to connect to MySQL: " . mysqli_error($connection));
         }

@@ -1,7 +1,5 @@
 <?php
 include 'loader.php';
-$database = new Model\Database();
-$authentication = new Controller\Authentication('users');
 ?>
 <!DOCTYPE html>
 <html>

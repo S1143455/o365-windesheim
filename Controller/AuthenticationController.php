@@ -45,4 +45,7 @@ class AuthenticationController
             return " | <a class='pull-right' href='/login'>Login</a> | <a class='pull-right' href='/register'>Register</a>";
         }
     }
+    function userRole(){
+        return 'role';
+    }
 }

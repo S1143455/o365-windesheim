@@ -13,5 +13,9 @@ class UserController extends AuthenticationController
         }
         return 'Login';
     }
+    public function isAdmin()
+    {
+        return true;
+    }
 
 }
