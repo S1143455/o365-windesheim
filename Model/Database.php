@@ -19,6 +19,8 @@ class Database extends Models
         $this->username = getenv('DATABASEUSERNAME');
         $this->password = getenv('DATABASEPASSWORD');
         $this->connection = $this->openConn();
+//        $this->column = $this->getColumns();
+        print_r($this->column);
     }
 
     /**
