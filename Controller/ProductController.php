@@ -18,23 +18,25 @@ Class ProductController
     {
 
         $product = new Product();
-        $product->setStockItemID(null);
-        $product->save();
+//        $product->setStockItemID(null);
+//        $product->save();
+//
+//
+//        $product1 = new Product();
+//        $product1->setStockItemID(1);
+//        $product2 = new Product();
+//        $product2->setStockItemID(2);
+//        $product3 = new Product();
+//        $product3->setStockItemID(3);
+//        $product4 = new Product();
+//        $product4->setStockItemID(4);
+//        $product5 = new Product();
+//        $product5->setStockItemID(5);
 
+//        $products = [$product1,$product2,$product3,$product4, $product5];
+//        $this->products = [$product1,$product2,$product3,$product4, $product5];
 
-        $product1 = new Product();
-        $product1->setStockItemID(1);
-        $product2 = new Product();
-        $product2->setStockItemID(2);
-        $product3 = new Product();
-        $product3->setStockItemID(3);
-        $product4 = new Product();
-        $product4->setStockItemID(4);
-        $product5 = new Product();
-        $product5->setStockItemID(5);
-
-        $products = [$product1,$product2,$product3,$product4, $product5];
-        $this->products = [$product1,$product2,$product3,$product4, $product5];
+        $product->retrieve();
 
         return include $this->viewPath . 'index.php';
     }

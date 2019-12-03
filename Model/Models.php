@@ -38,7 +38,6 @@ class Models
      */
     private function getStockItem()
     {
-
         $this->column = array(
             "StockItemID" => ['Integer', 'PrimaryKey', 'Required' ],
             "StockItemName" => ['Varchar', 'Attribute', 'Required'],

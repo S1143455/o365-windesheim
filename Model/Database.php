@@ -93,13 +93,27 @@ class Database extends Models
 
     public function findOrFail($id)
     {
-
-
         $connection = $this->connection;
         $sql = "SELECT id FROM " . $this->table . " WHERE " . $this->column['id'] . " = " . $id;
         $stmt = $connection->prepare($sql);
         echo $this->validate();
-//        print_r($stmt->execute());
+
+    }
+
+    public function retrieve()
+    {
+        //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
+        $this->getColumns();
+        $this->batch(5, 10);
+
+    }
+
+    private function batch($limit, $offset)
+    {
+
+        $connection = $this->connection;
+        $sql = "SELECT * FROM " . $this->table . ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
+        echo $sql;
 
     }
 
@@ -108,6 +122,11 @@ class Database extends Models
 
     }
 
+
+    private function setAttributes()
+    {
+
+    }
 
     /**
      * Validate the given data.
