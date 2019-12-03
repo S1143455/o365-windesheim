@@ -23,10 +23,10 @@ include_once 'content/backend/sidebar-admin.php';
         <!-- style="" voorbeeld  -->
 
         <div class="row" style="min-height: 1000px">
-            <div class="col-md-9">
+            <div class="col-md-10">
 
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <!-- https://getbootstrap.com/docs/4.0/components/modal/  -->
                 <button type="button" class="kortingopproductButton btn btn-primary" data-toggle="modal" data-target="#kortingProduct">
                     Korting op product(en)
