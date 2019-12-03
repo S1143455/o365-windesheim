@@ -4,6 +4,8 @@ namespace Model;
 
 use mysqli;
 
+//TODO: Look into static functions for global database functions.
+
 class Database extends Models
 {
     private $database;
@@ -12,6 +14,8 @@ class Database extends Models
     private $password;
     private $connection;
     protected $table;
+    protected $limit = 10;
+    protected $offset = 0;
 
 
     function __construct()
@@ -104,10 +108,17 @@ class Database extends Models
     {
         //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
         $this->getColumns();
-        $this->batch(5, 10);
+        $this->batch($this->limit, $this->offset);
 
     }
 
+    /**
+     * Gets the next batch of items.
+     */
+    protected function nextBatch()
+    {
+
+    }
     private function batch($limit, $offset)
     {
 
