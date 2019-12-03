@@ -44,7 +44,7 @@ include 'loader.php';
         }
     }
 </script>
-<div class="container">
+<div class="container" style="wi">
     <div class="row">
         <div class="col align-self-center">
 
