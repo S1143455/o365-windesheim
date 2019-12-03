@@ -1,0 +1,421 @@
+$primary : black;
+$secondary : red;
+
+
+
+body{
+  color: $primary;
+  h1{
+    color: $secondary;
+  }
+}
+.my-nav{
+  padding-top: 10px !important;
+}
+.sidenav {
+height: 100%;
+width: 250px;
+position: fixed;
+z-index: 1;
+top: 6%;
+left: 0;
+background-color: #111;
+overflow-x: hidden;
+padding-top: 20px;
+}
+
+.sidenav a {
+padding: 6px 8px 6px 16px;
+text-decoration: none;
+font-size: 20px;
+color: #818181;
+display: block;
+}
+
+.sidenav a:hover {
+color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.padding10 {
+  margin: 10px !important;
+}
+
+.search {
+  display: flex;
+  width: 40%;
+  position: absolute;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.searchTerm {
+  font-family: "Roboto Light";
+  font-style: italic;
+  width: 100%;
+  border: 3px solid #A9A9A9;
+  border-right: none;
+  padding: 5px;
+  height: 35px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #000000;
+}
+
+.searchButton {
+  font-family: "Roboto Light";
+  width: 80px;
+  height: 35px;
+  border: 1px solid #A9A9A9;
+  background: #A9A9A9;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.eenmaligekortingButton {
+  -webkit-transition: box-shadow 0.15s;
+  -moz-transition: box-shadow 0.15s;
+  -ms-transition: box-shadow 0.15s;
+  -o-transition: box-shadow 0.15s;
+  transition: box-shadow 0.15s;
+  border: 1px solid #b2afa5;
+  border-color: #e1e0dc #c9c8c1 #b2afa5;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.439);
+  background: -webkit-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -moz-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -ms-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -o-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: linear-gradient(top, #f6f5f0, #e1e0dc);
+  -pie-background: linear-gradient(top, #f6f5f0, #e1e0dc);
+  color: #6b635b;
+  -webkit-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -moz-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -ms-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -o-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000000;
+  margin-left: 70%;
+  margin-top: 5%;
+  width: 250px;
+  line-height: inherit;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.eenmaligekortingButton:hover {
+  background: #f1f1f1;
+  color: #A9A9A9;
+}
+
+.kortingopproductButton {
+  -webkit-transition: box-shadow 0.15s;
+  -moz-transition: box-shadow 0.15s;
+  -ms-transition: box-shadow 0.15s;
+  -o-transition: box-shadow 0.15s;
+  transition: box-shadow 0.15s;
+  border: 1px solid #b2afa5;
+  border-color: #e1e0dc #c9c8c1 #b2afa5;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.439);
+  background: -webkit-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -moz-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -ms-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -o-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: linear-gradient(top, #f6f5f0, #e1e0dc);
+  -pie-background: linear-gradient(top, #f6f5f0, #e1e0dc);
+  color: #6b635b;
+  -webkit-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -moz-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -ms-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -o-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000000;
+  margin-left: 70%;
+  margin-top: 1%;
+  width: 250px;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.kortingopproductButton:hover {
+  background: #f1f1f1;
+  color: #A9A9A9;
+}
+
+.kortingopcategorieButton {
+  -webkit-transition: box-shadow 0.15s;
+  -moz-transition: box-shadow 0.15s;
+  -ms-transition: box-shadow 0.15s;
+  -o-transition: box-shadow 0.15s;
+  transition: box-shadow 0.15s;
+  border: 1px solid #b2afa5;
+  border-color: #e1e0dc #c9c8c1 #b2afa5;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.439);
+  background: -webkit-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -moz-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -ms-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -o-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: linear-gradient(top, #f6f5f0, #e1e0dc);
+  -pie-background: linear-gradient(top, #f6f5f0, #e1e0dc);
+  color: #6b635b;
+  -webkit-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -moz-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -ms-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -o-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000000;
+  margin-left: 70%;
+  margin-top: 1%;
+  width: 250px;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.kortingopcatButton:hover {
+  background: #f1f1f1;
+  color: #A9A9A9;
+}
+
+.kortingmailenButton {
+  -webkit-transition: box-shadow 0.15s;
+  -moz-transition: box-shadow 0.15s;
+  -ms-transition: box-shadow 0.15s;
+  -o-transition: box-shadow 0.15s;
+  transition: box-shadow 0.15s;
+  border: 1px solid #b2afa5;
+  border-color: #e1e0dc #c9c8c1 #b2afa5;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.439);
+  background: -webkit-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -moz-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -ms-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: -o-linear-gradient(top, #f6f5f0, #e1e0dc);
+  background: linear-gradient(top, #f6f5f0, #e1e0dc);
+  -pie-background: linear-gradient(top, #f6f5f0, #e1e0dc);
+  color: #6b635b;
+  -webkit-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -moz-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -ms-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  -o-box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  box-shadow: rgba(255, 255, 255, 0) 0 0 1px 0, rgba(255, 255, 255, 0) 0 0 0 1px inset, white 0 1px 0 0;
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000000;
+  margin-left: 70%;
+  margin-top: 1%;
+  width: 250px;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.kortingmailenButton:hover {
+  background: #f1f1f1;
+  color: #A9A9A9;
+}
+
+.eenmaligekortingWindow {
+  margin-top: 100px;
+  position: fixed;
+  background-color: rgba(200, 200, 200, 0.75);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.eenmaligekortingWindow:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.eenmaligekortingWindow>div {
+  width: 1000px;
+  position: relative;
+  margin: 10% auto;
+  padding: 2rem;
+  background: #fff;
+  color: #444;
+}
+
+.eenmaligekortingWindow header {
+  font-weight: bold;
+}
+
+.eenmaligekortingClose {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+}
+
+.eenmaligekortingClose:hover {
+  color: #000;
+}
+
+a {
+  color: #000 !important;
+  line-height: normal;
+}
+a:hover, a:focus {
+  color: #000 !important;
+}
+
+.kortingopproductWindow {
+  margin-top: 100px;
+  position: fixed;
+  background-color: rgba(200, 200, 200, 0.75);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.kortingopproductWindow:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.kortingopproductWindow>div {
+  width: 1000px;
+  position: relative;
+  margin: 10% auto;
+  padding: 2rem;
+  background: #fff;
+  color: #444;
+}
+
+.kortingopproductWindow header {
+  font-weight: bold;
+}
+
+.kortingopproductClose {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+}
+
+.kortingopproductClose:hover {
+  color: #000;
+}
+
+.kortingopcategorieWindow {
+  margin-top: 100px;
+  position: fixed;
+  background-color: rgba(200, 200, 200, 0.75);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.kortingopcategorieWindow:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.kortingopcategorieWindow>div {
+  width: 1000px;
+  position: relative;
+  margin: 10% auto;
+  padding: 2rem;
+  background: #fff;
+  color: #444;
+}
+
+.kortingopcategorieWindow header {
+  font-weight: bold;
+}
+
+.kortingopcategorieClose {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+}
+
+.kortingopcategorie:hover {
+  color: #000;
+}
+
