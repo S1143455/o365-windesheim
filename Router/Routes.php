@@ -74,7 +74,7 @@ $router->route('/admin/bestellingoverzicht', function(){
 });
 
 /**
- * End Admin routes
+ * End AdminController routes
  */
 
 

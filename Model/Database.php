@@ -1,13 +1,17 @@
 <?php
 
 namespace Model;
+use mysqli;
+
 class Database
 {
     private $database;
     private $hostname;
     private $username;
     private $password;
+
     protected $table;
+
     function __construct()
     {
         $this->hostname = getenv('DATABASEHOSTNAME');
@@ -22,7 +26,7 @@ class Database
      */
     public function openConn()
     {
-        $connection = mysqli_connect($this->hostname, $this->username, $this->password, $this->database);
+        $connection = new \mysqli($this->hostname, $this->username, $this->password, $this->database);
         if (!$connection) {
             die ("Unable to connect to MySQL: " . mysqli_error($connection));
         }
@@ -48,6 +52,7 @@ class Database
         $connection = $this->openConn();
         $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
         $this->closeConn($connection);
+
         return $result;
     }
     /**
