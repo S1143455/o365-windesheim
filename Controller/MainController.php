@@ -2,12 +2,8 @@
 
 namespace Controller;
 
-<<<<<<< HEAD:Classes/Main.php
-
-class Main
-=======
 class MainController
->>>>>>> origin/master:Controller/MainController.php
+
 {
 
 
@@ -114,7 +110,6 @@ class MainController
         }
         return   $templatepath. '/theme/css/';
     }
-<<<<<<< HEAD:Classes/Main.php
 
     /**
      * Get HTML based on page_id and section from Database
@@ -123,17 +118,19 @@ class MainController
      * @param $section
      * @return string
      */
-    function getContent($page_id,$section){
+    function getContent($page_id,$section)
+    {
         $result = $this->database->Select("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGEID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGEID = CON.PAGEID AND CONN.SECTION = CON.SECTION);");
-        if(empty($result)){
+        if (empty($result)) {
             return "De selectie resulteert in een lege waarde.";
-        }else{
+        } else {
             return $result[0]['HTML'];
         }
-=======
+    }
+
     public function navigationalmenu(){
        $result = '';
-       $result .=  '<div class="collapse navbar-collapse" id="bas-navbar">
+       $result =  '<div class="collapse navbar-collapse" id="bas-navbar">
                             <ul class="nav navbar-nav navbar-left">
                                 ' . $this->nav_menu() .'
                                 <li class="dropdown">
@@ -148,7 +145,7 @@ class MainController
                         </div>
                     ';
         echo $result;
->>>>>>> origin/master:Controller/MainController.php
+
     }
 
     /**
