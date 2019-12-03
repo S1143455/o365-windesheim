@@ -24,9 +24,10 @@ class Database
      */
     public function openConn()
     {
-        $connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
-        if (!$connection) {
-            die ("Unable to connect to MySQL: " . mysqli_error($connection));
+        $connection = new \mysqli($this->hostname, $this->username, $this->password, $this->database);
+        if ($connection->connect_error)
+        {
+            die('Connection refused');
         }
         return $connection;
     }
@@ -48,6 +49,8 @@ class Database
     public function select($sql)
     {
         $connection = $this->openConn();
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
         $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
         $this->closeConn($connection);
         return $result;
@@ -77,7 +80,7 @@ class Database
 
     public function delete()
     {
-        echo 'From table ' . $this->table . ' i deleted stuff , ' . print_r($this);
+
     }
     public function save()
     {
