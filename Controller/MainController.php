@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-class Main
+class MainController
 {
 
 

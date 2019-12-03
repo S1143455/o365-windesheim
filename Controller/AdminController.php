@@ -1,8 +1,9 @@
 <?php
 
 namespace Controller;
+use Model\Admin;
 
-class Admin
+class AdminController
 {
 
 

@@ -73,7 +73,7 @@ $router->route('/admin/bestellingoverzicht', function(){
     return include 'content/backend/bestellingoverzicht.php';
 });
 /**
- * End Admin routes
+ * End AdminController routes
  */
 
 
