@@ -3,7 +3,7 @@
 namespace Model;
 use mysqli;
 
-class Database
+class Database extends Models
 {
     private $database;
     private $hostname;
