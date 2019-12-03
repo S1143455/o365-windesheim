@@ -1,5 +1,6 @@
 <?php
 include 'loader.php';
+$admin = new controller\AdminController();
 include 'admin_scripts.php';
 
 ?>
@@ -29,25 +30,9 @@ include 'admin_scripts.php';
             </button>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo" ></img>
-                    </div>
-                    <div class="col-md-9 tekst">
-                        <h1>Oma's beste</h1>
-                        <h2>Producten zoals oma ze vroeger maakte! </h2>
-                    </div>
-                </div>
+            <div class="col-md-2">
+                <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo" ></img>
             </div>
-            <div class="col-md-8">
-                <div class="hide1 scroll-nav">
-                    <?php $admin->navigationalmenu(); ?>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="height:1px;background-color:black;"> </div>
-        <div class="row">
             <div class="col-md-8 normalnav">
                 <?php $admin->navigationalmenu(); ?>
             </div>
