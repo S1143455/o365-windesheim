@@ -1,6 +1,8 @@
 <?php
 
 namespace Model;
+use mysqli;
+
 class Database
 {
     private $database;
@@ -28,6 +30,7 @@ class Database
         if ($connection->connect_error)
         {
             die('Connection refused');
+
         }
         return $connection;
     }
@@ -53,6 +56,7 @@ class Database
         $stmt->execute();
         $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
         $this->closeConn($connection);
+
         return $result;
     }
     /**

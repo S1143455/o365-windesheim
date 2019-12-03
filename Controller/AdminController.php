@@ -132,20 +132,7 @@ class AdminController
     }
     public function navigationalmenu(){
         $result = '';
-        $result .=  '<div class="collapse navbar-collapse" id="bas-navbar">
-                            <ul class="nav navbar-nav navbar-left">
-                                ' . $this->nav_menu() .'
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        ' . $this->nav_menu() .'
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    ';
+        $result .=  '<div class="collapse navbar-collapse" id="bas-navbar"><ul class="nav navbar-nav navbar-left">' . $this->nav_menu() .' <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a><ul class="dropdown-menu">' . $this->nav_menu() .'<li role="separator" class="divider"></li><li><a href="#">Separated link</a></li></ul></li></ul></div>';
         echo $result;
     }
 

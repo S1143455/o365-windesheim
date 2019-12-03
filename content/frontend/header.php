@@ -44,6 +44,10 @@ include 'loader.php';
         }
     }
 </script>
+<div class="container">
+    <div class="row">
+        <div class="col align-self-center">
+
 <nav class="navbar navbar-default navbar-static-top  my-nav">
     <div class="container navcontainer">
         <div class="navbar-header">
@@ -68,7 +72,7 @@ include 'loader.php';
             </div>
             <div class="col-md-8">
                 <div class="hide1 scroll-nav">
-                    <?php $main->navigationalmenu(); ?>
+                    <?php $main->navigationalmenu();?>
                 </div>
             </div>
         </div>
