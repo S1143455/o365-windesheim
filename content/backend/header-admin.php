@@ -2,9 +2,6 @@
 include 'loader.php';
 include 'admin_scripts.php';
 
-$database = new Model\Database();
-$authentication = new Controller\Authentication('users');
-
 ?>
 <!DOCTYPE html>
 <html>
