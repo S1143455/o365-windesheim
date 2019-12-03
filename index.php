@@ -1,5 +1,4 @@
 <?php
-
 // Comment these lines to hide errors
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -12,12 +11,12 @@ $dotenv = Dotenv\Dotenv::create(__DIR__);
 $dotenv->load();
 
 
-//Initialize our classes
+//Initialize our Controller
 require_once 'loader.php';
 
-$database = new Classes\Database();
-$authentication = new Classes\Authentication($database);
-$user = new Classes\User($database);
-$product = new Classes\Product();
+$database = new Model\Database();
+$authentication = new Controller\Authentication($database);
+$user = new Controller\User($database);
+$productController = new Controller\ProductController();
 
 include_once 'Router/Routes.php';

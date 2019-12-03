@@ -1,6 +1,6 @@
 <?php
 
-namespace Classes;
+namespace Controller;
 
 class Main
 {
@@ -54,20 +54,20 @@ class Main
     /**
      * Website navigation.
      */
-    function nav_menu($sep = ' | ')
+    function nav_menu($sep = '')
     {
         $nav_menu = '';
         $nav_items = $this->getConfig('nav_menu');
         foreach ($nav_items as $uri => $name) {
+            $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = $this->site_url() . '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-
-            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="item ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" >' . $name . '</a>' . $sep;
+            $nav_menu .= '</li>';
         }
-
         return trim($nav_menu, $sep);
     }
-
+//class="item ' . $class . '"
     /**
      * Displays page title. It takes the data from
      * URL, it replaces the hyphens with spaces and
@@ -108,6 +108,23 @@ class Main
         }
         return   $templatepath. '/theme/css/';
     }
-
+    public function navigationalmenu(){
+       $result = '';
+       $result .=  '<div class="collapse navbar-collapse" id="bas-navbar">
+                            <ul class="nav navbar-nav navbar-left">
+                                ' . $this->nav_menu() .'
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        ' . $this->nav_menu() .'
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    ';
+        echo $result;
+    }
 
 }

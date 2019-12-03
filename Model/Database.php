@@ -1,13 +1,13 @@
 <?php
 
-namespace Classes;
+namespace Model;
 class Database
 {
     private $database;
     private $hostname;
     private $username;
     private $password;
-
+    protected $table;
     function __construct()
     {
         $this->hostname = getenv('DATABASEHOSTNAME');
@@ -33,7 +33,7 @@ class Database
      * Closes the connection to the database.
      * @param $connection
      */
-    public function CloseCon($connection)
+    public function closeConn($connection)
     {
         mysqli_close($connection);
     }
@@ -43,20 +43,61 @@ class Database
      * @param $sql
      * @return array|null
      */
-    public function Select($sql)
+    public function select($sql)
     {
-        $connection = $this->OpenCon();
+        $connection = $this->openConn();
         $result = mysqli_fetch_all(mysqli_query($connection, $sql), MYSQLI_ASSOC);
-        $this->CloseCon($connection);
+        $this->closeConn($connection);
         return $result;
     }
-
     /**
-     * Test the database connection.
-     * @return false|\mysqli
+     * Executes a sql query.
+     * @param $sql
+     * @return array|null
      */
-    public function testConn()
+    //WIP($table , $params = NULL) <- new parameters
+    public function create($sql)
     {
-        return $this->openConn();
+//        $keys = array_keys($params);
+        $connection = $this->openConn();
+        if(mysqli_query($connection,$sql))
+        {
+            echo "New record created successfully";
+        }
+        else
+            {
+                echo "error";
+                print_r(mysqli_error($connection));
+            }
+        $this->closeConn($connection);
+
     }
+
+    public function delete()
+    {
+        echo 'From table ' . $this->table . ' i deleted stuff , ' . print_r($this);
+    }
+    public function save()
+    {
+
+    }
+    public function find($id)
+    {
+
+    }
+    public function findOrFail($id)
+    {
+
+    }
+    protected function validate()
+    {
+
+    }
+
+
+
+
+
+
+
 }

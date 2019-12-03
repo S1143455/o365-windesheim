@@ -1,5 +1,5 @@
 <?php
-namespace Classes;
+namespace Controller;
 Class Shoppingcart
 {
  private $shoppingcart;

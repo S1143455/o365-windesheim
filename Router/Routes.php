@@ -1,14 +1,10 @@
 <?php
-
-
 /**
  * ALL Routes the website uses will be defined here.
 */
 
-
-
 $router->route('/', function(){
-    return include 'content/home.php';
+    return include 'content/frontend/home.php';
 });
 
 $router->route('/about', function(){
@@ -16,28 +12,82 @@ $router->route('/about', function(){
 });
 
 $router->route('/about-us', function(){
-    return  include 'content/about-us.php';
+    return include 'content/frontend/about-us.php';
+});
+/**
+ * Login route
+ */
+$router->route('/login', function(){
+    return include 'views/login/login.php';;
 });
 
-$router->route('/product', function() use($product){
-    return $product->Index();
+/**
+ * Begin product routes
+ */
+$router->route('/product', function() use($productController){
+    return $productController->index();
 });
-$router->route('/product/create', function() use($product){
-    return $product->Create();
+$router->route('/product/create', function() use($productController){
+    return $productController->create();
+});
+/**
+ * End product routes
+ */
+
+/**
+ * Begin admin routes
+ */
+$router->route('/admin/onderhoud', function(){
+    return include 'content/backend/onderhoud-admin.php';
 });
 
+$router->route('/admin/onderhoud-hoofdpagina', function(){
+    return include 'content/backend/onderhoudhoofdpagina.php';
+});
 
+<<<<<<< HEAD
 $router->route('/account-toevoegen', function() {
     return include 'content/account-toevoegen.php';
 });
 
+=======
+$router->route('/admin', function(){
+    return include 'content/backend/home-admin.php';
+});
 
-$router->resource('/product', 'product');
+$router->route('/admin/onderhoud-categorieen', function(){
+    return include 'content/backend/onderhoudc.php';
+});
+
+$router->route('/admin/onderhoud-producten', function(){
+    return include 'content/backend/onderhoudproducten.php';
+});
+
+$router->route('/admin/onderhoud-klanten', function(){
+    return include 'content/backend/onderhoudklanten.php';
+});
+
+$router->route('/admin/onderhoud-korting', function(){
+    return include 'content/backend/onderhoudkorting.php';
+});
+
+$router->route('/admin/onderhoud-nieuwsbrief', function(){
+    return include 'content/backend/onderhoudnieuwsbrief.php';
+});
+
+$router->route('/admin/bestellingoverzicht', function(){
+    return include 'content/backend/bestellingoverzicht.php';
+});
+/**
+ * End Admin routes
+ */
+>>>>>>> b2bb1f4d544f81dcbbf97a44c468f2323b034549
+
 
 /**
  *  Execute the route
  */
 
-$action = $_SERVER['REQUEST_URI'];
+$action = preg_replace("/\?$/",'',$_SERVER['REQUEST_URI']);
 $router->dispatch($action);
 

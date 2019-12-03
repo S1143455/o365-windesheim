@@ -19,6 +19,7 @@ class Router
     {
         $action = trim($action, '/');
         $this->routes[$action] = $callback;
+//        print_r($this->routes);
     }
 
     public function dispatch($action)
@@ -33,7 +34,7 @@ class Router
             if(array_key_exists($this->method , $callback)){
 
             }
-            echo call_user_func($callback);
+            call_user_func($callback);
         } else {
             header("404 Not Found");
         }
