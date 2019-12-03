@@ -8,6 +8,12 @@ class User extends Database
 {
     private $username;
     private $password;
+    protected $table;
+    function __construct()
+    {
+        Parent::__construct();
+        $this->table = 'People';
+    }
 
     /**
      * @return mixed
