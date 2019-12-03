@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use Model\Database;
+
 class MainController
 
 {
@@ -104,8 +106,8 @@ class MainController
     public function template_path()
     {
         $templatepath = '';
-        if($this->root != ""){
-
+        if($this->root != "")
+        {
             $templatepath = "/" . $this->root ;
         }
         return   $templatepath. '/theme/css/';
@@ -121,16 +123,19 @@ class MainController
     function getContent($page_id,$section)
     {
         $result = $this->database->Select("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGEID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGEID = CON.PAGEID AND CONN.SECTION = CON.SECTION);");
-        if (empty($result)) {
+        if (empty($result))
+        {
             return "De selectie resulteert in een lege waarde.";
-        } else {
+        }else
+            {
             return $result[0]['HTML'];
         }
     }
 
-    public function navigationalmenu(){
+    public function navigationalmenu()
+    {
        $result = '';
-       $result =  '<div class="collapse navbar-collapse" id="bas-navbar">
+       $result = '<div class="collapse navbar-collapse" id="bas-navbar">
                             <ul class="nav navbar-nav navbar-left">
                                 ' . $this->nav_menu() .'
                                 <li class="dropdown">
@@ -168,7 +173,8 @@ class MainController
      * @param $arr
      * @param $class
      */
-    function generateGrid($arr, $class){
+    function generateGrid($arr, $cldass)
+    {
         if(empty($arr) or $class==''){
             echo "Use valid values.";
         }else{?>
@@ -182,6 +188,15 @@ class MainController
                 </div>
             </div>
         <?php }
+    }
+
+    /**
+     * Generates grid based on categories
+     */
+    function getGridCategories()
+    {
+        $result = $this->database->Select("SELECT a.FileLocation FROM content CON INNER JOIN content_category cc on CON.PageID = cc.PageID and CON.Section = cc.Section INNER JOIN category c on cc.CategoryID = c.CategoryID INNER JOIN attachments a on c.CategoryID = a.CategoryID WHERE CON.PageID = 'Home.PHP' AND CON.Section = 'Categories' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_dt) FROM content CONN WHERE CONN.PageID = CON.PageID AND CONN.Section = CON.Section);");
+        $this->generateGrid($result,"col-12 col-sm-6 col-md-4");
     }
 }
 ?>

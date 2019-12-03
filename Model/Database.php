@@ -1,6 +1,8 @@
 <?php
 
 namespace Model;
+use mysqli;
+
 class Database
 {
     private $database;
@@ -24,7 +26,7 @@ class Database
      */
     public function openConn()
     {
-        $connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
+        $connection = new \mysqli($this->hostname, $this->username, $this->password, $this->database);
         if (!$connection) {
             die ("Unable to connect to MySQL: " . mysqli_error($connection));
         }

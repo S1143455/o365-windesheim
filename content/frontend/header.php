@@ -44,21 +44,10 @@ include 'loader.php';
         }
     }
 </script>
-<<<<<<< HEAD
 <div class="container">
     <div class="row">
         <div class="col align-self-center">
-            <header>
-                <h1><?php echo $main->site_name(); ?></h1>
-                <nav class="menu">
 
-                        <?php echo $main->nav_menu();
-
-                        echo $user->isAuthenticated();
-                        ?>
-                </nav>
-            </header>
-=======
 <nav class="navbar navbar-default navbar-static-top  my-nav">
     <div class="container navcontainer">
         <div class="navbar-header">
@@ -83,7 +72,7 @@ include 'loader.php';
             </div>
             <div class="col-md-8">
                 <div class="hide1 scroll-nav">
-                    <?php $main->navigationalmenu(); ?>
+                    <?php $main->navigationalmenu();?>
                 </div>
             </div>
         </div>
@@ -92,7 +81,6 @@ include 'loader.php';
             <div class="col-md-8 normalnav">
                 <?php $main->navigationalmenu(); ?>
             </div>
->>>>>>> origin/master
         </div>
     </div>
 </nav>

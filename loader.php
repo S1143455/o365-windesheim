@@ -1,6 +1,5 @@
 <?php
 
-use Model\Admin;
 
 spl_autoload_register(function ($class) {
     include $class . '.php';
