@@ -1,14 +1,11 @@
 <?php
 
 namespace Controller;
-class Authentication
+class AuthenticationController
 {
-
-    private $db;
-
-    function __construct($db)
+    function __construct()
     {
-        $this->db = $db;
+
     }
 
     function login($username, $password)
@@ -17,7 +14,14 @@ class Authentication
         $_SESSION['USER']['name'] = $username; //'Test user';
         $_SESSION['authenticated']='TRUE';
     }
-
+    private function hashPassword($password)
+    {
+        return password_hash($password, PASSWORD_BCRYPT);
+    }
+    private function verifyPassword($inputPassword, $dbPassword)
+    {
+        return password_verify($inputPassword, $dbPassword);
+    }
     function register($data)
     {
 
@@ -34,11 +38,14 @@ class Authentication
     {
 
         if (isset($_SESSION['authenticated'])) {
-            //$user = new User();
-            $user = new User('');
+            //$user = new UserController();
+            $user = new UserController('');
             return "Welkom, " . $user->getUsername();
         } else {
             return " | <a class='pull-right' href='/login'>Login</a> | <a class='pull-right' href='/register'>Register</a>";
         }
+    }
+    function role(){
+        return 'role';
     }
 }

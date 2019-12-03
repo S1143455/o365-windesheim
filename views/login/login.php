@@ -24,12 +24,12 @@ if(count($_POST) !=0 )
 
     // Kijken of de ingevoerde gegevens juist zijn.
     $sql="select * from users where user_name = '" . $_POST['gbrkr'] . "' and user_password='". $_POST['pw'] . "'";
-    $dbnew= new Controller\Database;
+    $dbnew= new Model\Database;
     $result=$dbnew->select($sql);
 
     // Als we iets terug krijgen is het goed... (kennelijk)
     if (count($result) == 1){
-        $new_auth= new \Controller\Authentication('users');
+        $new_auth= new \Controller\AuthenticationController();
         $result_auth=$new_auth->login($result[0]['user_name'],$result[0]['user_password']);
         $authenticated= $new_auth->isAuthenticated();
     }
