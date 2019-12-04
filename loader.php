@@ -7,6 +7,7 @@ spl_autoload_register(function ($class) {
 $router = new Router\Router();
 $main = new Controller\MainController();
 $authentication = new Controller\AuthenticationController();
+$discount = new Controller\DiscountController();
 
 switch ($authentication->role()){
     case 'admin' :

@@ -15,6 +15,27 @@ include_once 'content/backend/sidebar-admin.php';
             <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
         </div>
     </div>
+
+    <div class="container">
+        <table class="table table-fixed">
+            <thead>
+            <tr>
+                <th class="col-xs-1">Code</th>
+                <th class="col-xs-1">Percentage</th>
+                <th class="col-xs-1">Eenmalig</th>
+                <th class="col-xs-1">Gebruikt</th>
+                <th class="col-xs-2">Omschrijving</th>
+                <th class="col-xs-2">Productnummer</th>
+                <th class="col-xs-2">Productcode</th>
+                <th class="col-xs-1">Beginperiode</th>
+                <th class="col-xs-1">Eindperiode</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $discount->GetAllDiscount(); ?>
+            </tbody>
+        </table>
+    </div>
     <!-- style="" voorbeeld  -->
 
     <div class="row" style="min-height: 1000px">
