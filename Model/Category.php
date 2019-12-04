@@ -9,12 +9,12 @@ class Category extends Database
     private $categoryID;
     private $categoryName;
     private $lastEditedBy;
-    private $parentcategory;
+    private $parentCategory;
 
     /**
      * @return mixed
      */
-    public function getcategoryID()
+    public function getCategoryID()
     {
         return $this->categoryID;
     }
@@ -22,7 +22,7 @@ class Category extends Database
     /**
      * @param mixed $categoryID
      */
-    public function setcategoryID($categoryID)
+    public function setCategoryID($categoryID)
     {
         $this->categoryID = $categoryID;
     }
@@ -30,7 +30,7 @@ class Category extends Database
     /**
      * @return mixed
      */
-    public function getcategoryName()
+    public function getCategoryName()
     {
         return $this->categoryName;
     }
@@ -38,7 +38,7 @@ class Category extends Database
     /**
      * @param mixed $categoryName
      */
-    public function setcategoryName($categoryName)
+    public function setCategoryName($categoryName)
     {
         $this->categoryName = $categoryName;
     }
@@ -62,26 +62,22 @@ class Category extends Database
     /**
      * @return mixed
      */
-    public function getParentcategory()
+    public function getParentCategory()
     {
-        return $this->parentcategory;
+        return $this->parentCategory;
     }
 
     /**
      * @param mixed $parentcategory
      */
-    public function setParentcategory($parentcategory)
+    public function setParentCategory($parentCategory)
     {
-        $this->parentcategory = $parentcategory;
+        $this->parentCategory = $parentCategory;
     }
 
-    public function Getcategories(){
+    public function getCategories(){
         $result = '';
-<<<<<<< HEAD
         $result = $this->select("SELECT a.FileLocation FROM content CON INNER JOIN content_category cc on CON.PageID = cc.PageID and CON.Section = cc.Section INNER JOIN category c on cc.CategoryID = c.CategoryID INNER JOIN attachments a on c.CategoryID = a.CategoryID WHERE CON.PageID = 'Home.PHP' AND CON.Section = 'Categories' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_dt) FROM content CONN WHERE CONN.PageID = CON.PageID AND CONN.Section = CON.Section);");
-=======
-       //$result = $this->select("SELECT a.FileLocation FROM content CON INNER JOIN content_category cc on CON.PageID = cc.PageID and CON.Section = cc.Section INNER JOIN category c on cc.CategoryID = c.CategoryID INNER JOIN attachments a on c.CategoryID = a.CategoryID WHERE CON.PageID = 'Home.PHP' AND CON.Section = 'Categories' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_dt) FROM content CONN WHERE CONN.PageID = CON.PageID AND CONN.Section = CON.Section);");
->>>>>>> 0463bfbf073e3d09fff94a08c9d0a3b347112822
        return $result;
     }
 }
