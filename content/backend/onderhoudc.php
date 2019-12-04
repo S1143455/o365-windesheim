@@ -21,27 +21,10 @@ include_once 'content/backend/sidebar-admin.php';
                 <table class="table table-fixed">
                     <thead>
                     <tr>
-                        <th class="col-xs-3">First Name</th>
-                        <th class="col-xs-3">Last Name</th>
+                        <th class="col-xs-3">CategoryID</th>
+                        <th class="col-xs-3">empty value</th>
                         <th class="col-xs-6">E-mail</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="col-xs-3">John</td>
-                        <td class="col-xs-3">Doe</td>
-                        <td class="col-xs-6">johndoe@email.com</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="table table-dark table-hover tableFixHead">
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">TH 1</th>
-                            <th scope="col">TH 2</th>
-                        </tr>
                     </thead>
                     <tbody>
                         <?php $category->GetAllCategories(); ?>

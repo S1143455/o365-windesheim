@@ -18,7 +18,12 @@ class CategoryController
         $categories = $this->category->getAllActiveCategories();
         foreach($categories as $category){
             $result = '';
-            $result .= '<tr><td>' . $category['CategoryID'] .'</td><td>'. $category['CategoryName'] .'</td></tr>';
+            $result .= '<tr>
+                        <td class="col-xs-3">' . $category['CategoryID'] .'</td>
+                        <td class="col-xs-3"></td>
+                        <td class="col-xs-6">johndoe@email.com</td>
+                    </tr>';
+
             echo $result;
         }
 
