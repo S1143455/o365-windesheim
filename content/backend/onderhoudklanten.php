@@ -11,7 +11,7 @@ include_once 'content/backend/sidebar-admin.php';
 ?>
     <div class="container">
         <div class="row">
-            <div class="col-md-">
+            <div class="col-md-12">
                 <!--dit gaat in header -->
                 <p>
                     Onderhoud Korting
