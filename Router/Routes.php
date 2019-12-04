@@ -72,6 +72,7 @@ $router->route('/admin/onderhoud-nieuwsbrief', function(){
 $router->route('/admin/bestellingoverzicht', function(){
     return include 'content/backend/bestellingoverzicht.php';
 });
+
 /**
  * End AdminController routes
  */
