@@ -34,7 +34,7 @@ class Database extends Models
     private function openConn()
     {
         /** @noinspection PhpComposerExtensionStubsInspection */
-        if($this->connection == null){
+        if ($this->connection == null) {
             $this->connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
             if ($this->connection->connect_error) {
                 echo "connection could not be established";
@@ -48,9 +48,20 @@ class Database extends Models
      * @param $sql
      * @return $result
      */
-    public function select($sql)
+    public function selectStmt($sql)
     {
-        if($this->connection == null){
+        if ($this->connection == null) {
+            $this->openConn();
+        }
+        $stmt = $this->connection->query($sql);
+        $this->closeConnection();
+
+        return $stmt;
+    }
+
+    public function selectFetchAll($sql)
+    {
+        if ($this->connection == null) {
             $this->openConn();
         }
         $stmt = $this->connection->query($sql);
@@ -95,20 +106,37 @@ class Database extends Models
 
     }
 
+    /**
+     * Finds a single row from the database by id.
+     * @param $id
+     * @return mixed|null
+     */
     public function find($id)
     {
+        $retVal = null;
+        if ($id != null) {
+            $this->openConn();
+            $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->getID("key") . " = " . $id;
+            $stmt = $this->connection->query($sql);
 
+            if (!array_key_exists('error', $this->connection) && $stmt->num_rows > 0) {
+                $retVal = $stmt->fetch_row();
+
+            }
+            $this->closeConnection();
+        }
+        return $retVal;
     }
 
     public function checkIfExists($id)
     {
         $retVal = null;
-        if($id != null){
+        if ($id != null) {
             $this->openConn();
-            $sql = "SELECT ". $this->getID('key') ." FROM " . $this->table . " WHERE " . $this->getID("key")  . " = " . $id;
+            $sql = "SELECT " . $this->getID('key') . " FROM " . $this->table . " WHERE " . $this->getID("key") . " = " . $id;
             $stmt = $this->connection->query($sql);
 
-            if(!array_key_exists('error', $this->connection) && $stmt->num_rows > 0 ) {
+            if (!array_key_exists('error', $this->connection) && $stmt->num_rows > 0) {
                 $retVal = $stmt->fetch_row();
             }
             $this->closeConnection();
@@ -116,11 +144,14 @@ class Database extends Models
         return $retVal;
     }
 
-    public function retrieve()
+    public function retrieve($id = null)
     {
         //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
         $this->getColumns();
-        $this->batch($this->limit, $this->offset);
+        if (empty($id)) {
+            $this->batch($this->limit, $this->offset);
+        }
+        $this->find($id);
 
     }
 
@@ -131,10 +162,11 @@ class Database extends Models
     {
 
     }
+
     private function batch($limit, $offset)
     {
-
-        $connection = $this->connection;
+        $this->openConn();
+        $this->getColumns();
         $sql = "SELECT * FROM " . $this->table . ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
         echo $sql;
 
@@ -149,13 +181,13 @@ class Database extends Models
         $sql = $this->createInsertStatement();
         $this->connection->query($sql);
 //        print_r($this->connection);
-        if($this->connection->error)
-        {
+        if ($this->connection->error) {
             print_r($this->connection->error);
             return $this->connection->error;
         }
         return true;
     }
+
     /**
      * Sets the attribute
      * @param $key
@@ -210,24 +242,18 @@ class Database extends Models
      */
     private function getID($type = null)
     {
-        foreach ($this->column as $key => $value)
-        {
-            if($value[1] == "PrimaryKey")
-            {
-                if(!$type){
+        foreach ($this->column as $key => $value) {
+            if ($value[1] == "PrimaryKey") {
+                if (!$type) {
                     return array(
                         "key" => $key,
                         "value" => $this->getAttribute($key)
                     );
-                }
-                else if ($type == "key")
-                {
+                } else if ($type == "key") {
                     return $key;
+                } else {
+                    return $this->getAttribute($key);
                 }
-                else
-                    {
-                        return  $this->getAttribute($key);
-                    }
             }
         }
         return null;
@@ -273,15 +299,13 @@ class Database extends Models
     {
 
         $type = gettype($value);
-        switch($type)
-        {
+        switch ($type) {
             case"string":
                 return "'" . $value . "'";
             case "integer":
                 return $value;
             case "boolean":
-                if($value)
-                {
+                if ($value) {
                     return 1;
                 }
                 return 0;
@@ -302,7 +326,7 @@ class Database extends Models
             $attributeValue = $this->getAttribute($key);
             if (!empty($attributeValue)) {
                 $columns .= $key . " , ";
-                $values .=  $this->serializedInput($attributeValue) . ",";
+                $values .= $this->serializedInput($attributeValue) . ",";
             }
         }
         $columns = substr($columns, 0, -2);
@@ -312,19 +336,19 @@ class Database extends Models
         print_r($sql);
         return $sql;
     }
+
     /**
      * Sets all the attributes that are given in the $_POST.
      *
      */
-    public function initialize(){
+    public function initialize()
+    {
         $this->getColumns();
 
-        foreach($_POST as $key => $value){
-            if(!empty($value) && array_key_exists($key, $this->column))
-            {
+        foreach ($_POST as $key => $value) {
+            if (!empty($value) && array_key_exists($key, $this->column)) {
                 $type = null;
-                switch($this->getType($key))
-                {
+                switch ($this->getType($key)) {
                     case "Integer":
                         $type = FILTER_VALIDATE_INT;
                         break;
@@ -340,10 +364,9 @@ class Database extends Models
                 }
                 $value = filter_input(INPUT_POST, $key, $type);
 
-                print_r([$type,$value]);
+                print_r([$type, $value]);
                 $this->setAttribute($key, $value);
             }
         }
     }
-
 }
