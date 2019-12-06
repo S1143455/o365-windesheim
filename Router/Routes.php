@@ -45,12 +45,12 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
     return include 'content/backend/onderhoudhoofdpagina.php';
 });
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 $router->route('/account-toevoegen', function() {
     return include 'content/account-toevoegen.php';
 });
 
-=======
+//=======
 $router->route('/admin', function(){
     return include 'content/backend/home-admin.php';
 });
@@ -81,7 +81,7 @@ $router->route('/admin/bestellingoverzicht', function(){
 /**
  * End Admin routes
  */
->>>>>>> b2bb1f4d544f81dcbbf97a44c468f2323b034549
+//>>>>>>> b2bb1f4d544f81dcbbf97a44c468f2323b034549
 
 
 /**
