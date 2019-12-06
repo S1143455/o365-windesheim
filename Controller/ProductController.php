@@ -9,6 +9,7 @@ Class ProductController
 {
 
     private $viewPath = 'views/product/';
+    private $product;
     /**
      * This should return the index page of the products.
      * So a list of products should be retrieved on this page.
@@ -59,31 +60,20 @@ Class ProductController
     /**
      * Stores the product in the database.
      *
-     * @param $product
+     * @param $product Product
      */
     public function store($product)
     {
-        if(!$this->validate($product))
-        {
-            return 'Product not valid.';
-        }
+          $this->product = $product;
+          print_r(          gettype($product->getSupplierID()));
+
+          $this->product->save();
+
 
         return "STORE FUNCTION EXECUTED";
     }
 
-    /**
-     * Validation of the input.
-     * @param $product
-     * @return bool
-     */
-    private function validate($product)
-    {
-        if(!isset($product['productname']))
-        {
-            return false;
-        }
-        return true;
-    }
+
 
     /**
      * This method should Update a Product in the database
