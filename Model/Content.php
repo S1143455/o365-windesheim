@@ -9,7 +9,7 @@ class Content extends Database
     private $pageID;
     private $section;
     private $HTML;
-    private $updDT;
+    private $upd_dt;
 
     function __construct()
     {
@@ -70,14 +70,14 @@ class Content extends Database
      */
     function getUpdDT()
     {
-        return $this->updDT;
+        return $this->upd_dt;
     }
 
     /**
      * @param $updDT
      */
-    function setUpdDT($updDT)
+    function setUpdDT($upd_dt)
     {
-        $this->updDT = $updDT;
+        $this->upd_dt = $upd_dt;
     }
 }
