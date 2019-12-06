@@ -4,12 +4,18 @@
 namespace Model;
 
 
-class Content
+class Content extends Database
 {
     private $pageID;
     private $section;
     private $HTML;
     private $updDT;
+
+    function __construct()
+    {
+        $this->table = "content";
+        parent::__construct();
+    }
 
     /**
      * @return mixed

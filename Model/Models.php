@@ -76,4 +76,14 @@ class Models
             "StockItemID" => ['StockItem', 'HasOne', 'Nullable'],
         );
     }
+
+    private function getContent()
+    {
+        $this->column = array(
+            "PageID" => ['Varchar', 'PrimaryKey', 'Required'],
+            "Section" => ['Varchar', 'PrimaryKey', 'Required'],
+            "HTML" => ['Longtext', 'Attribute', 'Required'],
+            "Upd_dt" => ['Datetime', 'Attribute', 'Required'],
+        );
+    }
 }
