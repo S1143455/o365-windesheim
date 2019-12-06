@@ -47,7 +47,7 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
 
 //<<<<<<< HEAD
 $router->route('/account-toevoegen', function() {
-    return include 'content/account-toevoegen.php';
+    return include 'content/frontend/account-toevoegen.php';
 });
 
 //=======
