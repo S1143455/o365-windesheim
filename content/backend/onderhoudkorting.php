@@ -4,20 +4,28 @@ include_once 'content/backend/header-admin.php';
 include_once 'content/backend/sidebar-admin.php';
 ?>
 
+<script>
+    function generateCode() {
+        var x = document.getElementById("inputCode")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
+</script>
+
 <div class="container">
     <div class="row">
         <div class="col-md-">
             <!--dit gaat in header -->
             <p>
-                Onderhoud Korting
+                <br> Onderhoud Korting
             </p>
             <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
             <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
+            <br>
         </div>
     </div>
 
     <div class="container">
-        <table class="table table-fixed">
+        <table class="table table-fixed" >
             <thead>
             <tr>
                 <th class="col-xs-1">Code</th>
@@ -66,19 +74,39 @@ include_once 'content/backend/sidebar-admin.php';
 <div class="modal fade" id="kortingEenmaal" tabindex="-1" role="dialog" aria-labelledby="kortingEenmaalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="kortingEenmaalLabel">Eenmalige korting aanmaken</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h1>Eenmalige korting aanmaken</h1>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary">Wijziging(en) opslaan</button>
-            </div>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="kortingEenmaalLabel">Eenmalige korting aanmaken</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        Code:
+                        <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
+                        <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Eenmalig
+                        </label>
+                    </div>
+                    <div class="col-md-12">
+                        Percentage:
+                        <input style="margin: 5px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                    </div>
+                    <div class="col-md-12"
+                        <form>
+                            Begin periode:
+                            <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                            Einde periode:
+                            <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <button type="button" class="btn btn-primary">Korting aanmaken</button>
+                </div>
         </div>
     </div>
 </div>
@@ -96,7 +124,7 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary">Wijziging(en) opslaan</button>
+                <button type="button" class="btn btn-primary">Korting aanmaken</button>
             </div>
         </div>
     </div>
@@ -115,7 +143,7 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary">Wijziging(en) opslaan</button>
+                <button type="button" class="btn btn-primary">Kortingn aanmaken</button>
             </div>
         </div>
     </div>
@@ -134,7 +162,7 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary">Wijziging(en) opslaan</button>
+                <button type="button" class="btn btn-primary">Korting versturen</button>
             </div>
         </div>
     </div>
