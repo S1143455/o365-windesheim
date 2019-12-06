@@ -36,10 +36,9 @@ class Database extends Models
         /** @noinspection PhpComposerExtensionStubsInspection */
         $this->connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
         if ($this->connection->connect_error) {
+            echo "connection could not be established";
             die('Connection refused');
-
         }
-        return $this->connection;
     }
 
     /**
@@ -49,12 +48,13 @@ class Database extends Models
      */
     public function select($sql)
     {
-
-        $stmt = $this->connection->prepare($sql);
-        $result = $stmt->execute();
+        if($this->connection == null){
+            $this->openConn();
+        }
+        $stmt = $this->connection->query($sql);
         $this->connection->close();
 
-        return $result;
+        return $stmt;
     }
     /**
      * Executes a sql query.
