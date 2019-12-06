@@ -1,7 +1,9 @@
 <?php
 
 namespace Controller;
-class User extends Authentication
+use Model\User;
+
+class UserController extends AuthenticationController
 {
     public function getUsername()
     {
@@ -11,4 +13,9 @@ class User extends Authentication
         }
         return 'Login';
     }
+    public function isAdmin()
+    {
+        return true;
+    }
+
 }

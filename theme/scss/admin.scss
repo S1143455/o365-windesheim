@@ -1,7 +1,9 @@
 $primary : black;
 $secondary : red;
 
-
+.navbar{
+  margin-bottom: 0px !important;
+}
 
 body{
   color: $primary;
@@ -9,29 +11,25 @@ body{
     color: $secondary;
   }
 }
-
+.my-nav{
+  padding-top: 10px !important;
+}
 .sidenav {
-  height: 100%;
-  width: 250px;
-  position: fixed;
-  z-index: 1;
-  top: 22%;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
+height: 100%;
+background-color: #fff3e6;
+overflow-x: hidden;
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #818181;
-  display: block;
+padding: 6px 8px 6px 16px;
+text-decoration: none;
+font-size: 20px;
+color: #818181;
+display: block;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+color: #f1f1f1;
 }
 
 .main {
@@ -46,5 +44,110 @@ body{
 }
 
 .padding10 {
-  margin: 10px !important;
+  margin:10px;
+  font-size:12px !important;
+}
+
+
+.one-offdiscountButton {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #808080 !important;
+  margin-left: 70%;
+  margin-top: 10%;
+  width: 250px;
+}
+
+.productdiscountButton {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #808080 !important;
+  margin-left: 70%;
+  margin-top: 1%;
+  width: 250px;
+}
+
+.categorydiscountButton {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #808080 !important;
+  margin-left: 70%;
+  margin-top: 1%;
+  width: 250px;
+}
+
+.maildiscountButton {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #808080 !important;
+  margin-left: 70%;
+  margin-top: 1%;
+  width: 250px;
+}
+
+.search {
+  display: flex;
+  width: 40%;
+  position: absolute;
+  left: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.searchTerm {
+  font-family: "Roboto Light";
+  font-style: italic;
+  width: 100%;
+  border: 3px solid #A9A9A9;
+  border-right: none;
+  padding: 5px;
+  height: 35px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #000000;
+}
+
+.searchButton {
+  font-family: "Roboto Light";
+  width: 80px;
+  height: 35px;
+  border: 1px solid #A9A9A9;
+  background: #A9A9A9;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.table-fixed{
+  width: 100%;
+  background-color: #f3f3f3;
+  tbody{
+    height:200px;
+    overflow-y:auto;
+    width: 100%;
+  }
+  thead,tbody,tr,td,th{
+    display:block;
+  }
+  tbody{
+    td{
+      float:left;
+    }
+  }
+  thead {
+    tr{
+      th{
+        float:left;
+        background-color: #fff3e6;
+        border-color:#ffad54;
+      }
+    }
+  }
 }

@@ -1,6 +1,9 @@
 <?php
 namespace Controller;
-Class Shoppingcart
+
+use Model\ShoppingCart;
+
+Class ShoppingcartController
 {
  private $shoppingcart;
  function __construct()
