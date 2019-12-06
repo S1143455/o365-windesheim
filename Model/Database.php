@@ -52,9 +52,15 @@ class Database extends Models
             $this->openConn();
         }
         $stmt = $this->connection->query($sql);
-        $this->connection->close();
+        $this->closeConnection();
 
-        return $stmt;
+        return $stmt->fetch_all();
+    }
+
+    private function closeConnection()
+    {
+        $this->connection->close();
+        $this->connection = null;
     }
     /**
      * Executes a sql query.
