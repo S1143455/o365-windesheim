@@ -31,13 +31,15 @@ class Database extends Models
      * Opens a connection to the database.
      * @return false|mysqli
      */
-    public function openConn()
+    private function openConn()
     {
         /** @noinspection PhpComposerExtensionStubsInspection */
-        $this->connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
-        if ($this->connection->connect_error) {
-            echo "connection could not be established";
-            die('Connection refused');
+        if($this->connection == null){
+            $this->connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
+            if ($this->connection->connect_error) {
+                echo "connection could not be established";
+                die('Connection refused');
+            }
         }
     }
 
@@ -71,9 +73,7 @@ class Database extends Models
     public function create($sql)
     {
 
-        $id = $this->column['id'];
-
-        $this->findOrFail(10);
+        $this->checkIfExists(10);
 
     }
 
@@ -87,11 +87,10 @@ class Database extends Models
         $this->connection = $this->openConn();
         $table = $this->table;
 
-        $id = $this->column['id']['value'];
-
-        if (!$this->findOrFail($id)) {
-            $this->newRow();
-            return;
+        $this->getColumns();
+        $this->validate();
+        if ($this->checkIfExists($this->getID("value")) == null) {
+            return $this->newRow();
         }
 
     }
@@ -101,13 +100,20 @@ class Database extends Models
 
     }
 
-    public function findOrFail($id)
+    public function checkIfExists($id)
     {
-        $connection = $this->connection;
-        $sql = "SELECT id FROM " . $this->table . " WHERE " . $this->column['id'] . " = " . $id;
-        $stmt = $connection->prepare($sql);
-        echo $this->validate();
+        $retVal = null;
+        if($id != null){
+            $this->openConn();
+            $sql = "SELECT ". $this->getID('key') ." FROM " . $this->table . " WHERE " . $this->getID("key")  . " = " . $id;
+            $stmt = $this->connection->query($sql);
 
+            if(!array_key_exists('error', $this->connection) && $stmt->num_rows > 0 ) {
+                $retVal = $stmt->fetch_row();
+            }
+            $this->closeConnection();
+        }
+        return $retVal;
     }
 
     public function retrieve()
@@ -134,15 +140,40 @@ class Database extends Models
 
     }
 
+    /**
+     * Creates a new database row.
+     */
     private function newRow()
     {
-
+        $this->openConn();
+        $sql = $this->createInsertStatement();
+        $this->connection->query($sql);
+//        print_r($this->connection);
+        if($this->connection->error)
+        {
+            print_r($this->connection->error);
+            return $this->connection->error;
+        }
+        return true;
+    }
+    /**
+     * Sets the attribute
+     * @param $key
+     * @return mixed
+     */
+    private function getAttribute($key)
+    {
+        return $this->{"get" . $key}();
     }
 
-
-    private function setAttributes()
+    /**
+     * Sets the attribute
+     * @param $key
+     * @return mixed
+     */
+    private function setAttribute($key, $value)
     {
-
+        return $this->{"set" . $key}($value);
     }
 
     /**
@@ -159,7 +190,7 @@ class Database extends Models
         //Step 2: Loop over the columns.
         foreach ($this->column as $key => $value) {
             //Get the value for the given key. (Example : $Product->getStockItemID())
-            $keyValue = $this->{"get" . $key}();
+            $keyValue = $this->getAttribute($key);
 
             //Check if the column is required && Check if the keyValue is filled.
             if ($value[2] === "Required" && empty($keyValue)) {
@@ -173,6 +204,36 @@ class Database extends Models
     }
 
     /**
+     * Get the ID key, value or both for the primarykey
+     * @param null $type
+     * @return array|int|mixed|string|null
+     */
+    private function getID($type = null)
+    {
+        foreach ($this->column as $key => $value)
+        {
+            if($value[1] == "PrimaryKey")
+            {
+                if(!$type){
+                    return array(
+                        "key" => $key,
+                        "value" => $this->getAttribute($key)
+                    );
+                }
+                else if ($type == "key")
+                {
+                    return $key;
+                }
+                else
+                    {
+                        return  $this->getAttribute($key);
+                    }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Validate the type(int, string) of the column.
      * @param $type
      * @param $setType
@@ -180,6 +241,7 @@ class Database extends Models
      */
     private function validateType($type, $setType)
     {
+        //TODO : DATETIME TESTER
         //We cant compare $setType if no value is given.
         switch ($type) {
             case "PrimaryKey":
@@ -202,5 +264,86 @@ class Database extends Models
         return true;
     }
 
+    /**
+     * Returns the correct input for use in a SQL statement
+     * @param $value
+     * @return string
+     */
+    private function serializedInput($value)
+    {
+
+        $type = gettype($value);
+        switch($type)
+        {
+            case"string":
+                return "'" . $value . "'";
+            case "integer":
+                return $value;
+            case "boolean":
+                if($value)
+                {
+                    return 1;
+                }
+                return 0;
+            default:
+                return strval($value);
+        }
+    }
+
+    /**
+     * Creates a sql insert statement.
+     * @return string
+     */
+    private function createInsertStatement()
+    {
+        $columns = "";
+        $values = "";
+        foreach ($this->column as $key => $value) {
+            $attributeValue = $this->getAttribute($key);
+            if (!empty($attributeValue)) {
+                $columns .= $key . " , ";
+                $values .=  $this->serializedInput($attributeValue) . ",";
+            }
+        }
+        $columns = substr($columns, 0, -2);
+        $values = substr($values, 0, -1);
+
+        $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $values . ");";
+        print_r($sql);
+        return $sql;
+    }
+    /**
+     * Sets all the attributes that are given in the $_POST.
+     *
+     */
+    public function initialize(){
+        $this->getColumns();
+
+        foreach($_POST as $key => $value){
+            if(!empty($value) && array_key_exists($key, $this->column))
+            {
+                $type = null;
+                switch($this->getType($key))
+                {
+                    case "Integer":
+                        $type = FILTER_VALIDATE_INT;
+                        break;
+                    case "Email":
+                        $type = FILTER_VALIDATE_EMAIL;
+                        break;
+                    case "String":
+                        $type = FILTER_SANITIZE_SPECIAL_CHARS;
+                        break;
+                    case "Boolean":
+                        $type = FILTER_VALIDATE_BOOLEAN;
+
+                }
+                $value = filter_input(INPUT_POST, $key, $type);
+
+                print_r([$type,$value]);
+                $this->setAttribute($key, $value);
+            }
+        }
+    }
 
 }
