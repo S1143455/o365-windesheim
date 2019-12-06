@@ -9,6 +9,7 @@ class Product extends Database
     private $stockItemName;
     private $supplierID;
     private $brand;
+    private $barcode;
     private $size;
     private $loadTimeDays;
     private $isChillerStock;
@@ -21,8 +22,9 @@ class Product extends Database
 
     function __construct()
     {
+        $this->table = "stockitem";
         parent::__construct();
-        $this->table = 'stockitem';
+
     }
 
     /**
@@ -89,6 +91,21 @@ class Product extends Database
         $this->brand = $brand;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBarcode()
+    {
+        return $this->barcode;
+    }
+
+    /**
+     * @param mixed $barcode
+     */
+    public function setBarcode($barcode)
+    {
+        $this->barcode = $barcode;
+    }
     /**
      * @return mixed
      */
