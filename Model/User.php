@@ -50,7 +50,7 @@ class User extends Database
     {
         'SELECT * FROM people WHERE username = ? or email = ? ';
         if($sqlreturendsomething)
-            $this->setPassword($retrieved->password)
+            $this->setPassword($retrieved->password);
 
         return true;
     }
