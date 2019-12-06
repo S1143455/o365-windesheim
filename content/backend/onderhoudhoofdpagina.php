@@ -18,7 +18,7 @@ $content = new controller\ContentController();
                 </select>
             </div>
             <br>
-            <?php $content->getRichTextEditor("","");?>
+            <?php $content->getRichTextEditor(" ");?>
         </div>
     </div>
 <?php

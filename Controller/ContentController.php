@@ -16,16 +16,29 @@ class ContentController
         return include $this->viewPath . 'index.php';
     }
 
-    public function show($pageID, $section)
+    /**
+     * Get PageID based on section
+     * @param $section
+     */
+    public function getPageID($section){
+        $pageID = "";
+        return $pageID;
+    }
+
+    public function show($pageID)
     {
         return include_once $this->viewPath . 'show.php';
     }
 
-    function getRichTextEditor($pageID, $section)
+    /**
+     * Generate richTextEditor
+     * @param $section
+     */
+    function getRichTextEditor($section)
     {
         $content = "";
-        if(isset($pageID) && isset($section)){
-           // $content = $this->show($pageID, $section);
+        if(isset($section)){
+           $content = $this->show($this->getPageID($section));
         };
 
         echo '<div id="toolbar">
@@ -49,7 +62,7 @@ class ContentController
                     </defs>
             </div>
             <div id="export-content">
-                <div id="editor-content" contenteditable="true">'.$content.'</div>
+                <div id="editor-content" contenteditable="true">' . $content . '</div>
             </div>
            <div id="export">
                <button id="damehtml">Opslaan</button>
