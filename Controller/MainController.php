@@ -198,5 +198,7 @@ class MainController
         $categories = $this->category->SpecialGetcategories();
         $this->generateGrid($categories,"col-12 col-sm-6 col-md-4");
     }
+
+
 }
 ?>

@@ -88,4 +88,20 @@ class Category extends Database
         $result = $this->select('SELECT * FROM omasbeste.category where CategoryActive = 1;');
         return $result;
     }
+    function searchQuery($searchParam ){
+        $query = $searchParam;
+        $min_length = 3;
+        if (strlen($query) >= $min_length) {
+            $query = htmlspecialchars($query);
+            $sql = 'SELECT * FROM omasbeste.category WHERE (`categoryID` LIKE \'%'. $query. '%\') OR (`categoryName` LIKE \'%' . $query . '%\')';
+            $raw_results = $this->select($sql);
+            if (mysqli_num_rows($raw_results) > 0) {
+                return $raw_results;
+            } else {
+                return "No results";
+            }
+        } else { // if query length is less than minimum
+            return "Minimum length is " . $min_length;
+        }
+    }
 }

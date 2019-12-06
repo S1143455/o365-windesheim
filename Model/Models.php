@@ -113,15 +113,15 @@ class Models
     private function getSupplier()
     {
         $this->column = array(
-            "SupplierID" => ['Integer', 'PrimaryKey', 'Required' ],
-            "SupplierName" => ['Varchar', 'Attribute', 'Required'],
-            "PrimaryContactPersonID" => ['Integer', 'HasOne', 'Required'],
-            "AlternateContactPersonID" => ['Integer', 'HasOne', 'Required'],
-            "SupplierReference" => ['Varchar', 'Attribute', 'Required'],
-            "InternalComments" => ['LongText', 'Attribute', 'Required'],
-            "WebsiteURL" => ['Boolean', 'Attribute', 'Required'],
-            "LastEditedBy" => ['Varchar', 'Attribute', 'Required'],
-            "AddressID" => ['Integer', 'Attribute', 'Required'],
+            "SupplierID"                =>   ['Integer', 'PrimaryKey', 'Required' ],
+            "SupplierName"              =>   ['Varchar', 'Attribute', 'Required'],
+            "PrimaryContactPersonID"    =>   ['People', 'HasOne', 'Required'],
+            "AlternateContactPersonID"  =>   ['People', 'HasOne', 'Required'],
+            "SupplierReference"         =>   ['Varchar', 'Attribute', 'Required'],
+            "InternalComments"          =>   ['LongText', 'Attribute', 'Required'],
+            "WebsiteURL"                =>   ['Boolean', 'Attribute', 'Required'],
+            "LastEditedBy"              =>   ['Varchar', 'Attribute', 'Required'],
+            "AddressID"                 =>   ['Address', 'HasOne', 'Required'],
 
         );
     }
