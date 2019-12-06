@@ -128,7 +128,7 @@ class Discount extends Database
 
     public function getAllSpecialDeals(){
         $result = '';
-        $result = $this->select('SELECT * FROM schoolproject.specialdeals;');
+        $result = $this->selectStmt('SELECT * FROM schoolproject.specialdeals;');
         return $result;
     }
 }
