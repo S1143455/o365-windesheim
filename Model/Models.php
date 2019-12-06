@@ -17,20 +17,28 @@ class Models
 
     protected function getColumns()
     {
-        switch ($this->table) {
-            case "stockitem":
-                $this->getStockItem();
-                break;
-            case 'category':
-                $this->getCategory();
-                break;
-            case 'attachment':
-                $this->getAttachments();
-                break;
-            default:
-                die('Table not implemented');
+        if($this->column == null)
+        {
+            switch ($this->table) {
+                case "stockitem":
+                    $this->getStockItem();
+                    break;
+                case 'category':
+                    $this->getCategory();
+                    break;
+                case 'attachment':
+                    $this->getAttachments();
+                    break;
+                case 'supplier':
+                    $this->getSupplier();
+                    break;
+                case  'people':
+                    $this->getPeople();
+                default:
+                    die('Table not implemented');
+            }
+            return $this->column;
         }
-        return $this->column;
     }
 
     /**
@@ -50,7 +58,7 @@ class Models
             "TaxRate" => ['Integer', 'Attribute', 'Required'],
             "UnitPrice" => ['Integer', 'Attribute', 'Required'],
             "MarketingComments" => ['LongText', 'Attribute', 'Nullable'],
-            "CategoryID" => ['Category', 'HasMany', 'Required'],
+            "CategoryID" => ['Category', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
     }
@@ -76,4 +84,50 @@ class Models
             "StockItemID" => ['StockItem', 'HasOne', 'Nullable'],
         );
     }
+
+
+    private function getPeople()
+    {
+        $this->column = array(
+            "PeopleID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "FullName" => ['Varchar', 'Attribute', 'Unique'],
+            "LogonName" => ['Supplier', 'HasOne', 'Required'],
+            "HashedPassword" => ['Varchar', 'Attribute', 'Required'],
+            "IsSystemUser" => ['Integer', 'Attribute', 'Required'],
+            "Role" => ['Integer', 'Attribute', 'Required'],
+            "PhoneNumber" => ['Boolean', 'Attribute', 'Required'],
+            "EmailAddress" => ['Varchar', 'Attribute', 'Unique'],
+            "Photo" => ['Blob', 'Attribute', 'Nullable'],
+            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+        );
+    }
+    private function getSupplier()
+    {
+        $this->column = array(
+            "SupplierID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "SupplierName" => ['Varchar', 'Attribute', 'Required'],
+            "PrimaryContactPersonID" => ['Integer', 'HasOne', 'Required'],
+            "AlternateContactPersonID" => ['Integer', 'HasOne', 'Required'],
+            "SupplierReference" => ['Varchar', 'Attribute', 'Required'],
+            "InternalComments" => ['LongText', 'Attribute', 'Required'],
+            "WebsiteURL" => ['Boolean', 'Attribute', 'Required'],
+            "LastEditedBy" => ['Varchar', 'Attribute', 'Required'],
+            "AddressID" => ['Integer', 'Attribute', 'Required'],
+
+        );
+    }
+
+    /**
+     * Gets the type of the $key
+     * @param $key
+     * @return mixed
+     */
+    protected function getType($key)
+    {
+        if(array_key_exists($key, $this->column))
+        {
+            return $this->column[$key][0];
+        }
+    }
+
 }
