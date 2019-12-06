@@ -1,56 +1,175 @@
-
 <?php
 
 include_once 'content/backend/header-admin.php';
 include_once 'content/backend/sidebar-admin.php';
 ?>
-    < class="container">
-    <div>
-        Onderhoud Korting
-        <div class="search">
-            <input type="text" class="searchTerm" placeholder="Waar ben je naar op zoek?">
-            <button type="button" class="searchButton" <p>Zoeken</p>
+
+<script>
+    function generateCode() {
+        var x = document.getElementById("inputCode")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-">
+            <!--dit gaat in header -->
+            <p>
+                <br> Onderhoud Korting
+            </p>
+            <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
+            <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
+            <br>
         </div>
     </div>
-    <div>
-        <div class="eenmaligekortingButton"
-            <button><a href="#open-eenmaligekorting">Eenmalige korting</a></button>
-        <div id="open-eenmaligekorting" class="eenmaligekortingWindow">
-            <div>
-                <a href="onderhoud-korting" title="Close" class="eenmaligekortingClose">Sluiten &times;</a>
-                <h1>Eenmalige korting aanmaken</h1>
+
+    <div class="container">
+        <table class="table table-fixed" >
+            <thead>
+            <tr>
+                <th class="col-xs-1">Code</th>
+                <th class="col-xs-1">Percentage</th>
+                <th class="col-xs-1">Eenmalig</th>
+                <th class="col-xs-1">Gebruikt</th>
+                <th class="col-xs-2">Omschrijving</th>
+                <th class="col-xs-2">Productnummer</th>
+                <th class="col-xs-2">Productcode</th>
+                <th class="col-xs-1">Beginperiode</th>
+                <th class="col-xs-1">Eindperiode</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $discount->GetAllDiscount(); ?>
+            </tbody>
+        </table>
+    </div>
+    <!-- style="" voorbeeld  -->
+
+    <div class="row" style="min-height: 1000px">
+        <div class="col-md-7">
+
+        </div>
+        <div class="col-md-5">
+            <!-- https://getbootstrap.com/docs/4.0/components/modal/  -->
+            <button type="button" class="one-offdiscountButton btn btn-primary" data-toggle="modal" data-target="#kortingEenmaal">
+                Eenmalige korting
+            </button>
+            <button type="button" class="productdiscountButton btn btn-primary" data-toggle="modal" data-target="#kortingProduct">
+                Korting op product(en)
+            </button>
+            <button type="button" class="categorydiscountButton btn btn-primary" data-toggle="modal" data-target="#kortingCategorie">
+                Korting op categorie(ën)
+            </button>
+            <button type="button" class="maildiscountButton btn btn-primary" data-toggle="modal" data-target="#kortingMailen">
+                Korting mailen naar klant
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- modals (popups) -->
+<div class="modal fade" id="kortingEenmaal" tabindex="-1" role="dialog" aria-labelledby="kortingEenmaalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="kortingEenmaalLabel">Eenmalige korting aanmaken</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        Code:
+                        <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
+                        <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                        Eenmalig
+                        </label>
+                    </div>
+                    <div class="col-md-12">
+                        Percentage:
+                        <input style="margin: 5px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                    </div>
+                    <div class="col-md-12"
+                        <form>
+                            Begin periode:
+                            <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                            Einde periode:
+                            <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <button type="button" class="btn btn-primary">Korting aanmaken</button>
+                </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="kortingProduct" tabindex="-1" role="dialog" aria-labelledby="kortingProductLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="kortingProductLabel">Korting op product(en) aanmaken</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>Korting op product(en) aanmaken</h1>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                <button type="button" class="btn btn-primary">Korting aanmaken</button>
             </div>
         </div>
     </div>
-<div>
-    <div class="kortingopproductButton"
-        <button><a href="#open-kortingopproduct">Korting op product(en)</a></button>
-    <div id="open-kortingopproduct" class="kortingopproductWindow">
-        <div>
-            <a href="onderhoud-korting" title="Close" class="kortingopproductClose">Sluiten &times;</a>
-            <h1>Korting op product(en) aanmaken</h1>
+</div>
+<div class="modal fade" id="kortingCategorie" tabindex="-1" role="dialog" aria-labelledby="kortingCategorieLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="kortingCategorieLabel">Korting op een categorie(ën) aanmaken</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>Korting op categorie(ën) aanmaken</h1>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                <button type="button" class="btn btn-primary">Kortingn aanmaken</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="kortingMailen" tabindex="-1" role="dialog" aria-labelledby="kortingMailenLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="kortingMailenLabel">Korting mailen naar klant</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>Korting mailen naar klant</h1>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                <button type="button" class="btn btn-primary">Korting versturen</button>
+            </div>
         </div>
     </div>
 </div>
 
-<div>
-    <div class="kortingopcategorieButton"
-        <button><a href="#open-kortingopcategorie">Korting op categorie(ën)</a></button>
-    <div id="open-kortingopcategorie" class="kortingopcategorieWindow">
-        <div>
-            <a href="onderhoud-korting" title="Close" class="kortingopcategorieClose">Sluiten &times;</a>
-            <h1>Korting op categorie(ën) aanmaken</h1>
-        </div>
-    </div>
-</div>
-
-    <div>
-    <div class="kortingmailenButton"
-        <button type="submit" <p>Korting mailen naar klant</p>
-    </div>
 
 <?php
 include_once 'content/backend/footer-admin.php';
-
 
 ?>
