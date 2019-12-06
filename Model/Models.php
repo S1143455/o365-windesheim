@@ -18,7 +18,7 @@ class Models
     protected function getColumns()
     {
         switch ($this->table) {
-            case "stockitem":
+            case 'stockitem':
                 $this->getStockItem();
                 break;
             case 'category':
@@ -26,6 +26,9 @@ class Models
                 break;
             case 'attachment':
                 $this->getAttachments();
+                break;
+            case 'content':
+                $this->getContent();
                 break;
             default:
                 die('Table not implemented');

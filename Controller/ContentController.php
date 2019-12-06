@@ -6,7 +6,7 @@ use Model\Content;
 
 class ContentController
 {
-    private $viewPath = 'views/content';
+    private $viewPath = 'views/content/';
 
     function __construct()
     {
@@ -25,7 +25,7 @@ class ContentController
     {
         $content = "";
         if(isset($pageID) && isset($section)){
-            $content = $this->show($pageID, $section);
+           // $content = $this->show($pageID, $section);
         };
 
         echo '<div id="toolbar">

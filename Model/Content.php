@@ -68,7 +68,7 @@ class Content extends Database
     /**
      * @return mixed
      */
-    function getUpdDT()
+    function getUpd_dt()
     {
         return $this->upd_dt;
     }
@@ -76,7 +76,7 @@ class Content extends Database
     /**
      * @param $updDT
      */
-    function setUpdDT($upd_dt)
+    function setUpd_dt($upd_dt)
     {
         $this->upd_dt = $upd_dt;
     }
