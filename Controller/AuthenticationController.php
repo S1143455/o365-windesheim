@@ -20,7 +20,8 @@ class AuthenticationController
     {
         if($username == '' || $password  == '')
         {
-            return 'Vul een gebruikernaam en wachtwoord in.';
+            $_SESSION['LOGIN_ERROR']='Vul een gebruikernaam en wachtwoord in.';
+            //return 'Vul een gebruikernaam en wachtwoord in.';
         }
 
         $user = new User();
