@@ -64,8 +64,13 @@ Class ProductController
      */
     public function store($product)
     {
+        print_r($product->initialize());
+          if(!$product->initialize())
+          {
+             return false;
+          };
+
           $this->product = $product;
-          print_r(          gettype($product->getSupplierID()));
 
           $this->product->save();
 
