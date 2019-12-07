@@ -66,7 +66,6 @@ class User extends Database
     {
         $getthedata=new Database();
         $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '".$this->username . "'");
-        print_r($sqlreturendsomething);
         if(!$sqlreturendsomething)
         {
             $_SESSION['LOGIN_ERROR']='Gebruikersnaam of wachtwoord onjuist.';
@@ -75,8 +74,7 @@ class User extends Database
         else
         {
             // return the password found in te database.
-            print_r($sqlreturendsomething);
-            $this->setDbPassword($sqlreturendsomething[0][3]);
+            $this->setDbPassword($sqlreturendsomething[0]['HashedPassword']);
             return true;
         }
     }
