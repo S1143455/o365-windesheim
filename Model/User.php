@@ -75,6 +75,7 @@ class User extends Database
         else
         {
             // return the password found in te database.
+            print_r($sqlreturendsomething);
             $this->setDbPassword($sqlreturendsomething[0][3]);
             return true;
         }

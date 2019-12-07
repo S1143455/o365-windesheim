@@ -58,10 +58,10 @@ class Database extends Models
         {
             $this->openConn();
         }
-        $stmt = $this->connection->query($sql);
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
         $this->closeConnection();
-
-        return $stmt;
+        return $stmt->fetchAll();
     }
 
     public function selectFetchAll($sql)
@@ -70,7 +70,8 @@ class Database extends Models
         {
             $this->openConn();
         }
-        $stmt = $this->connection->query($sql);
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
         $this->closeConnection();
 
         return $stmt->fetch_all();
