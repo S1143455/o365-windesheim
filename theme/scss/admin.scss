@@ -97,7 +97,7 @@ color: #f1f1f1;
 
 .inputCode {
 display: inline;
-margin-left: 58px;
+margin-left: 56px;
 width: 30%;
 height: 34px;
 padding: 6px 12px;
@@ -177,7 +177,7 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
 .btn-outline-secondary {
-  margin-left: 25px;
+  margin-left: 24px;
 }
 
 input[type="checkbox"] {
@@ -228,4 +228,8 @@ h4 {
       }
     }
   }
+}
+
+#exampleFormControlTextarea1 {
+  width: 65%;
 }
