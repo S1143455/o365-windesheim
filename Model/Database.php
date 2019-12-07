@@ -25,7 +25,6 @@ class Database extends Models
         $this->database = getenv('DATABASE');
         $this->username = getenv('DATABASEUSERNAME');
         $this->password = getenv('DATABASEPASSWORD');
-        $this->connection = $this->openConn();
     }
 
     /**
@@ -72,7 +71,6 @@ class Database extends Models
         }
         $stmt = $this->connection->query($sql);
         $this->closeConnection();
-
         return $stmt->fetch_all();
     }
 
@@ -115,23 +113,37 @@ class Database extends Models
      * @param $id
      * @return mixed|null
      */
-    public function find($id)
+    private function find($id)
     {
         $retVal = null;
         if ($id != null)
         {
             $this->openConn();
-            $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->getID("key") . " = " . $id;
-            $stmt = $this->connection->query($sql);
-
-            if (!array_key_exists('error', $this->connection) && $stmt->num_rows > 0)
+            $key = $this->getID("key");
+            $sql = "SELECT * FROM " . $this->table . " WHERE " . $key . " = :" . $key;
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(":".$key, $id );
+            $stmt->execute();
+            try
             {
-                $retVal = $stmt->fetch_row();
-
+                $retVal = $stmt->fetchAll();
+//                print_r($stmt->fetchAll());
+                if(empty($retVal))
+                {
+                    $retVal = null;
+                }
+                $retVal = $this->initRetrievedObjects($retVal)[0];
+                print_r($retVal->getStockItemName());
+            }
+            catch(Exception $e)
+            {
+                die($e);
+                $retVal = null;
             }
             $this->closeConnection();
+            return $retVal;
         }
-        return $retVal;
+
     }
 
     /**
@@ -145,13 +157,25 @@ class Database extends Models
         if ($id != null)
         {
             $this->openConn();
-            $sql = "SELECT " . $this->getID('key') . " FROM " . $this->table . " WHERE " . $this->getID("key") . " = " . $id;
-            $stmt = $this->connection->query($sql);
-
-            if (!array_key_exists('error', $this->connection) && $stmt->num_rows > 0)
+            $key = $this->getID("key");
+            $sql = "SELECT " . $key ."FROM " . $this->table . " WHERE " . $key . " = :" . $key;
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(":".$key, $id );
+            try
             {
-                $retVal = $stmt->fetch_row();
+                if(empty($stmt->fetchAll()))
+                {
+                    $retVal = false;
+                }
+                else{
+                    $retVal = true;
+                }
             }
+            catch(Exception $e)
+            {
+                $retVal = false;
+            }
+
             $this->closeConnection();
         }
         return $retVal;
@@ -167,9 +191,12 @@ class Database extends Models
         $this->getColumns();
         if (empty($id))
         {
-            $this->batch($this->limit, $this->offset);
+            return $this->batch($this->limit, $this->offset);
         }
-        $this->find($id);
+        else{
+
+           return $this->find($id);
+        }
 
     }
 
@@ -191,7 +218,25 @@ class Database extends Models
         $this->openConn();
         $this->getColumns();
         $sql = "SELECT * FROM " . $this->table . ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
-        echo $sql;
+        $stmt = $this->connection->query($sql);
+        $stmt->execute();
+        try
+        {
+            $retVal = $stmt->fetchAll();
+//                print_r($stmt->fetchAll());
+            if(empty($retVal))
+            {
+                $retVal = null;
+            }
+            $retVal = $this->initRetrievedObjects($retVal);
+        }
+        catch(Exception $e)
+        {
+            die($e);
+            $retVal = null;
+        }
+        $this->closeConnection();
+        return $retVal;
 
     }
 
@@ -232,7 +277,6 @@ class Database extends Models
      */
     private function setAttribute($key, $value)
     {
-        echo $value .' .. '.  gettype($value) . ' .. ' . $key ;
         return $this->{"set" . $key}($value);
     }
 
@@ -245,7 +289,6 @@ class Database extends Models
         //TODO: Return array with all required/type errors. So we can show feedback on input fields (Red borders/ Validation text underneath);
 
         $this->getColumns();
-
         foreach ($this->column as $key => $value)
         {
 
@@ -269,6 +312,7 @@ class Database extends Models
      */
     private function getID($type = null)
     {
+        $this->getColumns();
         foreach ($this->column as $key => $value)
         {
             if ($value[1] == "PrimaryKey")
@@ -456,6 +500,28 @@ class Database extends Models
 
         }
         return $valid;
+    }
+    private function initRetrievedObjects($array)
+    {
+        $modelObjects = [];
+        $className = get_class($this);
+        $modelObject = new $className;
+        $modelObject->getColumns();
+
+        foreach($array as $key => $value)
+        {
+            foreach ($value as $attrKey => $attrValue)
+            {
+                if(array_key_exists($attrKey,$modelObject->column))
+                {
+                    $modelObject->setAttribute($attrKey, $attrValue);
+
+                }
+            }
+            array_push($modelObjects, $modelObject);
+            print_r($modelObject->getStockItemName());
+        }
+        return $modelObjects;
     }
 
     /**
