@@ -25,6 +25,7 @@ class MainController
                 'about-us' => 'About Us',
                 'products' => 'Products',
                 'contact' => 'Contact',
+                'login' => 'Login',
             ],
         ];
         $this->root=getenv("ROOT");

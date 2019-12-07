@@ -34,7 +34,7 @@ class AuthenticationController
                 // The passwords are a match. The user is authenticated.
                 $_SESSION['authenticated']='true';
                 // Now were done were going back to the index page.
-                header('Refresh: 5; URL=/');
+                //header('Refresh: 5; URL=/');
                 return $_SESSION['LOGIN_ERROR']='Welkom '. $user->getUsername();
             }
             else

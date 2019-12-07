@@ -65,7 +65,8 @@ class User extends Database
     public function checkCredentials()
     {
         $getthedata=new Database();
-        $sqlreturendsomething=$getthedata->select("SELECT * FROM people WHERE LogonName = '".$this->username . "'");
+        $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '".$this->username . "'");
+        print_r($sqlreturendsomething);
         if(!$sqlreturendsomething)
         {
             $_SESSION['LOGIN_ERROR']='Gebruikersnaam of wachtwoord onjuist.';
