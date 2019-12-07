@@ -28,5 +28,9 @@ class CategoryController
         }
 
     }
+    function SearchCategories($searchParam){
+        $result = $this->category->searchQuery($searchParam);
+        var_dump($result);
+    }
 
 }
