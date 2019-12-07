@@ -2,7 +2,8 @@
 
 namespace Model;
 
-use mysqli;
+use http\Exception\InvalidArgumentException;
+use PDO;
 
 //TODO: Look into static functions for global database functions.
 
@@ -29,15 +30,20 @@ class Database extends Models
 
     /**
      * Opens a connection to the database.
-     * @return false|mysqli
+     * @return false|PDO
      */
-    public function openConn()
+    private function openConn()
     {
         /** @noinspection PhpComposerExtensionStubsInspection */
-        $this->connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
-        if ($this->connection->connect_error) {
-            echo "connection could not be established";
-            die('Connection refused');
+        if ($this->connection == null)
+        {
+            $this->connection = new PDO("mysql:host=$this->hostname;dbname=$this->database", $this->username, $this->password);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            if (false)
+            {
+                echo "connection could not be established";
+                die('Connection refused');
+            }
         }
     }
 
@@ -46,9 +52,22 @@ class Database extends Models
      * @param $sql
      * @return $result
      */
-    public function select($sql)
+    public function selectStmt($sql)
     {
-        if($this->connection == null){
+        if ($this->connection == null)
+        {
+            $this->openConn();
+        }
+        $stmt = $this->connection->query($sql);
+        $this->closeConnection();
+
+        return $stmt;
+    }
+
+    public function selectFetchAll($sql)
+    {
+        if ($this->connection == null)
+        {
             $this->openConn();
         }
         $stmt = $this->connection->query($sql);
@@ -59,7 +78,6 @@ class Database extends Models
 
     private function closeConnection()
     {
-        $this->connection->close();
         $this->connection = null;
     }
     /**
@@ -71,9 +89,7 @@ class Database extends Models
     public function create($sql)
     {
 
-        $id = $this->column['id'];
-
-        $this->findOrFail(10);
+        $this->checkIfExists(10);
 
     }
 
@@ -86,35 +102,74 @@ class Database extends Models
     {
         $this->connection = $this->openConn();
         $table = $this->table;
-
-        $id = $this->column['id']['value'];
-
-        if (!$this->findOrFail($id)) {
-            $this->newRow();
-            return;
+        $this->getColumns();
+        $this->validate();
+        if ($this->checkIfExists($this->getID("value")) == null)
+        {
+            return $this->newRow();
         }
-
     }
 
+    /**
+     * Finds a single row from the database by id.
+     * @param $id
+     * @return mixed|null
+     */
     public function find($id)
     {
+        $retVal = null;
+        if ($id != null)
+        {
+            $this->openConn();
+            $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->getID("key") . " = " . $id;
+            $stmt = $this->connection->query($sql);
 
+            if (!array_key_exists('error', $this->connection) && $stmt->num_rows > 0)
+            {
+                $retVal = $stmt->fetch_row();
+
+            }
+            $this->closeConnection();
+        }
+        return $retVal;
     }
 
-    public function findOrFail($id)
+    /**
+     * Checks if the entry by given id exists in the database.
+     * @param $id
+     * @return mixed|null
+     */
+    public function checkIfExists($id)
     {
-        $connection = $this->connection;
-        $sql = "SELECT id FROM " . $this->table . " WHERE " . $this->column['id'] . " = " . $id;
-        $stmt = $connection->prepare($sql);
-        echo $this->validate();
+        $retVal = null;
+        if ($id != null)
+        {
+            $this->openConn();
+            $sql = "SELECT " . $this->getID('key') . " FROM " . $this->table . " WHERE " . $this->getID("key") . " = " . $id;
+            $stmt = $this->connection->query($sql);
 
+            if (!array_key_exists('error', $this->connection) && $stmt->num_rows > 0)
+            {
+                $retVal = $stmt->fetch_row();
+            }
+            $this->closeConnection();
+        }
+        return $retVal;
     }
 
-    public function retrieve()
+    /**
+     * Retrieves entries from the database, if $id is not filled it will return the first 10 entries.
+     * @param null $id
+     */
+    public function retrieve($id = null)
     {
         //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
         $this->getColumns();
-        $this->batch($this->limit, $this->offset);
+        if (empty($id))
+        {
+            $this->batch($this->limit, $this->offset);
+        }
+        $this->find($id);
 
     }
 
@@ -125,24 +180,60 @@ class Database extends Models
     {
 
     }
+
+    /**
+     * Retrieves entries from the database.
+     * @param $limit
+     * @param $offset
+     */
     private function batch($limit, $offset)
     {
-
-        $connection = $this->connection;
+        $this->openConn();
+        $this->getColumns();
         $sql = "SELECT * FROM " . $this->table . ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
         echo $sql;
 
     }
 
+    /**
+     * Creates a new database row.
+     */
     private function newRow()
     {
-
+        $this->openConn();
+        $stmt = $this->createInsertStatement();
+        print_r($stmt);
+        try
+        {
+            $stmt->execute();
+        } catch (Exception $e)
+        {
+//            $_GET['error'] = $e->getMessage();
+            return false;
+        }
+        return true;
     }
 
-
-    private function setAttributes()
+    /**
+     * Sets the attribute
+     * @param $key
+     * @return mixed
+     */
+    private function getAttribute($key)
     {
+        return $this->{"get" . $key}();
+    }
 
+    /**
+     * Sets the attribute
+     * @param $key
+     * @param $value
+     * @return mixed
+     */
+    private function setAttribute($key, $value)
+    {
+        echo $value .' .. '.  gettype($value) . ' .. ' . $key ;
+        return $this->{"set" . $key}($value);
     }
 
     /**
@@ -153,23 +244,51 @@ class Database extends Models
     {
         //TODO: Return array with all required/type errors. So we can show feedback on input fields (Red borders/ Validation text underneath);
 
-        //Step 1: Get the columns for the class.
         $this->getColumns();
 
-        //Step 2: Loop over the columns.
-        foreach ($this->column as $key => $value) {
-            //Get the value for the given key. (Example : $Product->getStockItemID())
-            $keyValue = $this->{"get" . $key}();
+        foreach ($this->column as $key => $value)
+        {
 
-            //Check if the column is required && Check if the keyValue is filled.
-            if ($value[2] === "Required" && empty($keyValue)) {
+            $keyValue = $this->getAttribute($key);
+
+            if ($value[2] === "Required" && empty($keyValue))
+            {
                 return $key . " is required, but it's empty.";
-            } //Validate the type(int, string) of the value.
-            else if (!$this->validateType($value[1], gettype($keyValue))) {
+            } else if (!$this->validateType($value[1], gettype($keyValue)))
+            {
                 return $key . " Should be of type " . $value[1] . " but type " . gettype($keyValue) . " was given.";
             }
         }
         return true;
+    }
+
+    /**
+     * Get the ID key, value or both for the primarykey
+     * @param null $type
+     * @return array|int|mixed|string|null
+     */
+    private function getID($type = null)
+    {
+        foreach ($this->column as $key => $value)
+        {
+            if ($value[1] == "PrimaryKey")
+            {
+                if (!$type)
+                {
+                    return array(
+                        "key" => $key,
+                        "value" => $this->getAttribute($key)
+                    );
+                } else if ($type == "key")
+                {
+                    return $key;
+                } else
+                {
+                    return $this->getAttribute($key);
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -180,19 +299,24 @@ class Database extends Models
      */
     private function validateType($type, $setType)
     {
+        echo "I expect type " . $type . " i got type " . $setType . '<br>';
+        //TODO : DATETIME TESTER
         //We cant compare $setType if no value is given.
-        switch ($type) {
+        switch ($type)
+        {
             case "PrimaryKey":
             case "HasOne":
             case "HasMany":
             case "Integer":
-                if (!$setType == "integer") {
+                if (!$setType == "integer")
+                {
                     return false;
                 }
                 break;
             case "Varchar":
             case "LongText":
-                if (!$setType === 'string') {
+                if (!$setType === 'string')
+                {
                     return false;
                 }
                 break;
@@ -202,5 +326,149 @@ class Database extends Models
         return true;
     }
 
+    /**
+     * Returns the correct input for use in a SQL statement
+     * @param $value
+     * @return string
+     */
+    private function serializedInput($value)
+    {
 
+        $type = gettype($value);
+        switch ($type)
+        {
+            case"string":
+                return $value;
+            case "integer":
+
+                return intval($value);
+            case "boolean":
+                if ($value || $value == 1)
+                {
+                    return 1;
+                }
+                return 0;
+            default:
+                return strval($value);
+        }
+    }
+
+    private function getStmtBindType($value)
+    {
+        $type = gettype($value);
+        switch ($type)
+        {
+            case"string":
+                return "s";
+            case "integer":
+            case "boolean":
+                return "i";
+            default:
+                throw new InvalidArgumentException("Could not convert" . $value . " with type " . gettype($value) . " to a valid type.");
+        }
+    }
+
+    /**
+     * Creates a sql insert statement.
+     * @return \PDOStatement
+     */
+    private function createInsertStatement()
+    {
+        $columns = "";
+        $values = [];
+        $placeholder = "";
+
+        foreach ($this->column as $key => $value)
+        {
+            $attributeValue = $this->getAttribute($key);
+            if (!empty($attributeValue))
+            {
+                $columns .= $key . " , ";
+                $placeholder .= ":" . strtolower($key) . ", ";
+                $values[strtolower($key)] = $this->serializedInput($attributeValue);
+            }
+        }
+        $columns = substr($columns, 0, -2);
+        $placeholder = substr($placeholder, 0, -2);
+
+        $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $placeholder . ");";
+
+        $stmt = $this->connection->prepare($sql);
+
+
+
+        foreach ($values as $parameter => $value)
+        {
+            print_r([$parameter, $value]);
+            $stmt->bindValue($parameter, $value);
+        }
+        return $stmt;
+    }
+
+    /**
+     * Sets all the attributes that are given in the $_POST.
+     *
+     */
+    public function initialize()
+    {
+        $this->getColumns();
+        $valid = true;
+        foreach ($_POST as $key => $value)
+        {
+            if (!empty($value) && array_key_exists($key, $this->column))
+            {
+                $type = null;
+                switch ($this->getType($key))
+                {
+                    case "Integer":
+                        echo "int<br>";
+                        $type = FILTER_VALIDATE_INT;
+                        break;
+                    case "Email":
+                        $type = FILTER_VALIDATE_EMAIL;
+                        break;
+                    case "LongText":
+                    case "Varchar":
+                    echo "string<br>";
+                        $type = FILTER_SANITIZE_SPECIAL_CHARS;
+                        break;
+                    case "Boolean":
+                        $type = FILTER_VALIDATE_BOOLEAN;
+                        break;
+                    default:
+                        $type = FILTER_VALIDATE_INT;
+
+                }
+
+                if (!filter_input(INPUT_POST, $key, $type))
+                {
+
+                    $this->setError($this->table, $value);
+                }
+               echo gettype($value);
+                if($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN )
+                {
+                    $value = intval($value);
+                }
+
+                $this->setAttribute($key, $value);
+            }
+
+        }
+        return $valid;
+    }
+
+    /**
+     * Sets a $_GET header with custom key and value.
+     * @param $key
+     * @param $value
+     */
+    private function setError($key, $value)
+    {
+        if (!isset($_GET[$key]))
+        {
+            $_GET[$key] = [];
+        }
+        array_push($_GET[$key], $value);
+    }
 }

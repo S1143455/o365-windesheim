@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 
@@ -9,6 +10,8 @@ Class ProductController
 {
 
     private $viewPath = 'views/product/';
+    private $product;
+
     /**
      * This should return the index page of the products.
      * So a list of products should be retrieved on this page.
@@ -49,8 +52,6 @@ Class ProductController
      */
     public function create()
     {
-
-        echo 'Controller??';
         $this->product = new Product();
         $this->product->setStockItemID(10);
         include $this->viewPath . 'create.php';
@@ -59,31 +60,25 @@ Class ProductController
     /**
      * Stores the product in the database.
      *
-     * @param $product
+     * @param $product Product
+     * @return string
      */
     public function store($product)
     {
-        if(!$this->validate($product))
+        if (!$product->initialize())
         {
-            return 'Product not valid.';
-        }
-
-        return "STORE FUNCTION EXECUTED";
-    }
-
-    /**
-     * Validation of the input.
-     * @param $product
-     * @return bool
-     */
-    private function validate($product)
-    {
-        if(!isset($product['productname']))
-        {
+            print_r($_GET);
             return false;
+        };
+
+        $this->product = $product;
+
+        if (!$this->product->save())
+        {
+            return "Something went wrong.";
         }
-        return true;
     }
+
 
     /**
      * This method should Update a Product in the database
@@ -93,7 +88,7 @@ Class ProductController
 
     public function update($id)
     {
-        return include_once $this->viewPath .'update.php';
+        return include_once $this->viewPath . 'update.php';
     }
 
     /**
@@ -103,7 +98,7 @@ Class ProductController
      */
     public function delete($id)
     {
-        return include_once $this->viewPath .'delete.php';
+        return include_once $this->viewPath . 'delete.php';
     }
 
     /**
@@ -114,6 +109,6 @@ Class ProductController
      */
     public function show($id)
     {
-        return include_once $this->viewPath .'show.php';
+        return include_once $this->viewPath . 'show.php';
     }
 }
