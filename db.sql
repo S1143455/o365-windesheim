@@ -22,7 +22,7 @@ ALTER TABLE Order_StockItem ADD CONSTRAINT OrderOrderStockItem FOREIGN KEY (Orde
 ALTER TABLE Order_StockItem ADD CONSTRAINT StockitemOrderStockitem FOREIGN KEY (StockItemID) REFERENCES StockItem (StockItemId);
 ALTER TABLE Supplier ADD CONSTRAINT `PrimaryContact Person` FOREIGN KEY (PrimaryContactPersonID) REFERENCES People (PersonID);
 ALTER TABLE Supplier ADD CONSTRAINT `SecondaryContact Person` FOREIGN KEY (AlternateContactPersonID) REFERENCES People (PersonID);
-ALTER TABLE Attachments ADD CONSTRAINT PersonLastEditedAttachment FOREIGN KEY (LastEditedBy) REFERENCES People (PersonID);
+ALTER TABLE Attachments ADD CONSTRAINT PersonLastEditedAttachment FOREIGN KEY (LastEditedBy) REFERENCES People (PersonID);1
 ALTER TABLE SpecialDeals ADD CONSTRAINT PersonLastEditedSpeciialDeal FOREIGN KEY (LastEditedBy) REFERENCES People (PersonID);
 ALTER TABLE category ADD CONSTRAINT FKcategory218916 FOREIGN KEY (LastEditedBy) REFERENCES People (PersonID);
 ALTER TABLE Address ADD CONSTRAINT PersonLastEditedAddress FOREIGN KEY (LastEditedBy) REFERENCES People (PersonID);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Controller;
 
 
@@ -10,6 +11,7 @@ Class ProductController
 
     private $viewPath = 'views/product/';
     private $product;
+
     /**
      * This should return the index page of the products.
      * So a list of products should be retrieved on this page.
@@ -50,8 +52,6 @@ Class ProductController
      */
     public function create()
     {
-
-        echo 'Controller??';
         $this->product = new Product();
         $this->product->setStockItemID(10);
         include $this->viewPath . 'create.php';
@@ -61,23 +61,23 @@ Class ProductController
      * Stores the product in the database.
      *
      * @param $product Product
+     * @return string
      */
     public function store($product)
     {
-        print_r($product->initialize());
-          if(!$product->initialize())
-          {
-             return false;
-          };
+        if (!$product->initialize())
+        {
+            print_r($_GET);
+            return false;
+        };
 
-          $this->product = $product;
+        $this->product = $product;
 
-          $this->product->save();
-
-
-        return "STORE FUNCTION EXECUTED";
+        if (!$this->product->save())
+        {
+            return "Something went wrong.";
+        }
     }
-
 
 
     /**
@@ -88,7 +88,7 @@ Class ProductController
 
     public function update($id)
     {
-        return include_once $this->viewPath .'update.php';
+        return include_once $this->viewPath . 'update.php';
     }
 
     /**
@@ -98,7 +98,7 @@ Class ProductController
      */
     public function delete($id)
     {
-        return include_once $this->viewPath .'delete.php';
+        return include_once $this->viewPath . 'delete.php';
     }
 
     /**
@@ -109,6 +109,6 @@ Class ProductController
      */
     public function show($id)
     {
-        return include_once $this->viewPath .'show.php';
+        return include_once $this->viewPath . 'show.php';
     }
 }
