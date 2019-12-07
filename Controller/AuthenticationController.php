@@ -20,8 +20,7 @@ class AuthenticationController
     {
         if($username == '' || $password  == '')
         {
-            $_SESSION['LOGIN_ERROR']='Vul een gebruikernaam en wachtwoord in.';
-            //return 'Vul een gebruikernaam en wachtwoord in.';
+           return $_SESSION['LOGIN_ERROR']='Vul een gebruikernaam en wachtwoord in.';
         }
 
         $user = new User();
@@ -29,8 +28,20 @@ class AuthenticationController
         $user->setPassword($password);
         if($user->checkCredentials())
         {
-            $user->getPassword();
-            $this->verifyPassword($password, $user->getPassword());
+            // Check if the passwords match.
+            if ($this->verifyPassword($user->getPassword(),$user->getDbPassword() ))
+            {
+                // The passwords are a match. The user is authenticated.
+                $_SESSION['authenticated']='true';
+                // Now were done were going back to the index page.
+                header('Refresh: 5; URL=/');
+                return $_SESSION['LOGIN_ERROR']='Welkom '. $user->getUsername();
+            }
+            else
+            {
+                // The passwords don't match.
+                return $_SESSION['LOGIN_ERROR']='Gebruikersnaam of wachtwoord onjuist.';
+            }
         }
     }
 
@@ -75,7 +86,6 @@ class AuthenticationController
     {
 
         if (isset($_SESSION['authenticated'])) {
-            //$user = new UserController();
             $user = new UserController();
             return "Welkom, " . $user->getUsername();
         } else {

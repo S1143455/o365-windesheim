@@ -9,6 +9,8 @@ class User extends Database
     private $username;
     private $password;
     protected $table;
+    private $dbPassword;
+
     function __construct()
     {
         Parent::__construct();
@@ -47,16 +49,37 @@ class User extends Database
         $this->username = $username;
     }
 
+    /**
+     * @param $dbPassword
+     */
+    public function setDbPassword($dbPassword)
+    {
+        $this->dbPassword = $dbPassword;
+    }
+
+    public function getDbPassword()
+    {
+        return $this->dbPassword;
+    }
+
     public function checkCredentials()
     {
         $getthedata=new Database();
-        $sqlreturendsomething=$getthedata->select("SELECT * FROM people WHERE LogonName = '".$this->username. "'");
-        print_r($sqlreturendsomething);
+        $sqlreturendsomething=$getthedata->select("SELECT * FROM people WHERE LogonName = '".$this->username . "'");
         if(!$sqlreturendsomething)
         {
             $_SESSION['LOGIN_ERROR']='Gebruikersnaam of wachtwoord onjuist.';
-            return;
+            return false;
+        }
+        else
+        {
+            // return the password found in te database.
+            $this->setDbPassword($sqlreturendsomething[0][3]);
+            return true;
         }
     }
+
+
+
 
 }
