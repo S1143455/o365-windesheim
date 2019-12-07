@@ -2,22 +2,16 @@
 
 
 use Model\Product;
-
-echo 'test';
-
 if (isset($_POST['submit'])) {
     include 'loader.php';
     $product = new Product();
 
 
-    echo $product->getStockItemName(). "<br>" ;
     $productController->store($product);
-    print_r($_GET);
     die();
 }
 
 ?>
-
 <form method="POST">
     <div class="form-group">
         <label for="stockItemName">Product naam</label>
@@ -26,7 +20,7 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="form-group">
         <label for="supplierID">SupplierID</label>
-        <input type="number" class="form-control" name="SupplierID" id="supplierID">
+        <input type="number" class="form-control" name="SupplierID" id="supplierID" value="1">
     </div>
     <div class="form-group">
         <label for="brand">Brand</label>
@@ -58,7 +52,7 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="form-group">
         <label for="categoryID">Category</label>
-        <input type="number" class="form-control" name="CategoryID" id="categoryID">
+        <input type="number" class="form-control" name="CategoryID" id="categoryID" value="1">
     </div>
 
 

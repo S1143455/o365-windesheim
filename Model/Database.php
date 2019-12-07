@@ -3,7 +3,7 @@
 namespace Model;
 
 use http\Exception\InvalidArgumentException;
-use mysqli;
+use PDO;
 
 //TODO: Look into static functions for global database functions.
 
@@ -30,15 +30,16 @@ class Database extends Models
 
     /**
      * Opens a connection to the database.
-     * @return false|mysqli
+     * @return false|PDO
      */
     private function openConn()
     {
         /** @noinspection PhpComposerExtensionStubsInspection */
         if ($this->connection == null)
         {
-            $this->connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
-            if ($this->connection->connect_error)
+            $this->connection = new PDO("mysql:host=$this->hostname;dbname=$this->database", $this->username, $this->password);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            if (false)
             {
                 echo "connection could not be established";
                 die('Connection refused');
@@ -77,7 +78,6 @@ class Database extends Models
 
     private function closeConnection()
     {
-        $this->connection->close();
         $this->connection = null;
     }
     /**
@@ -102,14 +102,12 @@ class Database extends Models
     {
         $this->connection = $this->openConn();
         $table = $this->table;
-
         $this->getColumns();
         $this->validate();
         if ($this->checkIfExists($this->getID("value")) == null)
         {
             return $this->newRow();
         }
-
     }
 
     /**
@@ -203,15 +201,15 @@ class Database extends Models
     private function newRow()
     {
         $this->openConn();
-        $sql = $this->createInsertStatement();
-        print_r($sql);
-
-
-//        $this->connection->query($sql);
-//        print_r($this->connection);
-        if ($this->connection->error)
+        $stmt = $this->createInsertStatement();
+        print_r($stmt);
+        try
         {
-            return $this->connection->error;
+            $stmt->execute();
+        } catch (Exception $e)
+        {
+//            $_GET['error'] = $e->getMessage();
+            return false;
         }
         return true;
     }
@@ -234,6 +232,7 @@ class Database extends Models
      */
     private function setAttribute($key, $value)
     {
+        echo $value .' .. '.  gettype($value) . ' .. ' . $key ;
         return $this->{"set" . $key}($value);
     }
 
@@ -339,9 +338,10 @@ class Database extends Models
         switch ($type)
         {
             case"string":
-                return "'" . $value . "'";
-            case "integer":
                 return $value;
+            case "integer":
+
+                return intval($value);
             case "boolean":
                 if ($value || $value == 1)
                 {
@@ -370,39 +370,39 @@ class Database extends Models
 
     /**
      * Creates a sql insert statement.
-     * @return Array
+     * @return \PDOStatement
      */
     private function createInsertStatement()
     {
         $columns = "";
-        $values = "";
-        $types = "";
+        $values = [];
         $placeholder = "";
+
         foreach ($this->column as $key => $value)
         {
-
-            echo $key . " => " . $this->getAttribute($key) . " <br>";
-
             $attributeValue = $this->getAttribute($key);
             if (!empty($attributeValue))
             {
                 $columns .= $key . " , ";
-                $values .= $this->serializedInput($attributeValue) . ",";
-                $types .= $this->getStmtBindType($attributeValue);
-                $placeholder .= "?,";
+                $placeholder .= ":" . strtolower($key) . ", ";
+                $values[strtolower($key)] = $this->serializedInput($attributeValue);
             }
         }
         $columns = substr($columns, 0, -2);
-        $values = substr($values, 0, -1);
-        $placeholder = substr($placeholder, 0, -1);
-
+        $placeholder = substr($placeholder, 0, -2);
 
         $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $placeholder . ");";
 
+        $stmt = $this->connection->prepare($sql);
 
-//        print_r([$sql , $types, $values]);
 
-        return [$sql, $types, $values];
+
+        foreach ($values as $parameter => $value)
+        {
+            print_r([$parameter, $value]);
+            $stmt->bindValue($parameter, $value);
+        }
+        return $stmt;
     }
 
     /**
@@ -415,13 +415,13 @@ class Database extends Models
         $valid = true;
         foreach ($_POST as $key => $value)
         {
-
             if (!empty($value) && array_key_exists($key, $this->column))
             {
                 $type = null;
                 switch ($this->getType($key))
                 {
                     case "Integer":
+                        echo "int<br>";
                         $type = FILTER_VALIDATE_INT;
                         break;
                     case "Email":
@@ -429,6 +429,7 @@ class Database extends Models
                         break;
                     case "LongText":
                     case "Varchar":
+                    echo "string<br>";
                         $type = FILTER_SANITIZE_SPECIAL_CHARS;
                         break;
                     case "Boolean":
@@ -438,11 +439,18 @@ class Database extends Models
                         $type = FILTER_VALIDATE_INT;
 
                 }
+
                 if (!filter_input(INPUT_POST, $key, $type))
                 {
-                    $valid = false;
+
                     $this->setError($this->table, $value);
                 }
+               echo gettype($value);
+                if($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN )
+                {
+                    $value = intval($value);
+                }
+
                 $this->setAttribute($key, $value);
             }
 
