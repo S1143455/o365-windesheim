@@ -79,16 +79,11 @@ include_once 'content/backend/sidebar-admin.php';
             }
 
             for (i = 1; i < tr.length; i++) {
-                console.log(tr[i]);
                 tdsearch = false;
                 tds = tr[i].getElementsByTagName("td");
                 for(x = 0; x < tds.length; x++){
                     if (tds[x]) {
                         txtValue = tds[x].textContent || tds[x].innerText;
-                        console.log(txtValue.toUpperCase());
-                        console.log(filter);
-                        console.log(txtValue.toUpperCase().indexOf(filter));
-
                         if (txtValue.toUpperCase().indexOf(filter) > -1) {
                             tdsearch = true;
                         }
