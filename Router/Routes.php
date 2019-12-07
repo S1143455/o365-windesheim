@@ -30,6 +30,10 @@ $router->route('/product', function() use($productController){
 $router->route('/product/create', function() use($productController){
     return $productController->create();
 });
+$router->route('/product/{id}', function($id) use($productController){
+    return $productController->show($id);
+});
+
 /**
  * End product routes
  */
