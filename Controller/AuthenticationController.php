@@ -35,8 +35,8 @@ class AuthenticationController
                 $_SESSION['authenticated']='true';
                 $_SESSION['USER']['name']=$user->getUsername();
                 // Now were done were going back to the index page.
-                //header("Refresh: 0");
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"0\";URL=\"/\">";
+                $_SESSION['LOGIN_ERROR']='U bent ingelogd';
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
             }
             else
             {
