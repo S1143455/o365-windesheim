@@ -7,8 +7,6 @@ use Model\Category;
 class MainController
 
 {
-
-
     private $templatePath;
     private $contentPath;
     private $root;
@@ -64,6 +62,14 @@ class MainController
     {
         $nav_menu = '';
         $nav_items = $this->getConfig('nav_menu');
+        if(!isset($_SESSION['authenticated']))
+        {
+            $nav_items['login']='Login';
+        }
+        else
+        {
+            $nav_items['logout']='Logout'; unset($nav_items['login']);
+        }
         foreach ($nav_items as $uri => $name) {
             $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';

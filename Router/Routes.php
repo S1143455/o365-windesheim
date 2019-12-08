@@ -17,8 +17,13 @@ $router->route('/about-us', function(){
 /**
  * Login route
  */
+
 $router->route('/login', function(){
     return include 'views/login/login.php';
+});
+
+$router->route('/logout', function(){
+    return include 'views/login/logout.php';
 });
 
 /**

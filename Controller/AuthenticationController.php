@@ -33,14 +33,16 @@ class AuthenticationController
             {
                 // The passwords are a match. The user is authenticated.
                 $_SESSION['authenticated']='true';
+                $_SESSION['USER']['name']=$user->getUsername();
                 // Now were done were going back to the index page.
-                //print_r(apache_request_headers());echo "<br>";
-                header('Refresh: 5; URL=/');
-                //return $_SESSION['LOGIN_ERROR']='Welkom '. $user->getUsername();
+                //header("Refresh: 0");
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"0\";URL=\"/\">";
             }
             else
             {
                 // The passwords don't match.
+                // If the user was logged in, he will be logged out now
+                unset($_SESSION['authenticated']);
                 return $_SESSION['LOGIN_ERROR']='Gebruikersnaam of wachtwoord onjuist.';
 
             }
