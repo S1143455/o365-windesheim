@@ -13,5 +13,3 @@ if(isset($_POST['logout']))
 <form method="post" action="">
     <button type="submit" name="logout">Uitloggen</button>
 </form>
-
-<?php include_once 'content/footer.php';?>

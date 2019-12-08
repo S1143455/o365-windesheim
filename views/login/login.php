@@ -17,4 +17,3 @@ include_once 'content/frontend/header.php';
 </form>
 
 <?php if(isset($_SESSION['LOGIN_ERROR'])){echo $_SESSION['LOGIN_ERROR']; unset($_SESSION['LOGIN_ERROR']);} ?>
-<?php include_once 'content/footer.php';?>
