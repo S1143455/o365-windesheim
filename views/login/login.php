@@ -1,5 +1,8 @@
 <?php
 include 'loader.php';
+include_once 'content/frontend/header.php';
+
+
     // Temporary bit of code. Its resets the $_SESSION.
     if(isset($_POST['reset'])){$_SESSION=array();}
 
@@ -17,4 +20,4 @@ include 'loader.php';
     <button type="submit" name="login">Inloggen</button>
 </form>
 <?php if(isset($_SESSION['LOGIN_ERROR'])){echo $_SESSION['LOGIN_ERROR']; unset($_SESSION['LOGIN_ERROR']);} ?>
-
+<?php include_once 'content/footer.php';?>
