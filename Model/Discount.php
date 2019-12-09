@@ -167,8 +167,7 @@ class Discount extends Database
     }
 
     public function getProductBasedOnID($ID){
-
-        $result = $this->selectFetchAll('SELECT COUNT(StockItemId) as total FROM stockitem WHERE DealID = '.$ID.';');
+        $result = $this->selectStmt('SELECT COUNT(StockItemId) as total FROM stockitem WHERE DealID = '.$ID.';');
         return $result[0][0];
     }
 }
