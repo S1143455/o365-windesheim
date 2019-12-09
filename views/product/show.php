@@ -1,2 +1,2 @@
 <?php
-echo "Update page";
+echo "show page";

@@ -2,7 +2,8 @@
 
 namespace Model;
 
-use mysqli;
+use http\Exception\InvalidArgumentException;
+use PDO;
 
 //TODO: Look into static functions for global database functions.
 
@@ -24,19 +25,21 @@ class Database extends Models
         $this->database = getenv('DATABASE');
         $this->username = getenv('DATABASEUSERNAME');
         $this->password = getenv('DATABASEPASSWORD');
-        $this->connection = $this->openConn();
     }
 
     /**
      * Opens a connection to the database.
-     * @return false|mysqli
+     * @return false|PDO
      */
     private function openConn()
     {
         /** @noinspection PhpComposerExtensionStubsInspection */
-        if ($this->connection == null) {
-            $this->connection = new mysqli($this->hostname, $this->username, $this->password, $this->database);
-            if ($this->connection->connect_error) {
+        if ($this->connection == null)
+        {
+            $this->connection = new PDO("mysql:host=$this->hostname;dbname=$this->database", $this->username, $this->password);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            if (false)
+            {
                 echo "connection could not be established";
                 die('Connection refused');
             }
@@ -50,29 +53,30 @@ class Database extends Models
      */
     public function selectStmt($sql)
     {
-        if ($this->connection == null) {
+        if ($this->connection == null)
+        {
             $this->openConn();
         }
-        $stmt = $this->connection->query($sql);
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
         $this->closeConnection();
-
-        return $stmt;
+        return $stmt->fetchAll();
     }
 
     public function selectFetchAll($sql)
     {
-        if ($this->connection == null) {
+        if ($this->connection == null)
+        {
             $this->openConn();
         }
-        $stmt = $this->connection->query($sql);
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
         $this->closeConnection();
-
         return $stmt->fetch_all();
     }
 
     private function closeConnection()
     {
-        $this->connection->close();
         $this->connection = null;
     }
     /**
@@ -97,13 +101,12 @@ class Database extends Models
     {
         $this->connection = $this->openConn();
         $table = $this->table;
-
         $this->getColumns();
         $this->validate();
-        if ($this->checkIfExists($this->getID("value")) == null) {
+        if ($this->checkIfExists($this->getID("value")) == null)
+        {
             return $this->newRow();
         }
-
     }
 
     /**
@@ -111,47 +114,90 @@ class Database extends Models
      * @param $id
      * @return mixed|null
      */
-    public function find($id)
+    private function find($id)
     {
         $retVal = null;
-        if ($id != null) {
+        if ($id != null)
+        {
             $this->openConn();
-            $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->getID("key") . " = " . $id;
-            $stmt = $this->connection->query($sql);
-
-            if (!array_key_exists('error', $this->connection) && $stmt->num_rows > 0) {
-                $retVal = $stmt->fetch_row();
-
+            $key = $this->getID("key");
+            $sql = "SELECT * FROM " . $this->table . " WHERE " . $key . " = :" . $key;
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(":".$key, $id );
+            $stmt->execute();
+            try
+            {
+                $retVal = $stmt->fetchAll();
+//                print_r($stmt->fetchAll());
+                if(empty($retVal))
+                {
+                    $retVal = null;
+                }
+                $retVal = $this->initRetrievedObjects($retVal)[0];
+                print_r($retVal->getStockItemName());
+            }
+            catch(Exception $e)
+            {
+                die($e);
+                $retVal = null;
             }
             $this->closeConnection();
+            return $retVal;
         }
-        return $retVal;
+
     }
 
+    /**
+     * Checks if the entry by given id exists in the database.
+     * @param $id
+     * @return mixed|null
+     */
     public function checkIfExists($id)
     {
         $retVal = null;
-        if ($id != null) {
+        if ($id != null)
+        {
             $this->openConn();
-            $sql = "SELECT " . $this->getID('key') . " FROM " . $this->table . " WHERE " . $this->getID("key") . " = " . $id;
-            $stmt = $this->connection->query($sql);
-
-            if (!array_key_exists('error', $this->connection) && $stmt->num_rows > 0) {
-                $retVal = $stmt->fetch_row();
+            $key = $this->getID("key");
+            $sql = "SELECT " . $key ."FROM " . $this->table . " WHERE " . $key . " = :" . $key;
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(":".$key, $id );
+            try
+            {
+                if(empty($stmt->fetchAll()))
+                {
+                    $retVal = false;
+                }
+                else{
+                    $retVal = true;
+                }
             }
+            catch(Exception $e)
+            {
+                $retVal = false;
+            }
+
             $this->closeConnection();
         }
         return $retVal;
     }
 
+    /**
+     * Retrieves entries from the database, if $id is not filled it will return the first 10 entries.
+     * @param null $id
+     */
     public function retrieve($id = null)
     {
         //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
         $this->getColumns();
-        if (empty($id)) {
-            $this->batch($this->limit, $this->offset);
+        if (empty($id))
+        {
+            return $this->batch($this->limit, $this->offset);
         }
-        $this->find($id);
+        else{
+
+           return $this->find($id);
+        }
 
     }
 
@@ -163,12 +209,35 @@ class Database extends Models
 
     }
 
+    /**
+     * Retrieves entries from the database.
+     * @param $limit
+     * @param $offset
+     */
     private function batch($limit, $offset)
     {
         $this->openConn();
         $this->getColumns();
         $sql = "SELECT * FROM " . $this->table . ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
-        echo $sql;
+        $stmt = $this->connection->query($sql);
+        $stmt->execute();
+        try
+        {
+            $retVal = $stmt->fetchAll();
+//                print_r($stmt->fetchAll());
+            if(empty($retVal))
+            {
+                $retVal = null;
+            }
+            $retVal = $this->initRetrievedObjects($retVal);
+        }
+        catch(Exception $e)
+        {
+            die($e);
+            $retVal = null;
+        }
+        $this->closeConnection();
+        return $retVal;
 
     }
 
@@ -178,12 +247,15 @@ class Database extends Models
     private function newRow()
     {
         $this->openConn();
-        $sql = $this->createInsertStatement();
-        $this->connection->query($sql);
-//        print_r($this->connection);
-        if ($this->connection->error) {
-            print_r($this->connection->error);
-            return $this->connection->error;
+        $stmt = $this->createInsertStatement();
+        print_r($stmt);
+        try
+        {
+            $stmt->execute();
+        } catch (Exception $e)
+        {
+//            $_GET['error'] = $e->getMessage();
+            return false;
         }
         return true;
     }
@@ -201,6 +273,7 @@ class Database extends Models
     /**
      * Sets the attribute
      * @param $key
+     * @param $value
      * @return mixed
      */
     private function setAttribute($key, $value)
@@ -216,19 +289,17 @@ class Database extends Models
     {
         //TODO: Return array with all required/type errors. So we can show feedback on input fields (Red borders/ Validation text underneath);
 
-        //Step 1: Get the columns for the class.
         $this->getColumns();
+        foreach ($this->column as $key => $value)
+        {
 
-        //Step 2: Loop over the columns.
-        foreach ($this->column as $key => $value) {
-            //Get the value for the given key. (Example : $Product->getStockItemID())
             $keyValue = $this->getAttribute($key);
 
-            //Check if the column is required && Check if the keyValue is filled.
-            if ($value[2] === "Required" && empty($keyValue)) {
+            if ($value[2] === "Required" && empty($keyValue))
+            {
                 return $key . " is required, but it's empty.";
-            } //Validate the type(int, string) of the value.
-            else if (!$this->validateType($value[1], gettype($keyValue))) {
+            } else if (!$this->validateType($value[1], gettype($keyValue)))
+            {
                 return $key . " Should be of type " . $value[1] . " but type " . gettype($keyValue) . " was given.";
             }
         }
@@ -242,16 +313,22 @@ class Database extends Models
      */
     private function getID($type = null)
     {
-        foreach ($this->column as $key => $value) {
-            if ($value[1] == "PrimaryKey") {
-                if (!$type) {
+        $this->getColumns();
+        foreach ($this->column as $key => $value)
+        {
+            if ($value[1] == "PrimaryKey")
+            {
+                if (!$type)
+                {
                     return array(
                         "key" => $key,
                         "value" => $this->getAttribute($key)
                     );
-                } else if ($type == "key") {
+                } else if ($type == "key")
+                {
                     return $key;
-                } else {
+                } else
+                {
                     return $this->getAttribute($key);
                 }
             }
@@ -267,20 +344,24 @@ class Database extends Models
      */
     private function validateType($type, $setType)
     {
+        echo "I expect type " . $type . " i got type " . $setType . '<br>';
         //TODO : DATETIME TESTER
         //We cant compare $setType if no value is given.
-        switch ($type) {
+        switch ($type)
+        {
             case "PrimaryKey":
             case "HasOne":
             case "HasMany":
             case "Integer":
-                if (!$setType == "integer") {
+                if (!$setType == "integer")
+                {
                     return false;
                 }
                 break;
             case "Varchar":
             case "LongText":
-                if (!$setType === 'string') {
+                if (!$setType === 'string')
+                {
                     return false;
                 }
                 break;
@@ -299,13 +380,16 @@ class Database extends Models
     {
 
         $type = gettype($value);
-        switch ($type) {
+        switch ($type)
+        {
             case"string":
-                return "'" . $value . "'";
-            case "integer":
                 return $value;
+            case "integer":
+
+                return intval($value);
             case "boolean":
-                if ($value) {
+                if ($value || $value == 1)
+                {
                     return 1;
                 }
                 return 0;
@@ -314,27 +398,56 @@ class Database extends Models
         }
     }
 
+    private function getStmtBindType($value)
+    {
+        $type = gettype($value);
+        switch ($type)
+        {
+            case"string":
+                return "s";
+            case "integer":
+            case "boolean":
+                return "i";
+            default:
+                throw new InvalidArgumentException("Could not convert" . $value . " with type " . gettype($value) . " to a valid type.");
+        }
+    }
+
     /**
      * Creates a sql insert statement.
-     * @return string
+     * @return \PDOStatement
      */
     private function createInsertStatement()
     {
         $columns = "";
-        $values = "";
-        foreach ($this->column as $key => $value) {
+        $values = [];
+        $placeholder = "";
+
+        foreach ($this->column as $key => $value)
+        {
             $attributeValue = $this->getAttribute($key);
-            if (!empty($attributeValue)) {
+            if (!empty($attributeValue))
+            {
                 $columns .= $key . " , ";
-                $values .= $this->serializedInput($attributeValue) . ",";
+                $placeholder .= ":" . strtolower($key) . ", ";
+                $values[strtolower($key)] = $this->serializedInput($attributeValue);
             }
         }
         $columns = substr($columns, 0, -2);
-        $values = substr($values, 0, -1);
+        $placeholder = substr($placeholder, 0, -2);
 
-        $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $values . ");";
-        print_r($sql);
-        return $sql;
+        $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $placeholder . ");";
+
+        $stmt = $this->connection->prepare($sql);
+
+
+
+        foreach ($values as $parameter => $value)
+        {
+            print_r([$parameter, $value]);
+            $stmt->bindValue($parameter, $value);
+        }
+        return $stmt;
     }
 
     /**
@@ -344,29 +457,85 @@ class Database extends Models
     public function initialize()
     {
         $this->getColumns();
-
-        foreach ($_POST as $key => $value) {
-            if (!empty($value) && array_key_exists($key, $this->column)) {
+        $valid = true;
+        foreach ($_POST as $key => $value)
+        {
+            if (!empty($value) && array_key_exists($key, $this->column))
+            {
                 $type = null;
-                switch ($this->getType($key)) {
+                switch ($this->getType($key))
+                {
                     case "Integer":
+                        echo "int<br>";
                         $type = FILTER_VALIDATE_INT;
                         break;
                     case "Email":
                         $type = FILTER_VALIDATE_EMAIL;
                         break;
-                    case "String":
+                    case "LongText":
+                    case "Varchar":
+                    echo "string<br>";
                         $type = FILTER_SANITIZE_SPECIAL_CHARS;
                         break;
                     case "Boolean":
                         $type = FILTER_VALIDATE_BOOLEAN;
+                        break;
+                    default:
+                        $type = FILTER_VALIDATE_INT;
 
                 }
-                $value = filter_input(INPUT_POST, $key, $type);
 
-                print_r([$type, $value]);
+                if (!filter_input(INPUT_POST, $key, $type))
+                {
+
+                    $this->setError($this->table, $value);
+                }
+               echo gettype($value);
+                if($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN )
+                {
+                    $value = intval($value);
+                }
+
                 $this->setAttribute($key, $value);
             }
+
         }
+        return $valid;
+    }
+    private function initRetrievedObjects($array)
+    {
+        $modelObjects = [];
+        $className = get_class($this);
+        $modelObject = new $className;
+        $modelObject->getColumns();
+
+        foreach($array as $key => $value)
+        {
+            foreach ($value as $attrKey => $attrValue)
+            {
+                if(array_key_exists($attrKey,$modelObject->column))
+                {
+                    $modelObject->setAttribute($attrKey, $attrValue);
+
+                }
+            }
+            array_push($modelObjects, $modelObject);
+            print_r($modelObject->getStockItemName());
+        }
+        return $modelObjects;
+    }
+
+    /**
+     * Sets a $_GET header with custom key and value.
+     * @param $key
+     * @param $value
+     */
+    private function setError($key, $value)
+    {
+        if (!isset($_GET[$key]))
+        {
+            $_GET[$key] = [];
+        }
+        array_push($_GET[$key], $value);
     }
 }

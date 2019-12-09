@@ -19,18 +19,14 @@ class CategoryController
         foreach($categories as $category){
             $result = '';
             $result .= '<tr>
-                        <td class="col-xs-3">' . $category['CategoryID'] .'</td>
-                        <td class="col-xs-3"></td>
-                        <td class="col-xs-6">johndoe@email.com</td>
+                        <td class="col-xs-2">' . $category['CategoryID'] .'</td>
+                        <td class="col-xs-7">' . $category['CategoryName'] .'</td>
+                        <td class="col-xs-3">' . $category['ParentCategory'] .'</td>
                     </tr>';
 
             echo $result;
         }
 
-    }
-    function SearchCategories($searchParam){
-        $result = $this->category->searchQuery($searchParam);
-        var_dump($result);
     }
 
 }
