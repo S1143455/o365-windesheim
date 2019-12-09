@@ -12,6 +12,43 @@ include_once 'content/backend/sidebar-admin.php';
     }
 </script>
 
+<script>
+    $('.load-modal').on('click', function(e){
+        e.preventDefault();
+        $('#createCategory').modal('show');
+    });
+
+    function searchbar() {
+
+        var input, filter, table, tr, tds, i, txtValue, tdsearch;
+        input = document.getElementById("searchbarDiscount");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableViewDiscount");
+        tr = table.getElementsByTagName("tr");
+
+        if(filter == ''){
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "";
+            }
+        }
+
+        for (i = 1; i < tr.length; i++) {
+            tdsearch = false;
+            tds = tr[i].getElementsByTagName("td");
+            for(x = 0; x < tds.length; x++){
+                if (tds[x]) {
+                    txtValue = tds[x].textContent || tds[x].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tdsearch = true;
+                    }
+                }
+            }
+            if(tdsearch == false){
+                tr[i].style.display = "none";
+            }
+        }
+    }
+</script>
 <div class="container">
     <div class="row">
         <div class="col-md-">
@@ -20,13 +57,13 @@ include_once 'content/backend/sidebar-admin.php';
                 <br> Onderhoud Korting
             </p>
             <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
-            <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
+            <input class="form-control" type="text" id="searchbarDiscount" onkeyup="searchbar()" placeholder="Waar ben je naar op zoek?" aria-label="Search">
             <br>
         </div>
     </div>
 
     <div class="container">
-        <table class="table table-fixed" >
+        <table class="table table-fixed" id="tableViewDiscount">
             <thead>
             <tr>
                 <th class="col-xs-2">Code</th>
@@ -132,12 +169,12 @@ include_once 'content/backend/sidebar-admin.php';
                 <div class="col-md-12">
                     <div class="form-group">
                         Omschrijving:
-                        <input class="form-control" style="margin-left: 98px" id="exampleFormControlTextarea1" rows="1"></input>
+                        <input type="text" class="inputCode" id="discountDescription" rows="1"/>
                     </div>
                 </div>
                 <div class="col-md-12">
                     Percentage:
-                    <input style="margin: 5px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
                 </div>
                 <div class="col-md-12"
                 <form>
@@ -159,39 +196,91 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="kortingCategorieLabel">Korting op een categorie(ën) aanmaken</h5>
+                <h4 class="modal-title" id="kortingEenmaalLabel">Korting op product(en) aanmaken</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h1>Korting op categorie(ën) aanmaken</h1>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary">Kortingn aanmaken</button>
+                <div class="col-md-12">
+                    Code:
+                    <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        Omschrijving:
+                        <input type="text" class="inputCode" id="discountDescription" rows="1"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    Percentage:
+                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                </div>
+                <div class="col-md-12"
+                <form>
+                    Begin periode:
+                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                    Einde periode:
+                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                </form>
             </div>
         </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+            <button type="button" class="btn btn-primary">Korting aanmaken</button>
+        </div>
     </div>
+</div>
 </div>
 <div class="modal fade" id="kortingMailen" tabindex="-1" role="dialog" aria-labelledby="kortingMailenLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="kortingMailenLabel">Korting mailen naar klant</h5>
+                <h4 class="modal-title" id="kortingEenmaalLabel">Korting op product(en) aanmaken</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h1>Korting mailen naar klant</h1>
+                <div class="col-md-12">
+                    Code:
+                    <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Eenmalig
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        Omschrijving:
+                        <input type="text" class="inputCode" id="discountDescription" rows="1"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    Percentage:
+                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                </div>
+                <div class="col-md-12"
+                <form>
+                    Begin periode:
+                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                    Einde periode:
+                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary">Korting versturen</button>
-            </div>
+            <div class="form-group row">
+                <label for="inputEmail3" style="left: 17px" class="col-sm-2 col-form-label">Email:</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail3">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+            <button type="button" class="btn btn-primary">Korting mailen</button>
         </div>
     </div>
+</div>
 </div>
 
 
