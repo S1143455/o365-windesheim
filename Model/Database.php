@@ -520,7 +520,8 @@ class Database extends Models
                 }
             }
             array_push($modelObjects, $modelObject);
-            print_r($modelObject->getStockItemName());
+            /* JL: Ik heb dit maar uit gezet, gaf een foutmelding */
+            /* print_r($modelObject->getStockItemName());*/
         }
         return $modelObjects;
     }
