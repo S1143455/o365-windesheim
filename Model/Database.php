@@ -47,6 +47,7 @@ class Database extends Models
     }
 
     /**
+     *  Temporary function
      * Executes a SELECT statement.
      * @param $sql
      * @return $result
@@ -63,6 +64,11 @@ class Database extends Models
         return $stmt;
     }
 
+    /**
+     * Temporary function
+     * @param $sql
+     * @return mixed
+     */
     public function selectFetchAll($sql)
     {
         if ($this->connection == null)
@@ -91,7 +97,7 @@ class Database extends Models
 
     }
 
-    public function delete()
+    public function delete($id)
     {
 
     }
@@ -180,6 +186,54 @@ class Database extends Models
         return $retVal;
     }
 
+    public function createQuery($selectType, $columnKeys, $compareTypes, $values)
+    {
+        $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
+        $cpIsArray = false;
+        print_r($checkInput[1]);
+        if($checkInput[1])
+        {
+            $cpIsArray = true;
+        }
+//        if (!($checkInput[0] && $checkInput[2]) || !(!$checkInput[0] && !$checkInput[1] && !$checkInput[2]))
+//        {
+//            echo !($checkInput[0] && $checkInput[2]);
+//            echo !(!$checkInput[0] && !$checkInput[1] && !$checkInput[2]);
+//            die('All parameters should be of the same type.');
+//        } else if ($checkInput[0] && $checkInput[1] && $checkInput[2])
+//        {
+//            $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
+//            if ($validArrayLength != 3)
+//            {
+//                die("Parameters differ in size");
+//            }
+//        } else if ($checkInput[0] && $checkInput[2])
+//        {
+//            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
+//            if ($validArrayLength != 2)
+//            {
+//                die("Parameters differ in size");
+//            }
+//        }
+        $sql = $selectType . " FROM " . $this->table . " ";
+
+        $where = "";
+        if (!$checkInput[0] && !$checkInput[1] && !$checkInput[2])
+        {
+            $where = $columnKeys . " " . $compareTypes . " :" . $columnKeys;
+        } else
+        {
+            for ($i = 0; $i < sizeof($columnKeys); $i++ )
+            {
+                $where .= $columnKeys[$i] .  " " . ($cpIsArray ? $compareTypes[$i] : $compareTypes ) . " " . $values[$i];
+                $where .= " && ";
+            }
+        }
+        $sql .= $where;
+
+        echo $sql;
+    }
+
     /**
      * Retrieves entries from the database, if $id is not filled it will return the first 10 entries.
      * @param null $id
@@ -194,6 +248,15 @@ class Database extends Models
         } else
         {
             return $this->find($id);
+        }
+
+    }
+
+    public function where($whereClause, $valueClause)
+    {
+        if (!is_array($whereClause) || !is_array($valueClause))
+        {
+
         }
 
     }
@@ -421,8 +484,9 @@ class Database extends Models
 
         foreach ($this->column as $key => $value)
         {
+
             $attributeValue = $this->getAttribute($key);
-            if (!empty($attributeValue))
+            if (!empty($attributeValue) && $value[1])
             {
                 $columns .= $key . " , ";
                 $placeholder .= ":" . strtolower($key) . ", ";
@@ -497,8 +561,6 @@ class Database extends Models
 
     private function initRetrievedObjects($array)
     {
-        echo "initRetrievedObjects";
-        print_r($array);
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
@@ -534,5 +596,23 @@ class Database extends Models
             $_GET[$key] = [];
         }
         array_push($_GET[$key], $value);
+    }
+
+    public function getRelation($model)
+    {
+        $columns = $this->getColumns();
+        if ($columns == null)
+        {
+            die('relation does not exist');
+        }
+        foreach ($columns as $col)
+        {
+            if ($col[1] == "PrimaryKey")
+            {
+
+            }
+        }
+
+        echo $model;
     }
 }

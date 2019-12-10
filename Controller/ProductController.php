@@ -3,6 +3,7 @@
 namespace Controller;
 
 
+use Model\Category;
 use Model\Product;
 
 
@@ -19,10 +20,16 @@ Class ProductController
 
     public function index()
     {
+        $test = new Product();
+
+        $test->createQuery("select" , ["StockItemID", "StockItemName", "IsChillerStock"], "=" , ["test", "test1", "test2"] );
+        die();
 
         $products = new Product();
         $products = $products->retrieve();
 
+        $categories = new Category();
+        $categories = $categories->retrieve();
 
         return include $this->viewPath . 'index.php';
     }
