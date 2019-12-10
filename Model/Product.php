@@ -19,7 +19,6 @@ class Product extends Database
     private $categoryID;
     private $lastEditedBy;
 
-
     function __construct()
     {
         $this->table = "stockitem";

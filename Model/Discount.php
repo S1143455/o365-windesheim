@@ -13,6 +13,40 @@ class Discount extends Database
     private $DiscountPercentage;
     private $DealCode;
     private $LastEditedBy;
+    private $OneTime;
+
+    /**
+     * @return mixed
+     */
+    public function getOneTime()
+    {
+        return $this->OneTime;
+    }
+
+    /**
+     * @param mixed $OneTime
+     */
+    public function setOneTime($OneTime)
+    {
+        $this->OneTime = $OneTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->Active;
+    }
+
+    /**
+     * @param mixed $Active
+     */
+    public function setActive($Active)
+    {
+        $this->Active = $Active;
+    }
+    private $Active;
 
     /**
      * @return mixed
@@ -128,8 +162,14 @@ class Discount extends Database
 
     public function getAllSpecialDeals(){
         $result = '';
-        $result = $this->select('SELECT * FROM schoolproject.specialdeals;');
+        $result = $this->selectStmt('SELECT * FROM specialdeals;');
         return $result;
+    }
+
+    public function getProductBasedOnID($ID){
+
+        $result = $this->selectFetchAll('SELECT COUNT(StockItemId) as total FROM stockitem WHERE DealID = '.$ID.';');
+        return $result[0][0];
     }
 }
 

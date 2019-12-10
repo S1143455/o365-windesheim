@@ -2,6 +2,7 @@
 
 include_once 'content/backend/header-admin.php';
 include_once 'content/backend/sidebar-admin.php';
+
 ?>
 
 <script>
@@ -28,13 +29,12 @@ include_once 'content/backend/sidebar-admin.php';
         <table class="table table-fixed" >
             <thead>
             <tr>
-                <th class="col-xs-1">Code</th>
+                <th class="col-xs-2">Code</th>
                 <th class="col-xs-1">Percentage</th>
                 <th class="col-xs-1">Eenmalig</th>
                 <th class="col-xs-1">Gebruikt</th>
-                <th class="col-xs-2">Omschrijving</th>
-                <th class="col-xs-2">Productnummer</th>
-                <th class="col-xs-2">Productcode</th>
+                <th class="col-xs-3">Omschrijving</th>
+                <th class="col-xs-2">Product aantal</th>
                 <th class="col-xs-1">Beginperiode</th>
                 <th class="col-xs-1">Eindperiode</th>
             </tr>
@@ -105,7 +105,7 @@ include_once 'content/backend/sidebar-admin.php';
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                    <button type="button" class="btn btn-primary">Korting aanmaken</button>
+                    <button type="button" class="btn btn-primary" name="createDiscount">Korting aanmaken</button>
                 </div>
         </div>
     </div>
@@ -114,15 +114,41 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="kortingProductLabel">Korting op product(en) aanmaken</h5>
+                <h4 class="modal-title" id="kortingEenmaalLabel">Korting op product(en) aanmaken</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h1>Korting op product(en) aanmaken</h1>
+                <div class="col-md-12">
+                    Code:
+                    <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Eenmalig
+                    </label>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        Omschrijving:
+                        <input class="form-control" style="margin-left: 98px" id="exampleFormControlTextarea1" rows="1"></input>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    Percentage:
+                    <input style="margin: 5px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                </div>
+                <div class="col-md-12"
+                <form>
+                    Begin periode:
+                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                    Einde periode:
+                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                </form>
             </div>
-            <div class="modal-footer">
+        </div>
+        <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                 <button type="button" class="btn btn-primary">Korting aanmaken</button>
             </div>

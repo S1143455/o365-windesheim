@@ -7,8 +7,6 @@ use Model\Category;
 class MainController
 
 {
-
-
     private $templatePath;
     private $contentPath;
     private $root;
@@ -25,6 +23,7 @@ class MainController
                 'about-us' => 'About Us',
                 'products' => 'Products',
                 'contact' => 'Contact',
+                'login' => 'Login',
             ],
         ];
         $this->root=getenv("ROOT");
@@ -63,6 +62,14 @@ class MainController
     {
         $nav_menu = '';
         $nav_items = $this->getConfig('nav_menu');
+        if(!isset($_SESSION['authenticated']))
+        {
+            $nav_items['login']='Login';
+        }
+        else
+        {
+            $nav_items['logout']='Logout'; unset($nav_items['login']);
+        }
         foreach ($nav_items as $uri => $name) {
             $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
@@ -124,7 +131,7 @@ class MainController
     function getContent($page_id,$section)
     {
 
-        $result = $this->database->Select("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGEID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGEID = CON.PAGEID AND CONN.SECTION = CON.SECTION);");
+        $result = $this->database->selectStmt("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGEID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGEID = CON.PAGEID AND CONN.SECTION = CON.SECTION);");
         if (empty($result))
         {
             return "De selectie resulteert in een lege waarde.";
@@ -181,17 +188,13 @@ class MainController
     {
         if(empty($arr) or $class==''){
             echo "Use valid values.";
-        }else{?>
-            <div class="container">
-                <div class="row">
-                    <?php for($i=1;$i<count($arr);$i++){ ?>
-                        <div class=<?php $class;?>>
-                            test;
-                        </div>
-                    <?php };?>
-                </div>
-            </div>
-        <?php }
+        }else{
+            echo '<div class="container"><div class="row">';
+            for($i=1;$i<count($arr);$i++) {
+                echo '<div class="' . $class . '"></div>';
+            }
+            echo '</div></div>';
+        }
     }
 
     /**
@@ -199,9 +202,10 @@ class MainController
      */
     function getGridCategories()
     {
-        
         $categories = $this->category->SpecialGetcategories();
         $this->generateGrid($categories,"col-12 col-sm-6 col-md-4");
     }
+
+
 }
 ?>
