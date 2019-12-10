@@ -25,8 +25,10 @@ class ContentController
         return $pageID;
     }
 
-    public function show($pageID)
+    public function show($section)
     {
+        $content = new Content();
+        $content = $content->retrieve($section);
         return include_once $this->viewPath . 'show.php';
     }
 
