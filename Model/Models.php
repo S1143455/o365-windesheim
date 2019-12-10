@@ -17,27 +17,27 @@ class Models
 
     protected function getColumns()
     {
-        if($this->column == null)
-        {
-            switch ($this->table) {
-                case "stockitem":
-                    $this->getStockItem();
-                    break;
-                case 'category':
-                    $this->getCategory();
-                    break;
-                case 'attachment':
-                    $this->getAttachments();
-                    break;
-                case 'supplier':
-                    $this->getSupplier();
-                    break;
-                case  'people':
-                    $this->getPeople();
-                default:
-                    die('Table not implemented');
-            }
-            return $this->column;
+        switch ($this->table) {
+            case 'stockitem':
+                $this->getStockItem();
+                break;
+            case 'category':
+                $this->getCategory();
+                break;
+            case 'attachment':
+                $this->getAttachments();
+                break;
+            case 'content':
+                $this->getContent();
+                break;
+            case 'supplier':
+                $this->getSupplier();
+                break;
+            case  'people':
+                $this->getPeople();
+                break;
+            default:
+                die('Table not implemented');
         }
     }
 
@@ -85,6 +85,15 @@ class Models
         );
     }
 
+    private function getContent()
+    {
+        $this->column = array(
+            "PageID" => ['Varchar', 'PrimaryKey', 'Required'],
+            "Section" => ['Varchar', 'PrimaryKey', 'Required'],
+            "HTML" => ['Longtext', 'Attribute', 'Required'],
+            "Upd_dt" => ['Datetime', 'Attribute', 'Required'],
+        );
+    }
 
     private function getPeople()
     {
@@ -129,5 +138,4 @@ class Models
             return $this->column[$key][0];
         }
     }
-
 }
