@@ -188,17 +188,13 @@ class MainController
     {
         if(empty($arr) or $class==''){
             echo "Use valid values.";
-        }else{?>
-            <div class="container">
-                <div class="row">
-                    <?php for($i=1;$i<count($arr);$i++){ ?>
-                        <div class=<?php $class;?>>
-                            test;
-                        </div>
-                    <?php };?>
-                </div>
-            </div>
-        <?php }
+        }else{
+            echo '<div class="container"><div class="row">';
+            for($i=1;$i<count($arr);$i++) {
+                echo '<div class="' . $class . '"></div>';
+            }
+            echo '</div></div>';
+        }
     }
 
     /**
@@ -206,7 +202,6 @@ class MainController
      */
     function getGridCategories()
     {
-        
         $categories = $this->category->SpecialGetcategories();
         $this->generateGrid($categories,"col-12 col-sm-6 col-md-4");
     }
