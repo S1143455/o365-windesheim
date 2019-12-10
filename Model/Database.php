@@ -465,7 +465,6 @@ class Database extends Models
                 switch ($this->getType($key))
                 {
                     case "Integer":
-                        echo "int<br>";
                         $type = FILTER_VALIDATE_INT;
                         break;
                     case "Email":
@@ -473,7 +472,6 @@ class Database extends Models
                         break;
                     case "LongText":
                     case "Varchar":
-                    echo "string<br>";
                         $type = FILTER_SANITIZE_SPECIAL_CHARS;
                         break;
                     case "Boolean":
