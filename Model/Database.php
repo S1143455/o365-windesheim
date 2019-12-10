@@ -115,27 +115,27 @@ class Database extends Models
      */
     private function find($id)
     {
-        $retVal = null;
+        $retVal = $this;
         if ($id != null)
         {
             $this->openConn();
             $key = $this->getID("key");
             $sql = "SELECT * FROM " . $this->table . " WHERE " . $key . " = :" . $key;
             $stmt = $this->connection->prepare($sql);
-            $stmt->bindValue(":".$key, $id );
+            $stmt->bindValue(":" . $key, $id);
             $stmt->execute();
             try
             {
                 $retVal = $stmt->fetchAll();
-//                print_r($stmt->fetchAll());
-                if(empty($retVal))
+//              print_r($stmt->fetchAll());
+                if (empty($retVal))
                 {
-                    $retVal = null;
+                    $retVal = $this;
+                } else
+                {
+                    $retVal = $this->initRetrievedObjects($retVal)[0];
                 }
-                $retVal = $this->initRetrievedObjects($retVal)[0];
-                print_r($retVal->getStockItemName());
-            }
-            catch(Exception $e)
+            } catch (Exception $e)
             {
                 die($e);
                 $retVal = null;
@@ -158,20 +158,19 @@ class Database extends Models
         {
             $this->openConn();
             $key = $this->getID("key");
-            $sql = "SELECT " . $key ."FROM " . $this->table . " WHERE " . $key . " = :" . $key;
+            $sql = "SELECT " . $key . "FROM " . $this->table . " WHERE " . $key . " = :" . $key;
             $stmt = $this->connection->prepare($sql);
-            $stmt->bindValue(":".$key, $id );
+            $stmt->bindValue(":" . $key, $id);
             try
             {
-                if(empty($stmt->fetchAll()))
+                if (empty($stmt->fetchAll()))
                 {
                     $retVal = false;
-                }
-                else{
+                } else
+                {
                     $retVal = true;
                 }
-            }
-            catch(Exception $e)
+            } catch (Exception $e)
             {
                 $retVal = false;
             }
@@ -192,10 +191,9 @@ class Database extends Models
         if (empty($id))
         {
             return $this->batch($this->limit, $this->offset);
-        }
-        else{
-
-           return $this->find($id);
+        } else
+        {
+            return $this->find($id);
         }
 
     }
@@ -223,14 +221,15 @@ class Database extends Models
         try
         {
             $retVal = $stmt->fetchAll();
-//                print_r($stmt->fetchAll());
-            if(empty($retVal))
+            if (empty($retVal))
             {
-                $retVal = null;
+                $retVal = [];
+            } else
+            {
+
+                $retVal = $this->initRetrievedObjects($retVal);
             }
-            $retVal = $this->initRetrievedObjects($retVal);
-        }
-        catch(Exception $e)
+        } catch (Exception $e)
         {
             die($e);
             $retVal = null;
@@ -247,7 +246,6 @@ class Database extends Models
     {
         $this->openConn();
         $stmt = $this->createInsertStatement();
-        print_r($stmt);
         try
         {
             $stmt->execute();
@@ -343,7 +341,6 @@ class Database extends Models
      */
     private function validateType($type, $setType)
     {
-        echo "I expect type " . $type . " i got type " . $setType . '<br>';
         //TODO : DATETIME TESTER
         //We cant compare $setType if no value is given.
         switch ($type)
@@ -440,7 +437,6 @@ class Database extends Models
         $stmt = $this->connection->prepare($sql);
 
 
-
         foreach ($values as $parameter => $value)
         {
             print_r([$parameter, $value]);
@@ -487,8 +483,7 @@ class Database extends Models
 
                     $this->setError($this->table, $value);
                 }
-               echo gettype($value);
-                if($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN )
+                if ($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN)
                 {
                     $value = intval($value);
                 }
@@ -499,26 +494,31 @@ class Database extends Models
         }
         return $valid;
     }
+
     private function initRetrievedObjects($array)
     {
+        echo "initRetrievedObjects";
+        print_r($array);
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
         $modelObject->getColumns();
-
-        foreach($array as $key => $value)
+        if (!empty($array))
         {
-            foreach ($value as $attrKey => $attrValue)
+            foreach ($array as $key => $value)
             {
-                if(array_key_exists($attrKey,$modelObject->column))
+                foreach ($value as $attrKey => $attrValue)
                 {
-                    $modelObject->setAttribute($attrKey, $attrValue);
-
+                    if (array_key_exists($attrKey, $modelObject->column))
+                    {
+                        $modelObject->setAttribute($attrKey, $attrValue);
+                    }
                 }
+                array_push($modelObjects, $modelObject);
+                print_r($modelObject->getStockItemName());
             }
-            array_push($modelObjects, $modelObject);
-            print_r($modelObject->getStockItemName());
         }
+
         return $modelObjects;
     }
 
