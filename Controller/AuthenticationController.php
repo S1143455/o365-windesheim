@@ -38,7 +38,7 @@ class AuthenticationController
                 $_SESSION['USER']['DATA']=$user->getUserDataArray();
                 // Now were done were going back to the index page.
                 $_SESSION['LOGIN_ERROR']='U bent ingelogd';
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/onderhoudaccount\">";
             }
             else
             {
