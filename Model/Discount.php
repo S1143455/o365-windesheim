@@ -162,7 +162,7 @@ class Discount extends Database
 
     public function getAllSpecialDeals(){
         $result = '';
-        $result = $this->selectStmt('SELECT * FROM schoolproject.specialdeals;');
+        $result = $this->selectStmt('SELECT * FROM specialdeals;');
         return $result;
     }
 

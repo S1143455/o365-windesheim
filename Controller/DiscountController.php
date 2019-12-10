@@ -28,7 +28,6 @@ class DiscountController
                     <td class="col-xs-2">'. $this->discount->getProductBasedOnID($discount['SpecialDealID']) .'</td>
                     <td class="col-xs-1">' . $discount['StartDate'] .'</td>
                     <td class="col-xs-1">' . $discount['EndDate'] .'</td>
-                    
                 </tr>';
             echo $result;
         }
