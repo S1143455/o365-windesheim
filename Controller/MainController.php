@@ -23,7 +23,7 @@ class MainController
             'nav_menu' => [
                 '' => 'Home',
                 'about-us' => 'About Us',
-                'products' => 'Products',
+                'products' => 'Product',
                 'contact' => 'Contact',
             ],
         ];
