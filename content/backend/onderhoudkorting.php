@@ -5,7 +5,7 @@ include_once 'content/backend/sidebar-admin.php';
 
 ?>
 
-<script>
+<script xmlns:line-height="http://www.w3.org/1999/xhtml">
     function generateCode() {
         var x = document.getElementById("inputCode")
         x.value = Math.floor((Math.random() * 900000000) + 100000000);
@@ -129,14 +129,14 @@ include_once 'content/backend/sidebar-admin.php';
                     </div>
                     <div class="col-md-12">
                         Percentage:
-                        <input style="margin: 5px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                        <input style="margin: 5px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCodeOneTimeDiscount"> %
                     </div>
                     <div class="col-md-12"
                         <form>
                             Begin periode:
-                            <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                            <input type="date" class="inputStartDate" id="inputStartDateOneTimeDiscount">
                             Einde periode:
-                            <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                            <input type="date" class="inputEndDate" id="inputEndDateOneTimeDiscount">
                         </form>
                     </div>
                 </div>
@@ -159,7 +159,7 @@ include_once 'content/backend/sidebar-admin.php';
             <div class="modal-body">
                 <div class="col-md-12">
                     Code:
-                    <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
+                    <input type="text" class="inputCode" aria-label="inputCode" id="inputCodeDiscountProduct">
                     <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">
@@ -179,9 +179,9 @@ include_once 'content/backend/sidebar-admin.php';
                 <div class="col-md-12"
                 <form>
                     Begin periode:
-                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                    <input type="date" class="inputStartDate" id="inputStartDateDiscountProduct">
                     Einde periode:
-                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                    <input type="date" class="inputEndDate" id="inputEndDateDiscountProduct">
                 </form>
             </div>
         </div>
@@ -196,7 +196,7 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="kortingEenmaalLabel">Korting op product(en) aanmaken</h4>
+                <h4 class="modal-title" id="kortingEenmaalLabel">Korting op categorie(ën) aanmaken</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -215,14 +215,14 @@ include_once 'content/backend/sidebar-admin.php';
                 </div>
                 <div class="col-md-12">
                     Percentage:
-                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCodeDiscountCategory"> %
                 </div>
                 <div class="col-md-12"
                 <form>
                     Begin periode:
-                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                    <input type="date" class="inputStartDate" id="inputStartDateDiscountProduct">
                     Einde periode:
-                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
+                    <input type="date" class="inputEndDate" id="inputEndDateDiscountProduct">
                 </form>
             </div>
         </div>
@@ -237,7 +237,7 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="kortingEenmaalLabel">Korting op product(en) aanmaken</h4>
+                <h4 class="modal-title" id="kortingEenmaalLabel">Korting mailen naar klant</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -254,26 +254,32 @@ include_once 'content/backend/sidebar-admin.php';
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        Omschrijving:
-                        <input type="text" class="inputCode" id="discountDescription" rows="1"/>
+                        <label class="descriptionMailDiscount" for="discountDescriptionMailDiscount">Omschrijving:</label>
+                        <textarea class="form-control" id="DescriptionMailDiscount" rows="3"></textarea>
+
                     </div>
                 </div>
                 <div class="col-md-12">
                     Percentage:
-                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCodeMailDiscount"> <span class="input-group-text">%</span>
                 </div>
                 <div class="col-md-12"
-                <form>
+                <div>
                     Begin periode:
-                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
-                    Einde periode:
-                    <input style="margin: 5px 0px 15px 4px; text-align: center;line-height: 10px;" type="date" class="inputCode">
-                </form>
-            </div>
-            <div class="form-group row">
-                <label for="inputEmail3" style="left: 17px" class="col-sm-2 col-form-label">Email:</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3">
+                    <input type="date" class="inputStartDate" id="inputStartDateMailDiscount">
+                    <div class="inputEndDate-container"
+                    <p class="einde-periode">Einde periode:</p>
+                    <input type="date" class="inputEndDate" id="inputEndDateMailDiscount">
+                </div>
+                </div>
+                <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
+                        <input type="email" class="form-control" id="inputEmail3">
+                    </div>
+                </div>
+                </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
