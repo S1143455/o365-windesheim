@@ -129,17 +129,18 @@ include_once 'content/backend/sidebar-admin.php';
                     </div>
                     <div class="col-md-12">
                         Percentage:
-                        <input style="margin: 5px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCodeOneTimeDiscount"> %
+                        <input type="text" class="inputPercentage" aria-label="inputPercentage" id="inputPercentageOneTimeDiscount"> <span class="input-group-text">%</span>
                     </div>
                     <div class="col-md-12"
-                        <form>
-                            Begin periode:
-                            <input type="date" class="inputStartDate" id="inputStartDateOneTimeDiscount">
-                            Einde periode:
-                            <input type="date" class="inputEndDate" id="inputEndDateOneTimeDiscount">
-                        </form>
+                    <div>
+                        Begin periode:
+                        <input type="date" class="inputStartDate" id="inputStartDateOneTimeDiscount">
+                        <div class="inputEndDate-container"
+                        <p class="einde-periode">Einde periode:</p>
+                        <input type="date" class="inputEndDate" id="inputEndDateOneTimeDiscount">
+                        </div>
                     </div>
-                </div>
+                    </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                     <button type="button" class="btn btn-primary" name="createDiscount">Korting aanmaken</button>
@@ -168,23 +169,24 @@ include_once 'content/backend/sidebar-admin.php';
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        Omschrijving:
-                        <input type="text" class="inputCode" id="discountDescription" rows="1"/>
+                        <label class="descriptionPopUp" for="descriptionDiscountProduct">Omschrijving:</label>
+                        <textarea class="form-control" id="descriptionDiscountProduct" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="col-md-12">
                     Percentage:
-                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCode"> %
+                    <input type="text" class="inputPercentage" aria-label="inputPercentage" id="inputPercentageDiscountProduct"> <span class="input-group-text">%</span>
                 </div>
                 <div class="col-md-12"
-                <form>
+                <div>
                     Begin periode:
                     <input type="date" class="inputStartDate" id="inputStartDateDiscountProduct">
-                    Einde periode:
+                    <div class="inputEndDate-container"
+                    <p class="einde-periode">Einde periode:</p>
                     <input type="date" class="inputEndDate" id="inputEndDateDiscountProduct">
-                </form>
+                    </div>
+                </div>
             </div>
-        </div>
         <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                 <button type="button" class="btn btn-primary">Korting aanmaken</button>
@@ -209,23 +211,24 @@ include_once 'content/backend/sidebar-admin.php';
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        Omschrijving:
-                        <input type="text" class="inputCode" id="discountDescription" rows="1"/>
+                        <label class="descriptionPopUp" for="descriptionDiscountCategory">Omschrijving:</label>
+                        <textarea class="form-control" id="descriptionDiscountCategory" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="col-md-12">
                     Percentage:
-                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCodeDiscountCategory"> %
+                    <input type="text" class="inputPercentage" aria-label="inputCode" id="inputPercentageDiscountCategory"> <span class="input-group-text">%</span>
                 </div>
                 <div class="col-md-12"
-                <form>
+                <div>
                     Begin periode:
-                    <input type="date" class="inputStartDate" id="inputStartDateDiscountProduct">
-                    Einde periode:
-                    <input type="date" class="inputEndDate" id="inputEndDateDiscountProduct">
-                </form>
+                    <input type="date" class="inputStartDate" id="inputStartDateDiscountCategory">
+                    <div class="inputEndDate-container"
+                    <p class="einde-periode">Einde periode:</p>
+                    <input type="date" class="inputEndDate" id="inputEndDateDiscountCategory">
+                    </div>
+                </div>
             </div>
-        </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
             <button type="button" class="btn btn-primary">Korting aanmaken</button>
@@ -254,14 +257,13 @@ include_once 'content/backend/sidebar-admin.php';
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="descriptionMailDiscount" for="discountDescriptionMailDiscount">Omschrijving:</label>
-                        <textarea class="form-control" id="DescriptionMailDiscount" rows="3"></textarea>
-
+                        <label class="descriptionPopUp" for="descriptionMailDiscount">Omschrijving:</label>
+                        <textarea class="form-control" id="descriptionMailDiscount" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="col-md-12">
                     Percentage:
-                    <input style="margin: 0px 0px 0px 19px;" type="text" class="inputPercentage" aria-label="inputCode" id="inputCodeMailDiscount"> <span class="input-group-text">%</span>
+                    <input type="text" class="inputPercentage" aria-label="inputCode" id="inputCodeMailDiscount"> <span class="input-group-text">%</span>
                 </div>
                 <div class="col-md-12"
                 <div>
@@ -270,7 +272,7 @@ include_once 'content/backend/sidebar-admin.php';
                     <div class="inputEndDate-container"
                     <p class="einde-periode">Einde periode:</p>
                     <input type="date" class="inputEndDate" id="inputEndDateMailDiscount">
-                </div>
+                    </div>
                 </div>
                 <div class="col-md-12">
                 <div class="form-group row">
