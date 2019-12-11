@@ -10,6 +10,7 @@ class User extends Database
     private $password;
     protected $table;
     private $dbPassword;
+    private  $UserDataArray;
 
     function __construct()
     {
@@ -62,6 +63,16 @@ class User extends Database
         return $this->dbPassword;
     }
 
+    public function setUserDataArray($sqlreturendsomething)
+    {
+        $this->UserDataArray = $sqlreturendsomething;
+    }
+
+    public function  getUserDataArray()
+    {
+        return $this->UserDataArray;
+    }
+
     public function checkCredentials()
     {
         $getthedata=new Database();
@@ -73,12 +84,13 @@ class User extends Database
         }
         else
         {
-            // return the password found in te database.
+            // return the password found in te database and place the userdata in a variable.
+            $this->setUserDataArray($sqlreturendsomething);
             $this->setDbPassword($sqlreturendsomething[0]['HashedPassword']);
             return true;
         }
-    }
 
+    }
 
 
 
