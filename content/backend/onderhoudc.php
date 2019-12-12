@@ -1,6 +1,9 @@
 <?php
 include_once 'content/backend/header-admin.php';
 include_once 'content/backend/sidebar-admin.php';
+use Model\Category;
+
+
 ?>
     <div class="container marginleft">
         <div class="row" style="min-height: 50px;"></div>
@@ -39,19 +42,34 @@ include_once 'content/backend/sidebar-admin.php';
             <div class="col-md-3">
 
                 <button class="btn btn-primary load-modal" href="editadminprofile.php?id='.$row['id'].'" data-toggle="modal" data-target="#myModal2" title="Click To View Orders">Edit Profile</button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kortingEenmaal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategory">
                     Eenmalige korting
                 </button>
             </div>
         </div>
     </div>
-
-
-
-    <div id="createCategory" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+    <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:1000px;">
             <div class="modal-content">
-                <!-- HTML will be inserted here -->
+                <form role="form" id="universalModalForm" method="POST" action="test">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                        <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span> Edit<span class="modal-title">.model-title</span></h4>
+                    </div>
+                    <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
+                        <span class="alert-body"></span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="categoryID">Category</label>
+                            <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <input type="submit" name="submit" value="product" class="btn btn-primary">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -63,9 +81,23 @@ include_once 'content/backend/sidebar-admin.php';
             e.preventDefault();
             $('#createCategory').modal('show');
         });
+        $(document).ready(function() {
+
+            $('#createCategory form').submit(function (event) {
+             //   event.preventDefault();
+
+                $category = new Category();
+
+                $category->initialize();
+                $categoryController->store($category);
+
+                alert("spam");
+                $('#createCategory').style.display = none;
+
+            });
+        });
 
         function searchbar() {
-
             var input, filter, table, tr, tds, i, txtValue, tdsearch;
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();

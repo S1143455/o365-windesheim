@@ -76,7 +76,6 @@ class AdminController
         $nav_items = $this->getConfig('nav_menu_side');
         $i = 0;
         $max = count($nav_items);
-        var_dump($this->site_urlAdmin());
         foreach ($nav_items as $uri => $name) {
 
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';

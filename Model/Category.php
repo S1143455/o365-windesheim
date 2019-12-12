@@ -10,7 +10,12 @@ class Category extends Database
     private $categoryName;
     private $lastEditedBy;
     private $parentCategory;
+    function __construct()
+    {
+        $this->table = "category";
+        parent::__construct();
 
+    }
     /**
      * @return mixed
      */
