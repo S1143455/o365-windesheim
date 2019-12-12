@@ -1,8 +1,11 @@
-function getSelectedSection(section){
-};
-
-
 $(document).ready(function() {
+    $("#section").change(function(){
+        alert($("#section").val());
+        var execPHP = "<?php getContent(" . $("#section").val() . ")?>";
+        alert(execPHP);
+        return false;
+    });
+
     $("#imprimir").click(function() {
         PrintElem($("#editor-content"));
     });

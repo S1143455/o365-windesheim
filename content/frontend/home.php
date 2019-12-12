@@ -8,11 +8,11 @@ include_once 'content/frontend/header.php';
             //img
         </div>
         <div id="info">
-                <?php $main->showContent("Home.php", "TITLE"); ?>
+                <?php $main->showContent("TITLE"); ?>
             <br>
-                <?php $main->showContent("Home.php", "SUBTITLE"); ?>
+                <?php $main->showContent("SUBTITLE"); ?>
 
-                <?php $main->showContent("Home.php", "STORY");?>
+                <?php $main->showContent( "STORY");?>
         </div>
 
         <div id="categories">

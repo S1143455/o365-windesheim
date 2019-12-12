@@ -6,7 +6,7 @@ include_once 'loader.php';
 
 <div>
     <div id="Content">
-        <?php $main->showContent("Klantenservice.php", "TITLE");?>
+        <?php $main->showContent( "TITLE");?>
     </div>
 </div>
 <?php

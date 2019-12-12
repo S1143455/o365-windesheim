@@ -21,7 +21,7 @@ class MainController
             'nav_menu' => [
                 '' => 'Home',
                 'about-us' => 'About Us',
-                'products' => 'Products',
+                'products' => 'Product',
                 'contact' => 'Contact',
                 'login' => 'Login',
             ],
@@ -162,17 +162,17 @@ class MainController
      * @param $section
      * @return string
      */
-    function getContent($page_id,$section)
+    function getContent($section)
     {
 
-        $result = $this->database->selectStmt("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGEID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGEID = CON.PAGEID AND CONN.SECTION = CON.SECTION);");
+        $result = $this->database->selectStmt("SELECT CON.HTML FROM CONTENT CON WHERE CON.SECTION = '" . $section . "' AND CON.UpdDt = (SELECT MAX(CONN.UpdDt) FROM CONTENT CONN WHERE CONN.SECTION = CON.SECTION);");
         if (empty($result))
         {
             return "De selectie resulteert in een lege waarde.";
         }else
             {
-                print_r($result);
-//            return $result[0]['HTML'];
+               // print_r($result);
+            return $result[0]['HTML'];
         }
     }
 
@@ -204,8 +204,8 @@ class MainController
      * @param $page_id
      * @param $section
      */
-    function showContent($page_id, $section){
-        echo $this->getContent($page_id,$section);
+    function showContent($section){
+        echo $this->getContent($section);
     }
 
     /**
