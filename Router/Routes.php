@@ -27,6 +27,17 @@ $router->route('/logout', function(){
 });
 
 /**
+ * Begin usermainteance
+ */
+$router->route('/onderhoudaccount', function(){
+    return include 'content/frontend/usermaintenance.php';
+});
+
+/**
+ * End usermaintenance
+ */
+
+/**
  * Begin product routes
  */
 $router->route('/product', function() use($productController){

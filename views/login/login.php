@@ -8,6 +8,11 @@ include_once 'content/frontend/header.php';
         $authentication->login($_POST['gbrkr'], $_POST['pw']);
     }
 
+    if (isset($_POST['forgotpassword']))
+    {
+        echo "yuo stupid succer!";
+    }
+
 ?>
 
     <form method="post" action="">
@@ -20,7 +25,8 @@ include_once 'content/frontend/header.php';
             <input type="password" name="pw" placeholder="Wachtwoord" class="col-sm-6">
         </div>
         <div class="row justify-content-md-center">
-            <div class="col-sm-6"><button type="submit" name="login" class="button" style="padding: 5px">Inloggen</button></div>
+            <div class="col-sm-1"><button type="submit" name="login" class="button" style="padding: 5px">Inloggen</button></div>
+            <div class="col-sm-1"><button type="submit" name="forgotpassword" class="button" style="padding: 5px">Wachtwoord vergeten</button></div>
         </div>
     </form>
 <div><?php if(isset($_SESSION['LOGIN_ERROR'])){echo $_SESSION['LOGIN_ERROR']; unset($_SESSION['LOGIN_ERROR']);} ?></div>
