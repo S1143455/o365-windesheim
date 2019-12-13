@@ -56,11 +56,11 @@ class CategoryController
         $categories = $this->category->getAllActiveCategories();
         foreach($categories as $category){
             $result = '';
-            $result .= '<tr>
-                        <td class="col-xs-2">' . $category['CategoryID'] .'</td>
-                        <td class="col-xs-7">' . $category['CategoryName'] .'</td>
-                        <td class="col-xs-3">' . $category['ParentCategory'] .'</td>
-                    </tr>';
+            $result .= '<tr style="height:40px;">
+                            <td class="col-xs-2">' . $category['CategoryID'] .'</td>
+                            <td class="col-xs-7">' . $category['CategoryName'] .'</td>
+                            <td class="col-xs-3">' . $category['ParentCategory'] .'</td>
+                        </tr>';
 
             echo $result;
         }
