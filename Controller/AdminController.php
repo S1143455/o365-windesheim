@@ -88,7 +88,7 @@ class AdminController
             if($i == $max){
                 $class .= ' last ';
             }
-            $nav_menu .= '<a href=/omasbeste/admin' . $url . ' title=' . $name . ' class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href=/admin' . $url . ' title=' . $name . ' class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
         }
 
         return trim($nav_menu, $sep);
@@ -102,7 +102,7 @@ class AdminController
             $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=/omasbeste' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);
