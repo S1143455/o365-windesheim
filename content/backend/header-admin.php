@@ -21,17 +21,9 @@ include 'admin_scripts.php';
 <body>
 <nav class="navbar navbar-default navbar-static-top  my-nav">
     <div class="container navcontainer">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bas-navbar" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
         <div class="row">
             <div class="col-md-2">
-                <!-- <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo" ></img> -->
+                <img style="max-height: 50px; max-width: 80px;" class="navbar-brand logo" src="../logo_omasbeste.png" alt="photo" >
             </div>
             <div class="col-md-8 normalnav">
                 <?php $admin->navigationalmenu(); ?>
