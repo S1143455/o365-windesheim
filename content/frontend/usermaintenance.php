@@ -5,7 +5,7 @@ include_once 'content/frontend/header.php';
 <form method="post" action="">
     <div class="col-sm-1"><button type="submit" name="details" class="button" style="padding: 5px">details</button></div>
     <div class="col-sm-1"><button type="submit" name="orders" class="button" style="padding: 5px">orders</button></div>
-</form>
+</form><br>
 <?php
 // Check if the user is logged in. If not he will be redirected to the homepage.
 if (!isset($_SESSION['authenticated']))
