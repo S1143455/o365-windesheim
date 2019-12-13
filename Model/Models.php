@@ -17,6 +17,7 @@ class Models
 
     protected function getColumns()
     {
+        var_dump($this->table);
         switch ($this->table) {
             case 'stockitem':
                 $this->getStockItem();
@@ -35,6 +36,9 @@ class Models
                 break;
             case  'people':
                 $this->getPeople();
+                break;
+            case  'customer':
+                $this->getCustomer();
                 break;
             default:
                 die('Table not implemented');
@@ -123,6 +127,19 @@ class Models
             "LastEditedBy"              =>   ['Varchar', 'Attribute', 'Required'],
             "AddressID"                 =>   ['Address', 'HasOne', 'Required'],
 
+        );
+    }
+
+    private function getCustomer()
+    {
+        $this->column = array(
+            "CustomerID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "AddressID" => ['Integer', 'Attribute', 'Unique'],
+            "PersonID" => ['Integer', 'HasOne', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "Gender" => ['Varchar', 'Attribute', 'Required'],
+            "newsletter" => ['Boolean', 'Attribute', 'Not Required'],
+            "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
         );
     }
 

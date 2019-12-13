@@ -66,12 +66,15 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
     return include 'content/backend/onderhoudhoofdpagina.php';
 });
 
-//<<<<<<< HEAD
-$router->route('/account-toevoegen', function() {
-    return include 'content/frontend/account-toevoegen.php';
-});
 
-//=======
+$router->route('/account-toevoegen', function() use($customerController){
+    return $customerController->create();
+});
+//$router->route('/account-toevoegen', function() {
+//    return include 'content/frontend/account-toevoegen.php';
+//});
+//
+
 $router->route('/admin', function(){
     return include 'content/backend/home-admin.php';
 });

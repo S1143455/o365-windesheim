@@ -24,7 +24,7 @@ $categoryController = new Controller\CategoryController();
 
 $user = new Controller\UserController();
 $productController = new Controller\ProductController();
-
+$customerController = new Controller\CustomerController();
 
 
 
