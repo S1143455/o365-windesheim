@@ -1,9 +1,14 @@
 $(document).ready(function() {
-    $("#section").change(function(){
-        alert($("#section").val());
-        var execPHP = "<?php getContent(" . $("#section").val() . ")?>";
-        alert(execPHP);
-        return false;
+    $("#section").change(function() {
+        //alert($("#section").val());
+
+        $.ajax({ url: 'http://localhost/wwi/content/backend/AjaxPHP.php',
+            data: {function2call: 'test', otherkey:otherdata},
+            type: 'post',
+            success: function(output) {
+                alert(output);
+            }
+        });
     });
 
     $("#imprimir").click(function() {
