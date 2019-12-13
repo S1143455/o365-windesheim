@@ -7,98 +7,6 @@ include_once 'content/backend/header-admin.php';
 <?php
 include_once 'content/backend/sidebar-admin.php';
 ?>
-
-<script xmlns:line-height="http://www.w3.org/1999/xhtml">
-    function generateCodeOnetime() {
-        var x = document.getElementById("inputCodeOneTime")
-        x.value = Math.floor((Math.random() * 900000000) + 100000000);
-    }
-
-    function generateCodeProduct() {
-        var x = document.getElementById("inputCodeDiscountProduct")
-        x.value = Math.floor((Math.random() * 900000000) + 100000000);
-    }
-
-    function generateCodeCategory() {
-        var x = document.getElementById("inputCodeDiscountCategory")
-        x.value = Math.floor((Math.random() * 900000000) + 100000000);
-    }
-
-    function generateCodeMail() {
-        var x = document.getElementById("inputCodeMailDiscount")
-        x.value = Math.floor((Math.random() * 900000000) + 100000000);
-    }
-</script>
-
-<script>
-    $('.load-modal').on('click', function(e){
-        e.preventDefault();
-        $('#createCategory').modal('show');
-    });
-
-    function searchbar() {
-
-        var input, filter, table, tr, tds, i, txtValue, tdsearch;
-        input = document.getElementById("searchbarDiscount");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("tableViewDiscount");
-        tr = table.getElementsByTagName("tr");
-
-        if(filter == ''){
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "";
-            }
-        }
-
-        for (i = 1; i < tr.length; i++) {
-            tdsearch = false;
-            tds = tr[i].getElementsByTagName("td");
-            for(x = 0; x < tds.length; x++){
-                if (tds[x]) {
-                    txtValue = tds[x].textContent || tds[x].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tdsearch = true;
-                    }
-                }
-            }
-            if(tdsearch == false){
-                tr[i].style.display = "none";
-            }
-        }
-    }
-</script>
-<div class="container">
-    <div class="row">
-        <div class="col-md-">
-            <!--dit gaat in header -->
-            <p>
-                <br> Onderhoud Korting
-            </p>
-            <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
-            <input class="form-control" type="text" id="searchbarDiscount" onkeyup="searchbar()" placeholder="Waar ben je naar op zoek?" aria-label="Search">
-            <br>
-        </div>
-    </div>
-
-    <div class="container">
-        <table class="table table-fixed" id="tableViewDiscount">
-            <thead>
-            <tr>
-                <th class="col-xs-2">Code</th>
-                <th class="col-xs-1">Percentage</th>
-                <th class="col-xs-1">Eenmalig</th>
-                <th class="col-xs-1">Gebruikt</th>
-                <th class="col-xs-3">Omschrijving</th>
-                <th class="col-xs-2">Product aantal</th>
-                <th class="col-xs-1">Beginperiode</th>
-                <th class="col-xs-1">Eindperiode</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php $discount->GetAllDiscount(); ?>
-            </tbody>
-        </table>
-
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-12">
@@ -158,7 +66,7 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="labelOneTimeDiscount">Eenmalige korting aanmaken</h4>
+                      <h4 class="modal-title" id="labelOneTimeDiscount">Eenmalige korting aanmaken</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -344,7 +252,68 @@ include_once 'content/backend/sidebar-admin.php';
     </div>
 </div>
 </div>
-<?php
+
+    <script xmlns:line-height="http://www.w3.org/1999/xhtml">
+        function generateCodeOnetime() {
+            var x = document.getElementById("inputCodeOneTime")
+            x.value = Math.floor((Math.random() * 900000000) + 100000000);
+        }
+
+        function generateCodeProduct() {
+            var x = document.getElementById("inputCodeDiscountProduct")
+            x.value = Math.floor((Math.random() * 900000000) + 100000000);
+        }
+
+        function generateCodeCategory() {
+            var x = document.getElementById("inputCodeDiscountCategory")
+            x.value = Math.floor((Math.random() * 900000000) + 100000000);
+        }
+
+        function generateCodeMail() {
+            var x = document.getElementById("inputCodeMailDiscount")
+            x.value = Math.floor((Math.random() * 900000000) + 100000000);
+        }
+    </script>
+
+    <script>
+        $('.load-modal').on('click', function(e){
+            e.preventDefault();
+            $('#createCategory').modal('show');
+        });
+
+        function searchbar() {
+
+            var input, filter, table, tr, tds, i, txtValue, tdsearch;
+            input = document.getElementById("searchbarDiscount");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tableViewDiscount");
+            tr = table.getElementsByTagName("tr");
+
+            if(filter == ''){
+                for (i = 1; i < tr.length; i++) {
+                    tr[i].style.display = "";
+                }
+            }
+
+            for (i = 1; i < tr.length; i++) {
+                tdsearch = false;
+                tds = tr[i].getElementsByTagName("td");
+                for(x = 0; x < tds.length; x++){
+                    if (tds[x]) {
+                        txtValue = tds[x].textContent || tds[x].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tdsearch = true;
+                        }
+                    }
+                }
+                if(tdsearch == false){
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    <?php
 include_once 'content/backend/footer-admin.php';
 
 ?>
