@@ -14,7 +14,6 @@ include_once 'content/frontend/header.php';
     }
 
 ?>
-
     <form method="post" action="">
         <div class="row justify-content-between">
             <label class="col-sm-3">Gebruikersnaam : </label>
