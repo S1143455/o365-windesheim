@@ -46,6 +46,7 @@ $router->route('/product', function() use($productController){
 $router->route('/product/create', function() use($productController){
     return $productController->create();
 });
+
 $router->route('/product/{id}', function($id) use($productController){
     return $productController->show($id);
 });
@@ -79,6 +80,9 @@ $router->route('/admin/onderhoud-producten', function(){
 
 $router->route('/admin/onderhoud-klanten', function(){
     return include 'content/backend/onderhoudklanten.php';
+});
+$router->route('/admin/test', function() use($categoryController){
+    return $categoryController->create();
 });
 
 $router->route('/admin/onderhoud-korting', function(){

@@ -4,6 +4,9 @@ include_once 'content/backend/header-admin.php';
 include_once 'content/backend/sidebar-admin.php';
 $content = new controller\ContentController();
 
+function getContent($section){
+    echo 'test';
+}
 ?>
 
     <link href="../theme/css/htmlEditor.css" rel="stylesheet">
