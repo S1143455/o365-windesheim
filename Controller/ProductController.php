@@ -22,7 +22,7 @@ Class ProductController
     {
         $test = new Product();
 
-        $test->createQuery("select" , ["StockItemID", "StockItemName", "IsChillerStock"], "=" , ["test", "test1", "test2"] );
+        $test->where(["StockItemID", "StockItemName", "IsChillerStock"]  , ["StockItemID", "StockItemName", "IsChillerStock"], "=" , ["test", "test1", "test2"] );
         die();
 
         $products = new Product();
@@ -103,6 +103,11 @@ Class ProductController
     {
         $product = new Product();
         $product = $product->retrieve($id);
+        if(empty($product->getStockItemID()))
+        {
+            header("Location: /404", true);
+        }
+
         echo '<br>'. $product->getStockItemName() .'<br>';
         return include_once $this->viewPath . 'show.php';
     }

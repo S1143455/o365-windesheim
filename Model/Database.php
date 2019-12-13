@@ -127,32 +127,39 @@ class Database extends Models
         {
             $this->openConn();
             $key = $this->getID("key");
-            $sql = "SELECT * FROM " . $this->table . " WHERE " . $key . " = :" . $key;
-            $stmt = $this->connection->prepare($sql);
-            $stmt->bindValue(":" . $key, $id);
-            $stmt->execute();
-            try
-            {
-                $retVal = $stmt->fetchAll();
-//              print_r($stmt->fetchAll());
-                if (empty($retVal))
-                {
-                    $retVal = $this;
-                } else
-                {
-                    $retVal = $this->initRetrievedObjects($retVal)[0];
-                }
+            $retrieved = $this->where("*", $key, "=" , $id);
 
-                $retVal = $this->initRetrievedObjects($retVal)[0];
-               // print_r($retVal->getStockItemName());
-            }
-            catch(Exception $e)
-            {
-                die($e);
-                $retVal = null;
-            }
-            $this->closeConnection();
-            return $retVal;
+            return $this->initRetrievedObjects($retrieved)[0];
+
+
+
+
+//            $sql = "SELECT * FROM " . $this->table . " WHERE " . $key . " = :" . $key;
+//            $stmt = $this->connection->prepare($sql);
+//            $stmt->bindValue(":" . $key, $id);
+//            $stmt->execute();
+//            try
+//            {
+//                $retVal = $stmt->fetchAll();
+////              print_r($stmt->fetchAll());
+//                if (empty($retVal))
+//                {
+//                    $retVal = $this;
+//                } else
+//                {
+//                    $retVal = $this->initRetrievedObjects($retVal)[0];
+//                }
+//
+//                $retVal = $this->initRetrievedObjects($retVal)[0];
+//               // print_r($retVal->getStockItemName());
+//            }
+//            catch(Exception $e)
+//            {
+//                die($e);
+//                $retVal = null;
+//            }
+//            $this->closeConnection();
+//            return $retVal;
         }
 
     }
@@ -165,78 +172,118 @@ class Database extends Models
     public function checkIfExists($id)
     {
         $retVal = null;
-        if ($id != null)
+        if ($id == null)
         {
+            die("Please supply an identifier to the function");
+        }
             $this->openConn();
             $key = $this->getID("key");
-            $sql = "SELECT " . $key . "FROM " . $this->table . " WHERE " . $key . " = :" . $key;
-            $stmt = $this->connection->prepare($sql);
-            $stmt->bindValue(":" . $key, $id);
-            try
+            $retrieved = $this->where($key, $key, "=", $id);
+            if (!empty($retrieved))
             {
-                if (empty($stmt->fetchAll()))
-                {
-                    $retVal = false;
-                } else
-                {
-                    $retVal = true;
-                }
-            } catch (Exception $e)
-            {
-                $retVal = false;
+                return true;
             }
+            return false;
+//            $sql = "SELECT " . $key . "FROM " . $this->table . " WHERE " . $key . " = :" . $key;
+//            $stmt = $this->connection->prepare($sql);
+//            $stmt->bindValue(":" . $key, $id);
+//            $stmt->execute();
+//            try
+//            {
+//                if (empty($stmt->fetchAll()))
+//                {
+//                    $retVal = false;
+//                } else
+//                {
+//                    $retVal = true;
+//                }
+//            } catch (Exception $e)
+//            {
+//                $retVal = false;
+//            }
+//
+//            $this->closeConnection();
+//        }
+//        return $retVal;
 
-            $this->closeConnection();
-        }
-        return $retVal;
     }
 
-    public function createQuery($selectType, $columnKeys, $compareTypes, $values)
+    /**
+     * Creates a database select statement
+     * (SELECT * FROM TABLE)
+     * @param $selectType
+     * @param $returnAttr
+     * @return string
+     */
+    private function createSelectStatement($returnAttr)
     {
-        $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
-        $cpIsArray = false;
-        print_r($checkInput[1]);
-        if($checkInput[1])
+        $attributes = "";
+        if(is_array($returnAttr))
         {
-            $cpIsArray = true;
+            foreach($returnAttr as $key => $value)
+            {
+                $attributes .= $value . (end($returnAttr) == $value ? "" :", ");
+            }
         }
-//        if (!($checkInput[0] && $checkInput[2]) || !(!$checkInput[0] && !$checkInput[1] && !$checkInput[2]))
-//        {
-//            echo !($checkInput[0] && $checkInput[2]);
-//            echo !(!$checkInput[0] && !$checkInput[1] && !$checkInput[2]);
-//            die('All parameters should be of the same type.');
-//        } else if ($checkInput[0] && $checkInput[1] && $checkInput[2])
-//        {
-//            $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
-//            if ($validArrayLength != 3)
-//            {
-//                die("Parameters differ in size");
-//            }
-//        } else if ($checkInput[0] && $checkInput[2])
-//        {
-//            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
-//            if ($validArrayLength != 2)
-//            {
-//                die("Parameters differ in size");
-//            }
-//        }
-        $sql = $selectType . " FROM " . $this->table . " ";
+        else {
+            $attributes = $returnAttr;
+        }
 
+        return  "SELECT " . $attributes . " FROM " . $this->table . " ";
+    }
+
+    /**
+     *
+     * Creates a sql query.
+     * @param $queryType
+     * @param $returnAttr
+     * @param $columnKeys
+     * @param $compareTypes
+     * @param $values
+     * @return array
+     */
+    public function where($returnAttr, $columnKeys, $compareTypes, $values)
+    {
+       $type = $this->checkQueryParameters($columnKeys, $compareTypes, $values);
+
+        $sql = $this->createSelectStatement($returnAttr);
         $where = "";
-        if (!$checkInput[0] && !$checkInput[1] && !$checkInput[2])
+
+        //Single search.
+        if ($type == "single")
         {
+
             $where = $columnKeys . " " . $compareTypes . " :" . $columnKeys;
-        } else
+            $sql .= " WHERE " . $where;
+            $columnKeys = [$columnKeys];
+            $values = [$values];
+        }
+        //multiple search points
+        else
         {
             for ($i = 0; $i < sizeof($columnKeys); $i++ )
             {
-                $where .= $columnKeys[$i] .  " " . ($cpIsArray ? $compareTypes[$i] : $compareTypes ) . " " . $values[$i];
-                $where .= " && ";
+                $where .= $columnKeys[$i] .  " " . (is_array($compareTypes) ? $compareTypes[$i] : $compareTypes ) . " :" . $columnKeys[$i];
+                if(($i + 1) < sizeof($columnKeys))
+                {
+                    $where .= " && ";
+                }
             }
+            $sql .= " WHERE " .$where;
         }
-        $sql .= $where;
-
         echo $sql;
+        $this->openConn();
+        $stmt = $this->connection->prepare($sql);
+        for($i = 0; $i < sizeof($columnKeys); $i++)
+        {
+            $stmt->bindValue(":" . $columnKeys[$i], $values[$i]);
+        }
+        $stmt->execute();
+
+        $retVal = $stmt->fetchAll();
+        $this->connection = null;
+        print_r($retVal);
+        return $retVal;
     }
 
     /**
@@ -257,13 +304,44 @@ class Database extends Models
 
     }
 
-    public function where($whereClause, $valueClause)
+    /**
+     * @param $columnKeys
+     * @param $compareTypes
+     * @param $values
+     * @return string
+     */
+    private function checkQueryParameters($columnKeys, $compareTypes, $values)
     {
-        if (!is_array($whereClause) || !is_array($valueClause))
+        $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
+
+        if ($checkInput[0] && $checkInput[1] && $checkInput[2])
+        {
+            $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
+            if ($validArrayLength != 3)
+            {
+                die("Parameters differ in size");
+            }
+            return "array";
+        } else if ($checkInput[0] && $checkInput[2])
+        {
+            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
+            if ($validArrayLength != 2)
+            {
+                die("Parameters differ in size");
+            }
+            return "array";
+        }
+        else if(!$checkInput[0] && !$checkInput[1] && !$checkInput[2])
+        {
+            return "single";
+        }
+        else
         {
 
+            echo !($checkInput[0] && $checkInput[2]);
+            echo !(!$checkInput[0] && !$checkInput[1] && !$checkInput[2]);
+            die('All parameters should be of the same type.');
         }
-
     }
 
     /**
@@ -283,7 +361,8 @@ class Database extends Models
     {
         $this->openConn();
         $this->getColumns();
-        $sql = "SELECT * FROM " . $this->table . ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
+        $sql = $this->createSelectStatement("*");
+        $sql .=  ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
         $stmt = $this->connection->query($sql);
         $stmt->execute();
         try
@@ -585,8 +664,12 @@ class Database extends Models
                 array_push($modelObjects, $modelObject);
                 print_r($modelObject->getStockItemName());
             }
-            array_push($modelObjects, $modelObject);
+//            array_push($modelObjects, $modelObject);
         }
+        else
+            {
+            array_push($modelObjects, $modelObject);
+            }
 
         return $modelObjects;
     }
