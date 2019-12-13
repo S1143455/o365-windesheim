@@ -22,12 +22,11 @@ class Models
             $modelColumn = $this->column;
             $this->column = null;
         }
-
         if ($this->column == null)
         {
-            switch ($column)
+            switch ($this->table)
             {
-                case "stockitem":
+                case 'stockitem':
                     $this->getStockItem();
                     break;
                 case 'category':
@@ -36,22 +35,26 @@ class Models
                 case 'attachment':
                     $this->getAttachments();
                     break;
+                case 'content':
+                    $this->getContent();
+                    break;
                 case 'supplier':
                     $this->getSupplier();
                     break;
                 case  'people':
                     $this->getPeople();
+                    break;
                 default:
-
+                    die('Table not implemented');
             }
-            if($column != null)
-            {
-                $retrievedRelation = $this->column;
-                $this->column = $modelColumn;
-                return $retrievedRelation;
-            }
-            return $this->column;
         }
+        if ($column != null)
+        {
+            $retrievedRelation = $this->column;
+            $this->column = $modelColumn;
+            return $retrievedRelation;
+        }
+        return $this->column;
     }
 
     /**
@@ -98,6 +101,15 @@ class Models
         );
     }
 
+    private function getContent()
+    {
+        $this->column = array(
+            "PageID" => ['Varchar', 'PrimaryKey', 'Required'],
+            "Section" => ['Varchar', 'PrimaryKey', 'Required'],
+            "HTML" => ['Longtext', 'Attribute', 'Required'],
+            "Upd_dt" => ['Datetime', 'Attribute', 'Required'],
+        );
+    }
 
     private function getPeople()
     {
@@ -143,5 +155,4 @@ class Models
             return $this->column[$key][0];
         }
     }
-
 }

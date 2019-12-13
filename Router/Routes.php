@@ -17,9 +17,25 @@ $router->route('/about-us', function(){
 /**
  * Login route
  */
+
 $router->route('/login', function(){
-    return include 'views/login/login.php';;
+    return include 'views/login/login.php';
 });
+
+$router->route('/logout', function(){
+    return include 'views/login/logout.php';
+});
+
+/**
+ * Begin usermainteance
+ */
+$router->route('/onderhoudaccount', function(){
+    return include 'content/frontend/usermaintenance.php';
+});
+
+/**
+ * End usermaintenance
+ */
 
 /**
  * Begin product routes
@@ -30,6 +46,7 @@ $router->route('/product', function() use($productController){
 $router->route('/product/create', function() use($productController){
     return $productController->create();
 });
+
 $router->route('/product/{id}', function($id) use($productController){
     return $productController->show($id);
 });
@@ -63,6 +80,9 @@ $router->route('/admin/onderhoud-producten', function(){
 
 $router->route('/admin/onderhoud-klanten', function(){
     return include 'content/backend/onderhoudklanten.php';
+});
+$router->route('/admin/test', function() use($categoryController){
+    return $categoryController->create();
 });
 
 $router->route('/admin/onderhoud-korting', function(){

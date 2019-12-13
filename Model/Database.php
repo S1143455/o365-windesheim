@@ -58,10 +58,10 @@ class Database extends Models
         {
             $this->openConn();
         }
-        $stmt = $this->connection->query($sql);
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
         $this->closeConnection();
-
-        return $stmt;
+        return $stmt->fetchAll();
     }
 
     /**
@@ -75,7 +75,8 @@ class Database extends Models
         {
             $this->openConn();
         }
-        $stmt = $this->connection->query($sql);
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
         $this->closeConnection();
         return $stmt->fetch_all();
     }
@@ -141,7 +142,11 @@ class Database extends Models
                 {
                     $retVal = $this->initRetrievedObjects($retVal)[0];
                 }
-            } catch (Exception $e)
+
+                $retVal = $this->initRetrievedObjects($retVal)[0];
+               // print_r($retVal->getStockItemName());
+            }
+            catch(Exception $e)
             {
                 die($e);
                 $retVal = null;
@@ -503,7 +508,7 @@ class Database extends Models
 
         foreach ($values as $parameter => $value)
         {
-            print_r([$parameter, $value]);
+           // print_r([$parameter, $value]);
             $stmt->bindValue($parameter, $value);
         }
         return $stmt;
@@ -547,7 +552,8 @@ class Database extends Models
 
                     $this->setError($this->table, $value);
                 }
-                if ($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN)
+
+                if($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN )
                 {
                     $value = intval($value);
                 }
@@ -579,6 +585,7 @@ class Database extends Models
                 array_push($modelObjects, $modelObject);
                 print_r($modelObject->getStockItemName());
             }
+            array_push($modelObjects, $modelObject);
         }
 
         return $modelObjects;

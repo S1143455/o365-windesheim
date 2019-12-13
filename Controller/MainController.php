@@ -7,8 +7,6 @@ use Model\Category;
 class MainController
 
 {
-
-
     private $templatePath;
     private $contentPath;
     private $root;
@@ -25,6 +23,17 @@ class MainController
                 'about-us' => 'About Us',
                 'product' => 'Products',
                 'contact' => 'Contact',
+                'login' => 'Login',
+            ],
+            'nav_menu_side' => [
+                'onderhoud-hoofdpagina' => 'Onderhoud Hoofdpagina',
+                'onderhoud-categorieen' => 'Onderhoud Categorieën',
+                'onderhoud-producten' => 'Onderhoud Producten',
+                'onderhoud-klanten' => 'Onderhoud Klanten',
+                'onderhoud-korting' => 'Onderhoud Korting',
+                'onderhoud-nieuwsbrief' => 'Onderhoud Nieuwsbrief',
+                'bestellingoverzicht' => 'Bestellingoverzicht',
+
             ],
         ];
         $this->root=getenv("ROOT");
@@ -63,13 +72,45 @@ class MainController
     {
         $nav_menu = '';
         $nav_items = $this->getConfig('nav_menu');
+        if(!isset($_SESSION['authenticated']))
+        {
+            $nav_items['login']='Login';
+        }
+        else
+        {
+            $nav_items['logout']='Logout'; unset($nav_items['login']);
+        }
         foreach ($nav_items as $uri => $name) {
             $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
-            $url = $this->site_url() . '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" >' . $name . '</a>' . $sep;
+            $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
+            $nav_menu .= '<a href=/omasbeste' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
+        return trim($nav_menu, $sep);
+    }
+
+    function nav_menu_side($sep = '')
+    {
+        $nav_menu = '';
+        $nav_items = $this->getConfig('nav_menu_side');
+        $i = 0;
+        $max = count($nav_items);
+        foreach ($nav_items as $uri => $name) {
+
+            $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
+            $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
+
+            if($i == 0){
+                $class .= ' first ';
+            }
+            $i++;
+            if($i == $max){
+                $class .= ' last ';
+            }
+            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+        }
+
         return trim($nav_menu, $sep);
     }
 //class="item ' . $class . '"
@@ -121,17 +162,17 @@ class MainController
      * @param $section
      * @return string
      */
-    function getContent($page_id,$section)
+    function getContent($section)
     {
 
-        $result = $this->database->selectStmt("SELECT CON.HTML FROM CONTENT CON WHERE CON.PAGEID = '" . $page_id . "' AND CON.SECTION = '" . $section . "' AND CON.Upd_dt = (SELECT MAX(CONN.Upd_Dt) FROM CONTENT CONN WHERE CONN.PAGEID = CON.PAGEID AND CONN.SECTION = CON.SECTION);");
+        $result = $this->database->selectStmt("SELECT CON.HTML FROM CONTENT CON WHERE CON.SECTION = '" . $section . "' AND CON.UpdDt = (SELECT MAX(CONN.UpdDt) FROM CONTENT CONN WHERE CONN.SECTION = CON.SECTION);");
         if (empty($result))
         {
             return "De selectie resulteert in een lege waarde.";
         }else
             {
-                print_r($result);
-//            return $result[0]['HTML'];
+               // print_r($result);
+            return $result[0]['HTML'];
         }
     }
 
@@ -163,8 +204,8 @@ class MainController
      * @param $page_id
      * @param $section
      */
-    function showContent($page_id, $section){
-        echo $this->getContent($page_id,$section);
+    function showContent($section){
+        echo $this->getContent($section);
     }
 
     /**
@@ -181,17 +222,13 @@ class MainController
     {
         if(empty($arr) or $class==''){
             echo "Use valid values.";
-        }else{?>
-            <div class="container">
-                <div class="row">
-                    <?php for($i=1;$i<count($arr);$i++){ ?>
-                        <div class=<?php $class;?>>
-                            test;
-                        </div>
-                    <?php };?>
-                </div>
-            </div>
-        <?php }
+        }else{
+            echo '<div class="container"><div class="row">';
+            for($i=1;$i<count($arr);$i++) {
+                echo '<div class="' . $class . '"></div>';
+            }
+            echo '</div></div>';
+        }
     }
 
     /**
@@ -199,7 +236,6 @@ class MainController
      */
     function getGridCategories()
     {
-        
         $categories = $this->category->SpecialGetcategories();
         $this->generateGrid($categories,"col-12 col-sm-6 col-md-4");
     }

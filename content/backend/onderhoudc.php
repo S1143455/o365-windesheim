@@ -1,40 +1,112 @@
 <?php
-include_once 'content/backend/header-admin.php';
-include_once 'content/backend/sidebar-admin.php';
-?>
-    <div class="container marginleft">
-        <div class="row" style="min-height: 50px;">
-            <div class="col-md-7">
-            </div>
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-3">
-            </div>
-        </div>
-        <div class="row">
-            <div class="container">
-                <table class="table table-fixed">
-                    <thead>
-                    <tr>
-                        <th class="col-xs-3">CategoryID</th>
-                        <th class="col-xs-3">empty value</th>
-                        <th class="col-xs-6">E-mail</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <?php $category->GetAllCategories(); ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <?php $category->SearchCategories("johndoe"); ?>
-        </div>
-        Onderhoud Categorieën
-        <p>This is <b>test</b> page.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
-    </div>
+    include_once 'content/backend/header-admin.php';
+    use Model\Category;
 
+?>
+<div class="container" style="width:100%">
+    <div class="row">
+
+<?php
+    include_once 'content/backend/sidebar-admin.php';
+?>
+
+<div class="col-md-8">
+    <div class="row" style="min-height: 50px;"></div>
+    <div class="row" style="min-height: 50px;">
+        <div class="col-md-7">
+            <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
+        </div>
+
+    </div>
+    <div class="row">
+        <table id="categoryTable" class="table table-fixed">
+            <thead>
+            <tr>
+                <th class="col-xs-2">Categorie ID</th>
+                <th class="col-xs-6">Omschrijving</th>
+                <th class="col-xs-2">Parent Categorie</th>
+                <th class="col-xs-2">Acties </th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php $categoryController->GetAllCategories(); ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="row">
+        <button type="button" class="first discountButton btn btn-primary" data-toggle="modal" data-target="#createCategory">
+            Aanmaken Categorie
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-content">
+            <form role="form" id="universalModalForm" method="POST" action="test">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
+                </div>
+                <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
+                    <span class="alert-body"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="categoryID">Categorie</label>
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryID">Ouder Categorie</label>
+                        <select class="form-control" name="ParentCategory">
+                            <option value="None">Empty</option>
+                            <?php $categoryController->ParentCategories() ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+<script>
+    function searchbar() {
+        var input, filter, table, tr, tds, i, txtValue, tdsearch;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("categoryTable");
+        tr = table.getElementsByTagName("tr");
+
+        if(filter == ''){
+            for (i = 1; i < tr.length; i++) {
+                    tr[i].style.display = "";
+            }
+        }
+
+        for (i = 1; i < tr.length; i++) {
+            tdsearch = false;
+            tds = tr[i].getElementsByTagName("td");
+            for(x = 0; x < tds.length; x++){
+                if (tds[x]) {
+                    txtValue = tds[x].textContent || tds[x].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tdsearch = true;
+                    }
+                }
+            }
+            if(tdsearch == false){
+                tr[i].style.display = "none";
+            }
+        }
+    }
+</script>
 <?php
 include_once 'content/backend/footer-admin.php';
 ?>

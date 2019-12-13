@@ -6,10 +6,10 @@ spl_autoload_register(function ($class) {
 });
 $router = new Router\Router();
 $main = new Controller\MainController();
-$authentication = new Controller\AuthenticationController();
+$authenticationController = new Controller\AuthenticationController();
 $discount = new Controller\DiscountController();
 
-switch ($authentication->role()){
+switch ($authenticationController->role()){
     case 'admin' :
         break;
     case 'customer':
@@ -20,7 +20,7 @@ switch ($authentication->role()){
         break;
 }
 $admin = new Controller\AdminController();
-$category = new Controller\CategoryController();
+$categoryController = new Controller\CategoryController();
 
 $user = new Controller\UserController();
 $productController = new Controller\ProductController();

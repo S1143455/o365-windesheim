@@ -1,44 +1,37 @@
 <?php
 include 'loader.php';
+include_once 'content/frontend/header.php';
+
+    // Let's test the input of the user.
     if(isset($_POST['login']))
     {
-        $authentication->login($_POST['gbrkr'], $_POST['pw']);
-        die();
+        $authenticationController->login($_POST['gbrkr'], $_POST['pw']);
+    }
+
+    if (isset($_POST['forgotpassword']))
+    {
+        echo "Dat is niet handig!";
     }
 
 ?>
-<form method="post" action="">
-    <input type="text" name="gbrkr" placeholder="Gebruikersnaam" value="' . $value_naam . '"><br>
-    <input type="password" name="pw" placeholder="Wachtwoord"><br>
-    <button type="submit" name="login">Inloggen</button>
-</form>
-
-<!---->
-<?php
-//include "Controller/Database.php";
-// Wat variabelen aanmaken voor later gebruikt.
-$value_naam='';
-
-// Als er al ingegeven is, dan kijken of de gebruikersnaam ook ingegeven is.
-// Is dit het geval, dan wordt deze als value gebruikt in de inputbox.
-
-
-    // Als de username en/of password leeg is een melding geven.
-
-
-    // Kijken of de ingevoerde gegevens juist zijn.
-
-
-    // Als we iets terug krijgen is het goed... (kennelijk)
-    if (count($result) == 1){
-        $new_auth= new \Controller\AuthenticationController();
-        $result_auth=$new_auth->login($result[0]['user_name'],$result[0]['user_password']);
-        $authenticated= $new_auth->isAuthenticated();
-    }
-    // kennelijk zijn de ingevoerde gegevens niet juist.
-    else {echo "Gebruikersnaam en/of wachtwoord is niet goed.";}
-}
-else {
-    echo "Voer uw gebruikersnaam en wachtwoord in.<br>";
-}
-//?>
+<div class="card">
+    <article class="card-body">
+<!--        <a href="" class="float-right btn btn-outline-primary">Sign up</a>-->
+<!--        <h4 class="card-title mb-4 mt-1">Sign in</h4>-->
+        <form method="post" action="">
+            <div class="form-group">
+                <label >Gebruikersnaam : </label>
+                <input class="form-control" type="text" name="gbrkr" placeholder="Gebruikersnaam">
+            </div> <!-- form-group// -->
+            <div class="form-group">
+                <label class="col-sm-3">Wachtwoord : </label>
+                <input class="form-control" type="password" name="pw" placeholder="Wachtwoord">
+            </div> <!-- form-group// -->
+            <div class="form-group">
+                <button type="submit" name="login" class="button" style="padding: 5px">Inloggen</button>
+                <button type="submit" name="forgotpassword" class="button" style="padding: 5px">Wachtwoord vergeten</button>
+            </div> <!-- form-group// -->
+        </form>
+    </article>
+</div>
+<div><?php if(isset($_SESSION['LOGIN_ERROR'])){echo $_SESSION['LOGIN_ERROR']; unset($_SESSION['LOGIN_ERROR']);} ?></div>
