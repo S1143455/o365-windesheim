@@ -44,43 +44,44 @@ include 'loader.php';
         }
     }
 </script>
-<div class="container" style="wi">
+<div class="container" style=" width:100% !important; ">
     <div class="row">
         <div class="col align-self-center">
 
-<nav class="navbar navbar-default navbar-static-top  my-nav">
-    <div class="container navcontainer">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bas-navbar" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo" ></img>
+            <nav class="navbar navbar-default navbar-static-top  my-nav">
+                <div class="container navcontainer">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bas-navbar" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                     </div>
-                    <div class="col-md-9 tekst">
-                        <h1>Oma's beste</h1>
-                        <h2>Producten zoals oma ze vroeger maakte! </h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo" ></img>
+                                </div>
+                                <div class="col-md-9 tekst">
+                                    <h1>Oma's beste</h1>
+                                    <h2>Producten zoals oma ze vroeger maakte! </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="hide1 scroll-nav">
+                                <?php $main->navigationalmenu();?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="height:1px;background-color:black;"> </div>
+                    <div class="row">
+                        <div class="col-md-8 normalnav">
+                            <?php $main->navigationalmenu(); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="hide1 scroll-nav">
-                    <?php $main->navigationalmenu();?>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="height:1px;background-color:black;"> </div>
-        <div class="row">
-            <div class="col-md-8 normalnav">
-                <?php $main->navigationalmenu(); ?>
-            </div>
-        </div>
-    </div>
-</nav>
+            </nav>
+                <div class="container">

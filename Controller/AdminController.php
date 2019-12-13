@@ -76,7 +76,6 @@ class AdminController
         $nav_items = $this->getConfig('nav_menu_side');
         $i = 0;
         $max = count($nav_items);
-        var_dump($this->site_urlAdmin());
         foreach ($nav_items as $uri => $name) {
 
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
@@ -89,7 +88,7 @@ class AdminController
             if($i == $max){
                 $class .= ' last ';
             }
-            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href=/omasbeste/admin' . $url . ' title=' . $name . ' class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
         }
 
         return trim($nav_menu, $sep);

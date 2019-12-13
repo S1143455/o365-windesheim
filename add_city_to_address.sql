@@ -1,0 +1,1 @@
+ALTER TABLE `address` ADD `City` VARCHAR(255) NOT NULL AFTER `Zipcode`;
