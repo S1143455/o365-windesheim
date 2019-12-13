@@ -271,7 +271,7 @@ class Database extends Models
             }
             $sql .= " WHERE " .$where;
         }
-        echo $sql;
+
         $this->openConn();
         $stmt = $this->connection->prepare($sql);
         for($i = 0; $i < sizeof($columnKeys); $i++)
@@ -282,7 +282,13 @@ class Database extends Models
 
         $retVal = $stmt->fetchAll();
         $this->connection = null;
+
+        //Remove or comment these lines --
+        echo "Query that was created and executed :<br>" . $sql;
+        echo "<br> The array of objects that has been found: <br>";
         print_r($retVal);
+        // -- End
+
         return $retVal;
     }
 

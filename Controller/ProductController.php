@@ -21,7 +21,9 @@ Class ProductController
     public function index()
     {
         $test = new Product();
-
+        /**
+         * Database.php  line 287-289  to remove the comments from the page.
+         */
         $test->where(["StockItemID", "StockItemName", "IsChillerStock"]  , ["StockItemID", "StockItemName", "IsChillerStock"], "=" , ["test", "test1", "test2"] );
         die();
 
