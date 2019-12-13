@@ -6,8 +6,23 @@ include_once 'content/backend/sidebar-admin.php';
 ?>
 
 <script xmlns:line-height="http://www.w3.org/1999/xhtml">
-    function generateCode() {
-        var x = document.getElementById("inputCode")
+    function generateCodeOnetime() {
+        var x = document.getElementById("inputCodeOneTime")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
+
+    function generateCodeProduct() {
+        var x = document.getElementById("inputCodeDiscountProduct")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
+
+    function generateCodeCategory() {
+        var x = document.getElementById("inputCodeDiscountCategory")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
+
+    function generateCodeMail() {
+        var x = document.getElementById("inputCodeMailDiscount")
         x.value = Math.floor((Math.random() * 900000000) + 100000000);
     }
 </script>
@@ -101,7 +116,6 @@ include_once 'content/backend/sidebar-admin.php';
             <button type="button" class="maildiscountButton btn btn-primary" data-toggle="modal" data-target="#kortingMailen">
                 Korting mailen naar klant
             </button>
-
         </div>
     </div>
 </div>
@@ -112,29 +126,30 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="modal-dialog" role="document">
         <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="kortingEenmaalLabel">Eenmalige korting aanmaken</h4>
+                    <h4 class="modal-title" id="labelOneTimeDiscount">Eenmalige korting aanmaken</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
-                        Code:
-                        <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
-                        <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                        Eenmalig
-                        </label>
+                        <label for="inputCodeOneTimeDiscount">Code:</label>
+                        <input type="text" class="inputCode" aria-label="inputCodeOneTimeDiscount" id="inputCodeOneTimeDiscount">
+
+                        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeOnetime();">Genereer code</button>
+
+                        <input class="form-check-input" type="checkbox" value="" name="checkboxOneTimeDiscount" id="checkboxOneTimeDiscount">
+                        <label class="form-check-label" for="checkboxOneTimeDiscount">Eenmalig</label>
                     </div>
                     <div class="col-md-12">
-                        Percentage:
-                        <input type="text" class="inputPercentage" aria-label="inputPercentage" id="inputPercentageOneTimeDiscount"> <span class="input-group-text">%</span>
+                        <label for="inputPercentageOneTimeDiscount">Percentage:</label>
+                        <input type="text" class="inputPercentage" aria-label="inputPercentageOneTimeDiscount" id="inputPercentageOneTimeDiscount"> <span class="input-group-text">%</span>
                     </div>
                     <div class="col-md-12"
                     <div>
-                        Begin periode:
+                        <label for="inputPercentageOneTimeDiscount">Begin periode:</label>
                         <input type="date" class="inputStartDate" id="inputStartDateOneTimeDiscount">
+
                         <div class="inputEndDate-container"
                         <p class="einde-periode">Einde periode:</p>
                         <input type="date" class="inputEndDate" id="inputEndDateOneTimeDiscount">
@@ -145,9 +160,10 @@ include_once 'content/backend/sidebar-admin.php';
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                     <button type="button" class="btn btn-primary" name="createDiscount">Korting aanmaken</button>
                 </div>
+            </div>
         </div>
-    </div>
 </div>
+
 <div class="modal fade" id="kortingProduct" tabindex="-1" role="dialog" aria-labelledby="kortingProductLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -159,13 +175,13 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
-                    Code:
-                    <input type="text" class="inputCode" aria-label="inputCode" id="inputCodeDiscountProduct">
-                    <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        Eenmalig
-                    </label>
+                    <label for="inputCodeProductDiscount">Code:</label>
+                    <input type="text" class="inputCode" aria-label="inputCodeProductDiscount" id="inputCodeProductDiscount">
+
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeProduct();">Genereer code</button>
+
+                    <input class="form-check-input" type="checkbox" value="" id="checkboxDiscountProduct">
+                    <label class="form-check-label" for="checkboxDiscountProduct">Eenmalig</label>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
@@ -174,25 +190,27 @@ include_once 'content/backend/sidebar-admin.php';
                     </div>
                 </div>
                 <div class="col-md-12">
-                    Percentage:
-                    <input type="text" class="inputPercentage" aria-label="inputPercentage" id="inputPercentageDiscountProduct"> <span class="input-group-text">%</span>
+                    <label for="inputPercentageDiscountProduct">Percentage:</label>
+                    <input type="text" class="inputPercentage" aria-label="inputPercentageDiscountProduct" id="inputPercentageDiscountProduct"> <span class="input-group-text">%</span>
                 </div>
-                <div class="col-md-12"
-                <div>
-                    Begin periode:
+                <div class="col-md-12">
+                    <div>
+                    <label for="inputPercentageDiscountProduct">Begin periode:</label>
                     <input type="date" class="inputStartDate" id="inputStartDateDiscountProduct">
-                    <div class="inputEndDate-container"
+
+                    <div class="inputEndDate-container">
                     <p class="einde-periode">Einde periode:</p>
                     <input type="date" class="inputEndDate" id="inputEndDateDiscountProduct">
                     </div>
                 </div>
-            </div>
-        <div class="modal-footer">
+                </div>
+            <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                 <button type="button" class="btn btn-primary">Korting aanmaken</button>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="modal fade" id="kortingCategorie" tabindex="-1" role="dialog" aria-labelledby="kortingCategorieLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -205,37 +223,41 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
-                    Code:
-                    <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
-                    <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
+                    <label for="inputCodeCategoryDiscount">Code:</label>
+                    <input type="text" class="inputCode" aria-label="inputCodeCategoryDiscount" id="inputCodeCategoryDiscount">
+
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeCategory();">Genereer code</button>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="descriptionPopUp" for="descriptionDiscountCategory">Omschrijving:</label>
-                        <textarea class="form-control" id="descriptionDiscountCategory" rows="3"></textarea>
-                    </div>
+                <div class="form-group">
+                    <label class="descriptionPopUp" for="descriptionDiscountProduct">Omschrijving:</label>
+                    <textarea class="form-control" id="descriptionDiscountProduct" rows="3"></textarea>
+                </div>
                 </div>
                 <div class="col-md-12">
-                    Percentage:
-                    <input type="text" class="inputPercentage" aria-label="inputCode" id="inputPercentageDiscountCategory"> <span class="input-group-text">%</span>
+                    <label for="inputPercentageDiscountCategory">Percentage:</label>
+                    <input type="text" class="inputPercentage" aria-label="inputPercentageDiscountCategory" id="inputPercentageDiscountCategory"> <span class="input-group-text">%</span>
                 </div>
-                <div class="col-md-12"
+                <div class="col-md-12">
                 <div>
-                    Begin periode:
+                    <label for="inputPercentageDiscountCategory">Begin periode:</label>
                     <input type="date" class="inputStartDate" id="inputStartDateDiscountCategory">
-                    <div class="inputEndDate-container"
+
+                    <div class="inputEndDate-container">
                     <p class="einde-periode">Einde periode:</p>
                     <input type="date" class="inputEndDate" id="inputEndDateDiscountCategory">
                     </div>
                 </div>
+                </div>
             </div>
-        <div class="modal-footer">
+            <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
             <button type="button" class="btn btn-primary">Korting aanmaken</button>
+            </div>
         </div>
     </div>
 </div>
-</div>
+
 <div class="modal fade" id="kortingMailen" tabindex="-1" role="dialog" aria-labelledby="kortingMailenLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -247,13 +269,12 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
-                    Code:
-                    <input type="text" class="inputCode" aria-label="inputCode" id="inputCode">
-                    <button type="button" class="btn btn-outline-secondary" onclick="generateCode();">Genereer code</button>
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        Eenmalig
-                    </label>
+                    <label for="inputCodeMailDiscount">Code:</label>
+                    <input type="text" class="inputCode" aria-label="inputCodeMailDiscount" id="inputCodeMailDiscount">
+
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeMail();">Genereer code</button>
+                    <input class="form-check-input" type="checkbox" value="" id="checkboxMailDiscount">
+                    <label class="form-check-label" for="checkboxMailDiscount">Eenmalig</label>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
@@ -262,13 +283,14 @@ include_once 'content/backend/sidebar-admin.php';
                     </div>
                 </div>
                 <div class="col-md-12">
-                    Percentage:
-                    <input type="text" class="inputPercentage" aria-label="inputCode" id="inputCodeMailDiscount"> <span class="input-group-text">%</span>
+                    <label for="inputPercentageMailDiscount">Percentage:</label>
+                    <input type="text" class="inputPercentage" aria-label="inputPercentageMailDiscount" id="inputPercentageMailDiscount"> <span class="input-group-text">%</span>
                 </div>
                 <div class="col-md-12"
                 <div>
-                    Begin periode:
+                    <label for="inputPercentageMailDiscount">Begin periode:</label>
                     <input type="date" class="inputStartDate" id="inputStartDateMailDiscount">
+
                     <div class="inputEndDate-container"
                     <p class="einde-periode">Einde periode:</p>
                     <input type="date" class="inputEndDate" id="inputEndDateMailDiscount">
@@ -282,13 +304,12 @@ include_once 'content/backend/sidebar-admin.php';
                     </div>
                 </div>
                 </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-            <button type="button" class="btn btn-primary">Korting mailen</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                <button type="button" class="btn btn-primary">Korting mailen</button>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 
