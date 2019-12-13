@@ -134,7 +134,7 @@ class Database extends Models
                     $retVal = null;
                 }
                 $retVal = $this->initRetrievedObjects($retVal)[0];
-                print_r($retVal->getStockItemName());
+               // print_r($retVal->getStockItemName());
             }
             catch(Exception $e)
             {
@@ -248,7 +248,7 @@ class Database extends Models
     {
         $this->openConn();
         $stmt = $this->createInsertStatement();
-        print_r($stmt);
+     //   print_r($stmt);
         try
         {
             $stmt->execute();
@@ -444,7 +444,7 @@ class Database extends Models
 
         foreach ($values as $parameter => $value)
         {
-            print_r([$parameter, $value]);
+           // print_r([$parameter, $value]);
             $stmt->bindValue($parameter, $value);
         }
         return $stmt;
@@ -488,7 +488,7 @@ class Database extends Models
 
                     $this->setError($this->table, $value);
                 }
-               echo gettype($value);
+              // echo gettype($value);
                 if($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN )
                 {
                     $value = intval($value);
