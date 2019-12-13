@@ -7,5 +7,5 @@
         </div>
     </div>
 </body>
-    <script src="D:\Windesheim\SQL en Webprogrammeren\xampp\htdocs\wwi\scripts\script.js"></script>
+    <script src="..\scripts\script.js"></script>
 </html>

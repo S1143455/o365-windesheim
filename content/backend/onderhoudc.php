@@ -22,9 +22,10 @@
         <table id="categoryTable" class="table table-fixed">
             <thead>
             <tr>
-                <th class="col-xs-2">CategoryID</th>
-                <th class="col-xs-7">Omschrijving</th>
-                <th class="col-xs-3">Parent Category</th>
+                <th class="col-xs-2">Categorie ID</th>
+                <th class="col-xs-6">Omschrijving</th>
+                <th class="col-xs-2">Parent Categorie</th>
+                <th class="col-xs-2">Acties </th>
             </tr>
             </thead>
             <tbody>
@@ -35,8 +36,8 @@
 </div>
 <div class="col-md-2">
     <div class="row">
-        <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#createCategory">
-            Eenmalige korting
+        <button type="button" class="first discountButton btn btn-primary" data-toggle="modal" data-target="#createCategory">
+            Aanmaken Categorie
         </button>
     </div>
 </div>
@@ -47,20 +48,27 @@
             <form role="form" id="universalModalForm" method="POST" action="test">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
-                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span> Edit<span class="modal-title">.model-title</span></h4>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
                 </div>
                 <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
                     <span class="alert-body"></span>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="categoryID">Category</label>
+                        <label for="categoryID">Categorie</label>
                         <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryID">Ouder Categorie</label>
+                        <select class="form-control" name="ParentCategory">
+                            <option value="None">Empty</option>
+                            <?php $categoryController->ParentCategories() ?>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" name="submit" value="product" class="btn btn-primary">
+                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
                 </div>
             </form>
         </div>
