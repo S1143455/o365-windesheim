@@ -45,4 +45,5 @@ class Authentication
 //>>>>>>> b2bb1f4d544f81dcbbf97a44c468f2323b034549:Controller/Authentication.php
         }
     }
+
 }

@@ -2,7 +2,7 @@
 
 include_once 'loader.php';
 include_once 'content/frontend/header.php';
-
+include_once 'model/database.php';
 ?>
 
 <p><h2>Account aanmaken</h2></p> </br>
@@ -14,15 +14,15 @@ include_once 'content/frontend/header.php';
                     <div class="row">
                         <h4>Aanhef</h4>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="Gender" id="GenderMan" value="option1" checked>
+                            <input class="form-check-input" type="radio" name="Gender" id="GenderMan" value="Man" checked>
                             <label class="form-check-label" for="inlineRadio">De heer</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="Gender" id="GenderWoman" value="option2">
+                            <input class="form-check-input" type="radio" name="Gender" id="GenderWoman" value="Woman">
                             <label class="form-check-label" for="inlineRadio">Mevrouw</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="Gender" id="GenderUnknown" value="option3">
+                            <input class="form-check-input" type="radio" name="Gender" id="GenderUnknown" value="Unknown">
                             <label class="form-check-label" for="inlineRadio">Onbekend</label>
                         </div>
                     <div class="col-md-6">
@@ -75,11 +75,18 @@ if (isset($_POST["register"]))
     $usrphone= $_POST["PhoneNumber"];
     $system= "1";
     $pwd= $_POST["pwd"];
-    $register_sql='insert into people (fullName, logonname, emailaddress, phonenumber, hashedpassword, lasteditedby) values ("'.$fullname.'", "'.$usrname.'", "'.$usremail.'", "'.$usrphone.'", "'.$pwd.'", "'.$system.'")';
+    $termsandconditions = $_POST["GenConditions"];
+    $newsletter = $_POST["NewsLetter"];
+    $gender = $_POST["Gender"];
+    $register_sql='insert into people (fullName, logonname, emailaddress, phonenumber, hashedpassword, lasteditedby) 
+                   values ("'.$fullname.'", "'.$usrname.'", "'.$usremail.'", "'.$usrphone.'", "'.$pwd.'", "'.$system.'")
+                   insert into customer (gender, newsletter, termsandconditions) 
+                   values ("'.$gender.','.$newsletter.','.$termsandconditions.'")';
 
     echo "$register_sql";
 
 }
+
 
 else
 {
