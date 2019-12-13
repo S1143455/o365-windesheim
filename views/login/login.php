@@ -10,7 +10,7 @@ include_once 'content/frontend/header.php';
 
     if (isset($_POST['forgotpassword']))
     {
-        echo "yuo stupid succer!";
+        echo "Dat is niet handig!";
     }
 
 ?>
