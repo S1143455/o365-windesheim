@@ -5,7 +5,6 @@
 ?>
 <div class="container" style="width:100%">
     <div class="row">
-
 <?php
     include_once 'content/backend/sidebar-admin.php';
 ?>

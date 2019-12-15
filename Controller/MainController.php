@@ -25,6 +25,12 @@ class MainController
                 'contact' => 'Contact',
                 'login' => 'Login',
             ],
+            'nav_menu_side_fe' => [
+                'onderhoudaccount' => 'Uw account',
+                'Bestellingen' => 'Bestellingen',
+                'bestellingoverzicht' => 'Bestellingoverzicht',
+
+            ],
             'nav_menu_side' => [
                 'onderhoud-hoofdpagina' => 'Onderhoud Hoofdpagina',
                 'onderhoud-categorieen' => 'Onderhoud Categorieën',
@@ -87,6 +93,30 @@ class MainController
             $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
+        return trim($nav_menu, $sep);
+    }
+
+    function nav_menu_side_fe($sep = '')
+    {
+        $nav_menu = '';
+        $nav_items = $this->getConfig('nav_menu_side_fe');
+        $i = 0;
+        $max = count($nav_items);
+        foreach ($nav_items as $uri => $name) {
+
+            $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
+            $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
+
+            if($i == 0){
+                $class .= ' first ';
+            }
+            $i++;
+            if($i == $max){
+                $class .= ' last ';
+            }
+            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+        }
+
         return trim($nav_menu, $sep);
     }
 
