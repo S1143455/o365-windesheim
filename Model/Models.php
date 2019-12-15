@@ -44,6 +44,9 @@ class Models
                 case  'people':
                     $this->getPeople();
                     break;
+                case  'address':
+                    $this->getAddress();
+                    break;
                 default:
                     die('Table not implemented');
             }
@@ -86,6 +89,18 @@ class Models
             "CategoryID" => ['Integer', 'PrimaryKey', 'Required'],
             "CategoryName" => ['Varchar', 'Attribute', 'Required'],
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+        );
+    }
+
+    private function getAddress()
+    {
+        $this->column = array(
+            "AddressId" => ['Integer', 'PrimaryKey', 'Required'],
+            "Address" => ['Varchar', 'Attribute', 'Required'],
+            "Zipcode" => ['Varchar', 'HasMany', 'Nullable'],
+            "City" => ['Varchar', 'HasOne', 'Required'],
+            "PersonId" => ['People', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
     }

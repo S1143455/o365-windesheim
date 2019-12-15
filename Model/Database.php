@@ -66,6 +66,24 @@ class Database extends Models
 
     /**
      * Temporary function
+     * Executes a UPDATE statement.
+     * @param $sql
+     * @return $result
+     */
+    public function UpdateStmt($sql)
+    {
+        if ($this->connection == null)
+        {
+            $this->openConn();
+        }
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        $this->closeConnection();
+        return $stmt->rowcount();
+    }
+
+    /**
+     * Temporary function
      * @param $sql
      * @return mixed
      */

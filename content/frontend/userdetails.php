@@ -3,7 +3,12 @@
         <body>
             <h2>Uw klant nummer is <?php echo $_SESSION['USER']['DATA'][0]['PersonID']; ?>.</h2>
             <h2>Hieronder staan de gegevens zoals deze bij ons bekend zijn.</h2>
-                <?php if (isset($_POST['changeuser'])){include "update_userdetails.php";}?>
+                <?php
+                //echo "<pre>"; print_r($_POST);echo "</pre><br>";
+                if (isset($_POST['changeuser'])){include "update_userdetails.php";}
+                elseif (isset($_POST['changepassword'])){include "update_userpassword.php";}
+                ?>
+
                 <div class="card">
                     <article class="card-body">
                         <form method="post" action="">
@@ -12,52 +17,52 @@
                                     <b>Aanhef</b>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label for="male">De heer</label>
-                                    <input type="radio" disabled name="Gender" id="male" value="<?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] == 'Man'){echo 'true';} ?>" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] == 'Man'){echo "checked";} ?>>
+                                    <label for="male0">De heer</label>
+                                    <input type="radio" disabled id="male0" value="<?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] == 'Man'){echo 'true';} ?>" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] == 'Man'){echo "checked";} ?>>
                                 </div>
                                 <div class="form-group col-md-9">
-                                    <label for="female">Mevrouw</label>
-                                    <input type="radio" disabled name="Gender" id="female" value="<?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] != 'Man'){echo 'true';} ?>" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] != 'Man'){echo "checked";} ?>>
+                                    <label for="female0">Mevrouw</label>
+                                    <input type="radio" disabled id="female0" value="<?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] != 'Man'){echo 'true';} ?>" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] != 'Man'){echo "checked";} ?>>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-10">
-                                    <label for="naam">Naam</label>
-                                    <input type="text" readonly class="form-control" name="Naam" id="FullName" value="<?php echo $_SESSION['USER']['DATA'][0]['FullName'];?>">
+                                    <label for="naam0">Naam</label>
+                                    <input type="text" readonly class="form-control" id="FullName0" value="<?php echo $_SESSION['USER']['DATA'][0]['FullName'];?>">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="dob">Geboortedatum</label>
-                                    <input type="text" readonly class="form-control" name="Naam" id="DateOfBirth" value="<?php $show_date= new DateTime($_SESSION['USER']['DATA'][0]['DateOfBirth']); echo date_format($show_date, 'j-m-Y');?>">
+                                    <input type="text" readonly class="form-control" id="DateOfBirth0" value="<?php $show_date= new DateTime($_SESSION['USER']['DATA'][0]['DateOfBirth']); echo date_format($show_date, 'j-m-Y');?>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="Address" >Adres</label>
-                                    <input type="text" readonly class="form-control" name="Address" id="Address" placeholder= "<?php echo $_SESSION['USER']['ADDRESS'][0]['Address'];?>">
+                                    <label for="Address0" >Adres</label>
+                                    <input type="text" readonly class="form-control" id="Address0" placeholder= "<?php echo $_SESSION['USER']['ADDRESS'][0]['Address'];?>">
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label for="Zipcode">Postcode</label>
-                                    <input type="text" readonly class="form-control" name="Zipcode"  id="Zipcode" placeholder="<?php echo $_SESSION['USER']['ADDRESS'][0]['Zipcode'];?>">
+                                    <label for="Zipcode0">Postcode</label>
+                                    <input type="text" readonly class="form-control" id="Zipcode0" placeholder="<?php echo $_SESSION['USER']['ADDRESS'][0]['Zipcode'];?>">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="city">Woonplaats</label>
-                                    <input type="text" readonly class="form-control" name="city" id="city" placeholder="<?php echo $_SESSION['USER']['ADDRESS'][0]['City'];?>">
+                                    <label for="city0">Woonplaats</label>
+                                    <input type="text" readonly class="form-control" id="city0" placeholder="<?php echo $_SESSION['USER']['ADDRESS'][0]['City'];?>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="EmailAddress">Emailadres</label>
-                                    <input type="text" readonly class="form-control" id="EmailAddress" name="EmailAddress" placeholder="<?php echo $_SESSION['USER']['DATA'][0]['EmailAddress'];?>">
+                                    <label for="EmailAddress0">Emailadres</label>
+                                    <input type="text" readonly class="form-control" id="EmailAddress0" placeholder="<?php echo $_SESSION['USER']['DATA'][0]['EmailAddress'];?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="LogonName">Inlognaam</label>
-                                    <input type="text" readonly class="form-control" id="LogonName" name="LogonName" placeholder="<?php echo $_SESSION['USER']['DATA'][0]['LogonName'];?>">
+                                    <label for="LogonNam0e">Inlognaam</label>
+                                    <input type="text" readonly class="form-control" id="LogonName0" placeholder="<?php echo $_SESSION['USER']['DATA'][0]['LogonName'];?>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label for="newsletter">Ja! Ik ontvang graag de Nieuwsbrief van Oma's Beste.</label>
-                                    <input type="checkbox" disabled name="newsletter" id="newsletter" <?php if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['newsletter']==1) {echo "checked";} ?>>
+                                    <label for="newsletter0">Ja! Ik ontvang graag de Nieuwsbrief van Oma's Beste.</label>
+                                    <input type="checkbox" disabled id="newsletter0" <?php if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['newsletter']==1) {echo "checked";} ?>>
                                 </div>
                             </div>
                         </form>
@@ -74,7 +79,7 @@
                 <div class="modal fade" id="changeuser" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
                     <div class="modal-dialog" style="width:1000px;">
                         <div class="modal-content">
-                            <form role="form" id="universalModalForm" method="POST" action="">
+                            <form role="form" id="changeuserForm" method="POST" action="">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                                     <h4 class="modal-title"><span class="modal-title">Aanpassen gegevens</span></h4>
@@ -108,8 +113,8 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="address" >Adres</label>
-                                            <input type="text" class="form-control" name="address" id="address" value= "<?php echo $_SESSION['USER']['ADDRESS'][0]['Address'];?>">
+                                            <label for="Address" >Adres</label>
+                                            <input type="text" class="form-control" name="Address" id="Address" value= "<?php echo $_SESSION['USER']['ADDRESS'][0]['Address'];?>">
                                         </div>
                                         <div class="form-group col-md-2">
                                             <label for="Zipcode">Postcode</label>
@@ -117,7 +122,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="City">Woonplaats</label>
-                                            <input type="text" class="form-control" name="city" id="City" value="<?php echo $_SESSION['USER']['ADDRESS'][0]['City'];?>">
+                                            <input type="text" class="form-control" name="City" id="City" value="<?php echo $_SESSION['USER']['ADDRESS'][0]['City'];?>">
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -134,7 +139,8 @@
                                         <div class="form-group">
                                             <label for="newsletter">Ja! Ik ontvang graag de Nieuwsbrief van Oma's Beste.</label>
                                             <input type="checkbox" name="newsletter" id="newsletter" value="<?php if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['newsletter']==1) {echo 1;} ?>" <?php if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['newsletter']==1) {echo "checked";} ?>>
-                                            <input type="hidden" name="PersonID" value="<?php echo $_SESSION['USER']['DATA'][0]['PersonID'];?>" >
+                                            <input type="hidden" name="PersonID" value="<?php echo $_SESSION['USER']['DATA'][0]['PersonID'];?>">
+                                            <input type="hidden" name="AddressId" value="<?php echo $_SESSION['USER']['ADDRESS'][0]['AddressId'];?>">
                                         </div>
                                     </div>
                                 </div>
@@ -150,7 +156,7 @@
                 <div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
                     <div class="modal-dialog" style="width:1000px;">
                         <div class="modal-content">
-                            <form role="form" id="universalModalForm" method="POST" action="say_hi.php">
+                            <form role="form" id="changepasswordForm" method="POST" action="">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                                     <h4 class="modal-title"><span class="modal-title">Wachtwoord wijzigen</span></h4>
@@ -174,7 +180,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
-                                    <input type="submit" name="submit" value="Opslaan" class="btn btn-primary">
+                                    <input type="submit" name="changepassword" value="Opslaan" class="btn btn-primary">
                                 </div>
                             </form>
                         </div>

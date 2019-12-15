@@ -27,7 +27,7 @@ class MainController
             ],
             'nav_menu_side_fe' => [
                 'onderhoudaccount' => 'Uw account',
-                'Bestellingen' => 'Bestellingen',
+                'onderhoudbestellingen' => 'Bestellingen',
                 'bestellingoverzicht' => 'Bestellingoverzicht',
 
             ],

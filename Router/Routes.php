@@ -33,6 +33,11 @@ $router->route('/onderhoudaccount', function(){
     return include 'content/frontend/usermaintenance.php';
 });
 
+$router->route('/onderhoudbestellingen', function(){
+    return include 'content/frontend/usermaintenance.php';
+});
+
+
 /**
  * End usermaintenance
  */
