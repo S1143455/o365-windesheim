@@ -104,6 +104,11 @@ $router->route('/admin/Onderhoud-hoofdpagina', function(){
  */
 
 
+$router->route("/404", function()
+{
+    return include 'content/404.php';
+});
+
 /**
  *  Execute the route
  */
