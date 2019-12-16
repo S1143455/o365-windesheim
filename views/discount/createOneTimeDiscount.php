@@ -14,24 +14,26 @@ if (isset($_POST['submit'])) {
 ?>
 <form method="POST">
     <div class="form-group">
-        <label for="inputCodeOneTime">Code:</label>
-        <input type="text" class="inputCode" aria-label="inputCodeOneTime" id="inputCodeOneTime">
+        <label for="inputCodeOT">Code:</label>
+        <input type="text" class="form-control inputCode" name="DealCode" id="inputCodeOT">
+        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeOT();">Genereer code</button>
     </div>
     <div class="form-group">
-        <input class="form-check-input" type="checkbox" value="" name="checkboxOneTime" id="checkboxOneTime">
-        <label class="form-check-label" for="checkboxOneTime">Eenmalig</label>
+        <label class="form-check-label" for="checkboxOT">Eenmalig:</label>
+        <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT">
     </div>
     <div class="form-group">
-        <label for="inputPercentageOneTime">Percentage:</label>
-        <input type="text" class="inputPercentage" aria-label="inputPercentageOneTime" id="inputPercentageOneTime">
+        <label for="inputPercentageOTe">Percentage:</label>
+        <input type="text" class="form-control inputPercentage" name="DiscountPercentage" aria-label="inputPercentageOT" id="inputPercentageOT">
+        <span class="symbolPercentage">%</span>
     </div>
     <div class="form-group">
-        <label for="inputPercentageOneTime">Begin periode:</label>
-        <input type="date" class="inputStartDate" id="inputStartDateOneTimeDiscount">
+        <label for="inputPercentageOT"><span class="inputPercentageOT">Begin periode:</span></label>
+        <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartDateOT">
     </div>
     <div class="form-group">
-        <p class="einde-periode">Einde periode:</p>
-        <input type="date" class="inputEndDate" id="inputEndDateOneTimeDiscount">
+        <label for="inputEndDateOT">Einde periode:</label>
+        <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateOT">
     </div>
 </form>
 

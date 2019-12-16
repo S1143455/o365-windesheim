@@ -41,27 +41,27 @@
     </div>
 </div>
 
-<div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:1000px;">
-        <div class="modal-content">
-            <form role="form" id="universalModalForm" method="POST" action="test">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
-                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span> Edit<span class="modal-title">.model-title</span></h4>
-                </div>
-                <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
-                    <span class="alert-body"></span>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="categoryID">Category</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" name="submit" value="product" class="btn btn-primary">
-                </div>
+                <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="width:1000px;">
+                        <div class="modal-content">
+                            <form role="form" id="universalModalForm" method="POST" action="test">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span> Edit<span class="modal-title">.model-title</span></h4>
+                                </div>
+                                <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
+                                    <span class="alert-body"></span>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="categoryID">Category</label>
+                                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <input type="submit" name="submit" value="product" class="btn btn-primary">
+                                </div>
             </form>
         </div>
     </div>

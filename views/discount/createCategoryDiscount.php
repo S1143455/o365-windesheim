@@ -14,24 +14,26 @@ if (isset($_POST['submit'])) {
 ?>
 <form method="POST">
     <div class="form-group">
-        <label for="inputCodeCategoryDiscount">Code:</label>
-        <input type="text" class="inputCode" aria-label="inputCodeCategoryDiscount" id="inputCodeCategoryDiscount">
+        <label for="inputCodeDC">Code:</label>
+        <input type="text" class="form-control inputCode" name="DealCode" aria-label="inputCodeDC" id="inputCodeDC">
+        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeDC();">Genereer code</button>
     </div>
     <div class="form-group">
-        <label class="descriptionPopUp" for="descriptionDiscountCategory">Omschrijving:</label>
-        <textarea class="form-control" id="descriptionDiscountCategory" rows="3"></textarea>
+        <label class="descriptionPopUp" for="descriptionDC">Omschrijving:</label>
+        <textarea class="form-control dealDescription" name="DealDescription" id="descriptionDC" rows="3"></textarea>
     </div>
     <div class="form-group">
-        <label for="inputPercentageDiscountCategory">Percentage:</label>
-        <input type="text" class="inputPercentage" aria-label="inputPercentageDiscountCategory" id="inputPercentageDiscountCategory">
+        <label for="inputPercentageDC">Percentage:</label>
+        <input type="text" class="form-control inputPercentage" name="DiscountPercentage" aria-label="inputPercentageDC" id="inputPercentageDC">
+        <span class="symbolPercentage">%</span>
     </div>
     <div class="form-group">
-        <label for="inputPercentageDiscountCategory">Begin periode:</label>
-        <input type="date" class="inputStartDate" id="inputStartDateDiscountCategory">
+        <label for="inputStartDateDC">Begin periode:</label>
+        <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartDateDC">
     </div>
     <div class="form-group">
-        <p class="einde-periode">Einde periode:</p>
-        <input type="date" class="inputEndDate" id="inputEndDateDiscountCategory">
+        <label for="inputEndDateDC">Einde periode:</label>
+        <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateDC">
     </div>
 </form>
 

@@ -36,6 +36,9 @@ class Models
             case  'people':
                 $this->getPeople();
                 break;
+            case  'specialdeals':
+                $this->getSpecialdeals();
+                break;
             default:
                 die('Table not implemented');
         }
@@ -63,6 +66,20 @@ class Models
         );
     }
 
+    private function getSpecialdeals()
+    {
+        $this->column = array(
+            "SpecialDealID" => ['Integer', 'PrimaryKey', 'Required'],
+            "DealDescription" => ['Varchar', 'Attribute', 'Nullable'],
+            "StartDate" => ['Date', 'Attribute', 'Required'],
+            "EndDate" => ['Date', 'Attribute', 'Nullable'],
+            "DiscountPercentage" => ['Integer', 'Attribute', 'Required'],
+            "DealCode" => ['Integer', 'Attribute', 'Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "OneTime" => ['Tinyint', 'Attribute', 'Nullable'],
+            "Active" => ['Tinyint', 'Attribute', 'Nullable'],
+        );
+    }
 
     private function getCategory()
     {

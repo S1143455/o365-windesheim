@@ -84,6 +84,9 @@ $router->route('/admin/onderhoud-klanten', function(){
 $router->route('/admin/test', function() use($categoryController){
     return $categoryController->create();
 });
+$router->route('/admin/test123', function() use($discount){
+    return $discount->create();
+});
 
 $router->route('/admin/onderhoud-korting', function(){
     return include 'content/backend/onderhoudkorting.php';

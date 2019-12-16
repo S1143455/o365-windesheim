@@ -1,7 +1,8 @@
 <?php
 include_once 'content/backend/header-admin.php';
+
 ?>
-<div class="container" style="width:100%">
+<div class="container" style="width:100%" xmlns="http://www.w3.org/1999/html">
     <div class="row">
 
 <?php
@@ -11,16 +12,16 @@ include_once 'content/backend/sidebar-admin.php';
         <div class="row">
             <div class="col-md-12">
                 <!--dit gaat in header -->
-                <p>
+                <h3>
                     <br> Onderhoud Korting
-                </p>
+                </h3>
                 <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
-                <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
+                <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search" id="myInput" onkeyup="searchbar()">
                 <br>
             </div>
         </div>
         <div class="row">
-            <table class="table table-fixed" >
+            <table class="table table-fixed" id="tableViewDiscount">
                 <thead>
                 <tr>
                     <th class="col-xs-2">Code</th>
@@ -40,20 +41,20 @@ include_once 'content/backend/sidebar-admin.php';
         </div>
 
     </div>
-    <!-- style="" voorbeeld  -->
+    <!-- style="" -->
     <div class="col-md-2">
         <div class="row">
                      <!-- https://getbootstrap.com/docs/4.0/components/modal/  -->
-            <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#kortingEenmaal">
+            <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#oneTimeDiscount">
                 Eenmalige korting
             </button>
-            <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#kortingProduct">
+            <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#DiscountProduct">
                 Korting op product(en)
             </button>
-            <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#kortingCategorie">
+            <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#DiscountCategory">
                 Korting op categorie(ën)
             </button>
-            <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#kortingMailen">
+            <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#MailDiscount">
                 Korting mailen naar klant
             </button>
         </div>
@@ -62,88 +63,126 @@ include_once 'content/backend/sidebar-admin.php';
 
 
 <!-- modals (popups) -->
-<div class="modal fade" id="kortingEenmaal" tabindex="-1" role="dialog" aria-labelledby="kortingEenmaalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+<div class="modal fade" id="oneTimeDiscount" tabindex="-1" role="dialog" aria-labelledby="oneTimeDiscount" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
-                      <h4 class="modal-title" id="labelOneTimeDiscount">Eenmalige korting aanmaken</h4>
+                    <h4 class="modal-title">Eenmalige korting aanmaken</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-md-12">
-                        <label for="inputCodeOneTimeDiscount">Code:</label>
-                        <input type="text" class="inputCode" aria-label="inputCodeOneTimeDiscount" id="inputCodeOneTimeDiscount">
-
-                        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeOnetime();">Genereer code</button>
-
-                        <input class="form-check-input" type="checkbox" value="" name="checkboxOneTimeDiscount" id="checkboxOneTimeDiscount">
-                        <label class="form-check-label" for="checkboxOneTimeDiscount">Eenmalig</label>
+                    <div class="form-group">
+                        <label for="inputCodeOT">Code:</label>
+                        <input type="text" class="form-control inputCode" name="DealCode" id="inputCodeOT">
+                        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeOT();">Genereer code</button>
                     </div>
-                    <div class="col-md-12">
-                        <label for="inputPercentageOneTimeDiscount">Percentage:</label>
-                        <input type="text" class="inputPercentage" aria-label="inputPercentageOneTimeDiscount" id="inputPercentageOneTimeDiscount"> <span class="input-group-text">%</span>
+                    <div class="form-group">
+                        <label class="form-check-label" for="checkboxOT">Eenmalig:</label>
+                        <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT">
                     </div>
-                    <div class="col-md-12"
-                    <div>
-                        <label for="inputPercentageOneTimeDiscount">Begin periode:</label>
-                        <input type="date" class="inputStartDate" id="inputStartDateOneTimeDiscount">
-
-                        <div class="inputEndDate-container"
-                        <p class="einde-periode">Einde periode:</p>
-                        <input type="date" class="inputEndDate" id="inputEndDateOneTimeDiscount">
-                        </div>
+                    <div class="form-group">
+                        <label for="inputPercentageOT">Percentage:</label>
+                        <input type="text" class="form-control inputPercentage" name="DiscountPercentage" aria-label="inputPercentageOT" id="inputPercentageOT">
+                        <span class="symbolPercentage">%</span>
                     </div>
+                    <div class="form-group">
+                        <label for="inputStartDateOT">Begin periode:</label>
+                        <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartDateOT">
                     </div>
+                    <div class="form-group">
+                        <label for="inputEndDateOT">Einde periode:</label>
+                        <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateOT">
+                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                    <button type="button" class="btn btn-primary" name="createDiscount">Korting aanmaken</button>
+                    <button type="button" name="createDiscount" value="Korting aanmaken" class="btn btn-primary">
                 </div>
             </div>
         </div>
+    </div>
 </div>
 
-<div class="modal fade" id="kortingProduct" tabindex="-1" role="dialog" aria-labelledby="kortingProductLabel" aria-hidden="true">
+<div class="modal fade" id="DiscountProduct" tabindex="-1" role="dialog" aria-labelledby="DiscountProduct" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="kortingEenmaalLabel">Korting op product(en) aanmaken</h4>
+                <h4 class="modal-title">Korting op product(en)</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="col-md-12">
-                    <label for="inputCodeProductDiscount">Code:</label>
-                    <input type="text" class="inputCode" aria-label="inputCodeProductDiscount" id="inputCodeProductDiscount">
+                <div class="form-group">
+                    <label for="inputCodePD">Code:</label>
+                    <input type="text" class="form-control inputCode" name="DealCode" aria-label="inputCodePD" id="inputCodeDP">
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeDP();">Genereer code</button>
+                </div>
+                <div class="form-group">
+                    <label for="checkboxDP">Eenmalig:</label>
+                    <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
+                </div>
+                <div class="form-group">
+                    <label class="descriptionPopUp" for="descriptionDP">Omschrijving:</label>
+                    <textarea class="form-control dealDescription" name="DealDescription" id="descriptionDP" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputPercentageDP">Percentage:</label>
+                    <input type="text" class="form-control inputPercentage" aria-label="inputPercentageDP" name="DiscountPercentage" id="inputPercentageDP">
+                    <span class="symbolPercentage">%</span>
+                </div>
+                <div class="form-group">
+                    <label for="inputStartDateDP">Begin periode:</label>
+                    <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartDateDP">
+                </div>
+                <div class="form-group">
+                    <label for="inputEndDateDP">Einde periode:</label>
+                    <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateDP">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                <button type="button" class="btn btn-primary" onclick="">Korting aanmaken</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeProduct();">Genereer code</button>
-
-                    <input class="form-check-input" type="checkbox" value="" id="checkboxDiscountProduct">
-                    <label class="form-check-label" for="checkboxDiscountProduct">Eenmalig</label>
+<div class="modal fade" id="DiscountCategory" tabindex="-1" role="dialog" aria-labelledby="DiscountCategory" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Korting op categorie(ën)</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputCodeDC">Code:</label>
+                    <input type="text" class="form-control inputCode" name="DealCode" aria-label="inputCodeDC" id="inputCodeDC">
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeDC();">Genereer code</button>
                 </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="descriptionPopUp" for="descriptionDiscountProduct">Omschrijving:</label>
-                        <textarea class="form-control" id="descriptionDiscountProduct" rows="3"></textarea>
-                    </div>
+                <div class="form-group">
+                    <label class="descriptionPopUp" for="descriptionDC">Omschrijving:</label>
+                    <textarea class="form-control dealDescription" name="DealDescription" id="descriptionDC" rows="3"></textarea>
                 </div>
-                <div class="col-md-12">
-                    <label for="inputPercentageDiscountProduct">Percentage:</label>
-                    <input type="text" class="inputPercentage" aria-label="inputPercentageDiscountProduct" id="inputPercentageDiscountProduct"> <span class="input-group-text">%</span>
+                <div class="form-group">
+                    <label for="inputPercentageDC">Percentage:</label>
+                    <input type="text" class="form-control inputPercentage" name="DiscountPercentage" aria-label="inputPercentageDC" id="inputPercentageDC">
+                    <span class="symbolPercentage">%</span>
                 </div>
-                <div class="col-md-12">
-                    <div>
-                    <label for="inputPercentageDiscountProduct">Begin periode:</label>
-                    <input type="date" class="inputStartDate" id="inputStartDateDiscountProduct">
-
-                    <div class="inputEndDate-container">
-                    <p class="einde-periode">Einde periode:</p>
-                    <input type="date" class="inputEndDate" id="inputEndDateDiscountProduct">
-                    </div>
+                <div class="form-group">
+                    <label for="inputStartDateDC">Begin periode:</label>
+                    <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartDateDC">
                 </div>
+                <div class="form-group">
+                    <label for="inputEndDateDC">Einde periode:</label>
+                    <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateDC">
                 </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                 <button type="button" class="btn btn-primary">Korting aanmaken</button>
@@ -151,126 +190,75 @@ include_once 'content/backend/sidebar-admin.php';
         </div>
     </div>
 </div>
-</div>
-<div class="modal fade" id="kortingCategorie" tabindex="-1" role="dialog" aria-labelledby="kortingCategorieLabel" aria-hidden="true">
+
+<div class="modal fade" id="MailDiscount" tabindex="-1" role="dialog" aria-labelledby="MailDiscount" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="kortingEenmaalLabel">Korting op categorie(ën) aanmaken</h4>
+                <h4 class="modal-title">Korting mailen naar klant</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="col-md-12">
-                    <label for="inputCodeCategoryDiscount">Code:</label>
-                    <input type="text" class="inputCode" aria-label="inputCodeCategoryDiscount" id="inputCodeCategoryDiscount">
-
-                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeCategory();">Genereer code</button>
-                </div>
-                <div class="col-md-12">
                 <div class="form-group">
-                    <label class="descriptionPopUp" for="descriptionDiscountProduct">Omschrijving:</label>
-                    <textarea class="form-control" id="descriptionDiscountProduct" rows="3"></textarea>
+                    <label for="inputCodeMD">Code:</label>
+                    <input type="text" class="form-control inputCode" name="DealCode" aria-label="inputCodeMD" id="inputCodeMD">
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeMD();">Genereer code</button>
                 </div>
+                <div class="form-group">
+                    <label for="checkboxMD">Eenmalig:</label>
+                    <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxMD">
                 </div>
-                <div class="col-md-12">
-                    <label for="inputPercentageDiscountCategory">Percentage:</label>
-                    <input type="text" class="inputPercentage" aria-label="inputPercentageDiscountCategory" id="inputPercentageDiscountCategory"> <span class="input-group-text">%</span>
+                <div class="form-group">
+                    <label class="descriptionPopUp" for="descriptionMD">Omschrijving:</label>
+                    <textarea class="form-control dealDescription" name="DealDescription" id="descriptionMD" rows="3"></textarea>
                 </div>
-                <div class="col-md-12">
-                <div>
-                    <label for="inputPercentageDiscountCategory">Begin periode:</label>
-                    <input type="date" class="inputStartDate" id="inputStartDateDiscountCategory">
-
-                    <div class="inputEndDate-container">
-                    <p class="einde-periode">Einde periode:</p>
-                    <input type="date" class="inputEndDate" id="inputEndDateDiscountCategory">
-                    </div>
+                <div class="form-group">
+                    <label for="inputPercentageMD">Percentage:</label>
+                    <input type="text" class="form-control inputPercentage" name="DiscountPercentage" aria-label="inputPercentageMD" id="inputPercentageMD">
+                    <span class="symbolPercentage">%</span>
                 </div>
+                <div class="form-group">
+                    <label for="inputPercentageMD">Begin periode:</label>
+                    <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartMD">
+                </div>
+                <div class="form-group">
+                    <label for="inputEndDateMD">Einde periode:</label>
+                    <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateMD">
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">Email:</label>
+                    <input type="email" class="form-control inputEmail" id="inputEmail">
                 </div>
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-            <button type="button" class="btn btn-primary">Korting aanmaken</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="kortingMailen" tabindex="-1" role="dialog" aria-labelledby="kortingMailenLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="kortingEenmaalLabel">Korting mailen naar klant</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    <label for="inputCodeMailDiscount">Code:</label>
-                    <input type="text" class="inputCode" aria-label="inputCodeMailDiscount" id="inputCodeMailDiscount">
-
-                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeMail();">Genereer code</button>
-                    <input class="form-check-input" type="checkbox" value="" id="checkboxMailDiscount">
-                    <label class="form-check-label" for="checkboxMailDiscount">Eenmalig</label>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="descriptionPopUp" for="descriptionMailDiscount">Omschrijving:</label>
-                        <textarea class="form-control" id="descriptionMailDiscount" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <label for="inputPercentageMailDiscount">Percentage:</label>
-                    <input type="text" class="inputPercentage" aria-label="inputPercentageMailDiscount" id="inputPercentageMailDiscount"> <span class="input-group-text">%</span>
-                </div>
-                <div class="col-md-12"
-                <div>
-                    <label for="inputPercentageMailDiscount">Begin periode:</label>
-                    <input type="date" class="inputStartDate" id="inputStartDateMailDiscount">
-
-                    <div class="inputEndDate-container"
-                    <p class="einde-periode">Einde periode:</p>
-                    <input type="date" class="inputEndDate" id="inputEndDateMailDiscount">
-                    </div>
-                </div>
-                <div class="col-md-12">
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
-                        <input type="email" class="form-control" id="inputEmail3">
-                    </div>
-                </div>
-                </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary">Korting mailen</button>
+                <input type="submit" class="btn btn-primary" name="submit" value="Korting mailen"">
             </div>
         </div>
     </div>
 </div>
-</div>
+
 
     <script xmlns:line-height="http://www.w3.org/1999/xhtml">
-        function generateCodeOnetime() {
-            var x = document.getElementById("inputCodeOneTime")
+        function generateCodeOT() {
+            var x = document.getElementById("inputCodeOT")
             x.value = Math.floor((Math.random() * 900000000) + 100000000);
         }
 
-        function generateCodeProduct() {
-            var x = document.getElementById("inputCodeDiscountProduct")
+        function generateCodeDP() {
+            var x = document.getElementById("inputCodeDP")
             x.value = Math.floor((Math.random() * 900000000) + 100000000);
         }
 
-        function generateCodeCategory() {
-            var x = document.getElementById("inputCodeDiscountCategory")
+        function generateCodeDC() {
+            var x = document.getElementById("inputCodeDC")
             x.value = Math.floor((Math.random() * 900000000) + 100000000);
         }
 
-        function generateCodeMail() {
-            var x = document.getElementById("inputCodeMailDiscount")
+        function generateCodeMD() {
+            var x = document.getElementById("inputCodeMD")
             x.value = Math.floor((Math.random() * 900000000) + 100000000);
         }
     </script>
@@ -284,7 +272,7 @@ include_once 'content/backend/sidebar-admin.php';
         function searchbar() {
 
             var input, filter, table, tr, tds, i, txtValue, tdsearch;
-            input = document.getElementById("searchbarDiscount");
+            input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
             table = document.getElementById("tableViewDiscount");
             tr = table.getElementsByTagName("tr");

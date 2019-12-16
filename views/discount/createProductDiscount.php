@@ -14,28 +14,30 @@ if (isset($_POST['submit'])) {
 ?>
 <form method="POST">
     <div class="form-group">
-        <label for="inputCodeProductDiscount">Code:</label>
-        <input type="text" class="inputCode" aria-label="inputCodeProductDiscount" id="inputCodeProductDiscount">
+        <label for="inputCodePD">Code:</label>
+        <input type="text" class="form-control inputCode" name="DealCode" aria-label="inputCodePD" id="inputCodeDP">
+        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeDP();">Genereer code</button>
     </div>
     <div class="form-group">
-        <input class="form-check-input" type="checkbox" value="" id="checkboxDiscountProduct">
-        <label class="form-check-label" for="checkboxDiscountProduct">Eenmalig</label>
+        <label for="checkboxDP">Eenmalig:</label>
+        <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
     </div>
     <div class="form-group">
-        <label class="descriptionPopUp" for="descriptionDiscountProduct">Omschrijving:</label>
-        <textarea class="form-control" id="descriptionDiscountProduct" rows="3"></textarea>
+        <label class="descriptionPopUp" for="descriptionDP">Omschrijving:</label>
+        <textarea class="form-control dealDescription" name="DealDescription" id="descriptionDP" rows="3"></textarea>
     </div>
     <div class="form-group">
-        <label for="inputPercentageDiscountProduct">Percentage:</label>
-        <input type="text" class="inputPercentage" aria-label="inputPercentageDiscountProduct" id="inputPercentageDiscountProduct">
+        <label for="inputPercentageDP">Percentage:</label>
+        <input type="text" class="form-control inputPercentage" aria-label="inputPercentageDP" name="DiscountPercentage" id="inputPercentageDP">
+        <span class="symbolPercentage">%</span>
     </div>
     <div class="form-group">
-        label for="inputPercentageDiscountProduct">Begin periode:</label>
-        <input type="date" class="inputStartDate" id="inputStartDateDiscountProduct">
+        <label for="inputStartDateDP">Begin periode:</label>
+        <input type="date" class="form-control inputStartDate" name="EndDate" id="inputStartDateDP">
     </div>
     <div class="form-group">
-        <p class="einde-periode">Einde periode:</p>
-        <input type="date" class="inputEndDate" id="inputEndDateDiscountProduct">
+        <label for="inputEndDateDP">Einde periode:</label>
+        <input type="date" class="form-control inputEndDate" name="StartDate" id="inputEndDateDP">
     </div>
 </form>
 

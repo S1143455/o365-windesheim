@@ -8,6 +8,8 @@ use Model\Discount;
 
 class DiscountController
 {
+    private $admin = 'content/backend/';
+
     function __construct()
     {
         $this->discount = new Discount();
@@ -35,14 +37,31 @@ class DiscountController
     }
 
 
+    public function create()
+    {
+        print_r($_POST);
+        $this->discount = new discount();
+        $this->discount->initialize();
+
+        //$this->category->setCategoryID();
+        $this->discount->setLastEditedBy(1);
+        $this->store($this->discount);
+
+        // return "true";
+        // include $this->contentpath
+        include $this->admin . 'onderhoudkorting.php';
+    }
+
     /**
      * Stores the product in the database.
      *
-     * @param $discount Discount
+     * @param $discount discount
      * @return string
      */
     public function store($discount)
     {
+        var_dump($discount);
+
         if (!$discount->initialize())
         {
             print_r($_GET);
@@ -51,10 +70,9 @@ class DiscountController
 
         $this->discount = $discount;
 
-        if ($this->discount->save())
+        if (!$this->discount->save())
         {
-            return "Something went right.";
-        }
             return "Something went wrong.";
+        }
     }
 }

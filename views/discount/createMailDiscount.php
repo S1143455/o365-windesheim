@@ -14,32 +14,34 @@ if (isset($_POST['submit'])) {
 ?>
 <form method="POST">
     <div class="form-group">
-        <label for="inputCodeMailDiscount">Code:</label>
-        <input type="text" class="inputCode" aria-label="inputCodeMailDiscount" id="inputCodeMailDiscount">
+        <label for="inputCodeMD">Code:</label>
+        <input type="text" class="form-control inputCode" name="DealCode" aria-label="inputCodeMD" id="inputCodeMD">
+        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeMD();">Genereer code</button>
     </div>
     <div class="form-group">
-        <input class="form-check-input" type="checkbox" value="" id="checkboxMailDiscount">
-        <label class="form-check-label" for="checkboxMailDiscount">Eenmalig</label>
+        <label for="checkboxMD">Eenmalig:</label>
+        <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxMD">
     </div>
     <div class="form-group">
-        <label class="descriptionPopUp" for="descriptionMailDiscount">Omschrijving:</label>
-        <textarea class="form-control" id="descriptionMailDiscount" rows="3"></textarea>
+        <label class="descriptionPopUp" for="descriptionMD">Omschrijving:</label>
+        <textarea class="form-control dealDescription" name="DealDescription" id="descriptionMD" rows="3"></textarea>
     </div>
     <div class="form-group">
-        <label for="inputPercentageMailDiscount">Percentage:</label>
-        <input type="text" class="inputPercentage" aria-label="inputPercentageMailDiscount" id="inputPercentageMailDiscount">
+        <label for="inputPercentageMD">Percentage:</label>
+        <input type="text" class="form-control inputPercentage" name="DiscountPercentage" aria-label="inputPercentageMD" id="inputPercentageMD">
+        <span class="symbolPercentage">%</span>
     </div>
     <div class="form-group">
-        <label for="inputPercentageMailDiscount">Begin periode:</label>
-        <input type="date" class="inputStartDate" id="inputStartDateMailDiscount">
+        <label for="inputPercentageMD">Begin periode:</label>
+        <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartMD">
     </div>
     <div class="form-group">
-        <p class="einde-periode">Einde periode:</p>
-        <input type="date" class="inputEndDate" id="inputEndDateMailDiscount">
+        <label for="inputEndDateMD">Einde periode:</label>
+        <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateMD">
     </div>
     <div class="form-group">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
-        <input type="email" class="form-control" id="inputEmail3">
+        <label for="inputEmail">Email:</label>
+        <input type="email" class="form-control inputEmail" id="inputEmail">
     </div>
 </form>
 

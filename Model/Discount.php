@@ -14,7 +14,13 @@ class Discount extends Database
     private $DealCode;
     private $LastEditedBy;
     private $OneTime;
+    private $Active;
+    function __construct()
+    {
+        $this->table = "specialdeals";
+        parent::__construct();
 
+    }
     /**
      * @return mixed
      */
@@ -46,7 +52,6 @@ class Discount extends Database
     {
         $this->Active = $Active;
     }
-    private $Active;
 
     /**
      * @return mixed
