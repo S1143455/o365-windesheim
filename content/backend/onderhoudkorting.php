@@ -45,7 +45,11 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="col-md-2">
         <div class="row">
                      <!-- https://getbootstrap.com/docs/4.0/components/modal/  -->
+
             <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#oneTimeDiscount">
+=======
+            <button type="button" class="first discountButton btn btn-primary" data-toggle="modal" data-target="#kortingEenmaal">
+
                 Eenmalige korting
             </button>
             <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#DiscountProduct">

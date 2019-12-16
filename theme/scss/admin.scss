@@ -2,6 +2,7 @@ $primary : black;
 $secondary : #fff3e6;
 $textcolor: #818181;
 $background: #f8f8f8;
+
 .navbar{
   margin-bottom: 0px !important;
 }
@@ -17,7 +18,7 @@ body{
 }
 
 .sidenav {
-  min-height: 89%;
+  height: 89%;
   background-color: $secondary;
   overflow-x: hidden;
 }
@@ -50,12 +51,8 @@ color: $secondary;
   font-size:12px !important;
 }
 
-.firstdiscountButton {
-  display: inline-block;
-  white-space: nowrap;
-  background-color: #808080 !important;
-  margin-top: 10%;
-  width: 200px;
+.first {
+  margin-top: 10% !important;
 }
 
 .discountButton {
