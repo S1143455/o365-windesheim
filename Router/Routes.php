@@ -33,6 +33,11 @@ $router->route('/onderhoudaccount', function(){
     return include 'content/frontend/usermaintenance.php';
 });
 
+$router->route('/onderhoudbestellingen', function(){
+    return include 'content/frontend/usermaintenance.php';
+});
+
+
 /**
  * End usermaintenance
  */
@@ -103,6 +108,11 @@ $router->route('/admin/Onderhoud-hoofdpagina', function(){
  * End AdminController routes
  */
 
+
+$router->route("/404", function()
+{
+    return include 'content/404.php';
+});
 
 /**
  *  Execute the route

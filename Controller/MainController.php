@@ -21,9 +21,15 @@ class MainController
             'nav_menu' => [
                 '' => 'Home',
                 'about-us' => 'About Us',
-                'products' => 'Product',
+                'product' => 'Products',
                 'contact' => 'Contact',
                 'login' => 'Login',
+            ],
+            'nav_menu_side_fe' => [
+                'onderhoudaccount' => 'Uw account',
+                'onderhoudbestellingen' => 'Bestellingen',
+                'bestellingoverzicht' => 'Bestellingoverzicht',
+
             ],
             'nav_menu_side' => [
                 'onderhoud-hoofdpagina' => 'Onderhoud Hoofdpagina',
@@ -84,9 +90,33 @@ class MainController
             $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=/omasbeste' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
+        return trim($nav_menu, $sep);
+    }
+
+    function nav_menu_side_fe($sep = '')
+    {
+        $nav_menu = '';
+        $nav_items = $this->getConfig('nav_menu_side_fe');
+        $i = 0;
+        $max = count($nav_items);
+        foreach ($nav_items as $uri => $name) {
+
+            $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
+            $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
+
+            if($i == 0){
+                $class .= ' first ';
+            }
+            $i++;
+            if($i == $max){
+                $class .= ' last ';
+            }
+            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+        }
+
         return trim($nav_menu, $sep);
     }
 
