@@ -1,12 +1,12 @@
 
-DELETE FROM order_stockitem WHERE orderStockItemId <> 0;
+DELETE FROM order_stockitem WHERE orderStockItemID <> 0;
 DELETE FROM `order` WHERE OrderID <> 0;
 DELETE FROM paymentmethod WHERE PaymentMethodID <> 0;
 DELETE FROM deliverymethod WHERE DeliveryMethodID <> 0;
 DELETE FROM customer WHERE CustomerID <> 0;
 DELETE FROM shoppingcart_stockitems WHERE ShopStockID <> 0;
 DELETE FROM shoppingcart WHERE ShoppingCartID <> 0;
-DELETE FROM stockitem WHERE StockItemId <> 0;
+DELETE FROM stockitem WHERE StockItemID <> 0;
 DELETE FROM specialdeals WHERE SpecialDealID <> 0;
 DELETE FROM category WHERE CategoryID <> 0;
 DELETE FROM supplier WHERE SupplierID <> 0;
@@ -218,7 +218,7 @@ create table supplier
 
 create table stockitem
 (
-    StockItemId       int auto_increment
+    StockItemID       int auto_increment
         primary key,
     StockItemName     varchar(50) not null,
     SupplierID        int         not null,
@@ -243,14 +243,14 @@ create table stockitem
 
 create table order_stockitem
 (
-    orderStockItemId int(10) auto_increment
+    orderStockItemID int(10) auto_increment
         primary key,
     OrderID          int not null,
     StockItemID      int not null,
     constraint OrderOrderStockItem
         foreign key (OrderID) references `order` (OrderID),
     constraint StockitemOrderStockitem
-        foreign key (StockItemID) references stockitem (StockItemId)
+        foreign key (StockItemID) references stockitem (StockItemID)
 );
 
 create table shoppingcart_stockitems
@@ -262,7 +262,7 @@ create table shoppingcart_stockitems
     constraint ShoppingCartShoppingCart_StockItems
         foreign key (ShoppingCartID) references shoppingcart (ShoppingCartID),
     constraint Shoppingcart_StockitemsStockitem
-        foreign key (StockItemID) references stockitem (StockItemId)
+        foreign key (StockItemID) references stockitem (StockItemID)
 );
 
 INSERT INTO `people` VALUES ('1','ADMIN','ADMIN','1d89f8671a326456df5e5e0ec59fb3f7c4d2302b','1','ADMIN','267.061.5879x188','zemlak.weston@example.net','2004-02-11','/0eaa737605e66326caa25c6eb494f304.jpg','0'),

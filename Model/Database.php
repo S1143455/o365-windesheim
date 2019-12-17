@@ -157,12 +157,13 @@ class Database extends Models
      * @param $id
      * @return mixed|null
      */
-    public function checkIfExists($id)
+    private function checkIfExists($id)
     {
         $retVal = null;
         if ($id == null)
         {
-            die("Please supply an identifier to the function");
+            return false;
+//            die("Please supply an identifier to the function");
         }
             $this->openConn();
             $key = $this->getID("key");
@@ -395,7 +396,6 @@ class Database extends Models
                 $retVal = [];
             } else
             {
-
                 $retVal = $this->initRetrievedObjects($retVal);
             }
         } catch (Exception $e)
@@ -416,7 +416,8 @@ class Database extends Models
         $stmt = $this->createInsertStatement();
         try
         {
-            $stmt->execute();
+            print_R($stmt->execute());
+            die();
         } catch (Exception $e)
         {
 //            $_GET['error'] = $e->getMessage();
@@ -670,14 +671,14 @@ class Database extends Models
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
-        $modelObject->getColumns();
         if (!empty($array))
         {
             foreach ($array as $key => $value)
             {
+                $modelObject = new $className;
                 foreach ($value as $attrKey => $attrValue)
                 {
-                    if (array_key_exists($attrKey, $modelObject->column))
+                    if (array_key_exists($attrKey, $this->column))
                     {
                         $modelObject->setAttribute($attrKey, $attrValue);
                     }
@@ -691,7 +692,6 @@ class Database extends Models
             {
             array_push($modelObjects, $modelObject);
             }
-
         return $modelObjects;
     }
 

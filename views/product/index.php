@@ -12,14 +12,13 @@
 
 foreach ($products as $product)
 {
-    echo $product->getStockItemID();
-    $product->getRelation("Category");
+//    $product->getRelation("Category");
 }
 
 
-foreach ($categories as $category)
-{
-}
+//foreach ($categories as $category)
+//{
+//}
 
 /**
  * @param $table

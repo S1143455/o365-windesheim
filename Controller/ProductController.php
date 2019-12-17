@@ -24,14 +24,11 @@ Class ProductController
         /**
          * Database.php  line 287-289  to remove the comments from the page.
          */
-        $test->where(["StockItemID", "StockItemName", "IsChillerStock"]  , ["StockItemID", "StockItemName", "IsChillerStock"], "=" , ["test", "test1", "test2"] );
-        die();
-
         $products = new Product();
         $products = $products->retrieve();
 
-        $categories = new Category();
-        $categories = $categories->retrieve();
+//        $categories = new Category();
+//        $categories = $categories->retrieve();
 
         return include $this->viewPath . 'index.php';
     }
