@@ -49,4 +49,5 @@ $user = new Controller\UserController();
 		    </div>  		
 		</div>
 	</body>
-</html>
+<?/html>-
+
