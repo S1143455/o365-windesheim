@@ -111,9 +111,7 @@ class Database extends Models
     //WIP($table , $params = NULL) <- new parameters
     public function create($sql)
     {
-
         $this->checkIfExists(10);
-
     }
 
     public function delete($id)
@@ -130,6 +128,8 @@ class Database extends Models
         if ($this->checkIfExists($this->getID("value")) == null)
         {
             return $this->newRow();
+        }else if($this->getID("value") != null){
+
         }
     }
 
@@ -148,36 +148,6 @@ class Database extends Models
             $retrieved = $this->where("*", $key, "=" , $id);
 
             return $this->initRetrievedObjects($retrieved)[0];
-
-
-
-
-//            $sql = "SELECT * FROM " . $this->table . " WHERE " . $key . " = :" . $key;
-//            $stmt = $this->connection->prepare($sql);
-//            $stmt->bindValue(":" . $key, $id);
-//            $stmt->execute();
-//            try
-//            {
-//                $retVal = $stmt->fetchAll();
-////              print_r($stmt->fetchAll());
-//                if (empty($retVal))
-//                {
-//                    $retVal = $this;
-//                } else
-//                {
-//                    $retVal = $this->initRetrievedObjects($retVal)[0];
-//                }
-//
-//                $retVal = $this->initRetrievedObjects($retVal)[0];
-//               // print_r($retVal->getStockItemName());
-//            }
-//            catch(Exception $e)
-//            {
-//                die($e);
-//                $retVal = null;
-//            }
-//            $this->closeConnection();
-//            return $retVal;
         }
 
     }
@@ -187,12 +157,13 @@ class Database extends Models
      * @param $id
      * @return mixed|null
      */
-    public function checkIfExists($id)
+    private function checkIfExists($id)
     {
         $retVal = null;
         if ($id == null)
         {
-            die("Please supply an identifier to the function");
+            return false;
+//            die("Please supply an identifier to the function");
         }
             $this->openConn();
             $key = $this->getID("key");
@@ -202,28 +173,6 @@ class Database extends Models
                 return true;
             }
             return false;
-//            $sql = "SELECT " . $key . "FROM " . $this->table . " WHERE " . $key . " = :" . $key;
-//            $stmt = $this->connection->prepare($sql);
-//            $stmt->bindValue(":" . $key, $id);
-//            $stmt->execute();
-//            try
-//            {
-//                if (empty($stmt->fetchAll()))
-//                {
-//                    $retVal = false;
-//                } else
-//                {
-//                    $retVal = true;
-//                }
-//            } catch (Exception $e)
-//            {
-//                $retVal = false;
-//            }
-//
-//            $this->closeConnection();
-//        }
-//        return $retVal;
-
     }
 
     /**
@@ -248,6 +197,41 @@ class Database extends Models
         }
 
         return  "SELECT " . $attributes . " FROM " . $this->table . " ";
+    }
+
+
+    private function createUpdateStatement()
+    {
+        $columns = "";
+        $values = [];
+        $placeholder = "";
+
+        foreach ($this->column as $key => $value)
+        {
+
+            $attributeValue = $this->getAttribute($key);
+            if (!empty($attributeValue) && $value[1])
+            {
+                $columns .= $key . " , ";
+                $placeholder .= ":" . strtolower($key) . ", ";
+                $values[strtolower($key)] = $this->serializedInput($attributeValue);
+            }
+        }
+        $columns = substr($columns, 0, -2);
+        $placeholder = substr($placeholder, 0, -2);
+
+        $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $placeholder . ");";
+
+        $stmt = $this->connection->prepare($sql);
+
+
+        foreach ($values as $parameter => $value)
+        {
+            // print_r([$parameter, $value]);
+            $stmt->bindValue($parameter, $value);
+        }
+        return $stmt;
+        //return  "update " .  $this->table . "set " . $attributes . "where" . $primaryKey . " = " . $id ."";
     }
 
     /**
@@ -328,6 +312,21 @@ class Database extends Models
 
     }
 
+
+    public function UpdateEntry($id, $data){
+        if($id == null || empty($data)){
+            return false;
+        }else{
+            $test1 = $this->$this->getColumns();
+            var_dump($test1);
+            foreach ($data as $test)
+            {
+
+            }
+        }
+    }
+
+
     /**
      * @param $columnKeys
      * @param $compareTypes
@@ -397,7 +396,6 @@ class Database extends Models
                 $retVal = [];
             } else
             {
-
                 $retVal = $this->initRetrievedObjects($retVal);
             }
         } catch (Exception $e)
@@ -418,7 +416,8 @@ class Database extends Models
         $stmt = $this->createInsertStatement();
         try
         {
-            $stmt->execute();
+            print_R($stmt->execute());
+            die();
         } catch (Exception $e)
         {
 //            $_GET['error'] = $e->getMessage();
@@ -672,20 +671,20 @@ class Database extends Models
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
-        $modelObject->getColumns();
         if (!empty($array))
         {
             foreach ($array as $key => $value)
             {
+                $modelObject = new $className;
                 foreach ($value as $attrKey => $attrValue)
                 {
-                    if (array_key_exists($attrKey, $modelObject->column))
+                    if (array_key_exists($attrKey, $this->column))
                     {
                         $modelObject->setAttribute($attrKey, $attrValue);
                     }
                 }
                 array_push($modelObjects, $modelObject);
-                print_r($modelObject->getStockItemName());
+//                print_r($modelObject->getStockItemName());
             }
 //            array_push($modelObjects, $modelObject);
         }
@@ -693,7 +692,6 @@ class Database extends Models
             {
             array_push($modelObjects, $modelObject);
             }
-
         return $modelObjects;
     }
 
