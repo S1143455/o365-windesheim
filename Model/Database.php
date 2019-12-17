@@ -302,7 +302,7 @@ class Database extends Models
         $this->getColumns();
         if (empty($id))
         {
-            return $this->batch($this->limit, $this->offset);
+            return $this->batch(null, $this->offset);
         } else
         {
             return $this->find($id);
@@ -383,7 +383,7 @@ class Database extends Models
         $this->openConn();
         $this->getColumns();
         $sql = $this->createSelectStatement("*");
-        $sql .=  ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
+        $sql .=  ($limit != null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0? " OFFSET " . $offset : "");
         $stmt = $this->connection->query($sql);
         $stmt->execute();
         try
@@ -704,20 +704,24 @@ class Database extends Models
         }
         array_push($_GET[$key], $value);
     }
-
+    /**
+     * @var $model = \Database;
+     */
     public function getRelation($modelName)
     {
-        $columns = $this->getColumns();
-        $model =  new $modelName();
-        if ($columns == null)
+        $modelName = '\Model\\'.$modelName;
+        $model =  new $modelName;
+        $model->getColumns();
+
+        if ($model->columns == null)
         {
             die('relation does not exist');
         }
-        foreach ($columns as $col)
+        foreach ($model->columns as $key => $value)
         {
-            if ($col[1] == "PrimaryKey")
+            if ($value[1] == "PrimaryKey")
             {
-
+                $model->setAttr($key, $this->foreignkey);
             }
         }
 
