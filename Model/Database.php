@@ -304,7 +304,7 @@ class Database extends Models
         $this->getColumns();
         if (empty($id))
         {
-            return $this->batch($this->limit, $this->offset);
+            return $this->batch(null, $this->offset);
         } else
         {
             return $this->find($id);
@@ -385,7 +385,7 @@ class Database extends Models
         $this->openConn();
         $this->getColumns();
         $sql = $this->createSelectStatement("*");
-        $sql .=  ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
+        $sql .=  ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0 ? " OFFSET " . $offset : "");
         $stmt = $this->connection->query($sql);
         $stmt->execute();
         try
@@ -420,7 +420,6 @@ class Database extends Models
             die();
         } catch (Exception $e)
         {
-//            $_GET['error'] = $e->getMessage();
             return false;
         }
         return true;

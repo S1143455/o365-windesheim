@@ -25,17 +25,47 @@ include_once 'content/backend/header-admin.php';
                             <th class="col-xs-1">Productnummer</th>
                             <th class="col-xs-2">Categorie</th>
                             <th class="col-xs-3">Omschrijving</th>
-                            <th class="col-xs-1">Prijs</th>
-                            <th class="col-xs-1">Voorraad</th>
-                            <th class="col-xs-2">Start verkoop</th>
-                            <th class="col-xs-2">Eind verkoop</th>
+                            <th class="col-xs-1">Merk</th>
+                            <th class="col-xs-1">Formaat</th>
+                            <th class="col-xs-1">Barcode</th>
+                            <th class="col-xs-1">Inkoopprijs</th>
+                            <th class="col-xs-1">BTW (%)</th>
+                            <th class="col-xs-1">Totaal (€)</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-                        // var_dump($products);
                             foreach($products as $prod){
-                                echo $prod->getStockItemName();
+                                echo '<tr>';
+                                echo '<td class="col-xs-1">' . $prod->getStockItemID() . '</td>';
+                                echo '<td class="col-xs-2">' . $prod->getCategoryID() . '</td>';
+                                echo '<td class="col-xs-3">' . $prod->getStockItemName() . '</td>';
+                                echo '<td class="col-xs-1">' . $prod->getBrand() . '</td>';
+
+                                $size = 'Onbekend';
+                                switch ($prod->getSize()) {
+                                    case 1:
+                                        $size = 'Extra klein';
+                                        break;
+                                    case 2:
+                                        $size = 'Klein';
+                                        break;
+                                    case 3:
+                                        $size = 'Middel';
+                                        break;
+                                    case 4:
+                                        $size = 'Groot';
+                                        break;
+                                    case 5:
+                                        $size = 'Extra groot';
+                                }
+
+                                echo '<td class="col-xs-1">' . $size . '</td>';
+                                echo '<td class="col-xs-1">' . $prod->getBarcode() . '</td>';
+                                echo '<td class="col-xs-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
+                                echo '<td class="col-xs-1">' . $prod->getTaxRate() . '</td>';
+                                echo '<td class="col-xs-1">€' . number_Format($prod->getUnitPrice() - ($prod->getUnitPrice() / 100 * $prod->getTaxRate()),2) . '</td>';
+                                echo '</td>';
                             }
                         ?>
                         </tbody>
