@@ -22,6 +22,8 @@ switch ($authenticationController->role()){
 $admin = new Controller\AdminController();
 $categoryController = new Controller\CategoryController();
 
+$orderController = new Controller\OrderController();
+
 $discountController = new Controller\DiscountController();
 
 $user = new Controller\UserController();
