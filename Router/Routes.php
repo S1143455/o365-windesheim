@@ -33,6 +33,11 @@ $router->route('/onderhoudaccount', function(){
     return include 'content/frontend/usermaintenance.php';
 });
 
+$router->route('/onderhoudbestellingen', function(){
+    return include 'content/frontend/usermaintenance.php';
+});
+
+
 /**
  * End usermaintenance
  */
@@ -90,8 +95,11 @@ $router->route('/admin/onderhoud-producten', function(){
 $router->route('/admin/onderhoud-klanten', function(){
     return include 'content/backend/onderhoudklanten.php';
 });
-$router->route('/admin/test', function() use($categoryController){
+$router->route('/admin/CreateCategorie', function() use($categoryController){
     return $categoryController->create();
+});
+$router->route('/admin/test123', function() use($discount){
+    return $discount->create();
 });
 
 $router->route('/admin/onderhoud-korting', function(){
@@ -113,6 +121,11 @@ $router->route('/admin/Onderhoud-hoofdpagina', function(){
  */
 //>>>>>>> b2bb1f4d544f81dcbbf97a44c468f2323b034549
 
+
+$router->route("/404", function()
+{
+    return include 'content/404.php';
+});
 
 /**
  *  Execute the route

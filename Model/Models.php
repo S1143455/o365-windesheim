@@ -15,7 +15,7 @@ class Models
     protected $table;
     protected $column;
 
-    protected function getColumns()
+    protected function getColumns($column = null)
     {
         var_dump($this->table);
         switch ($this->table) {
@@ -37,11 +37,55 @@ class Models
             case  'people':
                 $this->getPeople();
                 break;
+<<<<<<< HEAD
             case  'customer':
                 $this->getCustomer();
+=======
+            case  'specialdeals':
+                $this->getSpecialdeals();
+>>>>>>> b003eb348236781a3032f1881a3b89b37efd3e78
                 break;
             default:
                 die('Table not implemented');
+
+                if ($column != null) {
+                    $modelColumn = $this->column;
+                    $this->column = null;
+                }
+                if ($this->column == null) {
+                    switch ($this->table) {
+                        case 'stockitem':
+                            $this->getStockItem();
+                            break;
+                        case 'category':
+                            $this->getCategory();
+                            break;
+                        case 'attachment':
+                            $this->getAttachments();
+                            break;
+                        case 'content':
+                            $this->getContent();
+                            break;
+                        case 'supplier':
+                            $this->getSupplier();
+                            break;
+                        case  'people':
+                            $this->getPeople();
+                            break;
+                        case  'address':
+                            $this->getAddress();
+                            break;
+                        default:
+                            die('Table not implemented');
+                    }
+
+                }
+                if ($column != null) {
+                    $retrievedRelation = $this->column;
+                    $this->column = $modelColumn;
+                    return $retrievedRelation;
+                }
+                return $this->column;
         }
     }
 
@@ -51,7 +95,7 @@ class Models
     private function getStockItem()
     {
         $this->column = array(
-            "StockItemID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "StockItemID" => ['Integer', 'PrimaryKey', 'Required'],
             "StockItemName" => ['Varchar', 'Attribute', 'Required'],
             "SupplierID" => ['Supplier', 'HasOne', 'Required'],
             "Brand" => ['Varchar', 'Attribute', 'Required'],
@@ -67,6 +111,20 @@ class Models
         );
     }
 
+    private function getSpecialdeals()
+    {
+        $this->column = array(
+            "SpecialDealID" => ['Integer', 'PrimaryKey', 'Required'],
+            "DealDescription" => ['Varchar', 'Attribute', 'Nullable'],
+            "StartDate" => ['Date', 'Attribute', 'Required'],
+            "EndDate" => ['Date', 'Attribute', 'Nullable'],
+            "DiscountPercentage" => ['Integer', 'Attribute', 'Required'],
+            "DealCode" => ['Integer', 'Attribute', 'Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "OneTime" => ['Tinyint', 'Attribute', 'Nullable'],
+            "Active" => ['Tinyint', 'Attribute', 'Nullable'],
+        );
+    }
 
     private function getCategory()
     {
@@ -74,6 +132,18 @@ class Models
             "CategoryID" => ['Integer', 'PrimaryKey', 'Required'],
             "CategoryName" => ['Varchar', 'Attribute', 'Required'],
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+        );
+    }
+
+    private function getAddress()
+    {
+        $this->column = array(
+            "AddressId" => ['Integer', 'PrimaryKey', 'Required'],
+            "Address" => ['Varchar', 'Attribute', 'Required'],
+            "Zipcode" => ['Varchar', 'HasMany', 'Nullable'],
+            "City" => ['Varchar', 'HasOne', 'Required'],
+            "PersonId" => ['People', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
     }
@@ -102,7 +172,7 @@ class Models
     private function getPeople()
     {
         $this->column = array(
-            "PeopleID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "PeopleID" => ['Integer', 'PrimaryKey', 'Required'],
             "FullName" => ['Varchar', 'Attribute', 'Unique'],
             "LogonName" => ['Supplier', 'HasOne', 'Required'],
             "HashedPassword" => ['Varchar', 'Attribute', 'Required'],
@@ -114,18 +184,19 @@ class Models
             "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
         );
     }
+
     private function getSupplier()
     {
         $this->column = array(
-            "SupplierID"                =>   ['Integer', 'PrimaryKey', 'Required' ],
-            "SupplierName"              =>   ['Varchar', 'Attribute', 'Required'],
-            "PrimaryContactPersonID"    =>   ['People', 'HasOne', 'Required'],
-            "AlternateContactPersonID"  =>   ['People', 'HasOne', 'Required'],
-            "SupplierReference"         =>   ['Varchar', 'Attribute', 'Required'],
-            "InternalComments"          =>   ['LongText', 'Attribute', 'Required'],
-            "WebsiteURL"                =>   ['Boolean', 'Attribute', 'Required'],
-            "LastEditedBy"              =>   ['Varchar', 'Attribute', 'Required'],
-            "AddressID"                 =>   ['Address', 'HasOne', 'Required'],
+            "SupplierID" => ['Integer', 'PrimaryKey', 'Required'],
+            "SupplierName" => ['Varchar', 'Attribute', 'Required'],
+            "PrimaryContactPersonID" => ['People', 'HasOne', 'Required'],
+            "AlternateContactPersonID" => ['People', 'HasOne', 'Required'],
+            "SupplierReference" => ['Varchar', 'Attribute', 'Required'],
+            "InternalComments" => ['LongText', 'Attribute', 'Required'],
+            "WebsiteURL" => ['Boolean', 'Attribute', 'Required'],
+            "LastEditedBy" => ['Varchar', 'Attribute', 'Required'],
+            "AddressID" => ['Address', 'HasOne', 'Required'],
 
         );
     }
@@ -150,7 +221,7 @@ class Models
      */
     protected function getType($key)
     {
-        if(array_key_exists($key, $this->column))
+        if (array_key_exists($key, $this->column))
         {
             return $this->column[$key][0];
         }
