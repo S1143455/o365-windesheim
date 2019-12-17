@@ -551,7 +551,7 @@ class Database extends Models
 
                 return intval($value);
             case "boolean":
-                if ($value || $value == 1)
+                if ($value || $value == 1 || strtolower($value) == "on")
                 {
                     return 1;
                 }
@@ -705,9 +705,10 @@ class Database extends Models
         array_push($_GET[$key], $value);
     }
 
-    public function getRelation($model)
+    public function getRelation($modelName)
     {
         $columns = $this->getColumns();
+        $model =  new $modelName();
         if ($columns == null)
         {
             die('relation does not exist');
