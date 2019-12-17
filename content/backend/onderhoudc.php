@@ -45,7 +45,7 @@
 <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:1000px;">
         <div class="modal-content">
-            <form role="form" id="universalModalForm" method="POST" action="test">
+            <form role="form" id="universalModalForm" method="POST" action="CreateCategorie">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                     <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>

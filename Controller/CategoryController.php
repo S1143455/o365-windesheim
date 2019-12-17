@@ -20,8 +20,6 @@ class CategoryController
         print_r($_POST);
         $this->category = new category();
         $this->category->initialize();
-
-        //$this->category->setCategoryID();
         $this->category->setLastEditedBy(2);
         $this->store($this->category);
 
