@@ -111,9 +111,7 @@ class Database extends Models
     //WIP($table , $params = NULL) <- new parameters
     public function create($sql)
     {
-
         $this->checkIfExists(10);
-
     }
 
     public function delete($id)
@@ -150,36 +148,6 @@ class Database extends Models
             $retrieved = $this->where("*", $key, "=" , $id);
 
             return $this->initRetrievedObjects($retrieved)[0];
-
-
-
-
-//            $sql = "SELECT * FROM " . $this->table . " WHERE " . $key . " = :" . $key;
-//            $stmt = $this->connection->prepare($sql);
-//            $stmt->bindValue(":" . $key, $id);
-//            $stmt->execute();
-//            try
-//            {
-//                $retVal = $stmt->fetchAll();
-////              print_r($stmt->fetchAll());
-//                if (empty($retVal))
-//                {
-//                    $retVal = $this;
-//                } else
-//                {
-//                    $retVal = $this->initRetrievedObjects($retVal)[0];
-//                }
-//
-//                $retVal = $this->initRetrievedObjects($retVal)[0];
-//               // print_r($retVal->getStockItemName());
-//            }
-//            catch(Exception $e)
-//            {
-//                die($e);
-//                $retVal = null;
-//            }
-//            $this->closeConnection();
-//            return $retVal;
         }
 
     }
@@ -204,28 +172,6 @@ class Database extends Models
                 return true;
             }
             return false;
-//            $sql = "SELECT " . $key . "FROM " . $this->table . " WHERE " . $key . " = :" . $key;
-//            $stmt = $this->connection->prepare($sql);
-//            $stmt->bindValue(":" . $key, $id);
-//            $stmt->execute();
-//            try
-//            {
-//                if (empty($stmt->fetchAll()))
-//                {
-//                    $retVal = false;
-//                } else
-//                {
-//                    $retVal = true;
-//                }
-//            } catch (Exception $e)
-//            {
-//                $retVal = false;
-//            }
-//
-//            $this->closeConnection();
-//        }
-//        return $retVal;
-
     }
 
     /**

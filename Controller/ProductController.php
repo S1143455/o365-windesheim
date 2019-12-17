@@ -107,7 +107,7 @@ Class ProductController
         $product = $product->retrieve($id);
         if(empty($product->getStockItemID()))
         {
-            header("Location: /404", true);
+//            header("Location: /404", true);
         }
 
         echo '<br>'. $product->getStockItemName() .'<br>';
