@@ -1,6 +1,7 @@
 $primary : black;
-$secondary : red;
-
+$secondary : #fff3e6;
+$textcolor: #818181;
+$background: #f8f8f8;
 .navbar{
   margin-bottom: 0px !important;
 }
@@ -16,21 +17,21 @@ body{
 }
 
 .sidenav {
-height: 100%;
-background-color: #fff3e6;
-overflow-x: hidden;
+  min-height: 89%;
+  background-color: $secondary;
+  overflow-x: hidden;
 }
 
 .sidenav a {
 padding: 6px 8px 6px 16px;
 text-decoration: none;
 font-size: 20px;
-color: #818181;
+color: $textcolor;
 display: block;
 }
 
 .sidenav a:hover {
-color: #f1f1f1;
+color: $secondary;
 }
 
 .main {
@@ -49,38 +50,19 @@ color: #f1f1f1;
   font-size:12px !important;
 }
 
-.one-offdiscountButton {
+.firstdiscountButton {
   display: inline-block;
   white-space: nowrap;
   background-color: #808080 !important;
-  margin-left: 70%;
   margin-top: 10%;
   width: 200px;
 }
 
-.productdiscountButton {
-  display: inline-block;
-  white-space: nowrap;
-  background-color: #808080 !important;
-  margin-left: 70%;
-  margin-top: 1%;
-  width: 200px;
-}
 
-.categorydiscountButton {
+.discountButton {
   display: inline-block;
   white-space: nowrap;
   background-color: #808080 !important;
-  margin-left: 70%;
-  margin-top: 1%;
-  width: 200px;
-}
-
-.maildiscountButton {
-  display: inline-block;
-  white-space: nowrap;
-  background-color: #808080 !important;
-  margin-left: 70%;
   margin-top: 1%;
   width: 200px;
 }
@@ -96,24 +78,24 @@ color: #f1f1f1;
 }
 
 .inputCode {
-display: inline;
-margin-left: 56px;
-width: 30%;
-height: 34px;
-padding: 6px 12px;
-font-size: 14px;
-line-height: 1.42857143;
-color: #555;
-background-color: #fff;
-background-image: none;
-border: 1px solid #ccc;
-border-radius: 4px;
--webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-box-shadow: inset 0 1px 1px
-rgba(0,0,0,.075);
--webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
--o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  display: inline;
+  margin-left: 56px;
+  width: 30%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px
+  rgba(0,0,0,.075);
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
 .inputPercentage {
@@ -196,14 +178,14 @@ label {
 }
 
 h4 {
-  color:red;
+  color: $textcolor;
 }
 
 .table-fixed {
-  margin-left: -40px;
+  margin-left: 10px;
   width: 95%;
   font-size: 12px;
-  background-color: #f3f3f3;
+  background-color: $background;
   tbody{
     height:200px;
     overflow-y:auto;
@@ -223,7 +205,7 @@ h4 {
     tr{
       th{
         float:left;
-        background-color: #fff3e6;
+        background-color: $secondary;
         border-color:#ffad54;
       }
     }
@@ -232,4 +214,21 @@ h4 {
 
 #exampleFormControlTextarea1 {
   width: 65%;
+}
+
+td {
+  min-height: 20px;
+  height: 30px;
+}
+
+.nopadding{
+  padding:0px !important;
+}
+
+.width100{
+  width:100% !important;
+}
+
+.height15pct{
+  height:15%;
 }

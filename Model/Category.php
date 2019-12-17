@@ -10,7 +10,12 @@ class Category extends Database
     private $categoryName;
     private $lastEditedBy;
     private $parentCategory;
+    function __construct()
+    {
+        $this->table = "category";
+        parent::__construct();
 
+    }
     /**
      * @return mixed
      */
@@ -85,7 +90,10 @@ class Category extends Database
     public function getAllActiveCategories()
     {
         $result = '';
-        $result = $this->selectStmt('SELECT * FROM omasbeste.category where CategoryActive = 1;');
+        /**
+         * $result = $this->selectStmt('SELECT * FROM category where CategoryActive = 1;');
+         */
+        $result = $this->selectStmt('SELECT * FROM category;');
 
         return $result;
     }

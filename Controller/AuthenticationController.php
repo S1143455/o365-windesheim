@@ -34,15 +34,18 @@ class AuthenticationController
                 // The passwords are a match. The user is authenticated.
                 $_SESSION['authenticated']='true';
                 $_SESSION['USER']['name']=$user->getUsername();
+                // Place the userdata (an array) into the $_SESSION
+                $_SESSION['USER']['DATA']=$user->getUserDataArray();
                 // Now were done were going back to the index page.
                 $_SESSION['LOGIN_ERROR']='U bent ingelogd';
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/onderhoudaccount\">";
             }
             else
             {
                 // The passwords don't match.
-                // If the user was logged in, he will be logged out now
+                // If the user was logged in, he will be logged out now and the userdata will be cleared.
                 unset($_SESSION['authenticated']);
+                unset($_SESSION['USER']['DATA']);
                 return $_SESSION['LOGIN_ERROR']='Gebruikersnaam of wachtwoord onjuist.';
 
             }

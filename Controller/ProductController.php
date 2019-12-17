@@ -99,4 +99,6 @@ Class ProductController
         echo '<br>'. $product->getStockItemName() .'<br>';
         return include_once $this->viewPath . 'show.php';
     }
+
+
 }
