@@ -39,7 +39,7 @@ class CategoryController
     {
         if (!$category->initialize())
         {
-            print_r($_GET);
+           // print_r($_GET);
             return false;
         };
 
@@ -50,6 +50,15 @@ class CategoryController
             return "Something went wrong.";
         }
     }
+    function ParentCategories(){
+        $categories = $this->category->getAllActiveCategories();
+        foreach($categories as $category){
+            if($category['CategoryName'] != ''){
+                $result = '<option value="' . $category['CategoryID'] .'">'. $category['CategoryName'] . '</option>';
+                echo $result;
+            }
+        }
+    }
 
     function GetAllCategories()
     {
@@ -58,8 +67,9 @@ class CategoryController
             $result = '';
             $result .= '<tr style="height:40px;">
                             <td class="col-xs-2">' . $category['CategoryID'] .'</td>
-                            <td class="col-xs-7">' . $category['CategoryName'] .'</td>
-                            <td class="col-xs-3">' . $category['ParentCategory'] .'</td>
+                            <td class="col-xs-6">' . $category['CategoryName'] .'</td>
+                            <td class="col-xs-2">' . $category['ParentCategory'] .'</td>
+                            <td class="col-xs-2">iets</td>
                         </tr>';
 
             echo $result;
