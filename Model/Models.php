@@ -42,48 +42,45 @@ class Models
             default:
                 die('Table not implemented');
 
-        if ($column != null)
-        {
-            $modelColumn = $this->column;
-            $this->column = null;
-        }
-        if ($this->column == null)
-        {
-            switch ($this->table)
-            {
-                case 'stockitem':
-                    $this->getStockItem();
-                    break;
-                case 'category':
-                    $this->getCategory();
-                    break;
-                case 'attachment':
-                    $this->getAttachments();
-                    break;
-                case 'content':
-                    $this->getContent();
-                    break;
-                case 'supplier':
-                    $this->getSupplier();
-                    break;
-                case  'people':
-                    $this->getPeople();
-                    break;
-                case  'address':
-                    $this->getAddress();
-                    break;
-                default:
-                    die('Table not implemented');
-            }
+                if ($column != null) {
+                    $modelColumn = $this->column;
+                    $this->column = null;
+                }
+                if ($this->column == null) {
+                    switch ($this->table) {
+                        case 'stockitem':
+                            $this->getStockItem();
+                            break;
+                        case 'category':
+                            $this->getCategory();
+                            break;
+                        case 'attachment':
+                            $this->getAttachments();
+                            break;
+                        case 'content':
+                            $this->getContent();
+                            break;
+                        case 'supplier':
+                            $this->getSupplier();
+                            break;
+                        case  'people':
+                            $this->getPeople();
+                            break;
+                        case  'address':
+                            $this->getAddress();
+                            break;
+                        default:
+                            die('Table not implemented');
+                    }
 
+                }
+                if ($column != null) {
+                    $retrievedRelation = $this->column;
+                    $this->column = $modelColumn;
+                    return $retrievedRelation;
+                }
+                return $this->column;
         }
-        if ($column != null)
-        {
-            $retrievedRelation = $this->column;
-            $this->column = $modelColumn;
-            return $retrievedRelation;
-        }
-        return $this->column;
     }
 
     /**

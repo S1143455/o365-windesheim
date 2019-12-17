@@ -114,5 +114,8 @@ Class ProductController
         return include_once $this->viewPath . 'show.php';
     }
 
-
+    public function buildTableRowsProducts(){
+        $product = new Product();
+        print_r($product->retrieve());
+    }
 }

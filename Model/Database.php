@@ -407,7 +407,6 @@ class Database extends Models
         }
         $this->closeConnection();
         return $retVal;
-
     }
 
     /**
