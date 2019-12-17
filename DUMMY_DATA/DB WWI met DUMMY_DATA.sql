@@ -285,7 +285,7 @@ INSERT INTO `people` VALUES ('1','ADMIN','ADMIN','1d89f8671a326456df5e5e0ec59fb3
 ('18','Kirk Altenwerth Jr.','Juanita','1e31b599fb9fceb557dc39a19d3eacafd3039049','0','','+57(9)4137837291','rowe.cameron@example.org','1991-04-18',NULL,'0'),
 ('19','Muriel Hahn','Griffin','179ec77f34017a970e995dbb784d9fd5ec91e935','0','','1-841-575-9531x9631','witting.wendell@example.org','2010-12-05',NULL,'0'),
 ('20','Dana Zemlak','Keenan','24c150657eaa7e0af29bd9976816c4c89d480697','0','','1-646-703-4153','igibson@example.com','2003-01-09',NULL,'0'),
-('21','Cesar O\'Conner','Jarred','1b5d17062c83586522f2310dde643aab34c52584','0','','999.059.9134x893','ysmitham@example.org','2010-08-04',NULL,'0'),
+('21','Cesar O\Conner','Jarred','1b5d17062c83586522f2310dde643aab34c52584','0','','999.059.9134x893','ysmitham@example.org','2010-08-04',NULL,'0'),
 ('22','Prof. Crawford Simonis V','Neva','e166019b2596f8e249dd3018f382e8af5a1ec6ba','0','','(245)584-0430x196','beau.braun@example.org','1993-07-30',NULL,'0'),
 ('23','Jakayla Ledner','Ofelia','07deb5a086c448b3bfa804edc63d85c45eb9585f','0','','1-102-316-4166','ecollins@example.org','2015-01-09',NULL,'0'),
 ('24','Miss Greta Wiegand DDS','Nova','57f8348ea4d6f8ffa7404653fe65fe41e929c2b8','0','','190.399.7269','herta.harris@example.net','1975-10-04',NULL,'0'),
