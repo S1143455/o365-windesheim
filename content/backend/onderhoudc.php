@@ -1,7 +1,9 @@
 <?php
     include_once 'content/backend/header-admin.php';
     use Model\Category;
-
+    $categoryid = 0;
+    $category = $categoryController->retrieve("1223");
+    var_dump($category);
 ?>
 <div class="container" style="width:100%">
     <div class="row">
@@ -41,7 +43,9 @@
         </button>
     </div>
 </div>
-
+        <?php
+        //$categoryController->update($category)
+        ?>
 
 
 <!--  modals      -->
@@ -54,8 +58,9 @@
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                 </div>
                 <div class="modal-body">
+
                     <p>some content</p>
-                    <input type="text" name="bookId" id="bookId" value=""/>
+                    <input style="display: none;" type="text" name="bookId" id="bookId" value=""/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -103,10 +108,12 @@
 <script>
 
     $(document).on("click", ".open-EditDialog", function () {
-         var myBookId = $(this).data('id');
-         var_dump(myBookId);
-    //     $(".modal-body #bookId").val( myBookId );
-     });
+        alert("hoi");
+        var myBookId = $(this).data('id');
+        $(".modal-body #bookId").val( myBookId );
+        alert(myBookId);
+
+    });
 
 
 
