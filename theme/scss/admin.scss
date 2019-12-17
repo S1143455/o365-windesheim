@@ -2,7 +2,6 @@ $primary : black;
 $secondary : #fff3e6;
 $textcolor: #818181;
 $background: #f8f8f8;
-
 .navbar{
   margin-bottom: 0px !important;
 }
@@ -70,7 +69,7 @@ color: $secondary;
 }
 
 .form-control {
-  width: 30%;
+  width: 100%;
 }
 
 .inputCode {
@@ -168,18 +167,24 @@ h4 {
 .descriptionPopUp {
   margin-top: 25px;
 }
-  td {
-    min-height: 20px;
-    height: 30px;
+
+td {
+  min-height: 20px;
+  height: 30px;
+}
+
+.nopadding{
+  padding:0px !important;
+}
+
+.width100{
+  width:100% !important;
+}
+
+.height15pct {
+  height: 15%;
 }
 
 .checkboxOneTime {
-  height: 15px;
-  width: 0px;
-  margin-bottom: -6px;
-  margin-left: 96px;
-}
-
-.checkboxOneTime {
-  margin: 5px 0px 0px 34px!important;
+  margin: 5px 0px 0px 34px !important;
 }

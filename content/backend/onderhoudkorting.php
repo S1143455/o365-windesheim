@@ -23,14 +23,14 @@ include 'views/discount/createCategoryDiscount.php';
             <table class="table table-fixed" id="tableViewDiscount">
                 <thead>
                 <tr>
-                    <th class="col-xs-2">Code</th>
-                    <th class="col-xs-1">Percentage</th>
-                    <th class="col-xs-1">Eenmalig</th>
-                    <th class="col-xs-1">Gebruikt</th>
-                    <th class="col-xs-3">Omschrijving</th>
-                    <th class="col-xs-2">Product aantal</th>
-                    <th class="col-xs-1">Beginperiode</th>
-                    <th class="col-xs-1">Eindperiode</th>
+                    <th class="col-md-2">Code</th>
+                    <th class="col-md-1">Percentage</th>
+                    <th class="col-md-1">Eenmalig</th>
+                    <th class="col-md-1">Gebruikt</th>
+                    <th class="col-md-3">Omschrijving</th>
+                    <th class="col-md-2">Product aantal</th>
+                    <th class="col-md-1">Beginperiode</th>
+                    <th class="col-md-1">Eindperiode</th>
                 </tr>
                 </thead>
                 <tbody>

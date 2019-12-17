@@ -86,7 +86,7 @@ $router->route('/admin/onderhoud-producten', function(){
 $router->route('/admin/onderhoud-klanten', function(){
     return include 'content/backend/onderhoudklanten.php';
 });
-$router->route('/admin/test', function() use($categoryController){
+$router->route('/admin/CreateCategorie', function() use($categoryController){
     return $categoryController->create();
 });
 $router->route('/admin/test123', function() use($discount){

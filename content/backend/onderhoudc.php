@@ -1,7 +1,9 @@
 <?php
     include_once 'content/backend/header-admin.php';
     use Model\Category;
-
+    $categoryid = 0;
+    $category = $categoryController->retrieve("1223");
+    var_dump($category);
 ?>
 <div class="container" style="width:100%">
     <div class="row">
@@ -21,10 +23,11 @@
         <table id="categoryTable" class="table table-fixed">
             <thead>
             <tr>
-                <th class="col-xs-2">Categorie ID</th>
-                <th class="col-xs-6">Omschrijving</th>
-                <th class="col-xs-2">Parent Categorie</th>
-                <th class="col-xs-2">Acties </th>
+                <th class="col-md-1">manage</th>
+                <th class="col-md-2">Categorie ID</th>
+                <th class="col-md-5">Omschrijving</th>
+                <th class="col-md-2">Parent Categorie</th>
+                <th class="col-md-2">Acties </th>
             </tr>
             </thead>
             <tbody>
@@ -40,34 +43,38 @@
         </button>
     </div>
 </div>
+        <?php
+        //$categoryController->update($category)
+        ?>
 
 
-                <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" style="width:1000px;">
-                        <div class="modal-content">
-                            <form role="form" id="universalModalForm" method="POST" action="test">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
-                                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span> Edit<span class="modal-title">.model-title</span></h4>
-                                </div>
-                                <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
-                                    <span class="alert-body"></span>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="categoryID">Category</label>
-                                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <input type="submit" name="submit" value="product" class="btn btn-primary">
-                                </div>
+<!--  modals      -->
+
+<div class="modal fade" id="EditCategorieDialog" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-content">
+            <form role="form" id="universalModalForm1" method="POST" action="CreateCategorie">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                </div>
+                <div class="modal-body">
+
+                    <p>some content</p>
+                    <input style="display: none;" type="text" name="bookId" id="bookId" value=""/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:1000px;">
         <div class="modal-content">
-            <form role="form" id="universalModalForm" method="POST" action="test">
+            <form role="form" id="universalModalForm" method="POST" action="CreateCategorie">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                     <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
@@ -92,7 +99,6 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
                 </div>
-
             </form>
         </div>
     </div>
@@ -100,6 +106,17 @@
 
 </div>
 <script>
+
+    $(document).on("click", ".open-EditDialog", function () {
+        alert("hoi");
+        var myBookId = $(this).data('id');
+        $(".modal-body #bookId").val( myBookId );
+        alert(myBookId);
+
+    });
+
+
+
     function searchbar() {
         var input, filter, table, tr, tds, i, txtValue, tdsearch;
         input = document.getElementById("myInput");

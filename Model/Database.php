@@ -130,6 +130,8 @@ class Database extends Models
         if ($this->checkIfExists($this->getID("value")) == null)
         {
             return $this->newRow();
+        }else if($this->getID("value") != null){
+
         }
     }
 
@@ -250,6 +252,41 @@ class Database extends Models
         return  "SELECT " . $attributes . " FROM " . $this->table . " ";
     }
 
+
+    private function createUpdateStatement()
+    {
+        $columns = "";
+        $values = [];
+        $placeholder = "";
+
+        foreach ($this->column as $key => $value)
+        {
+
+            $attributeValue = $this->getAttribute($key);
+            if (!empty($attributeValue) && $value[1])
+            {
+                $columns .= $key . " , ";
+                $placeholder .= ":" . strtolower($key) . ", ";
+                $values[strtolower($key)] = $this->serializedInput($attributeValue);
+            }
+        }
+        $columns = substr($columns, 0, -2);
+        $placeholder = substr($placeholder, 0, -2);
+
+        $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $placeholder . ");";
+
+        $stmt = $this->connection->prepare($sql);
+
+
+        foreach ($values as $parameter => $value)
+        {
+            // print_r([$parameter, $value]);
+            $stmt->bindValue($parameter, $value);
+        }
+        return $stmt;
+        //return  "update " .  $this->table . "set " . $attributes . "where" . $primaryKey . " = " . $id ."";
+    }
+
     /**
      *
      * Creates a sql query.
@@ -327,6 +364,21 @@ class Database extends Models
         }
 
     }
+
+
+    public function UpdateEntry($id, $data){
+        if($id == null || empty($data)){
+            return false;
+        }else{
+            $test1 = $this->$this->getColumns();
+            var_dump($test1);
+            foreach ($data as $test)
+            {
+
+            }
+        }
+    }
+
 
     /**
      * @param $columnKeys
@@ -407,7 +459,6 @@ class Database extends Models
         }
         $this->closeConnection();
         return $retVal;
-
     }
 
     /**
@@ -686,7 +737,7 @@ class Database extends Models
                     }
                 }
                 array_push($modelObjects, $modelObject);
-                print_r($modelObject->getStockItemName());
+//                print_r($modelObject->getStockItemName());
             }
 //            array_push($modelObjects, $modelObject);
         }
