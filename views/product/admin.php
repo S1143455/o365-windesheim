@@ -1,7 +1,5 @@
 <?php
 include_once 'content/backend/header-admin.php';
-use Model\Product;
-
 ?>
     <div class="container" style="width:100%">
         <div class="row">
@@ -23,18 +21,23 @@ use Model\Product;
                 <div class="row">
                     <table id="productTable" class="table table-fixed">
                         <thead>
-                            <tr>
-                                <th class="col-xs-1">Productnummer</th>
-                                <th class="col-xs-2">Categorie</th>
-                                <th class="col-xs-3">Omschrijving</th>
-                                <th class="col-xs-1">Prijs</th>
-                                <th class="col-xs-1">Voorraad</th>
-                                <th class="col-xs-2">Start verkoop</th>
-                                <th class="col-xs-2">Eind verkoop</th>
-                            </tr>
+                        <tr>
+                            <th class="col-xs-1">Productnummer</th>
+                            <th class="col-xs-2">Categorie</th>
+                            <th class="col-xs-3">Omschrijving</th>
+                            <th class="col-xs-1">Prijs</th>
+                            <th class="col-xs-1">Voorraad</th>
+                            <th class="col-xs-2">Start verkoop</th>
+                            <th class="col-xs-2">Eind verkoop</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <?php $productController->tableProducts(); ?>
+                        <?php
+                        // var_dump($products);
+                            foreach($products as $prod){
+                                echo $prod->getStockItemName();
+                            }
+                        ?>
                         </tbody>
                     </table>
                 </div>
