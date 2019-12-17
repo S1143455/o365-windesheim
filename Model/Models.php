@@ -17,47 +17,70 @@ class Models
 
     protected function getColumns($column = null)
     {
-        if ($column != null)
-        {
-            $modelColumn = $this->column;
-            $this->column = null;
+        switch ($this->table) {
+            case 'stockitem':
+                $this->getStockItem();
+                break;
+            case 'category':
+                $this->getCategory();
+                break;
+            case 'attachment':
+                $this->getAttachments();
+                break;
+            case 'content':
+                $this->getContent();
+                break;
+            case 'supplier':
+                $this->getSupplier();
+                break;
+            case  'people':
+                $this->getPeople();
+                break;
+            case  'specialdeals':
+                $this->getSpecialdeals();
+                break;
+            default:
+                die('Table not implemented');
+
+                if ($column != null) {
+                    $modelColumn = $this->column;
+                    $this->column = null;
+                }
+                if ($this->column == null) {
+                    switch ($this->table) {
+                        case 'stockitem':
+                            $this->getStockItem();
+                            break;
+                        case 'category':
+                            $this->getCategory();
+                            break;
+                        case 'attachment':
+                            $this->getAttachments();
+                            break;
+                        case 'content':
+                            $this->getContent();
+                            break;
+                        case 'supplier':
+                            $this->getSupplier();
+                            break;
+                        case  'people':
+                            $this->getPeople();
+                            break;
+                        case  'address':
+                            $this->getAddress();
+                            break;
+                        default:
+                            die('Table not implemented');
+                    }
+
+                }
+                if ($column != null) {
+                    $retrievedRelation = $this->column;
+                    $this->column = $modelColumn;
+                    return $retrievedRelation;
+                }
+                return $this->column;
         }
-        if ($this->column == null)
-        {
-            switch ($this->table)
-            {
-                case 'stockitem':
-                    $this->getStockItem();
-                    break;
-                case 'category':
-                    $this->getCategory();
-                    break;
-                case 'attachment':
-                    $this->getAttachments();
-                    break;
-                case 'content':
-                    $this->getContent();
-                    break;
-                case 'supplier':
-                    $this->getSupplier();
-                    break;
-                case  'people':
-                    $this->getPeople();
-                    break;
-                case  'address':
-                    $this->getAddress();
-                    break;
-                default:
-                    die('Table not implemented');
-            }
-        }
-        if ($column != null)
-        {
-            $retrievedRelation = $this->column;
-            $this->column = $modelColumn;
-            return $retrievedRelation;
-        }
-        return $this->column;
     }
 
     /**
@@ -82,6 +105,20 @@ class Models
         );
     }
 
+    private function getSpecialdeals()
+    {
+        $this->column = array(
+            "SpecialDealID" => ['Integer', 'PrimaryKey', 'Required'],
+            "DealDescription" => ['Varchar', 'Attribute', 'Nullable'],
+            "StartDate" => ['Date', 'Attribute', 'Required'],
+            "EndDate" => ['Date', 'Attribute', 'Nullable'],
+            "DiscountPercentage" => ['Integer', 'Attribute', 'Required'],
+            "DealCode" => ['Integer', 'Attribute', 'Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "OneTime" => ['Tinyint', 'Attribute', 'Nullable'],
+            "Active" => ['Tinyint', 'Attribute', 'Nullable'],
+        );
+    }
 
     private function getCategory()
     {

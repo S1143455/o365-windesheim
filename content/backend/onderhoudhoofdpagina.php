@@ -3,17 +3,13 @@
 include_once 'content/backend/header-admin.php';
 include_once 'content/backend/sidebar-admin.php';
 $content = new controller\ContentController();
-
-function getContent($section){
-    echo 'test';
-}
 ?>
 
     <link href="../theme/css/htmlEditor.css" rel="stylesheet">
     <div class="container">
         <div id = "editor">
             <div id="selectie">
-                <select id = "section" onchange="getSelectedSection(this)">
+                <select id = "section">
                     <option value = "">Selecteer onderdeel...</option>
                     <option value = "TITLE">Titel</option>
                     <option value = "SUBTITLE">Subtitel</option>
