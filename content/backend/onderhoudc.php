@@ -2,7 +2,7 @@
     include_once 'content/backend/header-admin.php';
     use Model\Category;
     $categoryid = 0;
-    $category = $categoryController->retrieve("1223");
+    $category = $categoryController->retrieve(1123);
     var_dump($category);
     $categoryController->update($category)
 
