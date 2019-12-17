@@ -21,10 +21,11 @@
         <table id="categoryTable" class="table table-fixed">
             <thead>
             <tr>
-                <th class="col-xs-2">Categorie ID</th>
-                <th class="col-xs-6">Omschrijving</th>
-                <th class="col-xs-2">Parent Categorie</th>
-                <th class="col-xs-2">Acties </th>
+                <th class="col-md-1">manage</th>
+                <th class="col-md-2">Categorie ID</th>
+                <th class="col-md-5">Omschrijving</th>
+                <th class="col-md-2">Parent Categorie</th>
+                <th class="col-md-2">Acties </th>
             </tr>
             </thead>
             <tbody>
@@ -38,6 +39,30 @@
         <button type="button" class="first discountButton btn btn-primary" data-toggle="modal" data-target="#createCategory">
             Aanmaken Categorie
         </button>
+    </div>
+</div>
+
+
+
+<!--  modals      -->
+
+<div class="modal fade" id="EditCategorieDialog" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-content">
+            <form role="form" id="universalModalForm1" method="POST" action="CreateCategorie">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>some content</p>
+                    <input type="text" name="bookId" id="bookId" value=""/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -76,6 +101,15 @@
 
 </div>
 <script>
+
+    $(document).on("click", ".open-EditDialog", function () {
+         var myBookId = $(this).data('id');
+         var_dump(myBookId);
+    //     $(".modal-body #bookId").val( myBookId );
+     });
+
+
+
     function searchbar() {
         var input, filter, table, tr, tds, i, txtValue, tdsearch;
         input = document.getElementById("myInput");

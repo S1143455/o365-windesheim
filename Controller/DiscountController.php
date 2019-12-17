@@ -20,14 +20,14 @@ class DiscountController
         foreach($discounts as $discount){
             $result = '';
             $result .= '<tr>
-                    <td class="col-xs-2">' . $discount['DealCode'] .'</td>
-                    <td class="col-xs-1">' . $discount['DiscountPercentage'] .'</td>
-                    <td class="col-xs-1">' . $discount['OneTime'] .'</td>
-                    <td class="col-xs-1">' . $discount['Active'] .'</td>
-                    <td class="col-xs-3">' . $discount['DealDescription'] .'</td>
-                    <td class="col-xs-2">'. $this->discount->getProductBasedOnID($discount['SpecialDealID']) .'</td>
-                    <td class="col-xs-1">' . $discount['StartDate'] .'</td>
-                    <td class="col-xs-1">' . $discount['EndDate'] .'</td>
+                    <td class="col-md-2">' . $discount['DealCode'] .'</td>
+                    <td class="col-md-1">' . $discount['DiscountPercentage'] .'</td>
+                    <td class="col-md-1">' . $discount['OneTime'] .'</td>
+                    <td class="col-md-1">' . $discount['Active'] .'</td>
+                    <td class="col-md-3">' . $discount['DealDescription'] .'</td>
+                    <td class="col-md-2">'. $this->discount->getProductBasedOnID($discount['SpecialDealID']) .'</td>
+                    <td class="col-md-1">' . $discount['StartDate'] .'</td>
+                    <td class="col-md-1">' . $discount['EndDate'] .'</td>
                 </tr>';
             echo $result;
         }

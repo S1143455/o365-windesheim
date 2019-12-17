@@ -64,10 +64,11 @@ class CategoryController
         foreach($categories as $category){
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-xs-2">' . $category['CategoryID'] .'</td>
-                            <td class="col-xs-6">' . $category['CategoryName'] .'</td>
-                            <td class="col-xs-2">' . $category['ParentCategory'] .'</td>
-                            <td class="col-xs-2">iets</td>
+                            <td class="col-md-1"><button type="button" class="btn btn-primary" data-toggle="modal"  data-id="' . $category['CategoryID'] .'"  data-target="#EditCategorieDialog">Edit</button></td>
+                            <td class="col-md-2">' . $category['CategoryID'] .'</td>
+                            <td class="col-md-5">' . $category['CategoryName'] .'</td>
+                            <td class="col-md-2">' . $category['ParentCategory'] .'</td>
+                            <td class="col-md-2">iets</td>
                         </tr>';
 
             echo $result;
