@@ -37,13 +37,10 @@ class Models
             case  'people':
                 $this->getPeople();
                 break;
-<<<<<<< HEAD
             case  'customer':
                 $this->getCustomer();
-=======
             case  'specialdeals':
                 $this->getSpecialdeals();
->>>>>>> b003eb348236781a3032f1881a3b89b37efd3e78
                 break;
             default:
                 die('Table not implemented');
