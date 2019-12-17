@@ -111,9 +111,7 @@ class Database extends Models
     //WIP($table , $params = NULL) <- new parameters
     public function create($sql)
     {
-
         $this->checkIfExists(10);
-
     }
 
     public function delete($id)
@@ -273,7 +271,7 @@ class Database extends Models
         $columns = substr($columns, 0, -2);
         $placeholder = substr($placeholder, 0, -2);
 
-        $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $placeholder . ");";
+        $sql = "UPDATE INTO " . $this->table . $columns . " VALUES (" . $placeholder . ");";
 
         $stmt = $this->connection->prepare($sql);
 
