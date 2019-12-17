@@ -84,7 +84,7 @@ class Models
             return $retrievedRelation;
         }
         return $this->column;
-    }
+    }}
 
     /**
      * Define array of the product

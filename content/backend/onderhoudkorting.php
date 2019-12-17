@@ -1,13 +1,12 @@
 <?php
 include_once 'content/backend/header-admin.php';
+include_once 'content/backend/sidebar-admin.php';
+include 'views/discount/createCategoryDiscount.php';
 
 ?>
+
 <div class="container" style="width:100%" xmlns="http://www.w3.org/1999/html">
     <div class="row">
-
-<?php
-include_once 'content/backend/sidebar-admin.php';
-?>
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-12">
@@ -46,10 +45,7 @@ include_once 'content/backend/sidebar-admin.php';
         <div class="row">
                      <!-- https://getbootstrap.com/docs/4.0/components/modal/  -->
 
-            <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#oneTimeDiscount">
-=======
-            <button type="button" class="first discountButton btn btn-primary" data-toggle="modal" data-target="#kortingEenmaal">
-
+            <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#oneTimeDiscount">
                 Eenmalige korting
             </button>
             <button type="button" class="discountButton btn btn-primary" data-toggle="modal" data-target="#DiscountProduct">
@@ -66,49 +62,49 @@ include_once 'content/backend/sidebar-admin.php';
 </div>
 
 
-<!-- modals (popups) -->
+<!-- modal (popup) eenmalige korting -->
 <div class="modal fade" id="oneTimeDiscount" tabindex="-1" role="dialog" aria-labelledby="oneTimeDiscount" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Eenmalige korting aanmaken</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Eenmalige korting aanmaken</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputCodeOT">Code:</label>
+                    <input type="text" class="form-control inputCode" name="DealCode" id="inputCodeOT">
+                    <button type="button" class="btn btn-outline-secondary" onclick="generateCodeOT();">Genereer code</button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputCodeOT">Code:</label>
-                        <input type="text" class="form-control inputCode" name="DealCode" id="inputCodeOT">
-                        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeOT();">Genereer code</button>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-check-label" for="checkboxOT">Eenmalig:</label>
-                        <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPercentageOT">Percentage:</label>
-                        <input type="text" class="form-control inputPercentage" name="DiscountPercentage" aria-label="inputPercentageOT" id="inputPercentageOT">
-                        <span class="symbolPercentage">%</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputStartDateOT">Begin periode:</label>
-                        <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartDateOT">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEndDateOT">Einde periode:</label>
-                        <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateOT">
-                    </div>
+                <div class="form-group">
+                    <label class="form-check-label" for="checkboxOT">Eenmalig:</label>
+                    <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT">
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                    <button type="button" name="createDiscount" value="Korting aanmaken" class="btn btn-primary">
+                <div class="form-group">
+                    <label for="inputPercentageOT">Percentage:</label>
+                    <input type="text" class="form-control inputPercentage" name="DiscountPercentage" aria-label="inputPercentageOT" id="inputPercentageOT">
+                    <span class="symbolPercentage">%</span>
                 </div>
+                <div class="form-group">
+                    <label for="inputStartDateOT">Begin periode:</label>
+                    <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartDateOT">
+                </div>
+                <div class="form-group">
+                    <label for="inputEndDateOT">Einde periode:</label>
+                    <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateOT">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                <button type="button" class="btn btn-primary" name="submit">Korting aanmaken</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- modal (popup) korting op product -->
 <div class="modal fade" id="DiscountProduct" tabindex="-1" role="dialog" aria-labelledby="DiscountProduct" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -148,12 +144,13 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary" onclick="">Korting aanmaken</button>
+                <button type="button" class="btn btn-primary" name="submit">Korting aanmaken</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- modal (popup) korting op categorie -->
 <div class="modal fade" id="DiscountCategory" tabindex="-1" role="dialog" aria-labelledby="DiscountCategory" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -189,12 +186,13 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="button" class="btn btn-primary">Korting aanmaken</button>
+                <button type="button" class="btn btn-primary" name="submit">Korting aanmaken</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- modal (popup) korting mailen naar klant -->
 <div class="modal fade" id="MailDiscount" tabindex="-1" role="dialog" aria-labelledby="MailDiscount" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -238,74 +236,78 @@ include_once 'content/backend/sidebar-admin.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <input type="submit" class="btn btn-primary" name="submit" value="Korting mailen"">
+                <button type="button" class="btn btn-primary" name="submit">Korting aanmaken</button>
             </div>
         </div>
     </div>
 </div>
+</div>
 
+<!-- scripts voor het geneneren van random kortingscodes -->
+<script xmlns:line-height="http://www.w3.org/1999/xhtml">
+    function generateCodeOT() {
+        var x = document.getElementById("inputCodeOT")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
 
-    <script xmlns:line-height="http://www.w3.org/1999/xhtml">
-        function generateCodeOT() {
-            var x = document.getElementById("inputCodeOT")
-            x.value = Math.floor((Math.random() * 900000000) + 100000000);
-        }
+    function generateCodeDP() {
+        var x = document.getElementById("inputCodeDP")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
 
-        function generateCodeDP() {
-            var x = document.getElementById("inputCodeDP")
-            x.value = Math.floor((Math.random() * 900000000) + 100000000);
-        }
+    function generateCodeDC() {
+        var x = document.getElementById("inputCodeDC")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
 
-        function generateCodeDC() {
-            var x = document.getElementById("inputCodeDC")
-            x.value = Math.floor((Math.random() * 900000000) + 100000000);
-        }
+    function generateCodeMD() {
+        var x = document.getElementById("inputCodeMD")
+        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+    }
+</script>
 
-        function generateCodeMD() {
-            var x = document.getElementById("inputCodeMD")
-            x.value = Math.floor((Math.random() * 900000000) + 100000000);
-        }
-    </script>
+<!-- scripts voor het zoeken naar resultaten in de zoekbalk-->
+<script>
+    $('.load-modal').on('click', function(e){
+        e.preventDefault();
+        $('#createCategory').modal('show');
+    });
 
-    <script>
-        $('.load-modal').on('click', function(e){
-            e.preventDefault();
-            $('#createCategory').modal('show');
-        });
+    function searchbar() {
 
-        function searchbar() {
+        var input, filter, table, tr, tds, i, txtValue, tdsearch;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableViewDiscount");
+        tr = table.getElementsByTagName("tr");
 
-            var input, filter, table, tr, tds, i, txtValue, tdsearch;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("tableViewDiscount");
-            tr = table.getElementsByTagName("tr");
-
-            if(filter == ''){
-                for (i = 1; i < tr.length; i++) {
-                    tr[i].style.display = "";
-                }
-            }
-
+        if(filter == ''){
             for (i = 1; i < tr.length; i++) {
-                tdsearch = false;
-                tds = tr[i].getElementsByTagName("td");
-                for(x = 0; x < tds.length; x++){
-                    if (tds[x]) {
-                        txtValue = tds[x].textContent || tds[x].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tdsearch = true;
-                        }
+                tr[i].style.display = "";
+            }
+        }
+
+        for (i = 1; i < tr.length; i++) {
+            tdsearch = false;
+            tds = tr[i].getElementsByTagName("td");
+            for(x = 0; x < tds.length; x++){
+                if (tds[x]) {
+                    txtValue = tds[x].textContent || tds[x].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tdsearch = true;
                     }
                 }
-                if(tdsearch == false){
-                    tr[i].style.display = "none";
-                }
+            }
+            if(tdsearch == false){
+                tr[i].style.display = "none";
             }
         }
-    </script>
+    }
+</script>
 
-    <?php
+
+
+<?php
 include_once 'content/backend/footer-admin.php';
 
 ?>
