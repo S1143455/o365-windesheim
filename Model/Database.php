@@ -227,11 +227,9 @@ class Database extends Models
 
         foreach ($values as $parameter => $value)
         {
-            // print_r([$parameter, $value]);
             $stmt->bindValue($parameter, $value);
         }
         return $stmt;
-        //return  "update " .  $this->table . "set " . $attributes . "where" . $primaryKey . " = " . $id ."";
     }
 
     /**
@@ -684,9 +682,7 @@ class Database extends Models
                     }
                 }
                 array_push($modelObjects, $modelObject);
-//                print_r($modelObject->getStockItemName());
             }
-//            array_push($modelObjects, $modelObject);
         }
         else
             {
