@@ -227,11 +227,9 @@ class Database extends Models
 
         foreach ($values as $parameter => $value)
         {
-            // print_r([$parameter, $value]);
             $stmt->bindValue($parameter, $value);
         }
         return $stmt;
-        //return  "update " .  $this->table . "set " . $attributes . "where" . $primaryKey . " = " . $id ."";
     }
 
     /**
@@ -552,7 +550,7 @@ class Database extends Models
 
                 return intval($value);
             case "boolean":
-                if ($value || $value == 1)
+                if ($value || $value == 1 || strtolower($value) == "on")
                 {
                     return 1;
                 }
@@ -683,9 +681,7 @@ class Database extends Models
                     }
                 }
                 array_push($modelObjects, $modelObject);
-//                print_r($modelObject->getStockItemName());
             }
-//            array_push($modelObjects, $modelObject);
         }
         else
             {
@@ -708,9 +704,10 @@ class Database extends Models
         array_push($_GET[$key], $value);
     }
 
-    public function getRelation($model)
+    public function getRelation($modelName)
     {
         $columns = $this->getColumns();
+        $model =  new $modelName();
         if ($columns == null)
         {
             die('relation does not exist');

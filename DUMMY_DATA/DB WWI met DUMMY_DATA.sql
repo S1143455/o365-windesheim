@@ -167,6 +167,8 @@ create table specialdeals
     DiscountPercentage int          not null,
     DealCode           int          not null,
     LastEditedBy       int          not null,
+    OneTime            tinyint      null,
+    Active             tinyint      null,
     constraint PersonLastEditedSpeciialDeal
         foreign key (LastEditedBy) references people (PersonID)
 );
