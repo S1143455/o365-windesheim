@@ -284,9 +284,9 @@ class Database extends Models
         $this->connection = null;
 
         //Remove or comment these lines --
-        echo "Query that was created and executed :<br>" . $sql;
-        echo "<br> The array of objects that has been found: <br>";
-        print_r($retVal);
+        //echo "Query that was created and executed :<br>" . $sql;
+        //echo "<br> The array of objects that has been found: <br>";
+        //print_r($retVal);
         // -- End
 
         return $retVal;

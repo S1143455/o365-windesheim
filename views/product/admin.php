@@ -22,10 +22,10 @@ include_once 'content/backend/header-admin.php';
                     <table id="productTable" class="table table-fixed">
                         <thead>
                         <tr>
-                            <th class="col-xs-1">Productnummer</th>
+                            <th class="col-xs-1">Productnr</th>
                             <th class="col-xs-2">Categorie</th>
-                            <th class="col-xs-3">Omschrijving</th>
-                            <th class="col-xs-1">Merk</th>
+                            <th class="col-xs-2">Omschrijving</th>
+                            <th class="col-xs-2">Merk</th>
                             <th class="col-xs-1">Formaat</th>
                             <th class="col-xs-1">Barcode</th>
                             <th class="col-xs-1">Inkoopprijs</th>
@@ -36,35 +36,37 @@ include_once 'content/backend/header-admin.php';
                         <tbody>
                         <?php
                             foreach($products as $prod){
+                                $categories = $category->retrieve($prod->getCategoryID());
+
                                 echo '<tr>';
-                                echo '<td class="col-xs-1">' . $prod->getStockItemID() . '</td>';
-                                echo '<td class="col-xs-2">' . $prod->getCategoryID() . '</td>';
-                                echo '<td class="col-xs-3">' . $prod->getStockItemName() . '</td>';
-                                echo '<td class="col-xs-1">' . $prod->getBrand() . '</td>';
+                                    echo '<td class="col-xs-1">' . $prod->getStockItemID() . '</td>';
+                                    echo '<td class="col-xs-2">' . $categories->getCategoryName() . '</td>';
+                                    echo '<td class="col-xs-2">' . $prod->getStockItemName() . '</td>';
+                                    echo '<td class="col-xs-2">' . $prod->getBrand() . '</td>';
 
-                                $size = 'Onbekend';
-                                switch ($prod->getSize()) {
-                                    case 1:
-                                        $size = 'Extra klein';
-                                        break;
-                                    case 2:
-                                        $size = 'Klein';
-                                        break;
-                                    case 3:
-                                        $size = 'Middel';
-                                        break;
-                                    case 4:
-                                        $size = 'Groot';
-                                        break;
-                                    case 5:
-                                        $size = 'Extra groot';
-                                }
+                                    $size = 'Onbekend';
+                                    switch ($prod->getSize()) {
+                                        case 1:
+                                            $size = 'Extra klein';
+                                            break;
+                                        case 2:
+                                            $size = 'Klein';
+                                            break;
+                                        case 3:
+                                            $size = 'Middel';
+                                            break;
+                                        case 4:
+                                            $size = 'Groot';
+                                            break;
+                                        case 5:
+                                            $size = 'Extra groot';
+                                    }
 
-                                echo '<td class="col-xs-1">' . $size . '</td>';
-                                echo '<td class="col-xs-1">' . $prod->getBarcode() . '</td>';
-                                echo '<td class="col-xs-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
-                                echo '<td class="col-xs-1">' . $prod->getTaxRate() . '</td>';
-                                echo '<td class="col-xs-1">€' . number_Format($prod->getUnitPrice() - ($prod->getUnitPrice() / 100 * $prod->getTaxRate()),2) . '</td>';
+                                    echo '<td class="col-xs-1">' . $size . '</td>';
+                                    echo '<td class="col-xs-1">' . $prod->getBarcode() . '</td>';
+                                    echo '<td class="col-xs-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
+                                    echo '<td class="col-xs-1">' . number_format($prod->getTaxRate(),2) . '%</td>';
+                                    echo '<td class="col-xs-1">€' . number_Format($prod->getUnitPrice() - ($prod->getUnitPrice() / 100 * $prod->getTaxRate()),2) . '</td>';
                                 echo '</td>';
                             }
                         ?>
@@ -96,12 +98,20 @@ include_once 'content/backend/header-admin.php';
                                 <div class="col-md-12">
                                     <label for="CategoryID">Categorie</label>
                                     <select id = "CategoryID" class="form-control" required>
-                                        //TODO:::::: Categorieën ophalen en in select droppen
                                         <option value="">Selecteer een categorie...</option>
-                                        <option value="CategoryID1">Categorie 1</option>
-                                        <option value="CategoryID2">Categorie 2</option>
-                                        <option value="CategoryID3">Categorie 3</option>
-                                        <option value="CategoryID4">Categorie 4</option>
+                                        <?php
+                                        $categories = $category->retrieve();
+
+                                        foreach($categories as $cat){
+                                            $sCat = $cat->getCategoryName();
+
+                                            if($cat->getParentCategory() != null) {
+                                                $parentCat = $category->retrieve($cat->getParentCategory());
+                                                $sCat = $sCat . ' (' . $parentCat->getCategoryName() . ')';
+                                            }
+                                            echo '<option value="' . $cat->getCategoryID() . '">' . $sCat . '</option>';
+                                        }
+                                        ?>
                                     </select>
                                     <br>
                                     <label for="StockItemID">Productnummer</label>
@@ -115,12 +125,12 @@ include_once 'content/backend/header-admin.php';
                                     <div class="col-md-4 nopadding">
                                         <label for="SupplierID">Leverancier</label>
                                         <select id="SupplierID" class="form-control width100" required>
-                                            //TODO:::::: Leveranciers ophalen en in select droppen
                                             <option value="">Selecteer een leverancier...</option>
-                                            <option value="LeverancierID1">Leverancier 1</option>
-                                            <option value="LeverancierID2">Leverancier 2</option>
-                                            <option value="LeverancierID3">Leverancier 3</option>
-                                            <option value="LeverancierID4">Leverancier 4</option>
+                                            <?php
+                                            foreach($suppliers as $sup){
+                                                echo '<option value="' . $sup->getSupplierID() . '">' . $sup->getSupplierName() . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="col-md-1">

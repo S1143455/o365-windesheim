@@ -127,6 +127,7 @@ class Models
             "CategoryName" => ['Varchar', 'Attribute', 'Required'],
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
         );
     }
 
@@ -188,7 +189,7 @@ class Models
             "AlternateContactPersonID" => ['People', 'HasOne', 'Required'],
             "SupplierReference" => ['Varchar', 'Attribute', 'Required'],
             "InternalComments" => ['LongText', 'Attribute', 'Required'],
-            "WebsiteURL" => ['Boolean', 'Attribute', 'Required'],
+            "WebsiteURL" => ['Varchar', 'Attribute', 'Required'],
             "LastEditedBy" => ['Varchar', 'Attribute', 'Required'],
             "AddressID" => ['Address', 'HasOne', 'Required'],
 
