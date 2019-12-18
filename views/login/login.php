@@ -2,6 +2,8 @@
 include 'loader.php';
 include_once 'content/frontend/header.php';
 
+//$tst=new \Controller\AuthenticationController();
+//echo $tst->hashPassword('kats');
     // Let's test the input of the user.
     if(isset($_POST['login']))
     {
