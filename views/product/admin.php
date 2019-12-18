@@ -107,7 +107,7 @@ include_once 'content/backend/header-admin.php';
 
                                             if($cat->getParentCategory() != null) {
                                                 $parentCat = $category->retrieve($cat->getParentCategory());
-                                                $sCat = $sCat . ' (' . $parentCat->getCategoryName() . ')';
+                                                $sCat .= ' (' . $parentCat->getCategoryName() . ')';
                                             }
                                             echo '<option value="' . $cat->getCategoryID() . '">' . $sCat . '</option>';
                                         }
