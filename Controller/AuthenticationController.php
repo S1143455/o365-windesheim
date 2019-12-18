@@ -57,7 +57,7 @@ class AuthenticationController
      * @param $password
      * @return bool|string
      */
-    private function hashPassword($password)
+    public function hashPassword($password)
     {
         return password_hash($password, PASSWORD_BCRYPT);
     }

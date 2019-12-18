@@ -1,6 +1,9 @@
 <html lang="NL">
     <head>
         <body>
+            <script type="text/javascript">
+                $('#error_message').hide();
+            </script>
             <h2>Uw klant nummer is <?php echo $_SESSION['USER']['DATA'][0]['PersonID']; ?>.</h2>
             <h2>Hieronder staan de gegevens zoals deze bij ons bekend zijn.</h2>
                 <?php
@@ -8,7 +11,22 @@
                 if (isset($_POST['changeuser'])){include "update_userdetails.php";}
                 elseif (isset($_POST['changepassword'])){include "update_userpassword.php";}
                 ?>
+            <script type="text/javascript">
+                function ValidatePassword()
+                {
+                    let firstInput = document.getElementById("newpw1").value;
+                    let secondInput = document.getElementById("newpw2").value;
 
+                    if (firstInput === secondInput) {
+                        // do something here if inputs are same
+                        return true;
+                    } else {
+                        $('#error_message').show();
+                        return false;
+                    }
+                }
+            </script>
+<!-- Show the the data of the logged in user. -->
                 <div class="card">
                     <article class="card-body">
                         <form method="post" action="">
@@ -68,7 +86,7 @@
                         </form>
                     </article>
                 </div>
-
+<!-- The two buttons. -->
                 <div class="form-row">
                     <div class="col-md-12">
                         <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#changeuser">Gegevens aanpassen</button>
@@ -76,6 +94,7 @@
                     </div>
                 </div>
 
+<!-- The form for changing user details. -->
                 <div class="modal fade" id="changeuser" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
                     <div class="modal-dialog" style="width:1000px;">
                         <div class="modal-content">
@@ -153,10 +172,11 @@
                     </div>
                 </div>
 
+<!-- The form for changing the password. -->
                 <div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
                     <div class="modal-dialog" style="width:1000px;">
                         <div class="modal-content">
-                            <form role="form" id="changepasswordForm" method="POST" action="">
+                            <form role="form" id="changepasswordForm" method="POST" action="" onsubmit="return ValidatePassword()">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                                     <h4 class="modal-title"><span class="modal-title">Wachtwoord wijzigen</span></h4>
@@ -167,15 +187,18 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="oldpw">Uw oude wachtwoord</label>
-                                        <input type="password" class="form-control" name="oldpw" id="oldpw">
+                                        <input type="password" class="form-control" name="oldpw" id="oldpw" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="newpw1">Uw nieuwe wachtwoord</label>
-                                        <input type="password" class="form-control" name="newpw1" id="newpw1">
+                                        <input type="password" class="form-control" name="newpw1" id="newpw1" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="newpw2">Herhaal uw nieuwe wachtwoord</label>
-                                        <input type="password" class="form-control" name="newpw2" id="newpw2">
+                                        <input type="password" class="form-control" name="newpw2" id="newpw2" required>
+                                    </div>
+                                    <div id="error_message" style="width:100% height:100% display:none class="alert alert-danger" role="alert">
+                                        <h4 class="alert-heading">De wachtwoorden komen niet overeen.</h4>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
