@@ -43,30 +43,11 @@ include_once 'content/backend/header-admin.php';
                                     echo '<td class="col-xs-2">' . $categories->getCategoryName() . '</td>';
                                     echo '<td class="col-xs-2">' . $prod->getStockItemName() . '</td>';
                                     echo '<td class="col-xs-2">' . $prod->getBrand() . '</td>';
-
-                                    $size = 'Onbekend';
-                                    switch ($prod->getSize()) {
-                                        case 1:
-                                            $size = 'Extra klein';
-                                            break;
-                                        case 2:
-                                            $size = 'Klein';
-                                            break;
-                                        case 3:
-                                            $size = 'Middel';
-                                            break;
-                                        case 4:
-                                            $size = 'Groot';
-                                            break;
-                                        case 5:
-                                            $size = 'Extra groot';
-                                    }
-
-                                    echo '<td class="col-xs-1">' . $size . '</td>';
+                                    echo '<td class="col-xs-1">' . $this->getSizeString($prod->getSize()) . '</td>';
                                     echo '<td class="col-xs-1">' . $prod->getBarcode() . '</td>';
                                     echo '<td class="col-xs-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
                                     echo '<td class="col-xs-1">' . number_format($prod->getTaxRate(),2) . '%</td>';
-                                    echo '<td class="col-xs-1">€' . number_Format($prod->getUnitPrice() - ($prod->getUnitPrice() / 100 * $prod->getTaxRate()),2) . '</td>';
+                                    echo '<td class="col-xs-1">€' . number_Format($this->calculatePrice($prod->getUnitPrice(),$prod->getTaxRate()),2) . '</td>';
                                 echo '</td>';
                             }
                         ?>
@@ -93,72 +74,67 @@ include_once 'content/backend/header-admin.php';
                         <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
                             <span class="alert-body"></span>
                         </div>
-                        <div class="modal-body row">
-                            <div class="form-group col-md-10">
-                                <div class="col-md-12">
-                                    <label for="CategoryID">Categorie</label>
-                                    <select id = "CategoryID" class="form-control" required>
-                                        <option value="">Selecteer een categorie...</option>
+                        <div class="modal-body">
+                            <div class="form-group">
+
+                                <div class="row width100">
+                                    <div class="col-md-12">
+                                        <label for="CategoryID">Categorie</label>
                                         <?php
-                                        $categories = $category->retrieve();
-
-                                        foreach($categories as $cat){
-                                            $sCat = $cat->getCategoryName();
-
-                                            if($cat->getParentCategory() != null) {
-                                                $parentCat = $category->retrieve($cat->getParentCategory());
-                                                $sCat .= ' (' . $parentCat->getCategoryName() . ')';
-                                            }
-                                            echo '<option value="' . $cat->getCategoryID() . '">' . $sCat . '</option>';
-                                        }
+                                            include_once ('views/category/categoriesAllSelect.php');
                                         ?>
-                                    </select>
-                                    <br>
-                                    <label for="StockItemID">Productnummer</label>
-                                    <input type="text" class="form-control" name="StockItemID" id="StockItemID" value = "Nieuw" readonly required>
-                                    <br>
-                                    <label for="StockItemName">Omschrijving</label>
-                                    <input type="text" class="form-control" name="StockItemName" id="StockItemName" required>
-                                    <br>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="col-md-4 nopadding">
+                                        <br>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="StockItemID">Productnummer</label>
+                                        <input type="text" class="form-control" name="StockItemID" id="StockItemID" value = "Nieuw" readonly required>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="StockItemName">Omschrijving</label>
+                                        <input type="text" class="form-control" name="StockItemName" id="StockItemName" required>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-12">
                                         <label for="SupplierID">Leverancier</label>
-                                        <select id="SupplierID" class="form-control width100" required>
-                                            <option value="">Selecteer een leverancier...</option>
-                                            <?php
-                                            foreach($suppliers as $sup){
-                                                echo '<option value="' . $sup->getSupplierID() . '">' . $sup->getSupplierName() . '</option>';
-                                            }
-                                            ?>
-                                        </select>
+                                        <?php
+                                            include_once('views/supplier/suppliersAllSelect.php');
+                                        ?>
+                                        <br>
                                     </div>
-                                    <div class="col-md-1">
-                                    </div>
-                                    <div class="col-md-4 nopadding">
+                                    <div class="col-md-4">
                                         <label for="brand">Merk</label>
                                         <input type="text" class="form-control width100" name="brand" id="brand" required>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
+
+                                    <div class="col-md-3">
+                                        <label for="size" class="">Maat</label>
+                                        <select id="size" class="form-control" required>
+                                            <option value="">Selecteer een maat...</option>
+                                            <option value="1">Extra klein</option>
+                                            <option value="2">Klein</option>
+                                            <option value="3">Middel</option>
+                                            <option value="4">Groot</option>
+                                            <option value="5">Extra groot</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="loadTimeDays">Aanvulling voorraad (in dagen)</label>
+                                        <input type="number" class="form-control" name="loadTimeDays" id="loadTimeDays" required>
+                                    </div>
                                     <br>
-                                    <label for="size" class="">Maat</label>
-                                    <select id="size" class="form-control" required>
-                                        <option value="">Selecteer een maat...</option>
-                                        <option value="S">Klein</option>
-                                        <option value="M">Middel</option>
-                                        <option value="L">Groot</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-12">
-                                    <br>
-                                    <label for="loadTimeDays">Aanvulling voorraad (in dagen)</label>
-                                    <input type="number" class="form-control" name="loadTimeDays" id="loadTimeDays" required>
-                                </div>
-                                <div class="col-md-12">
-                                    <br>
-                                    <div class="col-md-3 nopadding">
-                                        <label for="unitPrice">Prijs (€)</label>
+                                    <div class="col-md-12">
+                                        <br>
+                                        <label for="barCode">Barcodenummer</label>
+                                        <input type="number" class="form-control width100" name="barCode" id="barCode" required>
+                                        <br>
+                                    </div>
+                                    <div class="col">
+                                        <label for="isChillerStock">Gekoeld product</label><br>
+                                        <input type="checkbox" class="" name="isChillerStock" id="isChillerStock" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="unitPrice">Inkoopprijs (€)</label>
                                         <input type="number" class="form-control width100" name="unitPrice" id="unitPrice" value="0.00" required>
                                     </div>
                                     <div class="col-md-3">
@@ -169,34 +145,21 @@ include_once 'content/backend/header-admin.php';
                                             <option value="0">Geen</option>
                                         </select>
                                     </div>
-
-                                    <div class="col-md-2">
-                                        <label>Totaal bedrag:</label>
-                                        <!--TODO:::: TOTAAL BEDRAG BEREKENEN -->
+                                    <div class="col-md-4">
+                                        <label>Totaal bedrag:</label><br>
+                                        <!--TODO:::: TOTAAL BEDRAG BEREKENEN OP FIELDCHANGE INKOOPPRIJS EN BTW -->
                                         €0,00
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <br>
-                                    <div class="col-md-6 nopadding">
-                                        <label for="barCode">Barcodenummer</label>
-                                        <input type="number" class="form-control width100" name="barCode" id="barCode" required>
+                                    <div class="col-md-12">
+                                        <br>
+                                        <label for="attachment">Afbeelding</label>
+                                        <input type="file" class="form-control" name="attachment" id="attachment" required>
+                                        <br>
                                     </div>
-                                    <div class="col-md-1">
-
+                                    <div class="col-md-12">
+                                        <label for="marketingComment">Overig commentaar</label>
+                                        <input type="text" class="form-control height15pct" name="marketingComment" id="marketingComment" required>
                                     </div>
-                                    <div class="col-md-2 nopadding">
-                                        <label for="isChillerStock">Gekoeld product</label>
-                                        <input type="checkbox" class="" name="isChillerStock" id="isChillerStock" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <br>
-                                    <label for="attachment">Afbeelding</label>
-                                    <input type="file" class="form-control" name="attachment" id="attachment" required>
-                                    <br>
-                                    <label for="marketingComment">Overig commentaar</label>
-                                    <input type="text" class="form-control height15pct" name="marketingComment" id="marketingComment" required>
                                 </div>
                             </div>
                         </div>
