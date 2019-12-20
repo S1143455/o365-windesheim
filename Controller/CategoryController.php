@@ -77,8 +77,8 @@ class CategoryController extends FileController
     function ParentCategories(){
         $categories = $this->category->getAllActiveCategories();
         foreach($categories as $category){
-            if($category['CategoryName'] != ''){
-                $result = '<option value="' . $category['CategoryID'] .'">'. $category['CategoryName'] . '</option>';
+            if($category->getCategoryName() != ''){
+                $result = '<option value="' . $category->getCategoryID()  .'">'. $category->getCategoryName() . '</option>';
                 echo $result;
             }
         }
