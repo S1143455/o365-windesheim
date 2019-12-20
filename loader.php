@@ -29,6 +29,7 @@ $discountController = new Controller\DiscountController();
 $user = new Controller\UserController();
 $productController = new Controller\ProductController();
 
+<<<<<<< HEAD
 $customerController = new Controller\CustomerController();
 
 
@@ -40,3 +41,9 @@ if (isset($_SESSION['authenticated']))
     echo '</div>
 </div>';
 }
+=======
+
+
+
+
+>>>>>>> a21b3e84e355ff689a42f55c814a6e0d6ad12d53
