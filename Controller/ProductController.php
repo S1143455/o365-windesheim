@@ -121,4 +121,31 @@ Class ProductController
 
         return include_once $this->viewPath . 'admin.php';
     }
+
+    public function getSizeString($sz){
+        switch ($sz) {
+            case 1:
+                $sz = 'Extra klein';
+                break;
+            case 2:
+                $sz = 'Klein';
+                break;
+            case 3:
+                $sz = 'Middel';
+                break;
+            case 4:
+                $sz = 'Groot';
+                break;
+            case 5:
+                $sz = 'Extra groot';
+                break;
+            default:
+                $sz = 'Onbekend';
+        }
+        return $sz;
+    }
+
+    public function calculatePrice($price,$btw){
+        return $price - ($price/100*$btw);
+    }
 }
