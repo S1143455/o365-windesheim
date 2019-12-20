@@ -178,7 +178,7 @@ create table `order`
     OrderID              int auto_increment
         primary key,
     CustomerID           int(10) not null,
-    OrderDae             date    null,
+    OrderDate             date    null,
     ExpectedDeliveryDate date    null,
     LastEditedBy         int     not null,
     DeliveryMethodID     int(10) not null,

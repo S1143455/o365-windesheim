@@ -125,10 +125,12 @@ class Database extends Models
         $table = $this->table;
         $this->getColumns();
         $this->validate();
+
         if ($this->checkIfExists($this->getID("value")) == null)
         {
             return $this->newRow();
         }else if($this->getID("value") != null){
+            return $this->UpdateIets();
 
         }
     }
@@ -146,7 +148,6 @@ class Database extends Models
             $this->openConn();
             $key = $this->getID("key");
             $retrieved = $this->where("*", $key, "=" , $id);
-
             return $this->initRetrievedObjects($retrieved)[0];
         }
 
@@ -163,16 +164,15 @@ class Database extends Models
         if ($id == null)
         {
             return false;
-//            die("Please supply an identifier to the function");
         }
-            $this->openConn();
-            $key = $this->getID("key");
-            $retrieved = $this->where($key, $key, "=", $id);
-            if (!empty($retrieved))
-            {
-                return true;
-            }
-            return false;
+        $this->openConn();
+        $key = $this->getID("key");
+        $retrieved = $this->where($key, $key, "=", $id);
+        if (!empty($retrieved))
+        {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -202,33 +202,29 @@ class Database extends Models
 
     private function createUpdateStatement()
     {
-        $columns = "";
         $values = [];
         $placeholder = "";
-
+        $primarykey = "";
         foreach ($this->column as $key => $value)
         {
-
-            $attributeValue = $this->getAttribute($key);
-            if (!empty($attributeValue) && $value[1])
-            {
-                $columns .= $key . " , ";
-                $placeholder .= ":" . strtolower($key) . ", ";
-                $values[strtolower($key)] = $this->serializedInput($attributeValue);
+            foreach ($value as $attribuut){
+                if($attribuut == "PrimaryKey"){
+                    $primarykey = $key;
+                }
             }
+            $placeholder .= ' ' . $key  . ' = \''  . $this->getAttribute($key).'\',';
         }
-        $columns = substr($columns, 0, -2);
-        $placeholder = substr($placeholder, 0, -2);
 
-        $sql = "UPDATE INTO " . $this->table . $columns . " VALUES (" . $placeholder . ");";
+        //$columns = substr($columns, 0, -2);
+        $placeholder = substr($placeholder, 0, -1);
 
+        $sql = "UPDATE " . $this->table ." set " . $placeholder . " where ". $primarykey ." = ". $this->getAttribute($primarykey) ." ;";
         $stmt = $this->connection->prepare($sql);
-
-
         foreach ($values as $parameter => $value)
         {
             $stmt->bindValue($parameter, $value);
         }
+
         return $stmt;
     }
 
@@ -404,7 +400,20 @@ class Database extends Models
         $this->closeConnection();
         return $retVal;
     }
-
+    private function UpdateIets()
+    {
+        $this->openConn();
+        $stmt = $this->createUpdateStatement();
+        try
+        {
+            $stmt->execute();
+        } catch (Exception $e)
+        {
+//            $_GET['error'] = $e->getMessage();
+            return false;
+        }
+        return true;
+    }
     /**
      * Creates a new database row.
      */
@@ -415,7 +424,6 @@ class Database extends Models
         try
         {
             $stmt->execute();
-
            $lastInsertID = $this->connection->lastInsertId();
            $primaryKey = $this->getID("key");
 
@@ -615,6 +623,12 @@ class Database extends Models
         }
         return $stmt;
     }
+
+    /**
+     * Sets all the attributes that are given in the $_POST.
+     *
+     */
+
 
     /**
      * Sets all the attributes that are given in the $_POST.

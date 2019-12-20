@@ -10,7 +10,7 @@ class Category extends Database
     private $categoryName;
     private $lastEditedBy;
     private $parentCategory;
-    private $attachmentID;
+    private $AttachmentID;
 
     function __construct()
     {
@@ -106,13 +106,9 @@ class Category extends Database
 
     public function getAllActiveCategories()
     {
-        $result = '';
-        /**
-         * $result = $this->selectStmt('SELECT * FROM category where CategoryActive = 1;');
-         */
-        $result = $this->selectStmt('SELECT * FROM category;');
-
-        return $result;
+        $categories = new Category();
+        $categories = $categories->retrieve();
+        return $categories;
     }
 
 

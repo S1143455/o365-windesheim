@@ -166,12 +166,13 @@ class Discount extends Database
     }
 
     public function getAllSpecialDeals(){
-        $result = '';
-        $result = $this->selectStmt('SELECT * FROM specialdeals;');
-        return $result;
+        $discounts = new Discount();
+        $discounts = $discounts->retrieve();
+        return $discounts;
     }
 
     public function getProductBasedOnID($ID){
+//where function gebruiken
         $result = $this->selectStmt('SELECT COUNT(StockItemId) as total FROM stockitem WHERE DealID = '.$ID.';');
         return $result[0][0];
     }
