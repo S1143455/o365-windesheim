@@ -284,9 +284,9 @@ class Database extends Models
         $this->connection = null;
 
         //Remove or comment these lines --
-        echo "Query that was created and executed :<br>" . $sql;
-        echo "<br> The array of objects that has been found: <br>";
-        print_r($retVal);
+        //echo "Query that was created and executed :<br>" . $sql;
+        //echo "<br> The array of objects that has been found: <br>";
+        //print_r($retVal);
         // -- End
 
         return $retVal;
@@ -384,6 +384,7 @@ class Database extends Models
         $this->getColumns();
         $sql = $this->createSelectStatement("*");
         $sql .=  ($limit != null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0? " OFFSET " . $offset : "");
+
         $stmt = $this->connection->query($sql);
         $stmt->execute();
         try
@@ -418,7 +419,6 @@ class Database extends Models
             die();
         } catch (Exception $e)
         {
-//            $_GET['error'] = $e->getMessage();
             return false;
         }
         return true;

@@ -2,16 +2,16 @@
 
 namespace Controller;
 
-
 use Model\Category;
 use Model\Product;
-
+use Model\Supplier;
 
 Class ProductController
 {
-
     private $viewPath = 'views/product/';
     private $product;
+    private $category;
+    private $supplier;
 
     /**
      * This should return the index page of the products.
@@ -88,7 +88,6 @@ Class ProductController
      */
     public function delete($id)
     {
-
         return include_once $this->viewPath . 'delete.php';
     }
 
@@ -111,8 +110,15 @@ Class ProductController
         return include_once $this->viewPath . 'show.php';
     }
 
-    public function buildTableRowsProducts(){
+    public function admin(){
         $product = new Product();
-        print_r($product->retrieve());
+        $products = $product->retrieve();
+
+        $category = new Category();
+
+        $supplier = new Supplier();
+        $suppliers = $supplier->retrieve();
+
+        return include_once $this->viewPath . 'admin.php';
     }
 }

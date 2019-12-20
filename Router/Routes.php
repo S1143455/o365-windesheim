@@ -79,8 +79,8 @@ $router->route('/admin/onderhoud-categorieen', function(){
     return include 'content/backend/onderhoudc.php';
 });
 
-$router->route('/admin/onderhoud-producten', function(){
-    return include 'content/backend/onderhoudproducten.php';
+$router->route('/admin/onderhoud-producten', function() use($productController){
+    return $productController->admin();
 });
 
 $router->route('/admin/onderhoud-klanten', function(){
