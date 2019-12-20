@@ -76,6 +76,7 @@ class User extends Database
     public function checkCredentials()
     {
         $getthedata=new Database();
+        //todofixpls
         $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '".$this->username . "'");
         if(!$sqlreturendsomething)
         {
