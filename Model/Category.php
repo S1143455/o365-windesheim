@@ -10,6 +10,7 @@ class Category extends Database
     private $categoryName;
     private $lastEditedBy;
     private $parentCategory;
+    private $AttachmentID;
     function __construct()
     {
         $this->table = "category";

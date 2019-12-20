@@ -167,6 +167,8 @@ create table specialdeals
     DiscountPercentage int          not null,
     DealCode           int          not null,
     LastEditedBy       int          not null,
+    OneTime            tinyint      null,
+    Active             tinyint      null,
     constraint PersonLastEditedSpeciialDeal
         foreign key (LastEditedBy) references people (PersonID)
 );
@@ -176,7 +178,7 @@ create table `order`
     OrderID              int auto_increment
         primary key,
     CustomerID           int(10) not null,
-    OrderDae             date    null,
+    OrderDate             date    null,
     ExpectedDeliveryDate date    null,
     LastEditedBy         int     not null,
     DeliveryMethodID     int(10) not null,

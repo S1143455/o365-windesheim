@@ -129,6 +129,7 @@ class Database extends Models
         {
             return $this->newRow();
         }else if($this->getID("value") != null){
+            return $this->UpdateIets();
 
         }
     }
@@ -201,36 +202,35 @@ class Database extends Models
 
     private function createUpdateStatement()
     {
-        $columns = "";
         $values = [];
         $placeholder = "";
+        $primarykey = "";
+
 
         foreach ($this->column as $key => $value)
         {
 
-            $attributeValue = $this->getAttribute($key);
-            if (!empty($attributeValue) && $value[1])
-            {
-                $columns .= $key . " , ";
-                $placeholder .= ":" . strtolower($key) . ", ";
-                $values[strtolower($key)] = $this->serializedInput($attributeValue);
+            foreach ($value as $attribuut){
+                if($attribuut == "PrimaryKey"){
+                    $primarykey = $key;
+                }
             }
+            $placeholder .= ' ' . $key  . ' = \''  . $this->getAttribute($key).'\',';
         }
-        $columns = substr($columns, 0, -2);
-        $placeholder = substr($placeholder, 0, -2);
 
-        $sql = "UPDATE INTO " . $this->table . $columns . " VALUES (" . $placeholder . ");";
+        //$columns = substr($columns, 0, -2);
+        $placeholder = substr($placeholder, 0, -1);
 
+        $sql = "UPDATE " . $this->table ." set " . $placeholder . " where ". $primarykey ." = ". $this->getAttribute($primarykey) ." ;";
         $stmt = $this->connection->prepare($sql);
 
 
         foreach ($values as $parameter => $value)
         {
-            // print_r([$parameter, $value]);
             $stmt->bindValue($parameter, $value);
         }
+
         return $stmt;
-        //return  "update " .  $this->table . "set " . $attributes . "where" . $primaryKey . " = " . $id ."";
     }
 
     /**
@@ -406,7 +406,20 @@ class Database extends Models
         $this->closeConnection();
         return $retVal;
     }
-
+    private function UpdateIets()
+    {
+        $this->openConn();
+        $stmt = $this->createUpdateStatement();
+        try
+        {
+            $stmt->execute();
+        } catch (Exception $e)
+        {
+//            $_GET['error'] = $e->getMessage();
+            return false;
+        }
+        return true;
+    }
     /**
      * Creates a new database row.
      */
@@ -612,6 +625,58 @@ class Database extends Models
             $stmt->bindValue($parameter, $value);
         }
         return $stmt;
+    }
+
+    /**
+     * Sets all the attributes that are given in the $_POST.
+     *
+     */
+    public function upload()
+    {
+        $out = '';
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+// Check if image file is a actual image or fake image
+        if(isset($_POST["submit"])) {
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if($check !== false) {
+                $out .= "File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                $out .= "File is not an image.";
+                $uploadOk = 0;
+            }
+        }
+// Check if file already exists
+        if (file_exists($target_file)) {
+            $out .= "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+// Check file size
+        if ($_FILES["fileToUpload"]["size"] > 500000) {
+            $out .= "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+// Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif" ) {
+            $out .= "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+// Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            $out .= "Sorry, your file was not uploaded.";
+// if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                $out .= "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+            } else {
+                $out .= "Sorry, there was an error uploading your file.";
+            }
+        }
+        return $out;
     }
 
     /**
