@@ -125,6 +125,7 @@ class Database extends Models
         $table = $this->table;
         $this->getColumns();
         $this->validate();
+        var_dump($this);
         if ($this->checkIfExists($this->getID("value")) == null)
         {
             return $this->newRow();
@@ -165,14 +166,14 @@ class Database extends Models
         {
             die("Please supply an identifier to the function");
         }
-            $this->openConn();
-            $key = $this->getID("key");
-            $retrieved = $this->where($key, $key, "=", $id);
-            if (!empty($retrieved))
-            {
-                return true;
-            }
-            return false;
+        $this->openConn();
+        $key = $this->getID("key");
+        $retrieved = $this->where($key, $key, "=", $id);
+        if (!empty($retrieved))
+        {
+            return true;
+        }
+        return false;
     }
 
     /**
