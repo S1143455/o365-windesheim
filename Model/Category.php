@@ -10,6 +10,8 @@ class Category extends Database
     private $categoryName;
     private $lastEditedBy;
     private $parentCategory;
+    private $AttachmentID;
+
     function __construct()
     {
         $this->table = "category";
@@ -79,6 +81,21 @@ class Category extends Database
     {
         $this->parentCategory = $parentCategory;
     }
+    /**
+ * @return mixed
+ */
+    public function getAttachmentID()
+    {
+        return $this->attachmentID;
+    }
+
+    /**
+     * @param mixed $parentcategory
+     */
+    public function setAttachmentID($attachmentID)
+    {
+        $this->attachmentID = $attachmentID;
+    }
 
     public function SpecialGetcategories()
     {
@@ -89,13 +106,9 @@ class Category extends Database
 
     public function getAllActiveCategories()
     {
-        $result = '';
-        /**
-         * $result = $this->selectStmt('SELECT * FROM category where CategoryActive = 1;');
-         */
-        $result = $this->selectStmt('SELECT * FROM category;');
-
-        return $result;
+        $categories = new Category();
+        $categories = $categories->retrieve();
+        return $categories;
     }
 
 

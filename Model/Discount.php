@@ -166,9 +166,11 @@ class Discount extends Database
     }
 
     public function getAllSpecialDeals(){
-        $discount = new Discount();
-        $discount = $discount->retrieve();
-        return $discount;
+
+        $discounts = new Discount();
+        $discounts = $discounts->retrieve();
+        return $discounts;
+
     }
 
     public function getProductBasedOnID($ID){
@@ -191,5 +193,5 @@ class Discount extends Database
     $result = '';
     $result = $this->selectStmt('SELECT * FROM category');
     return $result;
-}
+    }
 }

@@ -8,18 +8,19 @@
  * @var $categories array(Model\Category)
  * @var $category Model\Category
  */
-
+//print_R($products);
 
 foreach ($products as $product)
 {
     echo $product->getStockItemID();
+    echo $product->getCategoryID();
     $product->getRelation("Category");
 }
 
 
-foreach ($categories as $category)
-{
-}
+//foreach ($categories as $category)
+//{
+//}
 
 /**
  * @param $table

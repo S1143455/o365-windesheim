@@ -23,11 +23,13 @@ class DiscountController
             $result = '';
             $result .= '<tr>
                     <td class="col-md-2">' . $discount->getDealCode() .'</td>
+                    <td class="col-md-2">' . $discount->getDealCode() . '</td>
                     <td class="col-md-1">' . $discount->getDiscountPercentage() .'</td>
                     <td class="col-md-1">' . $discount->getOneTime() .'</td>
                     <td class="col-md-1">' . $discount->getActive() .'</td>
                     <td class="col-md-3">' . $discount->getDealDescription() .'</td>
                     <td class="col-md-2">' . $this->discount->getProductBasedOnID($discount->getSpecialDealID()) .'</td>
+                    <td class="col-md-2">'.  $this->discount->getProductBasedOnID($discount->getSpecialDealID()) .'</td>
                     <td class="col-md-1">' . $discount->getStartDate() .'</td>
                     <td class="col-md-1">' . $discount->getEndDate() .'</td>
                 </tr>';
