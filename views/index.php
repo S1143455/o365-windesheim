@@ -20,16 +20,18 @@ include_once 'content/frontend/header.php';
             <div class="row">
                 <?php
                     foreach($categories as $cat){
-                            $sCat = $cat->getCategoryName();
 
-                            if($cat->getParentCategory() != null) {
-                                $parentCat = $category->retrieve($cat->getParentCategory());
-                                $sCat .= ' (' . $parentCat->getCategoryName() . ')';
-                            };
+                            //if($cat->getParentCategory() != null) {
+                            //    $parentCat = $category->getRelation('Category');
+                            //    $sCat = ' (' . $parentCat->getCategoryName() . ')';
+                            // echo $sCat;
+                            //};
 
-                        echo '<div class="col-md-2 categorybox">';
-                        echo $sCat;
-                        echo '</div>';
+                        if($cat->getParentCategory() == null){
+                            echo '<div class="col-md-2 categorybox">';
+                            echo $cat->GetCategoryName();
+                            echo '</div>';
+                        }
                     }
                 ?>
             </div>
