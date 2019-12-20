@@ -8,7 +8,7 @@
  * @var $categories array(Model\Category)
  * @var $category Model\Category
  */
-
+//print_R($products);
 
 foreach ($products as $product)
 {
@@ -17,9 +17,9 @@ foreach ($products as $product)
 }
 
 
-foreach ($categories as $category)
-{
-}
+//foreach ($categories as $category)
+//{
+//}
 
 /**
  * @param $table

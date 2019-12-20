@@ -159,12 +159,13 @@ class Database extends Models
      * @param $id
      * @return mixed|null
      */
-    public function checkIfExists($id)
+    private function checkIfExists($id)
     {
         $retVal = null;
         if ($id == null)
         {
-            die("Please supply an identifier to the function");
+            return false;
+//            die("Please supply an identifier to the function");
         }
         $this->openConn();
         $key = $this->getID("key");
@@ -286,9 +287,9 @@ class Database extends Models
         $this->connection = null;
 
         //Remove or comment these lines --
-        echo "Query that was created and executed :<br>" . $sql;
-        echo "<br> The array of objects that has been found: <br>";
-        print_r($retVal);
+        //echo "Query that was created and executed :<br>" . $sql;
+        //echo "<br> The array of objects that has been found: <br>";
+        //print_r($retVal);
         // -- End
 
         return $retVal;
@@ -304,7 +305,7 @@ class Database extends Models
         $this->getColumns();
         if (empty($id))
         {
-            return $this->batch($this->limit, $this->offset);
+            return $this->batch(null, $this->offset);
         } else
         {
             return $this->find($id);
@@ -385,7 +386,8 @@ class Database extends Models
         $this->openConn();
         $this->getColumns();
         $sql = $this->createSelectStatement("*");
-        $sql .=  ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null ? " OFFSET " . $offset : "");
+        $sql .=  ($limit != null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0? " OFFSET " . $offset : "");
+
         $stmt = $this->connection->query($sql);
         $stmt->execute();
         try
@@ -396,7 +398,6 @@ class Database extends Models
                 $retVal = [];
             } else
             {
-
                 $retVal = $this->initRetrievedObjects($retVal);
             }
         } catch (Exception $e)
@@ -430,10 +431,10 @@ class Database extends Models
         $stmt = $this->createInsertStatement();
         try
         {
-            $stmt->execute();
+            print_R($stmt->execute());
+            die();
         } catch (Exception $e)
         {
-//            $_GET['error'] = $e->getMessage();
             return false;
         }
         return true;
@@ -566,7 +567,7 @@ class Database extends Models
 
                 return intval($value);
             case "boolean":
-                if ($value || $value == 1)
+                if ($value || $value == 1 || strtolower($value) == "on")
                 {
                     return 1;
                 }
@@ -736,28 +737,25 @@ class Database extends Models
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
-        $modelObject->getColumns();
         if (!empty($array))
         {
             foreach ($array as $key => $value)
             {
+                $modelObject = new $className;
                 foreach ($value as $attrKey => $attrValue)
                 {
-                    if (array_key_exists($attrKey, $modelObject->column))
+                    if (array_key_exists($attrKey, $this->column))
                     {
                         $modelObject->setAttribute($attrKey, $attrValue);
                     }
                 }
                 array_push($modelObjects, $modelObject);
-//                print_r($modelObject->getStockItemName());
             }
-//            array_push($modelObjects, $modelObject);
         }
         else
             {
             array_push($modelObjects, $modelObject);
             }
-
         return $modelObjects;
     }
 
@@ -774,19 +772,24 @@ class Database extends Models
         }
         array_push($_GET[$key], $value);
     }
-
-    public function getRelation($model)
+    /**
+     * @var $model = \Database;
+     */
+    public function getRelation($modelName)
     {
-        $columns = $this->getColumns();
-        if ($columns == null)
+        $modelName = '\Model\\'.$modelName;
+        $model =  new $modelName;
+        $model->getColumns();
+
+        if ($model->columns == null)
         {
             die('relation does not exist');
         }
-        foreach ($columns as $col)
+        foreach ($model->columns as $key => $value)
         {
-            if ($col[1] == "PrimaryKey")
+            if ($value[1] == "PrimaryKey")
             {
-
+                $model->setAttr($key, $this->foreignkey);
             }
         }
 

@@ -2,16 +2,16 @@
 
 namespace Controller;
 
-
 use Model\Category;
 use Model\Product;
-
+use Model\Supplier;
 
 Class ProductController
 {
-
     private $viewPath = 'views/product/';
     private $product;
+    private $category;
+    private $supplier;
 
     /**
      * This should return the index page of the products.
@@ -24,14 +24,11 @@ Class ProductController
         /**
          * Database.php  line 287-289  to remove the comments from the page.
          */
-        $test->where(["StockItemID", "StockItemName", "IsChillerStock"]  , ["StockItemID", "StockItemName", "IsChillerStock"], "=" , ["test", "test1", "test2"] );
-        die();
-
         $products = new Product();
         $products = $products->retrieve();
 
-        $categories = new Category();
-        $categories = $categories->retrieve();
+//        $categories = new Category();
+//        $categories = $categories->retrieve();
 
         return include $this->viewPath . 'index.php';
     }
@@ -91,7 +88,6 @@ Class ProductController
      */
     public function delete($id)
     {
-
         return include_once $this->viewPath . 'delete.php';
     }
 
@@ -114,8 +110,15 @@ Class ProductController
         return include_once $this->viewPath . 'show.php';
     }
 
-    public function buildTableRowsProducts(){
+    public function admin(){
         $product = new Product();
-        print_r($product->retrieve());
+        $products = $product->retrieve();
+
+        $category = new Category();
+
+        $supplier = new Supplier();
+        $suppliers = $supplier->retrieve();
+
+        return include_once $this->viewPath . 'admin.php';
     }
 }
