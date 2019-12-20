@@ -72,6 +72,17 @@ class MainController
     }
 
     /**
+     *  Index pagina
+     */
+    function index(){
+        $category = new category();
+        $categories = $category->retrieve();
+
+        $main = $this;
+        include_once('views/index.php');
+    }
+
+    /**
      * Website navigation.
      */
     function nav_menu($sep = '')
@@ -237,39 +248,5 @@ class MainController
     function showContent($section){
         echo $this->getContent($section);
     }
-
-    /**
-     * Display grid based on given array and class
-     * For example class: col-12 col-sm-6 col-md-4
-     * col-12 will show 1 column for the smallest screen
-     * col-sm-6 will show 2 columns for small screen
-     * col-md-4 will show 3 columns for medium screen
-     *
-     * @param $arr
-     * @param $class
-     */
-    function generateGrid($arr, $class)
-    {
-        if(empty($arr) or $class==''){
-            echo "Use valid values.";
-        }else{
-            echo '<div class="container"><div class="row">';
-            for($i=1;$i<count($arr);$i++) {
-                echo '<div class="' . $class . '"></div>';
-            }
-            echo '</div></div>';
-        }
-    }
-
-    /**
-     * Generates grid based on categories
-     */
-    function getGridCategories()
-    {
-        $categories = $this->category->SpecialGetcategories();
-        $this->generateGrid($categories,"col-12 col-sm-6 col-md-4");
-    }
-
-
 }
 ?>
