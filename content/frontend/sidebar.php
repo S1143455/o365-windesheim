@@ -3,7 +3,7 @@
 
 
     <?php
-    echo $main->nav_menu_side_fe();
+    echo $mainController->nav_menu_side_fe();
     ?>
 
 </div>

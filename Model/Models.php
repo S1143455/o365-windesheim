@@ -44,33 +44,33 @@ class Models
         }
 
         if ($this->column == null) {
-                    switch ($this->table) {
-                        case 'stockitem':
-                            $this->getStockItem();
-                            break;
-                        case 'category':
-                            $this->getCategory();
-                            break;
-                        case 'attachments':
-                            $this->getAttachments();
-                            break;
-                        case 'content':
-                            $this->getContent();
-                            break;
-                        case 'supplier':
-                            $this->getSupplier();
-                            break;
-                        case  'people':
-                            $this->getPeople();
-                            break;
-                        case  'address':
-                            $this->getAddress();
-                            break;
-                        default:
-                            die('Table not implemented');
-                    }
+            switch ($this->table) {
+                case 'stockitem':
+                    $this->getStockItem();
+                    break;
+                case 'category':
+                    $this->getCategory();
+                    break;
+                case 'attachments':
+                    $this->getAttachments();
+                    break;
+                case 'content':
+                    $this->getContent();
+                    break;
+                case 'supplier':
+                    $this->getSupplier();
+                    break;
+                case  'people':
+                    $this->getPeople();
+                    break;
+                case  'address':
+                    $this->getAddress();
+                    break;
+                default:
+                    die('Table not implemented');
+            }
 
-                }
+        }
 
     }
 
