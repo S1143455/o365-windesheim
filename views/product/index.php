@@ -13,6 +13,7 @@
 foreach ($products as $product)
 {
     echo $product->getStockItemID();
+    echo $product->getCategoryID();
     $product->getRelation("Category");
 }
 

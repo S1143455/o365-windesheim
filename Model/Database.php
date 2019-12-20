@@ -334,7 +334,6 @@ class Database extends Models
     private function checkQueryParameters($columnKeys, $compareTypes, $values)
     {
         $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
-
         if ($checkInput[0] && $checkInput[1] && $checkInput[2])
         {
             $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
@@ -415,8 +414,7 @@ class Database extends Models
         $stmt = $this->createInsertStatement();
         try
         {
-            print_R($stmt->execute());
-            die();
+            $stmt->execute();
         } catch (Exception $e)
         {
             return false;
@@ -705,26 +703,43 @@ class Database extends Models
         array_push($_GET[$key], $value);
     }
     /**
+     * Get the relation by relationname
      * @var $model = \Database;
      */
     public function getRelation($modelName)
     {
-        $modelName = '\Model\\'.$modelName;
-        $model =  new $modelName;
+
+        $createModelByName = '\Model\\'.$modelName;
+        $model =  new $createModelByName;
         $model->getColumns();
 
-        if ($model->columns == null)
+        $foreignKey = null;
+        $this->getColumns();
+
+        foreach($this->column as $key => $value)
+        {
+            if($value[0] == $modelName)
+            {
+                $foreignKey = $this->getAttribute($key);
+                break;
+            }
+        }
+        if ($model->column == null)
         {
             die('relation does not exist');
         }
-        foreach ($model->columns as $key => $value)
+        else if ($foreignKey == null)
+        {
+            die('Foreign key is empty');
+        }
+        foreach ($model->column as $key => $value)
         {
             if ($value[1] == "PrimaryKey")
             {
-                $model->setAttr($key, $this->foreignkey);
+                $model->setAttribute($key, $foreignKey);
+                $model = $model->find($model->getID("value"));
             }
         }
-
-        echo $model;
+         return $model;
     }
 }
