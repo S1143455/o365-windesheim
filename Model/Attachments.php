@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Model;
 
 
@@ -10,21 +9,24 @@ class Attachments extends Database
     private $alternateText;
     private $fileLocation;
     private $lastEditedBy;
-    private $stockItemId;
-    private $categoryID;
+    function __construct()
+    {
+        $this->table = "attachments";
+        parent::__construct();
 
+    }
     /**
      * @return mixed
      */
-    function getAttachmentID()
+    public function getAttachmentID()
     {
         return $this->attachmentID;
     }
 
     /**
-     * @param $attachmentID
+     * @param mixed $attachmentID
      */
-    function setAttachmentID($attachmentID)
+    public function setAttachmentID($attachmentID)
     {
         $this->attachmentID = $attachmentID;
     }
@@ -32,80 +34,51 @@ class Attachments extends Database
     /**
      * @return mixed
      */
-    function getAlternateText()
+    public function getAlternateText()
     {
         return $this->alternateText;
     }
 
     /**
-     * @param $AlternateText
+     * @param mixed $alternateText
      */
-    function setAlternateText($AlternateText)
+    public function setAlternateText($alternateText)
     {
-        $this->alternateText = $AlternateText;
+        $this->alternateText = $alternateText;
     }
 
     /**
      * @return mixed
      */
-    function getFileLocation()
+    public function getFileLocation()
     {
-        return $this->FileLocation;
+        return $this->fileLocation;
     }
 
     /**
-     * @param $FileLocation
+     * @param mixed $fileLocation
      */
-    function setFileLocation($FileLocation)
+    public function setFileLocation($fileLocation)
     {
-        $this->fileLocation = $FileLocation;
-    }
-
-    /**
-     * @return mixed
-     */
-    function getLastEditedBy()
-    {
-        return $this->LastEditedBy;
-    }
-
-    /**
-     * @param $LastEditedBy
-     */
-    function setLastEditedBy($LastEditedBy)
-    {
-        $this->lastEditedBy = $LastEditedBy;
+        $this->fileLocation = $fileLocation;
     }
 
     /**
      * @return mixed
      */
-    function getStockItemId()
+    public function getLastEditedBy()
     {
-        return $this->stockItemId;
+        return $this->lastEditedBy;
     }
 
     /**
-     * @param $stockItemId
+     * @param mixed $lastEditedBy
      */
-    function setStockItemId($stockItemId)
+    public function setLastEditedBy($lastEditedBy)
     {
-        $this->stockItemId = $stockItemId;
+        $this->lastEditedBy = $lastEditedBy;
     }
 
-    /**
-     * @return mixed
-     */
-    function getCategoryID()
-    {
-        return $this->categoryID;
-    }
 
-    /**
-     * @param $categoryID
-     */
-    function setCategoryID($categoryID)
-    {
-        $this->categoryID = $categoryID;
-    }
+
 }

@@ -5,15 +5,14 @@ namespace Controller;
 
 use Model\Category;
 use Model\Database;
-use Model\Product;
-
-class CategoryController
+use Model\File;
+class CategoryController extends FileController
 {
     private $admin = 'content/backend/';
 
     function __construct()
     {
-       $this->category = new category();
+        $this->category = new category();
     }
     public function retrieve($id){
         $category = new category();
@@ -32,8 +31,6 @@ class CategoryController
         $this->category->setLastEditedBy(2);
         $this->store($this->category);
 
-       // return "true";
-       // include $this->contentpath
         include $this->admin . 'onderhoudc.php';
     }
 
@@ -45,32 +42,18 @@ class CategoryController
      */
     public function store($category)
     {
-        var_dump($_POST);
-
-        if(isset($_FILES)){
-            $test = $category->upload();
-            var_dump($test);
-//            $target_dir = "uploads/";
-//            $target_file = $target_dir . basename($_POST["fileToUpload"]["name"]);
-//            $uploadOk = 1;
-//            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-//            $check = getimagesize($_POST["fileToUpload"]["tmp_name"]);
-//            if($check !== false) {
-//                echo "File is an image - " . $check["mime"] . ".";
-//                $uploadOk = 1;
-//            } else {
-//                echo "File is not an image.";
-//                $uploadOk = 0;
-//            }
-
-        }
         if (!$category->initialize())
         {
-
             return false;
         };
-
         $this->category = $category;
+        if(isset($_FILES)){
+            $attachmentID = $this->upload($this->category->getLastEditedBy());
+            var_dump($attachmentID);
+            $category->setAttachmentID($attachmentID);
+            var_dump($category);
+
+        }
 
         if (!$this->category->save())
         {

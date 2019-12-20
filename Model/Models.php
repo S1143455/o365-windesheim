@@ -24,7 +24,7 @@ class Models
             case 'category':
                 $this->getCategory();
                 break;
-            case 'attachment':
+            case 'attachments':
                 $this->getAttachments();
                 break;
             case 'content':
@@ -54,7 +54,7 @@ class Models
                         case 'category':
                             $this->getCategory();
                             break;
-                        case 'attachment':
+                        case 'attachments':
                             $this->getAttachments();
                             break;
                         case 'content':
@@ -150,7 +150,6 @@ class Models
             "AlternateText" => ['Varchar', 'Attribute', 'Nullable'],
             "FileLocation" => ['Varchar', 'Attribute', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
-            "StockItemID" => ['StockItem', 'HasOne', 'Nullable'],
         );
     }
 
