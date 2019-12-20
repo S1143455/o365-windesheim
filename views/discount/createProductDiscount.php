@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="form-group">
         <label for="checkboxDP">Eenmalig:</label>
-        <input class="form-control checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
+        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
     </div>
     <div class="form-group">
         <label class="descriptionPopUp" for="descriptionDP">Omschrijving:</label>
@@ -33,11 +33,11 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="form-group">
         <label for="inputStartDateDP">Begin periode:</label>
-        <input type="date" class="form-control inputStartDate" name="EndDate" id="inputStartDateDP">
+        <input type="date" class="form-control inputStartDate" name="StartDate" id="inputStartDateDP">
     </div>
     <div class="form-group">
         <label for="inputEndDateDP">Einde periode:</label>
-        <input type="date" class="form-control inputEndDate" name="StartDate" id="inputEndDateDP">
+        <input type="date" class="form-control inputEndDate" name="EndDate" id="inputEndDateDP">
     </div>
 </form>
 

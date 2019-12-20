@@ -89,8 +89,8 @@ $router->route('/admin/onderhoud-klanten', function(){
 $router->route('/admin/CreateCategorie', function() use($categoryController){
     return $categoryController->create();
 });
-$router->route('/admin/test123', function() use($discount){
-    return $discount->create();
+$router->route('/admin/CreateDiscount', function() use($discountController){
+    return $discountController->create();
 });
 
 $router->route('/admin/onderhoud-korting', function(){

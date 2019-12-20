@@ -33,7 +33,7 @@
             </tr>
             </thead>
             <tbody>
-                <?php $categoryController->GetAllCategories(); ?>
+                <?php $discount->GetAllCategories(); ?>
             </tbody>
         </table>
     </div>

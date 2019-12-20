@@ -82,9 +82,8 @@ class Models
                 return $this->column;
         }
         return $this->column;
-    }}
-=======
     }
+
 
     /**
      * Define array of the product
