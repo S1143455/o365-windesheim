@@ -235,11 +235,11 @@ class Database extends Models
     /**
      *
      * Creates a sql query.
-     * @param $queryType
-     * @param $returnAttr
-     * @param $columnKeys
-     * @param $compareTypes
-     * @param $values
+     *
+     * @param $returnAttr (Eg. Select);
+     * @param $columnKeys (Eg. "StockItemID" or ["StockItemID", "StockItemName"]);
+     * @param $compareTypes (Eg. "=" or ["=", ">"])
+     * @param $values (Eg. 10 or [10, 'TheNameForTheStockItem'])
      * @return array
      */
     public function where($returnAttr, $columnKeys, $compareTypes, $values)
