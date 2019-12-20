@@ -1,6 +1,6 @@
 <?php
-    echo '<select id = "CategoryID" class="form-control" required>
-            <option value="">Selecteer een categorie...</option>';
+    echo '<select id = "CategoryID" class="form-control" required>';
+    echo '<option value="">Selecteer een categorie...</option>';
 
     $categories = $category->retrieve();
 
@@ -10,9 +10,9 @@
         if($cat->getParentCategory() != null) {
             $parentCat = $category->retrieve($cat->getParentCategory());
             $sCat .= ' (' . $parentCat->getCategoryName() . ')';
-        }
+        };
 
         echo '<option value="' . $cat->getCategoryID() . '">' . $sCat . '</option>';
-    }
+    };
 
     echo '</select>';
