@@ -415,6 +415,11 @@ class Database extends Models
         try
         {
             $stmt->execute();
+
+           $lastInsertID = $this->connection->lastInsertId();
+           $primaryKey = $this->getID("key");
+
+           $this->setAttribute($primaryKey,$lastInsertID);
         } catch (Exception $e)
         {
             return false;
