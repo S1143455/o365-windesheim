@@ -48,7 +48,6 @@ class CategoryController
     {
         if (!$category->initialize())
         {
-           // print_r($_GET);
             return false;
         };
 

@@ -18,7 +18,7 @@ class Supplier extends User
     function __construct()
     {
             Parent::__construct();
-            $this->table = "Supplier";
+            $this->table = "supplier";
     }
 
     /**

@@ -15,7 +15,7 @@ class Models
     protected $table;
     protected $column;
 
-    protected function getColumns($column = null)
+    protected function getColumns()
     {
         switch ($this->table) {
             case 'stockitem':
@@ -41,12 +41,9 @@ class Models
                 break;
             default:
                 die('Table not implemented');
+        }
 
-                if ($column != null) {
-                    $modelColumn = $this->column;
-                    $this->column = null;
-                }
-                if ($this->column == null) {
+        if ($this->column == null) {
                     switch ($this->table) {
                         case 'stockitem':
                             $this->getStockItem();
@@ -74,13 +71,7 @@ class Models
                     }
 
                 }
-                if ($column != null) {
-                    $retrievedRelation = $this->column;
-                    $this->column = $modelColumn;
-                    return $retrievedRelation;
-                }
-                return $this->column;
-        }
+
     }
 
     /**
@@ -127,6 +118,7 @@ class Models
             "CategoryName" => ['Varchar', 'Attribute', 'Required'],
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
         );
     }
 
@@ -188,7 +180,7 @@ class Models
             "AlternateContactPersonID" => ['People', 'HasOne', 'Required'],
             "SupplierReference" => ['Varchar', 'Attribute', 'Required'],
             "InternalComments" => ['LongText', 'Attribute', 'Required'],
-            "WebsiteURL" => ['Boolean', 'Attribute', 'Required'],
+            "WebsiteURL" => ['Varchar', 'Attribute', 'Required'],
             "LastEditedBy" => ['Varchar', 'Attribute', 'Required'],
             "AddressID" => ['Address', 'HasOne', 'Required'],
 
