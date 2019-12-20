@@ -8,11 +8,13 @@
  * @var $categories array(Model\Category)
  * @var $category Model\Category
  */
-
+//print_R($products);
 
 foreach ($products as $product)
 {
-//    $product->getRelation("Category");
+    echo $product->getStockItemID();
+    echo $product->getCategoryID();
+    $product->getRelation("Category");
 }
 
 

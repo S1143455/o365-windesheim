@@ -20,7 +20,7 @@ class CategoryController
         $category = $category->retrieve($id);
         if(empty($category->getCategoryID()))
         {
-            header("Location: /404", true);
+            //header("Location: /404", true);
         }
 
         return $category;

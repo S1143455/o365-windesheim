@@ -25,12 +25,6 @@ class MainController
                 'contact' => 'Contact',
                 'login' => 'Login',
             ],
-            'nav_menu_side_fe' => [
-                'onderhoudaccount' => 'Uw account',
-                'onderhoudbestellingen' => 'Bestellingen',
-                'bestellingoverzicht' => 'Bestellingoverzicht',
-
-            ],
             'nav_menu_side' => [
                 'onderhoud-hoofdpagina' => 'Onderhoud Hoofdpagina',
                 'onderhoud-categorieen' => 'Onderhoud Categorieën',
@@ -40,6 +34,11 @@ class MainController
                 'onderhoud-nieuwsbrief' => 'Onderhoud Nieuwsbrief',
                 'bestellingoverzicht' => 'Bestellingoverzicht',
 
+            ],
+            'user_menu_item' => [
+                'onderhoudaccount' => 'Uw account',
+                'onderhoudbestellingen' => 'Bestellingen',
+                'logout' =>'Uitloggen',
             ],
         ];
         $this->root=getenv("ROOT");
@@ -95,7 +94,7 @@ class MainController
         }
         else
         {
-            $nav_items['logout']='Logout'; unset($nav_items['login']);
+            unset($nav_items['login']);
         }
         foreach ($nav_items as $uri => $name) {
             $nav_menu .= '<li>';
@@ -107,27 +106,18 @@ class MainController
         return trim($nav_menu, $sep);
     }
 
-    function nav_menu_side_fe($sep = '')
+    function user_menu_items($sep = '')
     {
         $nav_menu = '';
-        $nav_items = $this->getConfig('nav_menu_side_fe');
-        $i = 0;
-        $max = count($nav_items);
-        foreach ($nav_items as $uri => $name) {
+        $nav_items = $this->getConfig('user_menu_item');
 
+        foreach ($nav_items as $uri => $name) {
+            $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-
-            if($i == 0){
-                $class .= ' first ';
-            }
-            $i++;
-            if($i == $max){
-                $class .= ' last ';
-            }
-            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '</li>';
         }
-
         return trim($nav_menu, $sep);
     }
 
@@ -216,23 +206,37 @@ class MainController
             return $result[0]['HTML'];
         }
     }
+/*
+ * $nav_items['logout']='Logout';
+            $nav_items['onderhoudaccount']='Uw account';
+            $nav_items['onderhoudbestellingen']='Bestellingen';
+ */
+    function usermenu()
+    {
+        $showusermenu='';
+        $showusermenu='
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Uw gegevens<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                ' . $this->user_menu_items() .'
+            </ul>
+        </li>';
+        if(isset($_SESSION['authenticated'])){return $showusermenu;}
+    }
 
     public function navigationalmenu()
     {
        $result = '';
        $result = '<div class="collapse navbar-collapse" id="bas-navbar">
                     <ul class="nav navbar-nav navbar-left">
-                        ' . $this->nav_menu() .'
+                        ' . $this->nav_menu() .' 
+                        ' . $this->usermenu() .'
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                PRODUCTS <span class="caret"></span>
-                            </a>
-                        <ul class="dropdown-menu">
-                            ' . $this->nav_menu() .'
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
-                    </li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                ' . $this->nav_menu() .'                           
+                            </ul>
+                        </li>                      
                     </ul>
                  </div> ';
        echo $result;

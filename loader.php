@@ -27,14 +27,6 @@ $discountController = new Controller\DiscountController();
 $user = new Controller\UserController();
 $productController = new Controller\ProductController();
 
-if (isset($_SESSION['authenticated']))
-{
-    echo '<div class="container" style="width:100%">
-    <div class="row">';
-        include_once 'content/frontend/sidebar.php';
-    echo '</div>
-</div>';
-}
 
 
 

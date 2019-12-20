@@ -4,6 +4,8 @@
     $categoryid = 0;
     $category = $categoryController->retrieve(1123);
     var_dump($category);
+    $categoryController->update($category)
+
 ?>
 <div class="container" style="width:100%">
     <div class="row">
@@ -43,10 +45,6 @@
         </button>
     </div>
 </div>
-        <?php
-        //$categoryController->update($category)
-        ?>
-
 
 <!--  modals      -->
 

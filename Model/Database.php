@@ -220,7 +220,7 @@ class Database extends Models
         $columns = substr($columns, 0, -2);
         $placeholder = substr($placeholder, 0, -2);
 
-        $sql = "INSERT INTO " . $this->table . " (" . $columns . ") VALUES (" . $placeholder . ");";
+        $sql = "UPDATE INTO " . $this->table . $columns . " VALUES (" . $placeholder . ");";
 
         $stmt = $this->connection->prepare($sql);
 
@@ -334,7 +334,6 @@ class Database extends Models
     private function checkQueryParameters($columnKeys, $compareTypes, $values)
     {
         $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
-
         if ($checkInput[0] && $checkInput[1] && $checkInput[2])
         {
             $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
@@ -383,7 +382,8 @@ class Database extends Models
         $this->openConn();
         $this->getColumns();
         $sql = $this->createSelectStatement("*");
-        $sql .=  ($limit !== null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0 ? " OFFSET " . $offset : "");
+        $sql .=  ($limit != null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0? " OFFSET " . $offset : "");
+
         $stmt = $this->connection->query($sql);
         $stmt->execute();
         try
@@ -414,8 +414,7 @@ class Database extends Models
         $stmt = $this->createInsertStatement();
         try
         {
-            print_R($stmt->execute());
-            die();
+            $stmt->execute();
         } catch (Exception $e)
         {
             return false;
@@ -703,23 +702,44 @@ class Database extends Models
         }
         array_push($_GET[$key], $value);
     }
-
+    /**
+     * Get the relation by relationname
+     * @var $model = \Database;
+     */
     public function getRelation($modelName)
     {
-        $columns = $this->getColumns();
-        $model =  new $modelName();
-        if ($columns == null)
+
+        $createModelByName = '\Model\\'.$modelName;
+        $model =  new $createModelByName;
+        $model->getColumns();
+
+        $foreignKey = null;
+        $this->getColumns();
+
+        foreach($this->column as $key => $value)
+        {
+            if($value[0] == $modelName)
+            {
+                $foreignKey = $this->getAttribute($key);
+                break;
+            }
+        }
+        if ($model->column == null)
         {
             die('relation does not exist');
         }
-        foreach ($columns as $col)
+        else if ($foreignKey == null)
         {
-            if ($col[1] == "PrimaryKey")
+            die('Foreign key is empty');
+        }
+        foreach ($model->column as $key => $value)
+        {
+            if ($value[1] == "PrimaryKey")
             {
-
+                $model->setAttribute($key, $foreignKey);
+                $model = $model->find($model->getID("value"));
             }
         }
-
-        echo $model;
+         return $model;
     }
 }
