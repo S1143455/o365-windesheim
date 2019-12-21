@@ -129,8 +129,9 @@ class Database extends Models
         if ($this->checkIfExists($this->getID("value")) == null)
         {
             return $this->newRow();
+
         }else if($this->getID("value") != null){
-            return $this->UpdateIets();
+            return $this->UpdateEntry();
 
         }
     }
@@ -147,8 +148,10 @@ class Database extends Models
         {
             $this->openConn();
             $key = $this->getID("key");
-            $retrieved = $this->where("*", $key, "=" , $id);
-            return $this->initRetrievedObjects($retrieved)[0];
+
+            $retrieved = $this->where("*", $key, "=", $id);
+            return $retrieved[0];
+
         }
 
     }
@@ -185,18 +188,18 @@ class Database extends Models
     private function createSelectStatement($returnAttr)
     {
         $attributes = "";
-        if(is_array($returnAttr))
+        if (is_array($returnAttr))
         {
-            foreach($returnAttr as $key => $value)
+            foreach ($returnAttr as $key => $value)
             {
-                $attributes .= $value . (end($returnAttr) == $value ? "" :", ");
+                $attributes .= $value . (end($returnAttr) == $value ? "" : ", ");
             }
-        }
-        else {
+        } else
+        {
             $attributes = $returnAttr;
         }
 
-        return  "SELECT " . $attributes . " FROM " . $this->table . " ";
+        return "SELECT " . $attributes . " FROM " . $this->table . " ";
     }
 
 
@@ -240,7 +243,7 @@ class Database extends Models
      */
     public function where($returnAttr, $columnKeys, $compareTypes, $values)
     {
-       $type = $this->checkQueryParameters($columnKeys, $compareTypes, $values);
+        $type = $this->checkQueryParameters($columnKeys, $compareTypes, $values);
 
         $sql = $this->createSelectStatement($returnAttr);
         $where = "";
@@ -253,24 +256,23 @@ class Database extends Models
             $sql .= " WHERE " . $where;
             $columnKeys = [$columnKeys];
             $values = [$values];
-        }
-        //multiple search points
+        } //multiple search points
         else
         {
-            for ($i = 0; $i < sizeof($columnKeys); $i++ )
+            for ($i = 0; $i < sizeof($columnKeys); $i++)
             {
-                $where .= $columnKeys[$i] .  " " . (is_array($compareTypes) ? $compareTypes[$i] : $compareTypes ) . " :" . $columnKeys[$i];
-                if(($i + 1) < sizeof($columnKeys))
+                $where .= $columnKeys[$i] . " " . (is_array($compareTypes) ? $compareTypes[$i] : $compareTypes) . " :" . $columnKeys[$i];
+                if (($i + 1) < sizeof($columnKeys))
                 {
                     $where .= " && ";
                 }
             }
-            $sql .= " WHERE " .$where;
+            $sql .= " WHERE " . $where;
         }
 
         $this->openConn();
         $stmt = $this->connection->prepare($sql);
-        for($i = 0; $i < sizeof($columnKeys); $i++)
+        for ($i = 0; $i < sizeof($columnKeys); $i++)
         {
             $stmt->bindValue(":" . $columnKeys[$i], $values[$i]);
         }
@@ -278,6 +280,7 @@ class Database extends Models
 
         $retVal = $stmt->fetchAll();
         $this->connection = null;
+        $retVal = $this->initRetrievedObjects($retVal);
 
         //Remove or comment these lines --
         //echo "Query that was created and executed :<br>" . $sql;
@@ -307,20 +310,6 @@ class Database extends Models
     }
 
 
-    public function UpdateEntry($id, $data){
-        if($id == null || empty($data)){
-            return false;
-        }else{
-            $test1 = $this->$this->getColumns();
-            var_dump($test1);
-            foreach ($data as $test)
-            {
-
-            }
-        }
-    }
-
-
     /**
      * @param $columnKeys
      * @param $compareTypes
@@ -346,16 +335,13 @@ class Database extends Models
                 die("Parameters differ in size");
             }
             return "array";
-        }
-        else if(!$checkInput[0] && !$checkInput[1] && !$checkInput[2])
+        } else if (!$checkInput[0] && !$checkInput[1] && !$checkInput[2])
         {
             return "single";
-        }
-        else
+        } else
         {
 
-            echo !($checkInput[0] && $checkInput[2]);
-            echo !(!$checkInput[0] && !$checkInput[1] && !$checkInput[2]);
+
             die('All parameters should be of the same type.');
         }
     }
@@ -378,7 +364,7 @@ class Database extends Models
         $this->openConn();
         $this->getColumns();
         $sql = $this->createSelectStatement("*");
-        $sql .=  ($limit != null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0? " OFFSET " . $offset : "");
+        $sql .= ($limit != null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0 ? " OFFSET " . $offset : "");
 
         $stmt = $this->connection->query($sql);
         $stmt->execute();
@@ -400,7 +386,7 @@ class Database extends Models
         $this->closeConnection();
         return $retVal;
     }
-    private function UpdateIets()
+    private function UpdateEntry()
     {
         $this->openConn();
         $stmt = $this->createUpdateStatement();
@@ -618,7 +604,7 @@ class Database extends Models
 
         foreach ($values as $parameter => $value)
         {
-           // print_r([$parameter, $value]);
+            // print_r([$parameter, $value]);
             $stmt->bindValue($parameter, $value);
         }
         return $stmt;
@@ -669,7 +655,7 @@ class Database extends Models
                     $this->setError($this->table, $value);
                 }
 
-                if($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN )
+                if ($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN)
                 {
                     $value = intval($value);
                 }
@@ -700,11 +686,10 @@ class Database extends Models
                 }
                 array_push($modelObjects, $modelObject);
             }
-        }
-        else
-            {
+        } else
+        {
             array_push($modelObjects, $modelObject);
-            }
+        }
         return $modelObjects;
     }
 
@@ -721,44 +706,74 @@ class Database extends Models
         }
         array_push($_GET[$key], $value);
     }
+
     /**
-     * Get the relation by relationname
-     * @var $model = \Database;
+     * Get the relation within a model by relationname
+     * @param $modelName Name of the model to retrieve
+     * @return Mixed null or a single model or multiple models.
      */
     public function getRelation($modelName)
     {
-
-        $createModelByName = '\Model\\'.$modelName;
-        $model =  new $createModelByName;
+        /**
+         * Create the model.
+         * @var $model Database;
+         */
+        $createModelByName = '\Model\\' . $modelName;
+        $model = new $createModelByName;
         $model->getColumns();
-
+        if ($model->column == null)
+        {
+            die('Model does not exist');
+        }
         $foreignKey = null;
         $this->getColumns();
 
-        foreach($this->column as $key => $value)
+        /**
+         * Checks if the current model has the modelName as an available attribute,
+         * If so it should retrieve a single model.
+         *
+         */
+        foreach ($this->column as $key => $value)
         {
-            if($value[0] == $modelName)
+            if ($value[0] == $modelName)
             {
                 $foreignKey = $this->getAttribute($key);
-                break;
+                return $model->getModelByID($foreignKey);
             }
         }
-        if ($model->column == null)
-        {
-            die('relation does not exist');
-        }
-        else if ($foreignKey == null)
-        {
-            die('Foreign key is empty');
-        }
+        /**
+         * Checks if the model that is requested contains the primaryKey attribute of the currentModel,
+         * If so it should retrieve multiple models
+         */
+        $keyToMatch = $this->getID("key");
         foreach ($model->column as $key => $value)
+        {
+            if ($keyToMatch == $key)
+            {
+                $models = $model->where("*", $key, "=", $this->getID('value'));
+                return $models;
+            }
+        }
+
+    }
+
+    /**
+     * Gets a HasOne relationShip for a model.
+     * @param $model The model to fill.
+     * @param $foreignKey The primaryKey to find.
+     * @return mixed 0 or 1 models retrieved from database
+     */
+    private function getModelByID($foreignKey)
+    {
+        foreach ($this->column as $key => $value)
         {
             if ($value[1] == "PrimaryKey")
             {
-                $model->setAttribute($key, $foreignKey);
-                $model = $model->find($model->getID("value"));
+                $this->setAttribute($key, $foreignKey);
+                $model = $this->find($this->getID("value"));
+                return $model;
             }
         }
-         return $model;
     }
+
 }
