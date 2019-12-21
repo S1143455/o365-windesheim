@@ -9,10 +9,8 @@
         <h2>Hieronder staan de gegevens zoals deze bij ons bekend zijn.</h2>
             <?php
             include 'content/frontend/display_message.php';
-            if (isset($_POST['changeuser']))
-            {
-                include "update_userdetails.php";
-            }
+            //echo "<pre>"; print_r($_POST);echo "</pre><br>";
+            if (isset($_POST['changeuser'])){include "update_userdetails.php";}
             elseif (isset($_POST['changepassword']))
             {
                 include "update_userpassword.php";
@@ -174,7 +172,7 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="newsletter">Ja! Ik ontvang graag de Nieuwsbrief van Oma's Beste.</label>
-                                        <input type="checkbox" name="newsletter" id="newsletter" <?php if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['newsletter']==1) {echo "checked";} ?>>
+                                        <input type="checkbox" name="newsletter" id="newsletter" value="<?php if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['newsletter']==1) {echo 1;} ?>" <?php if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['newsletter']==1) {echo "checked";} ?>>
                                         <input type="hidden" name="PersonID" value="<?php echo $_SESSION['USER']['DATA'][0]['PersonID'];?>">
                                         <input type="hidden" name="AddressId" value="<?php echo $_SESSION['USER']['ADDRESS'][0]['AddressId'];?>">
                                     </div>

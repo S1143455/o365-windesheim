@@ -96,7 +96,7 @@ class User extends Database
     // this sets the TTL of the passwordrecovery link.
     public function passwordRecoveryTime()
     {
-        return $this->passwordRecoveryTime=600;
+        return $this->passwordRecoveryTime=1600;
     }
 
 

@@ -13,7 +13,7 @@ $emailAddress=$getEmailAddress->selectStmt("SELECT EmailAddress FROM people WHER
 // If the time expires the user will need to request a new link.
 
 // First off : The function for the random string
-function generateRandomString($length = 255) {
+function generateRandomString($length = 5) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@$%^*()_+=-<>';
     $charactersLength = strlen($characters);
     $randomString = '';
@@ -46,4 +46,4 @@ echo $recoveryLink . "<br>";
 // It does not matter if the emailaddress was found or not.
 // The message below will be shown.
 ShowTheMessage:
-echo display_message('success', 'Als uw emailadres is gevonden, dan is uw wachtwoord verstuurd naar uw emailadres.<br>Controleer ook uw spambox.') . "<meta http-equiv='refresh' content='5'>";
+echo display_message('succes', 'Als uw emailadres is gevonden, dan is uw wachtwoord verstuurd naar uw emailadres.<br>Controleer ook uw spambox.') . "<meta http-equiv='refresh' content='5'>";
