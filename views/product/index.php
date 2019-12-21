@@ -10,17 +10,24 @@
  */
 //print_R($products);
 
-foreach ($products as $product)
-{
-    echo $product->getStockItemID();
-    echo $product->getCategoryID();
-    $product->getRelation("Category");
-}
-
-
-//foreach ($categories as $category)
+//foreach ($products as $product)
 //{
+//    echo $product->getStockItemID();
+//    echo $product->getCategoryID();
+//    $product->getRelation("Category");
 //}
+
+
+foreach ($categories as $category)
+{
+    echo "Category  :" . $category->getCategoryName() . "<br>";
+    $products = $category->getRelation('Product');
+    foreach($products as $product)
+    {
+        echo $product->getStockItemName();
+        echo $product->getStockItemID() . "<br>";
+    }
+}
 
 /**
  * @param $table

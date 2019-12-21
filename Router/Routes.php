@@ -3,8 +3,9 @@
  * ALL Routes the website uses will be defined here.
 */
 
-$router->route('/', function(){
-    return include 'content/frontend/home.php';
+$router->route('/', function() use ($mainController){
+    //return include 'content/frontend/home.php';
+    return $mainController->index();
 });
 
 $router->route('/about', function(){

@@ -24,11 +24,16 @@ Class ProductController
         /**
          * Database.php  line 287-289  to remove the comments from the page.
          */
-        $products = new Product();
-        $products = $products->retrieve();
+//        $products = new Product();
+//        $products = $products->retrieve();
 
 //        $categories = new Category();
 //        $categories = $categories->retrieve();
+
+
+        $categories = new Category();
+        $categories = $categories->retrieve();
+
 
         return include $this->viewPath . 'index.php';
     }
@@ -118,7 +123,33 @@ Class ProductController
 
         $supplier = new Supplier();
         $suppliers = $supplier->retrieve();
-
         return include_once $this->viewPath . 'admin.php';
+    }
+
+    public function getSizeString($sz){
+        switch ($sz) {
+            case 1:
+                $sz = 'Extra klein';
+                break;
+            case 2:
+                $sz = 'Klein';
+                break;
+            case 3:
+                $sz = 'Middel';
+                break;
+            case 4:
+                $sz = 'Groot';
+                break;
+            case 5:
+                $sz = 'Extra groot';
+                break;
+            default:
+                $sz = 'Onbekend';
+        }
+        return $sz;
+    }
+
+    public function calculatePrice($price,$btw){
+        return $price - ($price/100*$btw);
     }
 }
