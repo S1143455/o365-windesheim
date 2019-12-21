@@ -5,15 +5,14 @@ namespace Controller;
 
 use Model\Category;
 use Model\Database;
-use Model\Product;
-
-class CategoryController
+use Model\File;
+class CategoryController extends FileController
 {
     private $admin = 'content/backend/';
 
     function __construct()
     {
-       $this->category = new category();
+        $this->category = new category();
     }
     public function retrieve($id){
         $category = new category();
@@ -27,14 +26,11 @@ class CategoryController
     }
     public function create()
     {
-        print_r($_POST);
         $this->category = new category();
         $this->category->initialize();
         $this->category->setLastEditedBy(2);
         $this->store($this->category);
 
-       // return "true";
-       // include $this->contentpath
         include $this->admin . 'onderhoudc.php';
     }
 
@@ -48,11 +44,16 @@ class CategoryController
     {
         if (!$category->initialize())
         {
-           // print_r($_GET);
             return false;
         };
-
         $this->category = $category;
+        if(isset($_FILES)){
+            $attachmentID = $this->upload($this->category->getLastEditedBy());
+            var_dump($attachmentID);
+            $category->setAttachmentID($attachmentID);
+            var_dump($category);
+
+        }
 
         if (!$this->category->save())
         {
@@ -63,33 +64,21 @@ class CategoryController
     /**
      * Stores the product in the database.
      *
-     * @param $category Category
+     * @param $category $category1
      * @return string
      */
-    public function update($category)
+    public function update($category1)
     {
+        $this->store($category1);
 
-
-//        if (!$category->initialize())
-//        {
-//            // print_r($_GET);
-//            return false;
-//        };
-//
-//        $this->category = $category;
-//
-//        if (!$this->category->save())
-//        {
-//            return "Something went wrong.";
-//        }
     }
 
 
     function ParentCategories(){
         $categories = $this->category->getAllActiveCategories();
         foreach($categories as $category){
-            if($category['CategoryName'] != ''){
-                $result = '<option value="' . $category['CategoryID'] .'">'. $category['CategoryName'] . '</option>';
+            if($category->getCategoryName() != ''){
+                $result = '<option value="' . $category->getCategoryID()  .'">'. $category->getCategoryName() . '</option>';
                 echo $result;
             }
         }
@@ -101,10 +90,10 @@ class CategoryController
         foreach($categories as $category){
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-md-1"><button type="button" class="open-EditDialog" style="color: #428bca;" data-toggle="modal" id="open-EditDialog" data-id="' . $category['CategoryID'] .'"  data-target="#EditCategorieDialog">Edit</button></td>
-                            <td class="col-md-2">' . $category['CategoryID'] .'</td>
-                            <td class="col-md-5">' . $category['CategoryName'] .'</td>
-                            <td class="col-md-2">' . $category['ParentCategory'] .'</td>
+                            <td class="col-md-1"><button type="submit" name="id" value="' . $category->getCategoryID() .'">Edit</button></td>
+                            <td class="col-md-2">' . $category->getCategoryID() .'</td>
+                            <td class="col-md-5">' . $category->getCategoryName() .'</td>
+                            <td class="col-md-2">' . $category->getParentCategory() .'</td>
                             <td class="col-md-2">iets</td>
                         </tr>';
 

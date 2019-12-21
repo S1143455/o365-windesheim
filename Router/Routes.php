@@ -90,8 +90,8 @@ $router->route('/admin/onderhoud-categorieen', function(){
     return include 'content/backend/onderhoudc.php';
 });
 
-$router->route('/admin/onderhoud-producten', function(){
-    return include 'content/backend/onderhoudproducten.php';
+$router->route('/admin/onderhoud-producten', function() use($productController){
+    return $productController->admin();
 });
 
 $router->route('/admin/onderhoud-klanten', function(){
@@ -115,8 +115,11 @@ $router->route('/admin/onderhoud-nieuwsbrief', function(){
 $router->route('/admin/bestellingoverzicht', function(){
     return include 'content/backend/bestellingoverzicht.php';
 });
-$router->route('/admin/Onderhoud-hoofdpagina', function(){
-    return include 'content/backend/onderhoudhoofdpagina.php';
+$router->route('/admin/bestellingoverzicht', function(){
+    return include 'content/backend/bestellingoverzicht.php';
+});
+$router->route('/admin/upload', function(){
+    return include 'content/backend/upload.php';
 });
 /**
  * End AdminController routes

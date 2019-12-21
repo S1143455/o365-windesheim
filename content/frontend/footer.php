@@ -1,6 +1,6 @@
                 <div class="row">
                 <footer>
-                    <small>&copy;<?php echo date('Y'); ?> <?php echo $main->site_name(); ?>.<br><?php echo $main->site_version(); ?></small>
+                    <small>&copy;<?php echo date('Y'); ?> <?php echo $mainController->site_name(); ?>.<br><?php echo $mainController->site_version(); ?></small>
                 </footer>
 
             </div>

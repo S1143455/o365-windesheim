@@ -8,15 +8,15 @@ include_once 'content/frontend/header.php';
             //img
         </div>
         <div id="info">
-                <?php $main->showContent("TITLE"); ?>
+                <?php $mainController->showContent("TITLE"); ?>
             <br>
-                <?php $main->showContent("SUBTITLE"); ?>
+                <?php $mainController->showContent("SUBTITLE"); ?>
 
-                <?php $main->showContent( "STORY");?>
+                <?php $mainController->showContent( "STORY");?>
         </div>
 
         <div id="categories">
-            <?php $main->getGridCategories();?>
+            <?php $mainController->getGridCategories();?>
         </div>
     </div>
 <?php
