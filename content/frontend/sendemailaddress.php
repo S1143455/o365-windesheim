@@ -1,5 +1,4 @@
 <?php
-include 'content/frontend/display_message.php';
 // Let's see if we can find the emailaddress of the user.
 $getEmailAddress= new \Model\Database();
 $emailAddress=$getEmailAddress->selectStmt("SELECT EmailAddress FROM people WHERE LogonName='" . $_POST['LogonName'] . "' AND EmailAddress='" . $_POST['EmailAddress'] . "'");

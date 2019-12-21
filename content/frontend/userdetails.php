@@ -2,13 +2,9 @@
     <head>
     </head>
     <body>
-        <script type="text/javascript">
-            $('#error_message').hide();
-        </script>
         <h2>Uw klant nummer is <?php echo $_SESSION['USER']['DATA'][0]['PersonID']; ?>.</h2>
         <h2>Hieronder staan de gegevens zoals deze bij ons bekend zijn.</h2>
             <?php
-            include 'content/frontend/display_message.php';
             if (isset($_POST['changeuser']))
             {
                 include "update_userdetails.php";
@@ -34,7 +30,6 @@
                 let firstInput = document.getElementById("newpw1").value;
                 let secondInput = document.getElementById("newpw2").value;
                 if (firstInput === secondInput) {
-                    // do something here if inputs are same
                     return true;
                 } else {
                     $('#error_message').show();
@@ -215,9 +210,6 @@
                                 </div>
                                 <div id="error_message" style="display:none" class="alert alert-danger" role="alert">
                                     <h4 >De wachtwoorden komen niet overeen.</h4>
-                                </div>
-                                <div id="error_message1" style="display:none" class="alert alert-danger" role="alert">
-                                    <h4 >Het oude wachtwoord komt niet overeen met het nieuwe wachtwoord.</h4>
                                 </div>
                             </div>
                             <div class="modal-footer">

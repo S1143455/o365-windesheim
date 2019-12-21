@@ -1,5 +1,5 @@
 <?php
-
+include_once 'content/frontend/display_message.php';
 function update_UserPassword($oldPassword,$newPassword) {
     // if the old password is ThisIsPasswordRecovery there won't be a password verify.
     if ($oldPassword != 'ThisIsPasswordRecovery')

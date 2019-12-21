@@ -1,4 +1,5 @@
 <?php
+include_once 'content/frontend/display_message.php';
 // Update Address
 $pushthedata=new Model\Database();
 $savetheaddress=$pushthedata->UpdateStmt("UPDATE address SET 
