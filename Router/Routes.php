@@ -14,6 +14,15 @@ $router->route('/about', function(){
 $router->route('/about-us', function(){
     return include 'content/frontend/about-us.php';
 });
+
+/**
+ * Passwordrecovery
+ */
+
+$router->route('/passwordrecovery', function() use($user){
+    return include 'content/frontend/passwordrecovery.php';
+});
+
 /**
  * Login route
  */
@@ -29,9 +38,11 @@ $router->route('/logout', function(){
 /**
  * Begin usermainteance
  */
+
 $router->route('/onderhoudaccount', function(){
     return include 'content/frontend/usermaintenance.php';
 });
+
 
 $router->route('/onderhoudbestellingen', function(){
     return include 'content/frontend/usermaintenance.php';

@@ -34,6 +34,7 @@ class Router
             $callback = $this->routes[$action];
             call_user_func($callback);
         }
+
         else if(preg_match('/\/(?:.(?!\/))+$/', $action,$matches))
         {
             $action = str_replace($matches[0], '', $action)."/{id}";
@@ -50,7 +51,15 @@ class Router
         }
 
         else {
-            header("Location: /404");
+            if (!strpos($_SERVER['REQUEST_URI'],'passwordrecovery'))
+            {
+                header("Location: /404");
+            }
+            else
+            {
+                $_POST['recoverystring']=str_replace(strtok($_SERVER['REQUEST_URI'],'?').'?','',$_SERVER['REQUEST_URI']);    strtok($_SERVER['REQUEST_URI'],'?');  // $_SERVER['REQUEST_URI'], 2);
+                return include "content/frontend/passwordrecovery.php";
+            }
         }
     }
 

@@ -8,9 +8,23 @@
         <h2>Uw klant nummer is <?php echo $_SESSION['USER']['DATA'][0]['PersonID']; ?>.</h2>
         <h2>Hieronder staan de gegevens zoals deze bij ons bekend zijn.</h2>
             <?php
+            include 'content/frontend/display_message.php';
             //echo "<pre>"; print_r($_POST);echo "</pre><br>";
             if (isset($_POST['changeuser'])){include "update_userdetails.php";}
-            elseif (isset($_POST['changepassword'])){include "update_userpassword.php";}
+            elseif (isset($_POST['changepassword']))
+            {
+                include "update_userpassword.php";
+                $changepassword=update_UserPassword($_POST['oldpw'],$_POST['newpw1']);
+                if ($changepassword['hasfaild']==true)
+                {
+                    echo display_message('danger', $changepassword['message']) . "<meta http-equiv='refresh' content='3'>";
+                }
+                else
+                {
+                    echo display_message('success', $changepassword['message']) . "<meta http-equiv='refresh' content='3'>";
+                }
+
+            }
             ?>
         <script type="text/javascript">
             function ValidatePassword()

@@ -2,8 +2,6 @@
 include 'loader.php';
 include_once 'content/frontend/header.php';
 
-//$tst=new \Controller\AuthenticationController();
-//echo $tst->hashPassword('kats');
     // Let's test the input of the user.
     if(isset($_POST['login']))
     {
@@ -35,6 +33,7 @@ include_once 'content/frontend/header.php';
                     <div class="form-group">
                         <button type="submit" name="login" class="firstdiscountButton btn btn-primary" data-toggle="modal">Inloggen</button>
                         <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#sendpassword">Wachtwoord vergeten</button>
+                        <button type="submit" name="createaccount" class="firstdiscountButton btn btn-primary" data-toggle="modal">Account aanmaken</button>
                     </div> <!-- form-group// -->
                 </form>
             </article>

@@ -11,6 +11,7 @@ class User extends Database
     protected $table;
     private $dbPassword;
     private  $UserDataArray;
+    private $passwordRecoveryTime;
 
     function __construct()
     {
@@ -89,9 +90,13 @@ class User extends Database
             $this->setDbPassword($sqlreturendsomething[0]['HashedPassword']);
             return true;
         }
-
     }
 
+    // this sets the TTL of the passwordrecovery link.
+    public function passwordRecoveryTime()
+    {
+        return $this->passwordRecoveryTime=1600;
+    }
 
 
 }
