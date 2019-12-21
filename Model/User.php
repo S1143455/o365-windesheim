@@ -81,8 +81,7 @@ class User extends Database
         $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '".$this->username . "'");
         if(!$sqlreturendsomething)
         {
-            $_SESSION['LOGIN_ERROR']='Gebruikersnaam of wachtwoord onjuist.';
-            return false;
+            return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
         }
         else
         {

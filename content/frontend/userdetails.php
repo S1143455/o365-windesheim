@@ -33,7 +33,6 @@
             {
                 let firstInput = document.getElementById("newpw1").value;
                 let secondInput = document.getElementById("newpw2").value;
-
                 if (firstInput === secondInput) {
                     // do something here if inputs are same
                     return true;
@@ -214,8 +213,11 @@
                                     <label for="newpw2">Herhaal uw nieuwe wachtwoord</label>
                                     <input type="password" class="form-control" name="newpw2" id="newpw2" required>
                                 </div>
-                                <div id="error_message" style="width:100% height:100% display:none class="alert alert-danger" role="alert">
-                                    <h4 class="alert-heading">De wachtwoorden komen niet overeen.</h4>
+                                <div id="error_message" style="display:none" class="alert alert-danger" role="alert">
+                                    <h4 >De wachtwoorden komen niet overeen.</h4>
+                                </div>
+                                <div id="error_message1" style="display:none" class="alert alert-danger" role="alert">
+                                    <h4 >Het oude wachtwoord komt niet overeen met het nieuwe wachtwoord.</h4>
                                 </div>
                             </div>
                             <div class="modal-footer">

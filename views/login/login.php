@@ -1,7 +1,7 @@
 <?php
 include 'loader.php';
 include_once 'content/frontend/header.php';
-
+include 'content/frontend/display_message.php';
     // Let's test the input of the user.
     if(isset($_POST['login']))
     {
@@ -23,7 +23,7 @@ include_once 'content/frontend/header.php';
         <!--        <h4 class="card-title mb-4 mt-1">Sign in</h4>-->
                 <form method="post" action="">
                     <div class="form-group">
-                        <label >Gebruikersnaam : </label>
+                        <label class="col-sm-3">Gebruikersnaam : </label>
                         <input class="form-control" type="text" name="gbrkr" placeholder="Gebruikersnaam">
                     </div> <!-- form-group// -->
                     <div class="form-group">
@@ -38,7 +38,7 @@ include_once 'content/frontend/header.php';
                 </form>
             </article>
         </div>
-        <div><?php if(isset($_SESSION['LOGIN_ERROR'])){echo $_SESSION['LOGIN_ERROR']; unset($_SESSION['LOGIN_ERROR']);} ?></div>
+        <div><?php if(isset($_SESSION['LOGIN_ERROR'])){echo display_message($_SESSION['LOGIN_ERROR']['type'],$_SESSION['LOGIN_ERROR']['message']);unset($_SESSION['LOGIN_ERROR']);}?></div>
 
         <!-- form for resending password -->
         <div class="modal fade" id="sendpassword" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
