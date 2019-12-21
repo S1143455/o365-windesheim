@@ -18,7 +18,7 @@ else
 if ($_POST['Gender']=='male')
     $gender='Man';
 else
-    $gender='vrouw';
+    $gender='Vrouw';
 
 $savethecustomer=$pushthedata->UpdateStmt("UPDATE customer SET 
 Gender=\"" . $gender	. "\" ,
