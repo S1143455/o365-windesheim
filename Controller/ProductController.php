@@ -24,11 +24,16 @@ Class ProductController
         /**
          * Database.php  line 287-289  to remove the comments from the page.
          */
-        $products = new Product();
-        $products = $products->retrieve();
+//        $products = new Product();
+//        $products = $products->retrieve();
 
 //        $categories = new Category();
 //        $categories = $categories->retrieve();
+
+
+        $categories = new Category();
+        $categories = $categories->retrieve();
+
 
         return include $this->viewPath . 'index.php';
     }
@@ -118,7 +123,6 @@ Class ProductController
 
         $supplier = new Supplier();
         $suppliers = $supplier->retrieve();
-
         return include_once $this->viewPath . 'admin.php';
     }
 

@@ -34,12 +34,10 @@ class Database extends Models
     private function openConn()
     {
         /** @noinspection PhpComposerExtensionStubsInspection */
-        if ($this->connection == null)
-        {
+        if ($this->connection == null) {
             $this->connection = new PDO("mysql:host=$this->hostname;dbname=$this->database", $this->username, $this->password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            if (false)
-            {
+            if (false) {
                 echo "connection could not be established";
                 die('Connection refused');
             }
@@ -54,8 +52,7 @@ class Database extends Models
      */
     public function selectStmt($sql)
     {
-        if ($this->connection == null)
-        {
+        if ($this->connection == null) {
             $this->openConn();
         }
         $stmt = $this->connection->prepare($sql);
@@ -72,8 +69,7 @@ class Database extends Models
      */
     public function UpdateStmt($sql)
     {
-        if ($this->connection == null)
-        {
+        if ($this->connection == null) {
             $this->openConn();
         }
         $stmt = $this->connection->prepare($sql);
@@ -89,8 +85,7 @@ class Database extends Models
      */
     public function selectFetchAll($sql)
     {
-        if ($this->connection == null)
-        {
+        if ($this->connection == null) {
             $this->openConn();
         }
         $stmt = $this->connection->prepare($sql);
@@ -126,11 +121,12 @@ class Database extends Models
         $this->getColumns();
         $this->validate();
 
-        if ($this->checkIfExists($this->getID("value")) == null)
-        {
+        if ($this->checkIfExists($this->getID("value")) == null) {
             return $this->newRow();
-        }else if($this->getID("value") != null){
+
+        } else if ($this->getID("value") != null) {
             return $this->UpdateModal();
+            return $this->UpdateEntry();
 
         }
     }
@@ -143,12 +139,13 @@ class Database extends Models
     private function find($id)
     {
         $retVal = $this;
-        if ($id != null)
-        {
+        if ($id != null) {
             $this->openConn();
             $key = $this->getID("key");
-            $retrieved = $this->where("*", $key, "=" , $id);
-            return $this->initRetrievedObjects($retrieved)[0];
+
+            $retrieved = $this->where("*", $key, "=", $id);
+            return $retrieved[0];
+
         }
 
     }
@@ -161,15 +158,13 @@ class Database extends Models
     private function checkIfExists($id)
     {
         $retVal = null;
-        if ($id == null)
-        {
+        if ($id == null) {
             return false;
         }
         $this->openConn();
         $key = $this->getID("key");
         $retrieved = $this->where($key, $key, "=", $id);
-        if (!empty($retrieved))
-        {
+        if (!empty($retrieved)) {
             return true;
         }
         return false;
@@ -185,18 +180,15 @@ class Database extends Models
     private function createSelectStatement($returnAttr)
     {
         $attributes = "";
-        if(is_array($returnAttr))
-        {
-            foreach($returnAttr as $key => $value)
-            {
-                $attributes .= $value . (end($returnAttr) == $value ? "" :", ");
+        if (is_array($returnAttr)) {
+            foreach ($returnAttr as $key => $value) {
+                $attributes .= $value . (end($returnAttr) == $value ? "" : ", ");
             }
-        }
-        else {
+        } else {
             $attributes = $returnAttr;
         }
 
-        return  "SELECT " . $attributes . " FROM " . $this->table . " ";
+        return "SELECT " . $attributes . " FROM " . $this->table . " ";
     }
 
 
@@ -205,23 +197,21 @@ class Database extends Models
         $values = [];
         $placeholder = "";
         $primarykey = "";
-        foreach ($this->column as $key => $value)
-        {
-            foreach ($value as $attribuut){
-                if($attribuut == "PrimaryKey"){
+        foreach ($this->column as $key => $value) {
+            foreach ($value as $attribuut) {
+                if ($attribuut == "PrimaryKey") {
                     $primarykey = $key;
                 }
             }
-            $placeholder .= ' ' . $key  . ' = \''  . $this->getAttribute($key).'\',';
+            $placeholder .= ' ' . $key . ' = \'' . $this->getAttribute($key) . '\',';
         }
 
         //$columns = substr($columns, 0, -2);
         $placeholder = substr($placeholder, 0, -1);
 
-        $sql = "UPDATE " . $this->table ." set " . $placeholder . " where ". $primarykey ." = ". $this->getAttribute($primarykey) ." ;";
+        $sql = "UPDATE " . $this->table . " set " . $placeholder . " where " . $primarykey . " = " . $this->getAttribute($primarykey) . " ;";
         $stmt = $this->connection->prepare($sql);
-        foreach ($values as $parameter => $value)
-        {
+        foreach ($values as $parameter => $value) {
             $stmt->bindValue($parameter, $value);
         }
 
@@ -240,44 +230,39 @@ class Database extends Models
      */
     public function where($returnAttr, $columnKeys, $compareTypes, $values)
     {
-       $type = $this->checkQueryParameters($columnKeys, $compareTypes, $values);
+        $type = $this->checkQueryParameters($columnKeys, $compareTypes, $values);
 
         $sql = $this->createSelectStatement($returnAttr);
         $where = "";
 
         //Single search.
-        if ($type == "single")
-        {
+        if ($type == "single") {
 
             $where = $columnKeys . " " . $compareTypes . " :" . $columnKeys;
             $sql .= " WHERE " . $where;
             $columnKeys = [$columnKeys];
             $values = [$values];
-        }
-        //multiple search points
-        else
-        {
-            for ($i = 0; $i < sizeof($columnKeys); $i++ )
-            {
-                $where .= $columnKeys[$i] .  " " . (is_array($compareTypes) ? $compareTypes[$i] : $compareTypes ) . " :" . $columnKeys[$i];
-                if(($i + 1) < sizeof($columnKeys))
-                {
+        } //multiple search points
+        else {
+            for ($i = 0; $i < sizeof($columnKeys); $i++) {
+                $where .= $columnKeys[$i] . " " . (is_array($compareTypes) ? $compareTypes[$i] : $compareTypes) . " :" . $columnKeys[$i];
+                if (($i + 1) < sizeof($columnKeys)) {
                     $where .= " && ";
                 }
             }
-            $sql .= " WHERE " .$where;
+            $sql .= " WHERE " . $where;
         }
 
         $this->openConn();
         $stmt = $this->connection->prepare($sql);
-        for($i = 0; $i < sizeof($columnKeys); $i++)
-        {
+        for ($i = 0; $i < sizeof($columnKeys); $i++) {
             $stmt->bindValue(":" . $columnKeys[$i], $values[$i]);
         }
         $stmt->execute();
 
         $retVal = $stmt->fetchAll();
         $this->connection = null;
+        $retVal = $this->initRetrievedObjects($retVal);
 
         //Remove or comment these lines --
         //echo "Query that was created and executed :<br>" . $sql;
@@ -296,28 +281,12 @@ class Database extends Models
     {
         //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
         $this->getColumns();
-        if (empty($id))
-        {
+        if (empty($id)) {
             return $this->batch(null, $this->offset);
-        } else
-        {
+        } else {
             return $this->find($id);
         }
 
-    }
-
-
-    public function UpdateEntry($id, $data){
-        if($id == null || empty($data)){
-            return false;
-        }else{
-            $test1 = $this->$this->getColumns();
-            var_dump($test1);
-            foreach ($data as $test)
-            {
-
-            }
-        }
     }
 
 
@@ -330,32 +299,23 @@ class Database extends Models
     private function checkQueryParameters($columnKeys, $compareTypes, $values)
     {
         $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
-        if ($checkInput[0] && $checkInput[1] && $checkInput[2])
-        {
+        if ($checkInput[0] && $checkInput[1] && $checkInput[2]) {
             $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
-            if ($validArrayLength != 3)
-            {
+            if ($validArrayLength != 3) {
                 die("Parameters differ in size");
             }
             return "array";
-        } else if ($checkInput[0] && $checkInput[2])
-        {
+        } else if ($checkInput[0] && $checkInput[2]) {
             $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
-            if ($validArrayLength != 2)
-            {
+            if ($validArrayLength != 2) {
                 die("Parameters differ in size");
             }
             return "array";
-        }
-        else if(!$checkInput[0] && !$checkInput[1] && !$checkInput[2])
-        {
+        } else if (!$checkInput[0] && !$checkInput[1] && !$checkInput[2]) {
             return "single";
-        }
-        else
-        {
+        } else {
 
-            echo !($checkInput[0] && $checkInput[2]);
-            echo !(!$checkInput[0] && !$checkInput[1] && !$checkInput[2]);
+
             die('All parameters should be of the same type.');
         }
     }
@@ -378,29 +338,29 @@ class Database extends Models
         $this->openConn();
         $this->getColumns();
         $sql = $this->createSelectStatement("*");
-        $sql .=  ($limit != null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0? " OFFSET " . $offset : "");
+        $sql .= ($limit != null ? " LIMIT " . $limit : "") . ($offset !== null && $offset > 0 ? " OFFSET " . $offset : "");
 
         $stmt = $this->connection->query($sql);
         $stmt->execute();
-        try
-        {
+        try {
             $retVal = $stmt->fetchAll();
-            if (empty($retVal))
-            {
+            if (empty($retVal)) {
                 $retVal = [];
-            } else
-            {
+            } else {
                 $retVal = $this->initRetrievedObjects($retVal);
             }
-        } catch (Exception $e)
-        {
+        } catch (Exception $e) {
             die($e);
             $retVal = null;
         }
         $this->closeConnection();
         return $retVal;
     }
-    private function UpdateModal()
+  //  function commented because of error
+  //  private function UpdateModal()
+
+    private function UpdateEntry()
+
     {
         $this->openConn();
         $stmt = $this->createUpdateStatement();
@@ -618,7 +578,7 @@ class Database extends Models
 
         foreach ($values as $parameter => $value)
         {
-           // print_r([$parameter, $value]);
+            // print_r([$parameter, $value]);
             $stmt->bindValue($parameter, $value);
         }
         return $stmt;
@@ -669,7 +629,7 @@ class Database extends Models
                     $this->setError($this->table, $value);
                 }
 
-                if($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN )
+                if ($type == FILTER_VALIDATE_INT || $type == FILTER_VALIDATE_BOOLEAN)
                 {
                     $value = intval($value);
                 }
@@ -700,11 +660,10 @@ class Database extends Models
                 }
                 array_push($modelObjects, $modelObject);
             }
-        }
-        else
-            {
+        } else
+        {
             array_push($modelObjects, $modelObject);
-            }
+        }
         return $modelObjects;
     }
 
@@ -721,44 +680,74 @@ class Database extends Models
         }
         array_push($_GET[$key], $value);
     }
+
     /**
-     * Get the relation by relationname
-     * @var $model = \Database;
+     * Get the relation within a model by relationname
+     * @param $modelName Name of the model to retrieve
+     * @return Mixed null or a single model or multiple models.
      */
     public function getRelation($modelName)
     {
-
-        $createModelByName = '\Model\\'.$modelName;
-        $model =  new $createModelByName;
+        /**
+         * Create the model.
+         * @var $model Database;
+         */
+        $createModelByName = '\Model\\' . $modelName;
+        $model = new $createModelByName;
         $model->getColumns();
-
+        if ($model->column == null)
+        {
+            die('Model does not exist');
+        }
         $foreignKey = null;
         $this->getColumns();
 
-        foreach($this->column as $key => $value)
+        /**
+         * Checks if the current model has the modelName as an available attribute,
+         * If so it should retrieve a single model.
+         *
+         */
+        foreach ($this->column as $key => $value)
         {
-            if($value[0] == $modelName)
+            if ($value[0] == $modelName)
             {
                 $foreignKey = $this->getAttribute($key);
-                break;
+                return $model->getModelByID($foreignKey);
             }
         }
-        if ($model->column == null)
-        {
-            die('relation does not exist');
-        }
-        else if ($foreignKey == null)
-        {
-            die('Foreign key is empty');
-        }
+        /**
+         * Checks if the model that is requested contains the primaryKey attribute of the currentModel,
+         * If so it should retrieve multiple models
+         */
+        $keyToMatch = $this->getID("key");
         foreach ($model->column as $key => $value)
+        {
+            if ($keyToMatch == $key)
+            {
+                $models = $model->where("*", $key, "=", $this->getID('value'));
+                return $models;
+            }
+        }
+
+    }
+
+    /**
+     * Gets a HasOne relationShip for a model.
+     * @param $model The model to fill.
+     * @param $foreignKey The primaryKey to find.
+     * @return mixed 0 or 1 models retrieved from database
+     */
+    private function getModelByID($foreignKey)
+    {
+        foreach ($this->column as $key => $value)
         {
             if ($value[1] == "PrimaryKey")
             {
-                $model->setAttribute($key, $foreignKey);
-                $model = $model->find($model->getID("value"));
+                $this->setAttribute($key, $foreignKey);
+                $model = $this->find($this->getID("value"));
+                return $model;
             }
         }
-         return $model;
     }
+
 }
