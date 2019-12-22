@@ -4,7 +4,7 @@ include_once 'content/backend/sidebar-admin.php';
 
 ?>
 
-<div class="container" style="width:100%" xmlns="http://www.w3.org/1999/html">
+<div class="container" style="width:100%" >
     <div class="row">
     <div class="col-md-8">
         <div class="row">
@@ -21,19 +21,19 @@ include_once 'content/backend/sidebar-admin.php';
         <div class="row">
             <table class="table table-fixed" id="tableViewDiscount">
                 <thead>
-                <tr>
-                    <th class="col-md-2">Code</th>
-                    <th class="col-md-1">Percentage</th>
-                    <th class="col-md-1">Eenmalig</th>
-                    <th class="col-md-1">Gebruikt</th>
-                    <th class="col-md-3">Omschrijving</th>
-                    <th class="col-md-2">Product aantal</th>
-                    <th class="col-md-1">Beginperiode</th>
-                    <th class="col-md-1">Eindperiode</th>
-                </tr>
+                    <tr>
+                        <th class="col-md-2">Code</th>
+                        <th class="col-md-1">Percentage</th>
+                        <th class="col-md-1">Eenmalig</th>
+                        <th class="col-md-1">Gebruikt</th>
+                        <th class="col-md-3">Omschrijving</th>
+                        <th class="col-md-2">Product aantal</th>
+                        <th class="col-md-1">Beginperiode</th>
+                        <th class="col-md-1">Eindperiode</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <?php $discount->GetAllDiscount(); ?>
+                    <?php $discount->GetAllDiscount(); ?>
                 </tbody>
             </table>
         </div>
@@ -121,7 +121,7 @@ include_once 'content/backend/sidebar-admin.php';
                     <a class="btn btn-secondary collapseButton" data-toggle="collapse" href="#tableCollapseProduct" role="button"
                        aria-expanded="false" aria-controls="tableCollapse">Product zoeken</a>
                 </p>
-                <div class="form-group">
+                <div class="tableViewProduct">
                     <div class="collapse multi-collapse" id="tableCollapseProduct">
                         <div class="card card-body">
                             <div class="row">

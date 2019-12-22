@@ -5,6 +5,8 @@ namespace Controller;
 
 
 use Model\Discount;
+use Model\Category;
+use Model\Product;
 
 class DiscountController
 {
@@ -13,6 +15,8 @@ class DiscountController
     function __construct()
     {
         $this->discount = new Discount();
+        $this->product = new Product();
+        $this->category = new Category();
     }
 
     function GetAllDiscount()
@@ -23,12 +27,10 @@ class DiscountController
             $result = '';
             $result .= '<tr>
                     <td class="col-md-2">' . $discount->getDealCode() .'</td>
-                    <td class="col-md-2">' . $discount->getDealCode() . '</td>
                     <td class="col-md-1">' . $discount->getDiscountPercentage() .'</td>
                     <td class="col-md-1">' . $discount->getOneTime() .'</td>
                     <td class="col-md-1">' . $discount->getActive() .'</td>
                     <td class="col-md-3">' . $discount->getDealDescription() .'</td>
-                    <td class="col-md-2">' . $this->discount->getProductBasedOnID($discount->getSpecialDealID()) .'</td>
                     <td class="col-md-2">'.  $this->discount->getProductBasedOnID($discount->getSpecialDealID()) .'</td>
                     <td class="col-md-1">' . $discount->getStartDate() .'</td>
                     <td class="col-md-1">' . $discount->getEndDate() .'</td>
@@ -40,16 +42,17 @@ class DiscountController
 
     function GetAllProducts()
     {
-        $discounts = $this->discount->getAllProducts();
+        $products = $this->product->retrieve();
+        //$discounts = $this->discount->getAllProducts();
 
-        foreach ($discounts as $discount) {
+        foreach ($products as $product) {
             $result = '';
             $result .= '<tr>
                    <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectTableRow" id="selectTableRow"></td>
-                   <td class="col-md-2">' . $discount['Brand'] . '</td>
-                   <td class="col-md-3">' . $discount['StockItemName'] . '</td>
-                   <td class="col-md-1">' . $discount['UnitPrice'] . '</td>
-                   <td class="col-md-4">' . $discount['MarketingComments'] . '</td>
+                   <td class="col-md-2">' . $product->getBrand() . '</td>
+                   <td class="col-md-3">' . $product->getStockItemName() . '</td>
+                   <td class="col-md-1">' . $product->getUnitPrice() . '</td>
+                   <td class="col-md-4">' . $product->getMarketingComments() . '</td>
                 </tr>';
             echo $result;
         }
@@ -57,16 +60,16 @@ class DiscountController
 
     function GetAllCategories()
     {
+        $categorys = $this->category->retrieve();
+        //$discounts = $this->discount->getAllCategories();
 
-        $discounts = $this->discount->getAllCategories();
-
-        foreach ($discounts as $discount) {
+        foreach ($categorys as $category) {
         $result = '';
         $result .= '<tr>
                    <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectTableRow" id="selectTableRow"></td>
-                   <td class="col-md-2">' . $discount['CategoryID'] . '</td>
-                   <td class="col-md-4">' . $discount['CategoryName'] . '</td>
-                   <td class="col-md-4">' . $discount['ParentCategory'] . '</td>
+                   <td class="col-md-2">' . $category->getCategoryID() . '</td>
+                   <td class="col-md-4">' . $category->getCategoryName() . '</td>
+                   <td class="col-md-4">' . $category->getParentCategory() . '</td>
                 </tr>';
         echo $result;
         }

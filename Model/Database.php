@@ -130,7 +130,7 @@ class Database extends Models
         {
             return $this->newRow();
         }else if($this->getID("value") != null){
-            return $this->UpdateIets();
+            return $this->UpdateModal();
 
         }
     }
@@ -400,7 +400,7 @@ class Database extends Models
         $this->closeConnection();
         return $retVal;
     }
-    private function UpdateIets()
+    private function UpdateModal()
     {
         $this->openConn();
         $stmt = $this->createUpdateStatement();

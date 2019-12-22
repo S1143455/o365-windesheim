@@ -70,6 +70,7 @@ class AuthenticationController
      */
     private function verifyPassword($inputPassword, $dbPassword)
     {
+        echo $dbPassword;
         return password_verify($inputPassword, $dbPassword);
     }
 
