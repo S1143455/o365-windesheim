@@ -48,10 +48,26 @@ $router->route('/onderhoudaccount', function(){
 $router->route('/onderhoudbestellingen', function(){
     return include 'content/frontend/usermaintenance.php';
 });
-
-
 /**
  * End usermaintenance
+ */
+
+/**
+ * Begin shoppingcart items
+ */
+$router->route('/winkerwagenbekijken', function(){
+    return include 'content/frontend/shoppingcart/shoppingcart.php';
+});
+
+$router->route('/winkerwagenafrekenen', function(){
+    return include 'content/frontend/shoppingcart/shoppingcart.php';
+});
+
+$router->route('/winkelwagenleegmaken', function(){
+    return include 'content/frontend/shoppingcart/shoppingcart.php';
+});
+/**
+ * End of shoppingcart items
  */
 
 /**

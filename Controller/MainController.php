@@ -40,6 +40,11 @@ class MainController
                 'onderhoudbestellingen' => 'Bestellingen',
                 'logout' =>'Uitloggen',
             ],
+            'shoppingcart' => [
+                'winkerwagenbekijken' => 'Winkelwagen bekijken',
+                'winkerwagenafrekenen' => 'Afrekenen',
+                'winkelwagenleegmaken' => 'Winkelwagen leegmaken',
+            ],
         ];
         $this->root=getenv("ROOT");
         $this->database=new Database();
@@ -110,6 +115,21 @@ class MainController
     {
         $nav_menu = '';
         $nav_items = $this->getConfig('user_menu_item');
+
+        foreach ($nav_items as $uri => $name) {
+            $nav_menu .= '<li>';
+            $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
+            $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
+            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '</li>';
+        }
+        return trim($nav_menu, $sep);
+    }
+
+    function CartMenuItems($sep = '')
+    {
+        $nav_menu = '';
+        $nav_items = $this->getConfig('shoppingcart');
 
         foreach ($nav_items as $uri => $name) {
             $nav_menu .= '<li>';
@@ -234,12 +254,30 @@ class MainController
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                ' . $this->nav_menu() .'                           
+                                ' . $this->nav_menu() .'   
+                                ' . $this->usermenu() .'                        
                             </ul>
                         </li>                      
                     </ul>
                  </div> ';
        echo $result;
+
+    }
+
+    public function ShoppingCartMenu()
+    {
+        $resultcart = '';
+        $resultcart = '<div class="collapse navbar-collapse" id="bas-navbar">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Winkelwagen <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                ' . $this->CartMenuItems() .'                           
+                            </ul>
+                        </li>                      
+                    </ul>
+                 </div> ';
+        echo $resultcart;
 
     }
 
