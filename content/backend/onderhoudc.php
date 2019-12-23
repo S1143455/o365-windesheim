@@ -28,8 +28,6 @@ if (isset($_POST['id'])) {
     </div>
     <div class="row">
         <form role="form" id="table" method="POST" action="">
-
-
             <table id="categoryTable" class="table table-fixed">
                 <thead>
                 <tr>

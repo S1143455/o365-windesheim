@@ -9,9 +9,10 @@ $cartRedirect=[
 
 ];
 
-echo "this is going to be a shoppingcart<br>";
-echo "POST  : ";print_r($_POST);echo "<br>";
-echo "GET   : ";print_r($_GET);echo "<br>";
-echo "CART  : ";print_r($cartRedirect);echo "<br>";
+if (!isset($_SESSION['authenticated']))
+{
+    echo display_message('info','Om te kunnen bestellen moet u ingelogd zijn.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/login\">";
+    die;
+}
 
-include "content/frontend/shoppingcart/". $cartRedirect[$_GET['page']] . ".php";
+include "content/frontend/shoppingcart/" . $cartRedirect[$_GET['page']] . ".php";

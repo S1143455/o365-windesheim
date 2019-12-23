@@ -266,11 +266,13 @@ class MainController
 
     public function ShoppingCartMenu()
     {
+        $amountInCart=getAmountOfItemsInCart();
+        if ($amountInCart>0){$badgeAmount="<span class=\"badge badge-light\">". $amountInCart ."</span>";} else $badgeAmount='';
         $resultcart = '';
         $resultcart = '<div class="collapse navbar-collapse" id="bas-navbar">
                     <ul class="nav navbar-nav navbar-left">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Winkelwagen <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Winkelwagen' . $badgeAmount . '<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 ' . $this->CartMenuItems() .'                           
                             </ul>
@@ -278,7 +280,6 @@ class MainController
                     </ul>
                  </div> ';
         echo $resultcart;
-
     }
 
     /**
