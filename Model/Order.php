@@ -85,9 +85,9 @@ class Order extends Database
     {
         $result = '';
         /**
-         * $result = $this->selectStmt('SELECT * FROM category where CategoryActive = 1;');
+         * $result = $this->selectStmt('SELECT * FROM order; ');
          */
-        $result = $this->selectStmt('SELECT * FROM order;');
+        $result = $this->selectStmt('SELECT orderID,CustomerID,OrderDate,OrderAmmount FROM order;');
 
         return $result;
     }
