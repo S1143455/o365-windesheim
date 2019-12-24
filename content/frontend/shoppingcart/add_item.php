@@ -44,4 +44,3 @@ else // If the item is already in the cart we need to add one more.
 }
 
 echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";
-//echo display_message('success','Het product is aan uw winkelwagen toegevoegd.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;\">";
