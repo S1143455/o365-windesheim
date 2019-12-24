@@ -1,0 +1,5 @@
+via de route een functie van je controller aanroepen (bijv index of admin)
+in de controller een functie hebben die index of admin heet
+	in de functie eerst een model aanmaken van bijv product 
+	return de view index.php of admin.php include 
+in de index of admin kun je nu de models gebruiken die je in je functie hebt aangemaakt

@@ -15,7 +15,7 @@ class Models
     protected $table;
     protected $column;
 
-    protected function getColumns($column = null)
+    protected function getColumns()
     {
         var_dump($this->table);
         switch ($this->table) {
@@ -25,7 +25,7 @@ class Models
             case 'category':
                 $this->getCategory();
                 break;
-            case 'attachment':
+            case 'attachments':
                 $this->getAttachments();
                 break;
             case 'content':
@@ -44,46 +44,37 @@ class Models
                 break;
             default:
                 die('Table not implemented');
-
-                if ($column != null) {
-                    $modelColumn = $this->column;
-                    $this->column = null;
-                }
-                if ($this->column == null) {
-                    switch ($this->table) {
-                        case 'stockitem':
-                            $this->getStockItem();
-                            break;
-                        case 'category':
-                            $this->getCategory();
-                            break;
-                        case 'attachment':
-                            $this->getAttachments();
-                            break;
-                        case 'content':
-                            $this->getContent();
-                            break;
-                        case 'supplier':
-                            $this->getSupplier();
-                            break;
-                        case  'people':
-                            $this->getPeople();
-                            break;
-                        case  'address':
-                            $this->getAddress();
-                            break;
-                        default:
-                            die('Table not implemented');
-                    }
-
-                }
-                if ($column != null) {
-                    $retrievedRelation = $this->column;
-                    $this->column = $modelColumn;
-                    return $retrievedRelation;
-                }
-                return $this->column;
         }
+
+        if ($this->column == null) {
+            switch ($this->table) {
+                case 'stockitem':
+                    $this->getStockItem();
+                    break;
+                case 'category':
+                    $this->getCategory();
+                    break;
+                case 'attachments':
+                    $this->getAttachments();
+                    break;
+                case 'content':
+                    $this->getContent();
+                    break;
+                case 'supplier':
+                    $this->getSupplier();
+                    break;
+                case  'people':
+                    $this->getPeople();
+                    break;
+                case  'address':
+                    $this->getAddress();
+                    break;
+                default:
+                    die('Table not implemented');
+            }
+
+        }
+
     }
 
     /**
@@ -130,6 +121,7 @@ class Models
             "CategoryName" => ['Varchar', 'Attribute', 'Required'],
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
         );
     }
 
@@ -152,7 +144,6 @@ class Models
             "AlternateText" => ['Varchar', 'Attribute', 'Nullable'],
             "FileLocation" => ['Varchar', 'Attribute', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
-            "StockItemID" => ['StockItem', 'HasOne', 'Nullable'],
         );
     }
 
@@ -191,7 +182,7 @@ class Models
             "AlternateContactPersonID" => ['People', 'HasOne', 'Required'],
             "SupplierReference" => ['Varchar', 'Attribute', 'Required'],
             "InternalComments" => ['LongText', 'Attribute', 'Required'],
-            "WebsiteURL" => ['Boolean', 'Attribute', 'Required'],
+            "WebsiteURL" => ['Varchar', 'Attribute', 'Required'],
             "LastEditedBy" => ['Varchar', 'Attribute', 'Required'],
             "AddressID" => ['Address', 'HasOne', 'Required'],
 

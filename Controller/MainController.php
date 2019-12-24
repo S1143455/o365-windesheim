@@ -40,6 +40,11 @@ class MainController
                 'onderhoudbestellingen' => 'Bestellingen',
                 'logout' =>'Uitloggen',
             ],
+            'shoppingcart' => [
+                'winkerwagenbekijken' => 'Winkelwagen bekijken',
+                'winkerwagenafrekenen' => 'Afrekenen',
+                'winkelwagenleegmaken' => 'Winkelwagen leegmaken',
+            ],
         ];
         $this->root=getenv("ROOT");
         $this->database=new Database();
@@ -71,6 +76,17 @@ class MainController
     }
 
     /**
+     *  Index pagina
+     */
+    function index(){
+        $category = new category();
+        $categories = $category->retrieve();
+
+        $main = $this;
+        include_once('views/index.php');
+    }
+
+    /**
      * Website navigation.
      */
     function nav_menu($sep = '')
@@ -99,6 +115,21 @@ class MainController
     {
         $nav_menu = '';
         $nav_items = $this->getConfig('user_menu_item');
+
+        foreach ($nav_items as $uri => $name) {
+            $nav_menu .= '<li>';
+            $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
+            $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
+            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '</li>';
+        }
+        return trim($nav_menu, $sep);
+    }
+
+    function CartMenuItems($sep = '')
+    {
+        $nav_menu = '';
+        $nav_items = $this->getConfig('shoppingcart');
 
         foreach ($nav_items as $uri => $name) {
             $nav_menu .= '<li>';
@@ -223,13 +254,32 @@ class MainController
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                ' . $this->nav_menu() .'                           
+                                ' . $this->nav_menu() .'   
+                                ' . $this->usermenu() .'                        
                             </ul>
                         </li>                      
                     </ul>
                  </div> ';
        echo $result;
 
+    }
+
+    public function ShoppingCartMenu()
+    {
+        $amountInCart=getAmountOfItemsInCart();
+        if ($amountInCart>0){$badgeAmount="<span class=\"badge badge-light\">". $amountInCart ."</span>";} else $badgeAmount='';
+        $resultcart = '';
+        $resultcart = '<div class="collapse navbar-collapse" id="bas-navbar">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Winkelwagen' . $badgeAmount . '<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                ' . $this->CartMenuItems() .'                           
+                            </ul>
+                        </li>                      
+                    </ul>
+                 </div> ';
+        echo $resultcart;
     }
 
     /**
@@ -241,39 +291,5 @@ class MainController
     function showContent($section){
         echo $this->getContent($section);
     }
-
-    /**
-     * Display grid based on given array and class
-     * For example class: col-12 col-sm-6 col-md-4
-     * col-12 will show 1 column for the smallest screen
-     * col-sm-6 will show 2 columns for small screen
-     * col-md-4 will show 3 columns for medium screen
-     *
-     * @param $arr
-     * @param $class
-     */
-    function generateGrid($arr, $class)
-    {
-        if(empty($arr) or $class==''){
-            echo "Use valid values.";
-        }else{
-            echo '<div class="container"><div class="row">';
-            for($i=1;$i<count($arr);$i++) {
-                echo '<div class="' . $class . '"></div>';
-            }
-            echo '</div></div>';
-        }
-    }
-
-    /**
-     * Generates grid based on categories
-     */
-    function getGridCategories()
-    {
-        $categories = $this->category->SpecialGetcategories();
-        $this->generateGrid($categories,"col-12 col-sm-6 col-md-4");
-    }
-
-
 }
 ?>

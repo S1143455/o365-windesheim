@@ -17,5 +17,5 @@ class UserController extends AuthenticationController
     {
         return true;
     }
-
 }
+

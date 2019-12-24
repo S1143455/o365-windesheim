@@ -20,7 +20,7 @@ class AuthenticationController
     {
         if($username == '' || $password  == '')
         {
-           return $_SESSION['LOGIN_ERROR']='Vul een gebruikernaam en wachtwoord in.';
+            return $_SESSION['LOGIN_ERROR']=["type"=>'warning', "message"=>'Vul een gebruikersnaam en wachtwoord in.'];
         }
 
         $user = new User();
@@ -37,7 +37,7 @@ class AuthenticationController
                 // Place the userdata (an array) into the $_SESSION
                 $_SESSION['USER']['DATA']=$user->getUserDataArray();
                 // Now were done were going back to the index page.
-                $_SESSION['LOGIN_ERROR']='U bent ingelogd';
+                $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
                 echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/onderhoudaccount\">";
             }
             else
@@ -46,7 +46,7 @@ class AuthenticationController
                 // If the user was logged in, he will be logged out now and the userdata will be cleared.
                 unset($_SESSION['authenticated']);
                 unset($_SESSION['USER']['DATA']);
-                return $_SESSION['LOGIN_ERROR']='Gebruikersnaam of wachtwoord onjuist.';
+                return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
 
             }
         }

@@ -1,4 +1,5 @@
 <?php
+include_once 'content/frontend/display_message.php';
 // Update Address
 $pushthedata=new Model\Database();
 $savetheaddress=$pushthedata->UpdateStmt("UPDATE address SET 
@@ -10,13 +11,20 @@ WHERE AddressId = '" . $_POST['AddressId'] . "'
 and PersonId='" . $_POST['PersonID'] . "'");
 
 // Update the customer
+if (isset($_POST['newsletter']))
+    $newsletter=1;
+else
+    $newsletter=0;
+
+if ($_POST['Gender']=='male')
+    $gender='Man';
+else
+    $gender='Vrouw';
+
 $savethecustomer=$pushthedata->UpdateStmt("UPDATE customer SET 
-Gender=\"" . $_POST['Gender']	. "\" ,
-newsletter=\"" . $_POST['newsletter']	. "\" 
+Gender=\"" . $gender	. "\" ,
+newsletter=\"" . $newsletter . "\" 
 WHERE CustomerID ='" . $_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'] . "'");
 
-if ($savetheaddress+$savethecustomer !=0){ echo "
-<div class=\"alert alert-success\" role=\"alert\">
-  <h4 class=\"alert-heading\">Uw gegevens zijn aangepast.</h4>
-</div>
-<meta http-equiv='refresh' content='2'>";}
+if ($savetheaddress+$savethecustomer !=0)
+    echo display_message('success', 'Uw gegevens zijn aangepast.') . "<meta http-equiv='refresh' content='3'>";

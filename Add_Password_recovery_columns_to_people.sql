@@ -1,0 +1,1 @@
+ALTER TABLE `people` ADD `PassWordRecoveryString` VARCHAR(255) NULL AFTER `LastEditedBy`, ADD `RecoveryStringTTL` INT(10) NULL AFTER `PassWordRecoveryString`;

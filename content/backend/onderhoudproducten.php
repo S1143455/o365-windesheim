@@ -34,7 +34,7 @@ use Model\Product;
                             </tr>
                         </thead>
                         <tbody>
-                            <?php echo $productController->buildTableRowsProducts(); ?>
+                            <?php $productController->tableProducts(); ?>
                         </tbody>
                     </table>
                 </div>

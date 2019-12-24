@@ -22,14 +22,14 @@ class DiscountController
         foreach($discounts as $discount){
             $result = '';
             $result .= '<tr>
-                    <td class="col-md-2">' . $discount['DealCode'] .'</td>
-                    <td class="col-md-1">' . $discount['DiscountPercentage'] .'</td>
-                    <td class="col-md-1">' . $discount['OneTime'] .'</td>
-                    <td class="col-md-1">' . $discount['Active'] .'</td>
-                    <td class="col-md-3">' . $discount['DealDescription'] .'</td>
-                    <td class="col-md-2">'. $this->discount->getProductBasedOnID($discount['SpecialDealID']) .'</td>
-                    <td class="col-md-1">' . $discount['StartDate'] .'</td>
-                    <td class="col-md-1">' . $discount['EndDate'] .'</td>
+                    <td class="col-md-2">' . $discount->getDealCode() . '</td>
+                    <td class="col-md-1">' . $discount->getDiscountPercentage() .'</td>
+                    <td class="col-md-1">' . $discount->getOneTime() .'</td>
+                    <td class="col-md-1">' . $discount->getActive() .'</td>
+                    <td class="col-md-3">' . $discount->getDealDescription() .'</td>
+                    <td class="col-md-2">'.  $this->discount->getProductBasedOnID($discount->getSpecialDealID()) .'</td>
+                    <td class="col-md-1">' . $discount->getStartDate() .'</td>
+                    <td class="col-md-1">' . $discount->getEndDate() .'</td>
                 </tr>';
             echo $result;
         }

@@ -3,8 +3,9 @@
  * ALL Routes the website uses will be defined here.
 */
 
-$router->route('/', function(){
-    return include 'content/frontend/home.php';
+$router->route('/', function() use ($mainController){
+    //return include 'content/frontend/home.php';
+    return $mainController->index();
 });
 
 $router->route('/about', function(){
@@ -14,6 +15,15 @@ $router->route('/about', function(){
 $router->route('/about-us', function(){
     return include 'content/frontend/about-us.php';
 });
+
+/**
+ * Passwordrecovery
+ */
+
+$router->route('/passwordrecovery', function() use($user){
+    return include 'content/frontend/passwordrecovery.php';
+});
+
 /**
  * Login route
  */
@@ -29,17 +39,35 @@ $router->route('/logout', function(){
 /**
  * Begin usermainteance
  */
+
 $router->route('/onderhoudaccount', function(){
     return include 'content/frontend/usermaintenance.php';
 });
 
+
 $router->route('/onderhoudbestellingen', function(){
     return include 'content/frontend/usermaintenance.php';
 });
-
-
 /**
  * End usermaintenance
+ */
+
+/**
+ * Begin shoppingcart items
+ */
+$router->route('/winkerwagenbekijken', function(){
+    return include 'content/frontend/shoppingcart/shoppingcart.php';
+});
+
+$router->route('/winkerwagenafrekenen', function(){
+    return include 'content/frontend/shoppingcart/shoppingcart.php';
+});
+
+$router->route('/winkelwagenleegmaken', function(){
+    return include 'content/frontend/shoppingcart/shoppingcart.php';
+});
+/**
+ * End of shoppingcart items
  */
 
 /**
@@ -88,8 +116,8 @@ $router->route('/admin/onderhoud-categorieen', function(){
     return include 'content/backend/onderhoudc.php';
 });
 
-$router->route('/admin/onderhoud-producten', function(){
-    return include 'content/backend/onderhoudproducten.php';
+$router->route('/admin/onderhoud-producten', function() use($productController){
+    return $productController->admin();
 });
 
 $router->route('/admin/onderhoud-klanten', function(){
@@ -113,8 +141,11 @@ $router->route('/admin/onderhoud-nieuwsbrief', function(){
 $router->route('/admin/bestellingoverzicht', function(){
     return include 'content/backend/bestellingoverzicht.php';
 });
-$router->route('/admin/Onderhoud-hoofdpagina', function(){
-    return include 'content/backend/onderhoudhoofdpagina.php';
+$router->route('/admin/bestellingoverzicht', function(){
+    return include 'content/backend/bestellingoverzicht.php';
+});
+$router->route('/admin/upload', function(){
+    return include 'content/backend/upload.php';
 });
 /**
  * End AdminController routes

@@ -1,10 +1,15 @@
 <?php
     include_once 'content/backend/header-admin.php';
     use Model\Category;
-    $categoryid = 0;
-    $category = $categoryController->retrieve(1123);
-    var_dump($category);
-    $categoryController->update($category)
+    var_dump($_POST);
+    //var_dump($_GET);
+if (isset($_POST['id'])) {
+    $categoryID = $_POST['id'];
+    if($categoryID != 0){
+        $category = $categoryController->retrieve($categoryID);
+        echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditCategorieDialog').modal('show');   }); </script>";
+    }
+}
 
 ?>
 <div class="container" style="width:100%">
@@ -22,20 +27,22 @@
 
     </div>
     <div class="row">
-        <table id="categoryTable" class="table table-fixed">
-            <thead>
-            <tr>
-                <th class="col-md-1">manage</th>
-                <th class="col-md-2">Categorie ID</th>
-                <th class="col-md-5">Omschrijving</th>
-                <th class="col-md-2">Parent Categorie</th>
-                <th class="col-md-2">Acties </th>
-            </tr>
-            </thead>
-            <tbody>
-                <?php $categoryController->GetAllCategories(); ?>
-            </tbody>
-        </table>
+        <form role="form" id="table" method="POST" action="">
+            <table id="categoryTable" class="table table-fixed">
+                <thead>
+                <tr>
+                    <th class="col-md-1">manage</th>
+                    <th class="col-md-2">Categorie ID</th>
+                    <th class="col-md-5">Omschrijving</th>
+                    <th class="col-md-2">Parent Categorie</th>
+                    <th class="col-md-2">Acties </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php $categoryController->GetAllCategories(); ?>
+                </tbody>
+            </table>
+        </form>
     </div>
 </div>
 <div class="col-md-2">
@@ -47,51 +54,81 @@
 </div>
 
 <!--  modals      -->
-
-<div class="modal fade" id="EditCategorieDialog" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:1000px;">
-        <div class="modal-content">
-            <form role="form" id="universalModalForm1" method="POST" action="CreateCategorie">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+<div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="CreateModal" aria-hidden="true">
+            <div class="modal-dialog" style="width:1000px;">
+                <div class="modal-content">
+                    <form role="form" id="universalModalForm" method="POST" action="CreateCategorie" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                            <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
+                        </div>
+                        <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
+                            <span class="alert-body"></span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="categoryID">Categorie</label>
+                                <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                            </div>
+                            <div class="form-group">
+                                <label for="AttachmentID">Afbeelding</label>
+                                <input type="file" name="fileToUpload" id="fileToUpload">
+                            </div>
+                            <div class="form-group">
+                                <label for="categoryID">Ouder Categorie</label>
+                                <select class="form-control" name="ParentCategory">
+                                    <option value="None">Empty</option>
+                                    <?php $categoryController->ParentCategories() ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body">
-
-                    <p>some content</p>
-                    <input style="display: none;" type="text" name="bookId" id="bookId" value=""/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
 
-<div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
+<div class="modal fade" id="EditCategorieDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal" aria-hidden="true">
     <div class="modal-dialog" style="width:1000px;">
         <div class="modal-content">
-            <form role="form" id="universalModalForm" method="POST" action="CreateCategorie">
+            <form role="form" id="CreateCategorie" method="POST" action="CreateCategorie">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
-                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
                 </div>
-                <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
-                    <span class="alert-body"></span>
-                </div>
+
+
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label for="categoryID">Categorie</label>
+
+
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getCategoryID()) ?>" >
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryID">Categorie</label>
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getCategoryName()) ?>" >
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryID">Categorie</label>
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getLastEditedBy()) ?>" >
+                    </div> <div class="form-group">
+                        <label for="categoryID">Categorie</label>
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getParentCategory()) ?>"  >
+                    </div>
                     <div class="form-group">
                         <label for="categoryID">Categorie</label>
                         <input type="text" class="form-control" name="CategoryName" id="CategoryName">
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Ouder Categorie</label>
-                        <select class="form-control" name="ParentCategory">
-                            <option value="None">Empty</option>
-                            <?php $categoryController->ParentCategories() ?>
-                        </select>
+                        <label for="categoryID">Categorie</label>
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
                     </div>
+
+                    <p>some content</p>
+                    <input style="" type="text" name="bookId" id="bookId" value=""/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -102,16 +139,16 @@
     </div>
 </div>
 
+
 </div>
 <script>
 
-    $(document).on("click", ".open-EditDialog", function () {
-        alert("hoi");
-        var myBookId = $(this).data('id');
-        $(".modal-body #bookId").val( myBookId );
-        alert(myBookId);
-
-    });
+    // $(document).on("click", ".open-EditDialog", function () {
+    //     alert("hoi");
+    //     var myBookId = $(this).data('id');
+    //
+    //
+    // });
 
 
 
