@@ -1,13 +1,6 @@
 <?php
 include_once 'content/frontend/header.php';
 include 'content/frontend/display_message.php';
-// Set an array to redirect to the right PHP file.
-$cartRedirect=[
-    'winkerwagenbekijken'=> 'viewshoppingcart',
-    'winkerwagenafrekenen' => 'paycart',
-    'winkelwagenleegmaken' => 'emptycart'
-
-];
 
 if (!isset($_SESSION['authenticated']))
 {
@@ -15,4 +8,6 @@ if (!isset($_SESSION['authenticated']))
     die;
 }
 
-include "content/frontend/shoppingcart/" . $cartRedirect[$_GET['page']] . ".php";
+// Check if the users wants to pay.
+if (isset($_POST['paycart'])){include 'content/frontend/shoppingcart/paycart.php';}
+else include 'content/frontend/shoppingcart/viewshoppingcart.php';

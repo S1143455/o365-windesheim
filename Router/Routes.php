@@ -55,17 +55,14 @@ $router->route('/onderhoudbestellingen', function(){
 /**
  * Begin shoppingcart items
  */
-$router->route('/winkerwagenbekijken', function(){
+$router->route('/winkelwagen', function(){
     return include 'content/frontend/shoppingcart/shoppingcart.php';
 });
 
-$router->route('/winkerwagenafrekenen', function(){
-    return include 'content/frontend/shoppingcart/shoppingcart.php';
+$router->route('/afrekenen', function(){
+    return include 'content/frontend/shoppingcart/paycart.php';
 });
 
-$router->route('/winkelwagenleegmaken', function(){
-    return include 'content/frontend/shoppingcart/shoppingcart.php';
-});
 /**
  * End of shoppingcart items
  */

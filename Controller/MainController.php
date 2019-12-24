@@ -41,9 +41,7 @@ class MainController
                 'logout' =>'Uitloggen',
             ],
             'shoppingcart' => [
-                'winkerwagenbekijken' => 'Winkelwagen bekijken',
-                'winkerwagenafrekenen' => 'Afrekenen',
-                'winkelwagenleegmaken' => 'Winkelwagen leegmaken',
+                'winkelwagen' => 'Winkelwagen1',
             ],
         ];
         $this->root=getenv("ROOT");
@@ -130,14 +128,19 @@ class MainController
     {
         $nav_menu = '';
         $nav_items = $this->getConfig('shoppingcart');
+        $amountInCart=getAmountOfItemsInCart();
+        if ($amountInCart>0){
+            $nav_items['winkelwagen']="Winkelwagen <span class=\"badge badge-light\">". $amountInCart ."</span>";
+        } else  $nav_items['winkelwagen']='Winkelwagen';
 
         foreach ($nav_items as $uri => $name) {
-            $nav_menu .= '<li>';
+             $nav_menu .= '<li>';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href=winkelwagen title=Winkelwagen>' . $nav_items['winkelwagen']  . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
+
         return trim($nav_menu, $sep);
     }
 
@@ -266,18 +269,9 @@ class MainController
 
     public function ShoppingCartMenu()
     {
-        $amountInCart=getAmountOfItemsInCart();
-        if ($amountInCart>0){$badgeAmount="<span class=\"badge badge-light\">". $amountInCart ."</span>";} else $badgeAmount='';
         $resultcart = '';
         $resultcart = '<div class="collapse navbar-collapse" id="bas-navbar">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Winkelwagen' . $badgeAmount . '<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                ' . $this->CartMenuItems() .'                           
-                            </ul>
-                        </li>                      
-                    </ul>
+                    <ul class="nav navbar-nav navbar-left">' . $this->CartMenuItems() . '</ul>
                  </div> ';
         echo $resultcart;
     }
