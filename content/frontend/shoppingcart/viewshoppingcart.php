@@ -16,7 +16,6 @@ if ($anyItemsInCart[0]['amount']==0) {
 if (isset($_POST['add'])){include 'content/frontend/shoppingcart/add_item.php';}
 if (isset($_POST['remove'])){include 'content/frontend/shoppingcart/remove_item.php';}
 ?>
-
 <div class="col-md-8">
        <div class="row">
         <form role="form" id="table" method="POST" action="">
