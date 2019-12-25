@@ -1,5 +1,4 @@
 <?php
-
 // A simple function to delete the discount elements.
 function CleanElements(){
     if (isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
@@ -44,8 +43,3 @@ if (!(($codeEnteredDate >= $codeStartDate) && ($codeEnteredDate <= $codeEndDate)
 
 // Let's put the found code in the SESSION array
 $_SESSION['USER']['SHOPPING_CART']['DISCOUNT']=$foundCode[0];
-//echo "<pre>";print_r($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']);echo "<br></pre>";
-
-
-
-

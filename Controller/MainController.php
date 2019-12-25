@@ -41,7 +41,7 @@ class MainController
                 'logout' =>'Uitloggen',
             ],
             'shoppingcart' => [
-                'winkelwagen' => 'Winkelwagen1',
+                'winkelwagen' => 'Winkelwagen',
             ],
         ];
         $this->root=getenv("ROOT");
@@ -229,11 +229,7 @@ class MainController
             return $result[0]['HTML'];
         }
     }
-/*
- * $nav_items['logout']='Logout';
-            $nav_items['onderhoudaccount']='Uw account';
-            $nav_items['onderhoudbestellingen']='Bestellingen';
- */
+
     function usermenu()
     {
         $showusermenu='';
