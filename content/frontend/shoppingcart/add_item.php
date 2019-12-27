@@ -32,14 +32,14 @@ function LowerStock($stockItem)
 $itemAlreadyPresent=$handelData->selectStmt("select count(*) as present from shoppingcart_stockitems where StockItemID=". $stockItem );
 if ($itemAlreadyPresent[0]['present']==0) // The selected item is not present in the cart.
 {
-    $insertItem=$handelData->UpdateStmt("INSERT INTO shoppingcart_stockitems(ShoppingCartID, StockItemID, StockItemAmmount) VALUES (" . $cartId . "," . $stockItem . ",1)");
+    $insertItem=$handelData->UpdateStmt("INSERT INTO shoppingcart_stockitems(ShoppingCartID, StockItemID, StockItemAmount) VALUES (" . $cartId . "," . $stockItem . ",1)");
     $updateStock=LowerStock($stockItem);
 }
 else // If the item is already in the cart we need to add one more.
 {
     $amountOfItemsPresent=$handelData->selectStmt("select *  from shoppingcart_stockitems where StockItemID=". $stockItem );
-    $newAmount=$amountOfItemsPresent[0]['StockItemAmmount']+1;
-    $updateItem=$handelData->UpdateStmt("UPDATE shoppingcart_stockitems SET StockItemAmmount=" . $newAmount . " where  ShopStockID= " . $amountOfItemsPresent[0]['ShopStockID']);
+    $newAmount=$amountOfItemsPresent[0]['StockItemAmount']+1;
+    $updateItem=$handelData->UpdateStmt("UPDATE shoppingcart_stockitems SET StockItemAmount=" . $newAmount . " where  ShopStockID= " . $amountOfItemsPresent[0]['ShopStockID']);
     $updateStock=LowerStock($stockItem);
 }
 

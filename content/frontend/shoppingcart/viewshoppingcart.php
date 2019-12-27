@@ -40,7 +40,7 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                     <div class="panel-body">
                         <?php $getAllTheProducts=new \Model\Database();
                         $totalCartPrice=0;
-                        $allTheProducts=$getAllTheProducts->selectStmt("select sti.StockItemID, sti.StockItemName, cit.StockItemAmmount, sti.RecommendedRetailPrice, (cit.StockItemAmmount*sti.RecommendedRetailPrice) as CartPrice 
+                        $allTheProducts=$getAllTheProducts->selectStmt("select sti.StockItemID, sti.StockItemName, cit.StockItemAmount, sti.RecommendedRetailPrice, (cit.StockItemAmount*sti.RecommendedRetailPrice) as CartPrice 
                                                                          from shoppingcart_stockitems cit left join stockitem sti on sti.StockItemID = cit.StockItemID;");
                         foreach ($allTheProducts as $item)
                         {
@@ -61,7 +61,7 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                                         </span>
                                      </div>
                                      <div class="col-xs-4">
-                                        <input type="text" class="form-control input-sm" value="' . $item['StockItemAmmount'] .'">
+                                        <input type="text" class="form-control input-sm" value="' . $item['StockItemAmount'] .'">
                                      </div>
                                      <div class="col-xs-3">
                                         <span>

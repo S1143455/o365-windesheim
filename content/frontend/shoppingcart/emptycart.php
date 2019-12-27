@@ -13,7 +13,7 @@ if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'])
     $getCartContense=$handelData->selectStmt('select * from shoppingcart_stockitems');
     foreach ($getCartContense as $item)
     {
-        $amountInCart=$item['StockItemAmmount'];
+        $amountInCart=$item['StockItemAmount'];
         $stockItem=$item['StockItemID'];
         $qtyInStock = $handelData->selectStmt("select QuantityOnHand  from stockitemholdings where StockItemID=" . $stockItem) ;
         $newQty = $qtyInStock[0]['QuantityOnHand'] + $amountInCart;

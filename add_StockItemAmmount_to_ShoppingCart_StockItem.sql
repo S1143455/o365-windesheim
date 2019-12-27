@@ -1,1 +1,0 @@
-ALTER TABLE `shoppingcart_stockitems` ADD `StockItemAmmount` INT(3) NOT NULL AFTER `StockItemID`;

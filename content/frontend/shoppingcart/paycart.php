@@ -1,14 +1,11 @@
 <?php
-//echo "<pre>";print_r($_SESSION['USER']['SHOPPING_CART']);echo "<br></pre>";
 $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank','SNS Bank','Triodos Bank','Van Lanschot Bankiers',];
-//echo "<pre>";print_r($_SESSION['USER']);echo "<br></pre>";
-
-print_r($_POST);
 
 // Let's remeber the paymentmethod for now.
 if (isset($_POST['paymentmethod']))
 {
     $_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']=$_POST['paymentmethod'];
+    include 'content/frontend/shoppingcart/handlepayment.php';
 }
 
 ?>
@@ -36,14 +33,14 @@ if (isset($_POST['paymentmethod']))
                         <hr>
                         <div class="row">
                             <div class="col-xs-4">
-                                <input type="radio" id="idealpayment" name="paymentmethod" value="idealpayment"
+                                <input type="radio" id="idealpayment" name="paymentmethod" value="ideal"
                                     <?php
                                     if (!isset($_POST['paymentmethod']))
                                     {
                                         echo "checked";
                                     }
                                     else
-                                        if ($_POST['paymentmethod']=='idealpayment'){echo "checked";}
+                                        if ($_POST['paymentmethod']=='ideal'){echo "checked";}
                                     ?>><label for="idealpayment"><h4 > Ideal </h4></label>
                             </div>
                             <div class="col-xs-4">
@@ -72,11 +69,11 @@ if (isset($_POST['paymentmethod']))
                         <hr>
                         <div class="row">
                             <div class="col-xs-4 text-left">
-                                <input type="radio" class="form-check-input" id="creditcardpayment" name="paymentmethod" value="creditcardpayment"
+                                <input type="radio" class="form-check-input" id="creditcardpayment" name="paymentmethod" value="creditcard"
                                     <?php
                                     if (!isset($_POST['paymentmethod'])){echo "";}
                                     else
-                                        if ($_POST['paymentmethod']== 'creditcardpayment'){echo "checked";}
+                                        if ($_POST['paymentmethod']== 'creditcard'){echo "checked";}
                                     ?>
                                 ><label for="creditcardpayment"><h4 > Credit card </h4></label>
                             </div>
@@ -88,11 +85,11 @@ if (isset($_POST['paymentmethod']))
                         <div class="row">
                             <div class="col-xs-4 text-left">
                                 <div class="form-group form-check">
-                                    <input type="radio" class="form-check-input" id="afterpaypayment" name="paymentmethod" value="afterpaypayment"
+                                    <input type="radio" class="form-check-input" id="afterpaypayment" name="paymentmethod" value="afterpay"
                                         <?php
                                         if (!isset($_POST['paymentmethod'])){echo "";}
                                         else
-                                            if ($_POST['paymentmethod']== 'afterpaypayment'){echo "checked";}
+                                            if ($_POST['paymentmethod']== 'afterpay'){echo "checked";}
                                         ?>
                                     ><label for="afterpaypayment"><h4 > AfterPay </h4></label>
                                 </div>

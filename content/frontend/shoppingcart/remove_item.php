@@ -25,9 +25,9 @@ function addToStock($stockItem)
 $amountOfItemsPresent=$handelData->selectStmt("select *  from shoppingcart_stockitems where StockItemID=". $stockItem . " and ShoppingCartID=".$cartId);
 if ($amountOfItemsPresent)
 {
-    $newAmount = $amountOfItemsPresent[0]['StockItemAmmount'] - 1;
+    $newAmount = $amountOfItemsPresent[0]['StockItemAmount'] - 1;
 
-    $updateItem = $handelData->UpdateStmt("UPDATE shoppingcart_stockitems SET StockItemAmmount=" . $newAmount . " where  ShopStockID= " . $amountOfItemsPresent[0]['ShopStockID'] . " and ShoppingCartID=" . $cartId);
+    $updateItem = $handelData->UpdateStmt("UPDATE shoppingcart_stockitems SET StockItemAmount=" . $newAmount . " where  ShopStockID= " . $amountOfItemsPresent[0]['ShopStockID'] . " and ShoppingCartID=" . $cartId);
     $updateStock = addToStock($stockItem);
 
 // If the amount reaches 0, the row needs to be deleted for the cart.

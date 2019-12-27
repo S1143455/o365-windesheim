@@ -19,7 +19,7 @@ function getAmountOfItemsInCart(){
     $handelData=new \Model\Database();
     $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 
-    $amountOfItemsPresent=$handelData->selectStmt("select sum(StockItemAmmount) as amount  from shoppingcart_stockitems where ShoppingCartID='".$cartId ."'");
+    $amountOfItemsPresent=$handelData->selectStmt("select sum(StockItemAmount) as amount  from shoppingcart_stockitems where ShoppingCartID='".$cartId ."'");
     if ($amountOfItemsPresent){
         return $amountOfItemsPresent[0]['amount'];
     }

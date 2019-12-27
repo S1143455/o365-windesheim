@@ -63,6 +63,13 @@ $router->route('/afrekenen', function(){
     return include 'content/frontend/shoppingcart/paycart.php';
 });
 
+$router->route('/betalengelukt', function(){
+    return include 'content/frontend/shoppingcart/paymentsuccess.php';
+});
+
+$router->route('/betalenmislukt', function(){
+    return include 'content/frontend/shoppingcart/paymentfailed.php';
+});
 /**
  * End of shoppingcart items
  */
