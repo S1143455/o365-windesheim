@@ -124,10 +124,12 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                                     <h4 class="text-right">Totaal <strong><?php if(!isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
                                             {
                                                 echo number_format($totalCartPrice, 2, ',', '.');
+                                                $_SESSION['USER']['SHOPPING_CART']['AMOUNT_TO_PAY']=number_format($totalCartPrice, 2, ',', '.');
                                             }
                                             else
                                             {
                                                 echo number_format($newTotalCartPrice, 2, ',', '.');
+                                                $_SESSION['USER']['SHOPPING_CART']['AMOUNT_TO_PAY']=number_format($newTotalCartPrice, 2, ',', '.');
                                             }
                                             ?></strong></h4>
                                 </div>
