@@ -1,5 +1,4 @@
 <?php
-
 // The users is logged in.
 $handelData=new \Model\Database();
 $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
