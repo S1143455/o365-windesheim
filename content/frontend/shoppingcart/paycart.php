@@ -1,13 +1,5 @@
 <?php
 $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank','SNS Bank','Triodos Bank','Van Lanschot Bankiers',];
-
-// Let's remeber the paymentmethod for now.
-if (isset($_POST['paymentmethod']))
-{
-    $_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']=$_POST['paymentmethod'];
-    include 'content/frontend/shoppingcart/handlepayment.php';
-}
-
 ?>
 <div class="container">
     <div class="row">
@@ -35,12 +27,12 @@ if (isset($_POST['paymentmethod']))
                             <div class="col-xs-4">
                                 <input type="radio" id="idealpayment" name="paymentmethod" value="ideal"
                                     <?php
-                                    if (!isset($_POST['paymentmethod']))
+                                    if (!isset($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']))
                                     {
                                         echo "checked";
                                     }
                                     else
-                                        if ($_POST['paymentmethod']=='ideal'){echo "checked";}
+                                        if ($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']=='ideal'){echo "checked";}
                                     ?>><label for="idealpayment"><h4 > Ideal </h4></label>
                             </div>
                             <div class="col-xs-4">
@@ -71,9 +63,9 @@ if (isset($_POST['paymentmethod']))
                             <div class="col-xs-4 text-left">
                                 <input type="radio" class="form-check-input" id="creditcardpayment" name="paymentmethod" value="creditcard"
                                     <?php
-                                    if (!isset($_POST['paymentmethod'])){echo "";}
+                                    if (!isset($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD'])){echo "";}
                                     else
-                                        if ($_POST['paymentmethod']== 'creditcard'){echo "checked";}
+                                        if ($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']== 'creditcard'){echo "checked";}
                                     ?>
                                 ><label for="creditcardpayment"><h4 > Credit card </h4></label>
                             </div>
@@ -87,23 +79,15 @@ if (isset($_POST['paymentmethod']))
                                 <div class="form-group form-check">
                                     <input type="radio" class="form-check-input" id="afterpaypayment" name="paymentmethod" value="afterpay"
                                         <?php
-                                        if (!isset($_POST['paymentmethod'])){echo "";}
+                                        if (!isset($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD'])){echo "";}
                                         else
-                                            if ($_POST['paymentmethod']== 'afterpay'){echo "checked";}
+                                            if ($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']== 'afterpay'){echo "checked";}
                                         ?>
                                     ><label for="afterpaypayment"><h4 > AfterPay </h4></label>
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <img src="content/frontend/shoppingcart/cartimages/afterpay.png" height="24" width="64">
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="text-center">
-                                <div class="col-xs-12">
-                                    <h4 class="text-right">Totaal <strong></strong></h4>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -117,7 +101,7 @@ if (isset($_POST['paymentmethod']))
                             <div class="col-xs-4">
                             </div>
                             <div class="col-xs-4">
-                                <button type="submit" class="btn btn-success btn-block" name="paycart">
+                                <button type="submit" class="btn btn-success btn-block" name="handlepayment">
                                     Betaling afronden <span class="glyphicon glyphicon-arrow-right"></span>
                                 </button>
                             </div>

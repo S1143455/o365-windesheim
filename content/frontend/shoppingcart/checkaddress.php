@@ -83,7 +83,7 @@ $billingaddress=$userName . '<br>' . $addressLine1 . '<br>' . $addressLine2;
                             </div>
                             <div class="col-xs-4">
                                 <button type="submit" class="btn btn-success btn-block" name="paycart">
-                                    Betaling afronden <span class="glyphicon glyphicon-arrow-right"></span>
+                                    Betalen <span class="glyphicon glyphicon-arrow-right"></span>
                                 </button>
                             </div>
                         </div>

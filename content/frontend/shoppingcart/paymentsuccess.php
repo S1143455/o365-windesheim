@@ -8,7 +8,7 @@ include 'content/frontend/display_message.php';
 // needs to be unset.
 
 // Let's check if the user want's to return home.
-if (isset($_POST{'ReturnHome'})){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/\">";}
+if (isset($_POST{'ReturnHome'})){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/\">";die;}
 
 $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
@@ -65,7 +65,7 @@ $removeCartItems=$handelDataBase->UpdateStmt("Delete from shoppingcart_stockitem
 $removeCart=$handelDataBase->UpdateStmt("Delete from shoppingcart where ShoppingCartID=".$cartId);
 
 // Unset the $_SESSION
-//$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']='';
+$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']='';
 unset($_SESSION['USER']['SHOPPING_CART']);
 
 // Let's let the user know all went well.
