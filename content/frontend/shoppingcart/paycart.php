@@ -1,12 +1,9 @@
 <?php
-print_r($_POST);
 //echo "<pre>";print_r($_SESSION['USER']['SHOPPING_CART']);echo "<br></pre>";
 $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank','SNS Bank','Triodos Bank','Van Lanschot Bankiers',];
 //echo "<pre>";print_r($_SESSION['USER']);echo "<br></pre>";
 
-$userName=$_SESSION['USER']['DATA'][0]['FullName'];
-$addressLine1=$_SESSION['USER']['ADDRESS'][0]['Address'];
-$addressLine2=$_SESSION['USER']['ADDRESS'][0]['Zipcode'] . ' ' .$_SESSION['USER']['ADDRESS'][0]['City'];;
+print_r($_POST);
 
 // Let's remeber the paymentmethod for now.
 if (isset($_POST['paymentmethod']))
@@ -18,7 +15,7 @@ if (isset($_POST['paymentmethod']))
 <div class="container">
     <div class="row">
         <form role="form" id="table" method="POST" action="">
-            <div class="col-xs-8">
+            <div class="col-xs-8 col-xs-offset-2">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="panel-title">
@@ -34,9 +31,6 @@ if (isset($_POST['paymentmethod']))
                             <div class="col-xs-6">
                                 <h4 class="product-name"><strong>Uw factuurbedrag is € <?php echo $_SESSION['USER']['SHOPPING_CART']['AMOUNT_TO_PAY']; ?>.</strong></h4>
                                 <h4 class="text-left">Kies uw betaalmethode:</h4>
-                            </div>
-                            <div class="col-xs-6">
-                                <h4 class="text-left">Kies uw betaal methode:</h4>
                             </div>
                         </div>
                         <hr>
@@ -119,8 +113,8 @@ if (isset($_POST['paymentmethod']))
                     <div class="panel-footer">
                         <div class="row text-center">
                             <div class="col-xs-4">
-                                <button type="submit" class="btn btn-success btn-block" name="backtocart">
-                                    <span class="glyphicon glyphicon-arrow-left"></span> Terug naar winkelwagen
+                                <button type="submit" class="btn btn-success btn-block" name="checkaddress">
+                                    <span class="glyphicon glyphicon-arrow-left"></span> Terug naar adres controleren
                                 </button>
                             </div>
                             <div class="col-xs-4">

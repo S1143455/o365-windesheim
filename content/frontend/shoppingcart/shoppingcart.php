@@ -8,6 +8,8 @@ if (!isset($_SESSION['authenticated']))
     die;
 }
 
-// Check if the users wants to pay.
+// Check what the users wants to do.
+if (isset($_POST['backtomainpage'])){ echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/\">";}
+if (isset($_POST['checkaddress'])){include 'content/frontend/shoppingcart/checkaddress.php'; die;}
 if (isset($_POST['paycart'])){include 'content/frontend/shoppingcart/paycart.php';}
 else include 'content/frontend/shoppingcart/viewshoppingcart.php';

@@ -26,7 +26,7 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
 <div class="container">
     <div class="row">
         <form role="form" id="table" method="POST" action="">
-            <div class="col-xs-8">
+            <div class="col-xs-8 col-xs-offset-2">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="panel-title">
@@ -137,16 +137,19 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                     </div>
                     <div class="panel-footer">
                         <div class="row text-center">
-                            <div class="col-xs-3">
+                            <div class="col-xs-4">
+                                <button type="submit" class="btn btn-success btn-block" name="backtomainpage">
+                                    <span class="glyphicon glyphicon-arrow-left"></span> Terug naar hoofdpagina
+                                </button>
+                            </div>
+                            <div class="col-xs-4">
                                 <button type="submit" class="btn btn-danger btn-block" name="emptycart">
                                     <span class="glyphicon glyphicon-trash"></span> Leegmaken
                                 </button>
                             </div>
-                            <div class="col-xs-6">
-                            </div>
-                            <div class="col-xs-3">
-                                <button type="submit" class="btn btn-success btn-block" name="paycart">
-                                    <span class="glyphicon glyphicon-euro"></span> Afrekenen
+                            <div class="col-xs-4">
+                                <button type="submit" class="btn btn-success btn-block" name="checkaddress">
+                                    Adres controleren <span class="glyphicon glyphicon-arrow-right"></span>
                                 </button>
                             </div>
                         </div>
