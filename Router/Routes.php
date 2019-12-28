@@ -44,10 +44,14 @@ $router->route('/onderhoudaccount', function(){
     return include 'content/frontend/usermaintenance.php';
 });
 
-
 $router->route('/onderhoudbestellingen', function(){
     return include 'content/frontend/usermaintenance.php';
 });
+
+$router->route('/accountverwijderen', function(){
+    return include 'content/frontend/DeleteUserAccount.php';
+});
+
 /**
  * End usermaintenance
  */

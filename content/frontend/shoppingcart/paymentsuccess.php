@@ -31,16 +31,16 @@ else
 
 // Put the order into the database
 $insertPart1="INSERT INTO orders (CustomerID, OrderDate, LastEditedBy, DeliveryMethodID, PaymentMethodID, SpecialDealID)";
-$insertPart2=" VALUES (" . $_SESSION['USER']['DATA'][0]['PersonID'] . ",'" . // CustomerID
-                $oderDate. "'," .                                            // OrderDate
-                $_SESSION['USER']['DATA'][0]['PersonID'] . "," .             // LastEditedBy
-                1 . ",".                                                     // DeliveryMethodID
-                $paymentMethodID[0]['PaymentMethodID']  . "," .              // PaymentMethodID
-                $specialDealId . ");";                                       // SpecialDealID
+$insertPart2=" VALUES (" . $_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'] . ",'" .  // CustomerID
+                $oderDate. "'," .                                               // OrderDate
+                $_SESSION['USER']['DATA'][0]['PersonID'] . "," .                // LastEditedBy
+                1 . ",".                                                        // DeliveryMethodID
+                $paymentMethodID[0]['PaymentMethodID']  . "," .                 // PaymentMethodID
+                $specialDealId . ");";                                          // SpecialDealID
             $insertOder=$handelDataBase->UpdateStmt($insertPart1.$insertPart2);
 
 // Retrieve the order ID
-$getOrderId=$handelDataBase->selectStmt( "select OrderID from orders where CustomerID=" . $_SESSION['USER']['DATA'][0]['PersonID'] ." and OrderDate = '" . $oderDate . "' order by OrderId desc limit 1");
+$getOrderId=$handelDataBase->selectStmt( "select OrderID from orders where CustomerID=" . $_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'] ." and OrderDate = '" . $oderDate . "' order by OrderId desc limit 1");
 $oderId=$getOrderId[0]['OrderID'];
 
 // Put the ordered items in th database
@@ -55,14 +55,8 @@ foreach ($_SESSION['USER']['SHOPPING_CART']['ITEMS'] as $key)
 }
 
 // Empty the shoppingcart.
-// First the customer table will be updated.
-$updateCustomer=$handelDataBase->UpdateStmt("update customer set ShoppingCartID= null where CustomerID=" . $customerId .";");
-
-// Remove all rows..
-$removeCartItems=$handelDataBase->UpdateStmt("Delete from shoppingcart_stockitems where ShoppingCartID=".$cartId);
-
-//Than we need to remove the cart itself.
-$removeCart=$handelDataBase->UpdateStmt("Delete from shoppingcart where ShoppingCartID=".$cartId);
+$cart=new \Model\ShoppingCart();
+$emptycart=$cart->EmptyCart();
 
 // Unset the $_SESSION
 $_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']='';

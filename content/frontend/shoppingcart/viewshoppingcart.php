@@ -14,7 +14,13 @@ $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
 
 // Check if the users wants to empty the card.
-if (isset($_POST['emptycart'])){include 'content/frontend/shoppingcart/emptycart.php';}
+if (isset($_POST['emptycart']))
+    {
+    $cart=new \Model\ShoppingCart();
+    $cleanCart=$cart->EmptyCart();
+    if ($cleanCart==1){echo display_message('success','Uw winkelwagen is met succes verwijderd.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";die;}
+    else {echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/\">";}
+    }
 
 // if the $_POST isset we add or remove an item.
 if (isset($_POST['add'])){include 'content/frontend/shoppingcart/add_item.php';}

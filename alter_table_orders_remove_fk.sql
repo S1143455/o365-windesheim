@@ -1,3 +1,4 @@
 RENAME TABLE order TO orders;
 ALTER TABLE orders DROP INDEX FKOrder835009;
 ALTER TABLE orders DROP INDEX FKOrder754218;
+ALTER TABLE orders DROP INDEX PersonLastEditedOrder;
