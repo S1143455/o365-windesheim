@@ -1,8 +1,6 @@
 <?php
 // The users is logged in.
 $handelData=new \Model\Database();
-$cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
-$customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
 $anyItemsInCart=$handelData->selectStmt('select count(*) as amount from shoppingcart_stockitems');
 
 // Let's see if there are any items in the cart.
@@ -11,6 +9,10 @@ if ($anyItemsInCart[0]['amount']==0) {
     echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
     die;
 }
+
+$cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
+$customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
+
 // Check if the users wants to empty the card.
 if (isset($_POST['emptycart'])){include 'content/frontend/shoppingcart/emptycart.php';}
 

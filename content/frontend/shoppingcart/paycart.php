@@ -1,5 +1,6 @@
 <?php
 $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank','SNS Bank','Triodos Bank','Van Lanschot Bankiers',];
+$monthArray=['01','02','03','04','05','06','07','08','09','10','11','12'];
 ?>
 <div class="container">
     <div class="row">
@@ -10,7 +11,7 @@ $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank
                         <div class="panel-title">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <h4><span class="glyphicon glyphicon-euro"></span> Afrekenen</h4>
+                                    <h4><span class="glyphicon glyphicon-euro"></span> Kies uw betaalmethode</h4>
                                 </div>
                             </div>
                         </div>
@@ -19,7 +20,6 @@ $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank
                         <div class="row">
                             <div class="col-xs-6">
                                 <h4 class="product-name"><strong>Uw factuurbedrag is € <?php echo $_SESSION['USER']['SHOPPING_CART']['AMOUNT_TO_PAY']; ?>.</strong></h4>
-                                <h4 class="text-left">Kies uw betaalmethode:</h4>
                             </div>
                         </div>
                         <hr>
@@ -33,7 +33,7 @@ $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank
                                     }
                                     else
                                         if ($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']=='ideal'){echo "checked";}
-                                    ?>><label for="idealpayment"><h4 > Ideal </h4></label>
+                                    ?>><label for="idealpayment"><h5><strong> Ideal </strong></h5></label>
                             </div>
                             <div class="col-xs-4">
                                 <img src="content/frontend/shoppingcart/cartimages/ideal.png">
@@ -41,7 +41,7 @@ $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank
                         </div>
                         <div class="row">
                             <div class="col-xs-12 text-left">
-                                <h4>Selecteer uw bank:</h4>
+                                <h5><strong>Selecteer uw bank:</strong></h5>
                             </div>
                         </div>
                         <div class="row">
@@ -67,10 +67,67 @@ $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank
                                     else
                                         if ($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']== 'creditcard'){echo "checked";}
                                     ?>
-                                ><label for="creditcardpayment"><h4 > Credit card </h4></label>
+                                ><label for="creditcardpayment"><h5><strong> Credit card </strong></h5></label>
                             </div>
                             <div class="col-xs-4">
                                 <img src="content/frontend/shoppingcart/cartimages/creditcards.png" height="24" width="128">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-left">
+                                <h5>Kaartnummer (*)</h5>
+                            </div>
+                            <div class="col-xs-8 text-left">
+                                <input type="text" class="form-control" name="CCNumber" id="CCNumber" value="" placeholder="Kaartnummer">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-left">
+                                <h5>Naam Kaarthouder (*)</h5>
+                            </div>
+                            <div class="col-xs-8 text-left">
+                                <input type="text" class="form-control" name="CCName" id="CCName" value="" placeholder="Naam Kaarthouder">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-left">
+                                <h5>Vervaldatum (*)</h5>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <div class="form-group">
+                                    <select  class="form-control" id="CCMonth" name="CCMonth">
+                                        <?php
+                                        foreach ($monthArray as $key)
+                                        {
+                                            echo '<option value="' . $key  . '">' .  $key . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-center">
+                                <h5>/</h5>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <div class="form-group">
+                                    <select  class="form-control" id="CCYear" name="CCYear">
+                                        <?php
+                                        $year=date('Y');
+                                        for ($y=$year; $y<=($year+10);$y++)
+                                        {
+                                            echo '<option value="' . $y  . '">' .  $y . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 text-left">
+                                <h5>CVC/CVV/CID (*)</h5>
+                            </div>
+                            <div class="col-xs-8 text-left">
+                                <input type="text" class="form-control" name="CC_CVC" id="CC_CVC" value="" placeholder="CVC/CVV/CI">
                             </div>
                         </div>
                         <hr>
@@ -83,7 +140,7 @@ $bankenArray=['ABN AMRO','ASN Bank','Friesland Bank','ING','Rabobank','RegioBank
                                         else
                                             if ($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']== 'afterpay'){echo "checked";}
                                         ?>
-                                    ><label for="afterpaypayment"><h4 > AfterPay </h4></label>
+                                    ><label for="afterpaypayment"><h5><strong> AfterPay </strong></h5></label>
                                 </div>
                             </div>
                             <div class="col-xs-4">
