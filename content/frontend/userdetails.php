@@ -186,7 +186,7 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="LogonName">Inlognaam</label>
-                                        <input type="text" class="form-control" id="LogonName" name="LogonName" value="<?php echo $_SESSION['USER']['DATA'][0]['LogonName'];?>">
+                                        <input type="text" class="form-control" id="LogonName" name="LogonName" value="<?php echo $_SESSION['USER']['DATA'][0]['LogonName'];?>" disabled>
                                     </div>
                                 </div>
                                 <div class="form-row">
