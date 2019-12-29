@@ -40,25 +40,37 @@ foreach ($orders as $orderkey)
     $_SESSION['USER']['ORDER'][$orderkey['OrderID']]['ORDER_DETAILS']['NUMBEROFITEMS']=$noItems;
 }
 
-echo "<pre>";print_r( $_SESSION['USER']['ORDER']);echo "</pre><br>";
+//echo "<pre>";print_r( $_SESSION['USER']['ORDER'][1]);echo "</pre><br>";
 ?>
 <div class="container" style="width:100%">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-6 col-md-offset-3">
             <div class="row" style="min-height: 50px;"></div>
             <div class="row">
                 <form role="form" id="table" method="POST" action="">
                     <table id="categoryTable" class="table table-fixed">
                         <thead>
                             <tr>
-                                <th class="col-md-1">manage</th>
-                                <th class="col-md-2">Categorie ID</th>
-                                <th class="col-md-5">Omschrijving</th>
-                                <th class="col-md-2">Parent Categorie</th>
-                                <th class="col-md-2">Acties </th>
+                                <th class="col-md-1 text-right">Bestelnummer</th>
+                                <th class="col-md-1 text-center">Besteldatum</th>
+                                <th class="col-md-1 text-right">Bedrag</th>
+                                <th class="col-md-3 text-right"></th>
                             </tr>
                         </thead>
                         <tbody>
+                        <?php
+                        foreach($_SESSION['USER']['ORDER'] as $key)
+                        {
+                            echo '<tr>
+                            <td class="col-md-1 text-right">' . $key['ORDER_DETAILS']['OrderID'] .'</td>
+                            <td class="col-md-1 text-center">' . date( 'd-m-Y',strtotime($key['ORDER_DETAILS']['OrderDate'] )).'</td>
+                            <td class="col-md-1 text-right">' . number_format($key['ORDER_DETAILS']['TOTALORDERPRICE'], 2, ',', '.')  .'</td>
+                             <td class="col-md-3 text-right"><button type="submit" class="btn btn-success btn-block" name="viewdetails" value="' . $key['ORDER_DETAILS']['OrderID']  . '">
+                                    Details <span class="glyphicon glyphicon-arrow-right"></span>
+                                </button></td></tr>
+                            ';
+                        }
+                        ?>
                         </tbody>
                     </table>
                 </form>
