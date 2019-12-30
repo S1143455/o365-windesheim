@@ -26,13 +26,13 @@ if (isset($_POST['emptycart']))
 // if the $_POST isset we add or remove an item.
 if (isset($_POST['add']))
 {
-    $updateCart=$cart->AddItem($_POST['add']);
+    $updateCart=$cart->AddItem($_POST['add'],1);
     if ($updateCart==1){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";}
     else {echo display_message('info','Helaas is dit product niet meer op voorraad.'). "<META HTTP-EQUIV=Refresh CONTENT=\"3;\">";}
 }
 
 if (isset($_POST['remove'])){
-    $updateCart=$cart->RemoveItem($_POST['remove']);
+    $updateCart=$cart->RemoveItem($_POST['remove'],1);
     echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";
 }
 
@@ -58,7 +58,7 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                     <div class="panel-body">
                         <?php $getAllTheProducts=new \Model\Database();
                         $totalCartPrice=0;
-                        $allTheProducts=$getAllTheProducts->selectStmt("select sti.StockItemID, sti.StockItemName, cit.StockItemAmount, sti.RecommendedRetailPrice, sti.Photo,(cit.StockItemAmount*sti.RecommendedRetailPrice) as CartPrice 
+                        $allTheProducts=$getAllTheProducts->selectStmt("select sti.StockItemID, sti.StockItemName,sti.MarketingComments, cit.StockItemAmount, sti.RecommendedRetailPrice, sti.Photo,(cit.StockItemAmount*sti.RecommendedRetailPrice) as CartPrice 
                                                                          from shoppingcart_stockitems cit left join stockitem sti on sti.StockItemID = cit.StockItemID;");
                         foreach ($allTheProducts as $item)
                         {
@@ -67,7 +67,7 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                             <div class="row">
                                 <div class="col-xs-2"><img class="img-responsive" src="' . $item['Photo'] .'"></div>
                                 <div class="col-xs-6">
-                                    <h4 class="product-name"><strong>' . $item['StockItemName'] .'</strong></h4><h4><small>' . $item['StockItemName'] .'</small></h4>
+                                    <h4 class="product-name"><strong>' . $item['StockItemName'] .'</strong></h4><h4><small>' . $item['MarketingComments'] .'</small></h4>
                                 </div>
                                 <div class="col-xs-4">
                                     <div class="col-xs-2 text-right">

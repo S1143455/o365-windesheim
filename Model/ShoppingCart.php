@@ -41,11 +41,7 @@ class ShoppingCart
             $getCartContense=$handelData->selectStmt('select * from shoppingcart_stockitems');
             foreach ($getCartContense as $item)
             {
-                $amountInCart=$item['StockItemAmount'];
-                $stockItem=$item['StockItemID'];
-                $qtyInStock = $handelData->selectStmt("select QuantityOnHand  from stockitemholdings where StockItemID=" . $stockItem) ;
-                $newQty = $qtyInStock[0]['QuantityOnHand'] + $amountInCart;
-                $updateStock=$handelData->UpdateStmt("UPDATE stockitemholdings set QuantityOnHand=" . $newQty . " where StockItemID=" . $stockItem );
+                $this->addToStock($item['StockItemID'],$item['StockItemAmount']);
             }
             // Remove all rows..
             $removeCartItems=$handelData->UpdateStmt("Delete from shoppingcart_stockitems where ShoppingCartID=".$cartId);
@@ -61,7 +57,34 @@ class ShoppingCart
         return 0;
     }
 
-    public function AddItem($stockItem){
+    function LowerStock($stockItem, $amount){
+        $handelData=new \Model\Database();
+        // if an item is in a cart. We need to lower the stockqty with one.
+        $qtyInStock = $handelData->selectStmt("select QuantityOnHand  from stockitemholdings where StockItemID=" . $stockItem);
+        $newQty = $qtyInStock[0]['QuantityOnHand'] - $amount;
+        $updateStock=$handelData->UpdateStmt("UPDATE stockitemholdings set QuantityOnHand=" . $newQty . " where StockItemID=" . $stockItem);
+        return;
+    }
+
+    // A function to add to the stock.
+    function addToStock($stockItem, $amount)
+    {
+        $handelData=new \Model\Database();
+        // if an item is removed from the cart. We need to add the stockqty with one.
+        $qtyInStock = $handelData->selectStmt("select QuantityOnHand  from stockitemholdings where StockItemID=" . $stockItem);
+        $newQty = $qtyInStock[0]['QuantityOnHand'] + $amount;
+        $updateStock=$handelData->UpdateStmt("UPDATE stockitemholdings set QuantityOnHand=" . $newQty . " where StockItemID=" . $stockItem);
+        return;
+    }
+
+    public function AddItem($stockItem,$amount){
+        $returnCode=1;
+        if (!isset($_SESSION['authenticated']))
+        {
+            echo display_message('info','Om bestellingen te kunnen bewerken moet u ingelogd zijn.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/login\">";
+            die;
+        }
+
         // If the user is logged in, we need to check if the user has a cart.
         if (!$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'])
             // No cart is present. So we need to create one.
@@ -71,16 +94,6 @@ class ShoppingCart
         $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
         $handelData=new \Model\Database();
 
-        function LowerStock($stockItem)
-        {
-            $handelData=new \Model\Database();
-            // if an item is in a cart. We need to lower the stockqty with one.
-            $qtyInStock = $handelData->selectStmt("select QuantityOnHand  from stockitemholdings where StockItemID=" . $stockItem);
-            $newQty = $qtyInStock[0]['QuantityOnHand'] - 1;
-            $updateStock=$handelData->UpdateStmt("UPDATE stockitemholdings set QuantityOnHand=" . $newQty . " where StockItemID=" . $stockItem);
-            return;
-        }
-
         // Check if the selected item is still in stock
         $isInStock=$handelData->selectStmt("select QuantityOnHand  from stockitemholdings where StockItemID=" . $stockItem);
         //If the  quantity of the item is zero (or less) then we let the user know.
@@ -88,25 +101,38 @@ class ShoppingCart
             return 0;
         }
 
+        // Check if the requested amount is still in stock
+        // If not the last of the stock wil be added to the cart.
+        if ($amount > $isInStock[0]['QuantityOnHand']){
+            $amount=$isInStock[0]['QuantityOnHand'];
+            $returnCode=9999;
+        }
+
         $itemAlreadyPresent=$handelData->selectStmt("select count(*) as present from shoppingcart_stockitems where StockItemID=". $stockItem );
         if ($itemAlreadyPresent[0]['present']==0) // The selected item is not present in the cart.
         {
             $insertItem=$handelData->UpdateStmt("INSERT INTO shoppingcart_stockitems(ShoppingCartID, StockItemID, StockItemAmount) VALUES (" . $cartId . "," . $stockItem . ",1)");
-            $updateStock=LowerStock($stockItem);
+            $this->LowerStock($stockItem,$amount);
         }
         else // If the item is already in the cart we need to add one more.
         {
             $amountOfItemsPresent=$handelData->selectStmt("select *  from shoppingcart_stockitems where StockItemID=". $stockItem );
             $newAmount=$amountOfItemsPresent[0]['StockItemAmount']+1;
             $updateItem=$handelData->UpdateStmt("UPDATE shoppingcart_stockitems SET StockItemAmount=" . $newAmount . " where  ShopStockID= " . $amountOfItemsPresent[0]['ShopStockID']);
-            $updateStock=LowerStock($stockItem);
+            $this->LowerStock($stockItem,$amount);
         }
 
         // The cart is updated.
-        return 1;
+        if ($returnCode !=1){
+            return $returnCode;
+        }
+        else{
+            return 1;
+        }
+
     }
 
-    public function RemoveItem($stockItem){
+    public function RemoveItem($stockItem,$amount){
         if (!isset($_SESSION['authenticated']))
         {
             echo display_message('info','Om bestellingen te kunnen bewerken moet u ingelogd zijn.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/login\">";
@@ -116,17 +142,6 @@ class ShoppingCart
         $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
         $handelData=new \Model\Database();
 
-        // A function to add to the stock.
-        function addToStock($stockItem)
-        {
-            $handelData=new \Model\Database();
-            // if an item is removed from the cart. We need to add the stockqty with one.
-            $qtyInStock = $handelData->selectStmt("select QuantityOnHand  from stockitemholdings where StockItemID=" . $stockItem);
-            $newQty = $qtyInStock[0]['QuantityOnHand'] + 1;
-            $updateStock=$handelData->UpdateStmt("UPDATE stockitemholdings set QuantityOnHand=" . $newQty . " where StockItemID=" . $stockItem);
-            return;
-        }
-
         // Lower the number of items in the cart.
         $amountOfItemsPresent=$handelData->selectStmt("select *  from shoppingcart_stockitems where StockItemID=". $stockItem . " and ShoppingCartID=".$cartId);
         if ($amountOfItemsPresent)
@@ -134,7 +149,7 @@ class ShoppingCart
             $newAmount = $amountOfItemsPresent[0]['StockItemAmount'] - 1;
 
             $updateItem = $handelData->UpdateStmt("UPDATE shoppingcart_stockitems SET StockItemAmount=" . $newAmount . " where  ShopStockID= " . $amountOfItemsPresent[0]['ShopStockID'] . " and ShoppingCartID=" . $cartId);
-            $updateStock = addToStock($stockItem);
+            $this->addToStock($stockItem,$amount);
 
             // If the amount reaches 0, the row needs to be deleted for the cart.
             if ($newAmount == 0)
@@ -142,8 +157,18 @@ class ShoppingCart
                 $removeCartItem = $handelData->UpdateStmt("Delete from shoppingcart_stockitems where StockItemID=" . $stockItem . " and ShoppingCartID=" . $cartId);
             }
         }
-
         return 1;
+    }
+
+    public function ReOrder($orderId){
+        $notAllPresent=1;
+        // We need to loop thru all the orderd items and put them in  the cart
+        foreach ($orderId as $item){
+            $result=$this->AddItem($item['StockItemID'],$item['ItemAmount']);
+            if ($result==9999)$notAllPresent=0;
+        }
+        return $notAllPresent;
+
     }
 
 
