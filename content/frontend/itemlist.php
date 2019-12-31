@@ -11,7 +11,8 @@ if (isset($_POST['add']))
 
 if (isset($_POST['remove'])){
     $updateCart=$cart->RemoveItem($_POST['remove'],1);
-    echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";
+    if ($updateCart==1){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";}
+    //echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";
 }
 
 ?>

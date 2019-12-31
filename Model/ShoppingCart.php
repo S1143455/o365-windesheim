@@ -133,10 +133,18 @@ class ShoppingCart
     }
 
     public function RemoveItem($stockItem,$amount){
+
         if (!isset($_SESSION['authenticated']))
         {
             echo display_message('info','Om bestellingen te kunnen bewerken moet u ingelogd zijn.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/login\">";
             die;
+        }
+
+        //check if there's a cart present.
+        if (!isset($_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']))
+        {
+            // No cart so there's nothing to remove.
+            return 0;
         }
 
         $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
