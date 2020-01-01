@@ -8,6 +8,8 @@ if (isset($_POST['submit'])) {
 
 
     $discountController->store($discount);
+
+    $product =
     die();
 }
 

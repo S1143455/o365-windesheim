@@ -1,37 +1,44 @@
-$primary : black;
-$secondary : #fff3e6;
+$primary: black;
+$secondary: #fff3e6;
 $textcolor: #818181;
 $background: #f8f8f8;
-.navbar{
+.navbar {
   margin-bottom: 0px !important;
 }
 
-body{
+.container {
+  margin: 0px 0px 0px 0px;
+}
+
+body {
   color: $primary;
-  h1{
+
+  h1 {
     color: $secondary;
   }
 }
-.my-nav{
+
+.my-nav {
   padding-top: 10px !important;
 }
 
 .sidenav {
-  height: 89%;
+  min-height: 100%;
+  min-width: max-content;
   background-color: $secondary;
   overflow-x: hidden;
 }
 
 .sidenav a {
-padding: 6px 8px 6px 16px;
-text-decoration: none;
-font-size: 20px;
-color: $textcolor;
-display: block;
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: $textcolor;
+  display: block;
 }
 
 .sidenav a:hover {
-color: $secondary;
+  color: $secondary;
 }
 
 .main {
@@ -41,13 +48,23 @@ color: $secondary;
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .discountButton {
+    width: 100% !important;
+  }
 }
 
 .padding10 {
-  margin:10px;
-  font-size:12px !important;
+  margin: 10px;
+  font-size: 12px !important;
 }
 
 .first {
@@ -55,11 +72,16 @@ color: $secondary;
 }
 
 .discountButton {
-  display: inline-block;
+  display: block;
   white-space: nowrap;
   background-color: #808080 !important;
   margin-top: 1%;
   width: 200px;
+}
+
+.modal-body{
+  overflow:auto;
+
 }
 
 .wrapper {
@@ -77,13 +99,27 @@ color: $secondary;
   width: 30%;
 }
 
+@media screen and (max-width: 991px) {
+  .form-control {
+    width: 100%;
+
+  .inputCode {
+    width: 100%;
+    }
+  }
+
+  .inputCode{
+    width: 35%;
+  }
+}
+
 .inputPercentage {
-  margin-left: 19px;
+  margin-left: 21px;
   width: 55px;
 }
 
 .inputStartDate {
-  margin: 5px 35px 10px 4px;
+  margin: 5px 0px 10px 7px;
   width: 20%;
   text-align: center;
   padding: 0px;
@@ -92,7 +128,7 @@ color: $secondary;
 .inputEndDate {
   text-align: center;
   width: 20%;
-  margin: -7px 0px 0 5px;
+  margin: -7px 0px 0 7px;
   padding: 0px;
 }
 
@@ -114,10 +150,6 @@ color: $secondary;
   margin-left: -7px;
 }
 
-.btn-outline-secondary {
-  margin-left: 20px;
-}
-
 label {
   font-weight: normal !important;
 }
@@ -130,32 +162,34 @@ h4 {
   color: $textcolor;
 }
 
-.table-fixed {
-  margin-left: 10px;
-  width: 95%;
+.table-responsive-lg {
+  //margin-left: 10px;
+  //width: 95%;
   font-size: 12px;
   background-color: $background;
-  tbody{
-    height:200px;
-    overflow-y:auto;
+
+  tbody {
+    height: 200px;
+    overflow-y: auto;
     width: 100%;
   }
 
-  thead,tbody,tr,td,th {
-    display:block;
+  thead, tbody, tr, td, th {
+    //display:block;
   }
 
-  tbody{
-    td{
-      float:left;
+  tbody {
+    td {
+      //float:left;
     }
   }
+
   thead {
-    tr{
-      th{
-        float:left;
+    tr {
+      th {
+        //float:left;
         background-color: $secondary;
-        border-color:#ffad54;
+        border-color: #ffad54;
       }
     }
   }
@@ -174,12 +208,12 @@ td {
   height: 30px;
 }
 
-.nopadding{
-  padding:0px !important;
+.nopadding {
+  padding: 0px !important;
 }
 
-.width100{
-  width:100% !important;
+.width100 {
+  width: 100% !important;
 }
 
 .height15pct {

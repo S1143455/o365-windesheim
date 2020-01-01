@@ -4,6 +4,7 @@
 use Model\Discount;
 if (isset($_POST['submit'])) {
     include 'loader.php';
+
     $discount = new Discount();
 
 

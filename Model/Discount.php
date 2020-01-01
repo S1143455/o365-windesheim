@@ -24,8 +24,19 @@ class Discount extends Database
     /**
      * @return mixed
      */
+
+    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
     public function getOneTime()
     {
+        if ($this->OneTime == "1"){
+          $this->OneTime =
+            '<input type="checkbox" name="OneTime" checked disabled>';
+
+        } else {
+            $this->OneTime =
+            '<input type="checkbox" name="OneTime" disabled>';
+
+        }
         return $this->OneTime;
     }
 
@@ -42,6 +53,15 @@ class Discount extends Database
      */
     public function getActive()
     {
+        if ($this->Active == "1"){
+            $this->Active =
+                '<input type="checkbox" name="Active" checked disabled>';
+
+        } else {
+            $this->Active =
+                '<input type="checkbox" name="Active" disabled>';
+
+        }
         return $this->Active;
     }
 
@@ -179,19 +199,14 @@ class Discount extends Database
         return $result[0][0];
     }
 
-//
-//    public function getAllProducts()
-//    {
-//        $result = '';
-//        $result = $this->selectStmt('SELECT * FROM stockitem');
+    public function getMaxSpecialDealID(){
+        $result = $this->selectStmt('SELECT MAX(SpecialDealID) FROM specialdeals;');
+        return $result[0];
+    }
+
+//    public function updateStockItemBasedOnSpecialDeal($SpecialDealID, $StockItemID){
+//        $result = $this->UpdateStmt('UPDATE stockitem SET SpecialDealID = '.$SpecialDealID.' WHERE StockItemID = '.$StockItemID.';');
 //        return $result;
 //    }
-//
-//
-//    public function getAllCategories()
-//    {
-//        $result = '';
-//        $result = $this->selectStmt('SELECT * FROM category');
-//        return $result;
-//    }
+
 }
