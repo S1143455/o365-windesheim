@@ -12,7 +12,7 @@ $emailAddress=$getEmailAddress->selectStmt("SELECT EmailAddress FROM people WHER
 // If the time expires the user will need to request a new link.
 
 // First off : The function for the random string
-function generateRandomString($length = 255) {
+function generateRandomString($length = 55) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@$%^*()_+=-<>';
     $charactersLength = strlen($characters);
     $randomString = '';

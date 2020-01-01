@@ -1,0 +1,1 @@
+INSERT INTO `paymentmethod` (`PaymentMethodName`, `LastEditedBy`) VALUES ('Ideal', '1'), ('CreditCard', '1'), ('AfterPay', '1')

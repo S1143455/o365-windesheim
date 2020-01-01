@@ -37,7 +37,7 @@ include_once 'content/frontend/header.php';
         </div>
     </div>
 <?php
-
+include 'content/frontend/itemlist.php';
 include_once 'content/frontend/footer.php';
 
 ?>

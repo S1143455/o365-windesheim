@@ -76,11 +76,19 @@ include 'loader.php';
                                 <?php $mainController->navigationalmenu();?>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="hide1 scroll-nav">
+                                <?php $mainController->ShoppingCartMenu(); ?>
+                            </div>
+                        </div>
                     </div>
                     <div class="row" style="height:1px;background-color:black;"> </div>
                     <div class="row">
                         <div class="col-md-8 normalnav">
                             <?php $mainController->navigationalmenu(); ?>
+                        </div>
+                        <div class="col-md-4 normalnav">
+                            <?php $mainController->ShoppingCartMenu(); ?>
                         </div>
                     </div>
                 </div>
