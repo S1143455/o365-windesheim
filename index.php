@@ -10,5 +10,5 @@ $dotenv->load();
 
 //Initialize our Controller
 require_once 'loader.php';
-
+include 'content/frontend/shoppingcart/itemsInCart.php';
 include_once 'Router/Routes.php';

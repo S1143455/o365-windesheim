@@ -44,14 +44,38 @@ $router->route('/onderhoudaccount', function(){
     return include 'content/frontend/usermaintenance.php';
 });
 
-
 $router->route('/onderhoudbestellingen', function(){
     return include 'content/frontend/usermaintenance.php';
 });
 
+$router->route('/accountverwijderen', function(){
+    return include 'content/frontend/DeleteUserAccount.php';
+});
 
 /**
  * End usermaintenance
+ */
+
+/**
+ * Begin shoppingcart items
+ */
+$router->route('/winkelwagen', function(){
+    return include 'content/frontend/shoppingcart/shoppingcart.php';
+});
+
+$router->route('/afrekenen', function(){
+    return include 'content/frontend/shoppingcart/paycart.php';
+});
+
+$router->route('/betalengelukt', function(){
+    return include 'content/frontend/shoppingcart/paymentsuccess.php';
+});
+
+$router->route('/betalenmislukt', function(){
+    return include 'content/frontend/shoppingcart/paymentfailed.php';
+});
+/**
+ * End of shoppingcart items
  */
 
 /**
