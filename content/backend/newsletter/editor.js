@@ -134,11 +134,11 @@ You should have received a copy of the GNU General Public License along with thi
 									}).append($('<a/>',{
 											"href":"#uploadImageBar_" + _idSuffix,
 											"data-toggle":"tab"
-										}).html("From Computer")
+										}).html("Van uw computer")
 							)).append($('<li/>').append($('<a/>',{
 											"href":"#imageFromLinkBar_" + _idSuffix,
 											"data-toggle":"tab"
-										}).html("From URL")));
+										}).html("Van een URL")));
 
 			var tabContent 		= $("<div/>", {class:"tab-content"});
 			var uploadImageBar  = $("<div/>",{

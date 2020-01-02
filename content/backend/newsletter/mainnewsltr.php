@@ -1,10 +1,7 @@
 <?php
 $dataHandler=new \Model\Database();
-
 // get all the existing newsletters
 $newsletters=$dataHandler->selectStmt("SELECT nws.*, con.NewsletterTitle FROM newsletters nws inner join newslettercontent con on con.NewsletterID = nws.NewsletterID order by nws.NewsletterID desc");
-//echo "**************<pre>";print_r($newsletters); echo "</pre>**************<br>";
-
 ?>
 <div class="container" style="width:100%">
     <div class="row">
@@ -67,12 +64,12 @@ $newsletters=$dataHandler->selectStmt("SELECT nws.*, con.NewsletterTitle FROM ne
                                                             <h4>' . $value['NewsletterTitle'] . '</h4>
                                                         </div>
                                                         <div class="col-xs-2">
-                                                            <button type="submit" onclick="myFunction()" name="AlterNewsletter" class="btn btn-success btn-block" value="'. $value['NewsletterID'] .'">
+                                                            <button type="submit" name="ChangeNewsletter" class="btn btn-success btn-block" value="'. $value['NewsletterID'] .'">
                                                                 Aanpassen
                                                             </button>
                                                         </div>
                                                         <div class="col-xs-2">
-                                                            <button type="submit" name="reSendNewNewsletter" class="btn btn-success btn-block';if($value['NewsletterSend']=='0000-00-00'){echo ' disabled';} echo '" value="'. $value['NewsletterID'] .'">Opnieuw versturen</button>
+                                                            <button type="submit" name="reSendNewsletter" class="btn btn-success btn-block';if($value['NewsletterSend']=='0000-00-00'){echo ' disabled';} echo '" value="'. $value['NewsletterID'] .'">Opnieuw versturen</button>
                                                         </div>
                                                     </div>
                                                     ';
