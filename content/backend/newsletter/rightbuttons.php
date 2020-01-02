@@ -13,10 +13,12 @@
                 Aanmaken Nieuwsbrief
             </button>
         </div>
+        <!--- We don't need this button...
         <div class="row">
             <button type="submit" class="btn btn-info btn-block" name="MaintainNewsletter" style="margin: 2px">
                 Onderhoud Nieuwbrief
             </button>
         </div>
+        -->
     </div>
 </form>
