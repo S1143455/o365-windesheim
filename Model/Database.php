@@ -113,7 +113,6 @@ class Database extends Models
     {
 
     }
-
     public function save()
     {
         $this->connection = $this->openConn();
@@ -121,15 +120,23 @@ class Database extends Models
         $this->getColumns();
         $this->validate();
 
+
         if ($this->checkIfExists($this->getID("value")) == null) {
             return $this->newRow();
 
         } else if ($this->getID("value") != null) {
             return $this->UpdateModal();
-            return $this->UpdateEntry();
+        }
 
+        var_dump($this->getID("value"));
+        if ($this->checkIfExists($this->getID("value")) == null) {
+            echo "3";
+            return $this->newRow();
+        } else if ($this->getID("value") != null) {
+            return $this->UpdateEntry();
         }
     }
+
 
     /**
      * Finds a single row from the database by id.
@@ -214,7 +221,7 @@ class Database extends Models
         foreach ($values as $parameter => $value) {
             $stmt->bindValue($parameter, $value);
         }
-
+echo $sql;
         return $stmt;
     }
 
@@ -300,13 +307,22 @@ class Database extends Models
     {
         $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
         if ($checkInput[0] && $checkInput[1] && $checkInput[2]) {
+
+
+
             $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
             if ($validArrayLength != 3) {
                 die("Parameters differ in size");
             }
             return "array";
         } else if ($checkInput[0] && $checkInput[2]) {
+
             $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
+
+            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 2;
+            echo sizeof($columnKeys);
+            echo sizeof($values);
+
             if ($validArrayLength != 2) {
                 die("Parameters differ in size");
             }
@@ -356,8 +372,13 @@ class Database extends Models
         $this->closeConnection();
         return $retVal;
     }
+
     //  function commented because of error
     //  private function UpdateModal()
+
+  //  function commented because of error
+  //  private function UpdateModal()
+
 
     private function UpdateEntry()
 
@@ -646,6 +667,8 @@ class Database extends Models
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
+        $this->getColumns();
+        var_dump($array);
         if (!empty($array))
         {
             foreach ($array as $key => $value)
@@ -653,6 +676,8 @@ class Database extends Models
                 $modelObject = new $className;
                 foreach ($value as $attrKey => $attrValue)
                 {
+                    var_dump($attrKey);
+                    var_dump($this->column);
                     if (array_key_exists($attrKey, $this->column))
                     {
                         $modelObject->setAttribute($attrKey, $attrValue);

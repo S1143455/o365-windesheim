@@ -36,12 +36,22 @@ class Models
             case  'people':
                 $this->getPeople();
                 break;
+            case  'customer':
+                $this->getCustomer();
+                break;
+            case  'Shoppingcart':
+                $this->getShoppingcart();
+                break;
+            case  'address':
+                $this->getAddress();
+                break;
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
             case 'shoppingcart_stockitems':
                 $this->getShoppingcartStockitems();
                 break;
+
             default:
                 die('Table not implemented');
         }
@@ -69,13 +79,24 @@ class Models
                 case  'address':
                     $this->getAddress();
                     break;
+                case  'customer':
+                    $this->getCustomer();
+                    break;
                 default:
                     die('Table not implemented');
             }
 
         }
 
+//        if ($column != null) {
+//            $retrievedRelation = $this->column;
+//            $this->column = $modelColumn;
+//            return $retrievedRelation;
+//        }
+//        return $this->column;
+
     }
+
 
     /**
      * Define array of the product
@@ -96,6 +117,7 @@ class Models
             "MarketingComments" => ['LongText', 'Attribute', 'Nullable'],
             "CategoryID" => ['Category', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
         );
     }
 
@@ -125,6 +147,15 @@ class Models
         );
     }
 
+    private function getCustomer()
+    {
+        $this->column = array(
+            "CustomerID" => ['Integer', 'PrimaryKey', 'Required'],
+            "PersonID" => ['People', 'HasOne', 'Required'],
+            "ShoppingCartID" => ['shoppingcart', 'HasOne', 'Nullable'],
+            "newsletter" => ['Tinyint', 'HasOne', 'Nullable'],
+        );
+    }
     private function getAddress()
     {
         $this->column = array(
@@ -147,6 +178,14 @@ class Models
         );
     }
 
+    private function getShoppingcart()
+    {
+        $this->column = array(
+            "ShoppingCartID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ExpirationDate" => ['Datetime', 'Attribute', 'Required'],
+            "CreationDate" => ['Datetime', 'Attribute', 'Required'],
+        );
+    }
     private function getContent()
     {
         $this->column = array(
@@ -161,19 +200,37 @@ class Models
     {
         $this->column = array(
             "PeopleID" => ['Integer', 'PrimaryKey', 'Required'],
-            "FullName" => ['Varchar', 'Attribute', 'Unique'],
-            "LogonName" => ['Supplier', 'HasOne', 'Required'],
-            "HashedPassword" => ['Varchar', 'Attribute', 'Required'],
-            "IsSystemUser" => ['Integer', 'Attribute', 'Required'],
-            "Role" => ['Integer', 'Attribute', 'Required'],
-            "PhoneNumber" => ['Boolean', 'Attribute', 'Required'],
+            "FullName" => ['Varchar', 'Attribute', 'Required'],
+            "LogonName" => ['Varchar', 'HasOne', 'Required'],
+            "HashedPassword" => ['Blob', 'Attribute', 'Required'],
+            "IsSystemUser" => ['Tinyint', 'Attribute', 'Required'],
+            "Role" => ['Varchar', 'Attribute', 'Required'],
+            "PhoneNumber" => ['Varchar', 'Attribute', 'Required'],
             "EmailAddress" => ['Varchar', 'Attribute', 'Unique'],
+            "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
             "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
             "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );
     }
+
+//    private function getPeople()
+//    {
+//        $this->column = array(
+//            "PeopleID" => ['Integer', 'PrimaryKey', 'Required'],
+//            "FullName" => ['Varchar', 'Attribute', 'Unique'],
+//            "LogonName" => ['Supplier', 'HasOne', 'Required'],
+//            "HashedPassword" => ['Varchar', 'Attribute', 'Required'],
+//            "IsSystemUser" => ['Integer', 'Attribute', 'Required'],
+//            "Role" => ['Integer', 'Attribute', 'Required'],
+//            "PhoneNumber" => ['Boolean', 'Attribute', 'Required'],
+//            "EmailAddress" => ['Varchar', 'Attribute', 'Unique'],
+//            "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
+//            "Photo" => ['Blob', 'Attribute', 'Nullable'],
+//            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+//        );
 
     private function getSupplier()
     {

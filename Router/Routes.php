@@ -20,7 +20,7 @@ $router->route('/about-us', function(){
  * Passwordrecovery
  */
 
-$router->route('/passwordrecovery', function() use($user){
+$router->route('/passwordrecovery', function() use($userController){
     return include 'content/frontend/passwordrecovery.php';
 });
 
@@ -35,6 +35,7 @@ $router->route('/login', function(){
 $router->route('/logout', function(){
     return include 'views/login/logout.php';
 });
+
 
 /**
  * Begin usermainteance
@@ -99,6 +100,25 @@ $router->route('/product/{id}', function($id) use($productController){
 /**
  * Begin admin routes
  */
+
+$router->route('/admin', function(){
+    return include 'content/backend/home-admin.php';
+});
+
+$router->route('/admin/passwordrecovery', function() use($userController){
+    return include 'content/backend/passwordrecovery.php';
+});
+
+$router->route('/admin/login', function(){
+    return include 'views/login-Admin/login.php';
+});
+
+$router->route('/admin/logout', function(){
+    return include 'views/login-Admin/logout.php';
+});
+
+
+
 $router->route('/admin/onderhoud', function(){
     return include 'content/backend/onderhoud-admin.php';
 });
@@ -107,9 +127,6 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
     return include 'content/backend/onderhoudhoofdpagina.php';
 });
 
-$router->route('/admin', function(){
-    return include 'content/backend/home-admin.php';
-});
 
 $router->route('/admin/onderhoud-categorieen', function(){
     return include 'content/backend/onderhoudc.php';
@@ -125,8 +142,11 @@ $router->route('/admin/onderhoud-klanten', function(){
 $router->route('/admin/CreateCategorie', function() use($categoryController){
     return $categoryController->create();
 });
-$router->route('/admin/test123', function() use($discount){
-    return $discount->create();
+$router->route('/admin/CreateDiscount', function() use($discountController){
+    return $discountController->create();
+});
+$router->route('/admin/UpdateDiscount', function() use($discountController){
+    return $discountController->update();
 });
 
 $router->route('/admin/onderhoud-korting', function(){
