@@ -39,10 +39,15 @@ class UserController
         $user = $this->user->databaseWhere($return,$key,$id);
         return $user;
     }
-    public function GetEmailByName($return, $key, $id){
-        $user = $this->user->databaseWhere($return,$key,$id);
-        var_dump($user);
-        return true;
+
+    /**
+     * Stores the product in the database.
+     *
+     * @return User
+     */
+    public function GetUserByEmail($return, $key, $id){
+        $user = $this->user->where($return,$key,$id);
+        return $user;
     }
 
 
