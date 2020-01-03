@@ -30,11 +30,11 @@ class Discount extends Database
     {
         if ($this->OneTime == "1"){
           $this->OneTime =
-            '<input type="checkbox" name="OneTime" checked disabled>';
+            '<input type="checkbox" name="OneTime" checked>';
 
         } else {
             $this->OneTime =
-            '<input type="checkbox" name="OneTime" disabled>';
+            '<input type="checkbox" name="OneTime">';
 
         }
         return $this->OneTime;
@@ -55,11 +55,11 @@ class Discount extends Database
     {
         if ($this->Active == "1"){
             $this->Active =
-                '<input type="checkbox" name="Active" checked disabled>';
+                '<input type="checkbox" name="Active" checked>';
 
         } else {
             $this->Active =
-                '<input type="checkbox" name="Active" disabled>';
+                '<input type="checkbox" name="Active">';
 
         }
         return $this->Active;

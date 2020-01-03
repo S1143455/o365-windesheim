@@ -1,6 +1,7 @@
 <?php
 include_once 'content/backend/header-admin.php';
 use Model\Discount;
+
 if (isset($_POST['id'])) {
     $discountID = $_POST['id'];
     if ($discountID != 0) {
@@ -395,27 +396,29 @@ if (isset($_POST['id'])) {
         <div class="modal-content">
             <form role="form" id="EditDiscount" method="POST" action="UpdateDiscount">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                                aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                    <h4 class="modal-title">Korting aanpassen</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group" style="display: none;">
-                        <label for="SpecialDealID">SpecialDealID:</label>
+                        <label class="col-3" for="SpecialDealID">SpecialDealID:</label>
                         <input type="text" class="form-control" name="SpecialDealID" id="SpecialDealID"
                                value="<?php echo($discount->getSpecialDealID()) ?>">
                     </div>
                     <div class="form-group">
-                        <label for="DealCode">Code:</label>
+                        <label class="col-3" for="DealCode">Code:</label>
                         <input type="text" class="form-control" name="DealCode" id="DealCode"
                                value="<?php echo($discount->getDealCode()) ?>">
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="checkboxOT">Eenmalig:</label>
+                        <label class="col-3 control-label" for="checkboxOT">Eenmalig:</label>
                         <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT"
-                               value="<?php echo($discount->getOneTime()) ?>"
+                               value="<?php echo($discount->getOneTime())?>
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Omschrijving:</label>
+                        <label class="col-3" for="categoryID">Omschrijving:</label>
                         <textarea class="form-control dealDescription" name="DealDescription" id="DealDescription"
                                value="<?php echo($discount->getDealDescription()) ?>"></textarea>
                     </div>
@@ -440,13 +443,15 @@ if (isset($_POST['id'])) {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <input type="submit" name="submit" value="Korting aanpassen" class="btn btn-primary">
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
 
 <!-- scripts to generate a random code for each modal-->
 <script xmlns:line-height="http://www.w3.org/1999/xhtml">

@@ -95,7 +95,7 @@ body {
 }
 
 .inputCode {
-  margin-left: 58px;
+  //margin-left: 58px;
   width: 30%;
 }
 
@@ -114,12 +114,12 @@ body {
 }
 
 .inputPercentage {
-  margin-left: 21px;
+  //margin-left: 21px;
   width: 55px;
 }
 
 .inputStartDate {
-  margin: 5px 0px 10px 7px;
+  //margin: 5px 0px 10px 7px;
   width: 20%;
   text-align: center;
   padding: 0px;
@@ -128,17 +128,17 @@ body {
 .inputEndDate {
   text-align: center;
   width: 20%;
-  margin: -7px 0px 0 7px;
+  //margin: -7px 0px 0 7px;
   padding: 0px;
 }
 
 .inputEmail {
-  margin-left: 57px;
+  //margin-left: 57px;
   width: 45%;
 }
 
 .dealDescription {
-  margin-left: 11px;
+  //margin-left: 11px;
   width: 60%;
 }
 
@@ -148,6 +148,7 @@ body {
   border-radius: 0px 3px 3px 0px;
   padding: 6px;
   margin-left: -7px;
+  text-align: center;
 }
 
 label {
@@ -167,12 +168,16 @@ h4 {
   //width: 95%;
   font-size: 12px;
   background-color: $background;
+  display: block;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
 
-  tbody {
-    height: 200px;
-    overflow-y: auto;
-    width: 100%;
-  }
+  //tbody {
+  //  height: 200px;
+  //  overflow-y: auto;
+  //  width: 100%;
+  //}
 
   thead, tbody, tr, td, th {
     //display:block;
@@ -221,7 +226,7 @@ td {
 }
 
 .checkboxOneTime {
-  margin: 5px 0px 0px 34px !important;
+  //margin: 5px 0px 0px 34px !important;
 }
 
 .collapseButton {
@@ -247,9 +252,24 @@ td {
 }
 
 .labelInputStartDate {
-  margin-top: 10px;
+  //margin-top: 10px;
 }
 
 .labelInputPercentage {
-  margin-top: 5px;
+  //margin-top: 5px;
+}
+
+.tableDiscount {
+  height: 300px;
+  width: 100%;
+  //overflow: hidden;
+}
+
+.btnGenerateCode {
+  margin-left: 20px;
+}
+
+#tableCollapseProduct {
+  height: 25%;
+  overflow-y: auto;
 }
