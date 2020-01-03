@@ -30,5 +30,40 @@ class UserController extends AuthenticationController
         var_dump($user);
         return true;
     }
+
+
+    /**
+     * Stores the product in the database.
+     *
+     * @param $user User
+     * @return string
+     */
+    public function store($user)
+    {
+        if (!$user->initialize())
+        {
+            return false;
+        };
+        $this->user = $user;
+
+        if (!$this->user->save())
+        {
+            return "Something went wrong.";
+        }
+    }
+
+    /**
+     * Stores the product in the database.
+     *
+     * @param $user1 User
+     * @return string
+     */
+    public function update($user1)
+    {
+        $this->store($user1);
+
+    }
+
+
 }
 
