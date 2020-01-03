@@ -4,9 +4,11 @@
 namespace Controller;
 
 
+use Model\Database;
 use Model\Discount;
 use Model\Category;
 use Model\Product;
+
 
 class DiscountController
 {
@@ -17,8 +19,19 @@ class DiscountController
         $this->discount = new Discount();
         $this->product = new Product();
         $this->category = new Category();
+        $this->database = new Database();
     }
+    public function retrieve($id){
+      //  echo "hoi";
+        $discount = new discount();
+        $discount = $discount->retrieve($id);
+        if(empty($discount->getSpecialDealID()))
+        {
+            //header("Location: /404", true);
+        }
 
+        return $discount;
+    }
     function GetAllDiscount()
     {
         $discounts = $this->discount->getAllSpecialDeals();
@@ -26,12 +39,13 @@ class DiscountController
         foreach($discounts as $discount){
             $result = '';
             $result .= '<tr>
-                    <td class="col-md-2">' . $discount->getDealCode() .'</td>
-                    <td class="col-md-1">' . $discount->getDiscountPercentage() .'</td>
+                    <td class="col-md-1"><button type="submit" name="id" value="' . $discount->getSpecialDealID() .'">Edit</button></td>
+                    <td class="col-md-2">' . $discount->getDealCode() . '</td>
+                    <td class="col-md-1">' . $discount->getDiscountPercentage() . "%" .'</td>
                     <td class="col-md-1">' . $discount->getOneTime() .'</td>
                     <td class="col-md-1">' . $discount->getActive() .'</td>
                     <td class="col-md-3">' . $discount->getDealDescription() .'</td>
-                    <td class="col-md-2">'.  $this->discount->getProductBasedOnID($discount->getSpecialDealID()) .'</td>
+                    <td class="col-md-1">'.  $this->discount->getProductBasedOnID($discount->getSpecialDealID()) .'</td>
                     <td class="col-md-1">' . $discount->getStartDate() .'</td>
                     <td class="col-md-1">' . $discount->getEndDate() .'</td>
                 </tr>';
@@ -43,15 +57,14 @@ class DiscountController
     function GetAllProducts()
     {
         $products = $this->product->retrieve();
-        //$discounts = $this->discount->getAllProducts();
 
         foreach ($products as $product) {
             $result = '';
             $result .= '<tr>
-                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectTableRow" id="selectTableRow"></td>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedIDs[]" id="selectTableRow" value="'. $product->getStockItemID().'"></td>
                    <td class="col-md-2">' . $product->getBrand() . '</td>
                    <td class="col-md-3">' . $product->getStockItemName() . '</td>
-                   <td class="col-md-1">' . $product->getUnitPrice() . '</td>
+                   <td class="col-md-1">' . "€ " . $product->getUnitPrice() . ",- " . '</td>
                    <td class="col-md-4">' . $product->getMarketingComments() . '</td>
                 </tr>';
             echo $result;
@@ -61,7 +74,6 @@ class DiscountController
     function GetAllCategories()
     {
         $categorys = $this->category->retrieve();
-        //$discounts = $this->discount->getAllCategories();
 
         foreach ($categorys as $category) {
         $result = '';
@@ -74,22 +86,48 @@ class DiscountController
         echo $result;
         }
     }
-
     public function create()
     {
-        print_r($_POST);
+       // print_r($_POST);
         $this->discount = new discount();
         $this->discount->initialize();
-        var_dump($this->discount);
-        //die("die");
-        //$this->category->setCategoryID();
+       // var_dump($this->discount);
+
         $this->discount->setLastEditedBy(1);
+        if ($_POST["selectedIDs"]) {
+            foreach ($_POST["selectedIDs"] as $id) {
+                $this->product = $this->product->retrieve($id);
+                $this->product->setSpecialDealID($this->discount->getSpecialDealID());
 
-        $this->store($this->discount);
+                //var_dump($this->product);
+                $this->storeProduct($this->product);
+            }
+        }
+        $this->storeDiscount($this->discount);
 
-        // return "true";
         // include $this->contentpath
         include $this->admin . 'onderhoudkorting.php';
+        return "";
+
+    }
+    public function update()
+    {
+
+        $this->discount = new discount();
+        $this->discount->initialize();
+        //ingelogde gebruiker
+        $this->discount->setLastEditedBy(1);
+        if ($_POST("StockItemID")) {
+            foreach ($_POST["StockItemID"] as $id) {
+                $this->product->retrieve($id);
+                $this->product->setSpecialDealID($this->discount->getSpecialDealID());
+                $this->storeProduct($this->product);
+            }
+        }
+        $this->store($this->discount);
+        include $this->admin . 'onderhoudkorting.php';
+        return "";
+
     }
 
     /**
@@ -98,9 +136,9 @@ class DiscountController
      * @param $discount discount
      * @return string
      */
-    public function store($discount)
+    public function storeDiscount($discount)
     {
-        var_dump($discount);
+        //var_dump($discount);
 
         if (!$discount->initialize())
         {
@@ -111,6 +149,53 @@ class DiscountController
         $this->discount = $discount;
 
         if (!$this->discount->save())
+        {
+            return "Something went wrong.";
+        }
+    }
+
+    /**
+     * Stores the product in the database.
+     *
+     * @param $product product
+     * @return string
+     */
+    public function storeProduct($product)
+    {
+        //var_dump($discount);
+
+        if (!$product->initialize())
+        {
+            print_r($_GET);
+            return false;
+        };
+
+        $this->product = $product;
+        var_dump($product);
+        if (!$this->product->save())
+        {
+            return "Something went wrong.";
+        }
+    }
+
+    /**
+     * Stores the product in the database.
+     *
+     * @param $category Category
+     * @return string
+     */
+    public function storeCategory($category)
+    {
+
+        if (!$category->initialize())
+        {
+            print_r($_GET);
+            return false;
+        };
+
+        $this->category = $category;
+
+        if (!$this->category->save())
         {
             return "Something went wrong.";
         }

@@ -145,6 +145,9 @@ $router->route('/admin/CreateCategorie', function() use($categoryController){
 $router->route('/admin/CreateDiscount', function() use($discountController){
     return $discountController->create();
 });
+$router->route('/admin/UpdateDiscount', function() use($discountController){
+    return $discountController->update();
+});
 
 $router->route('/admin/onderhoud-korting', function(){
     return include 'content/backend/onderhoudkorting.php';

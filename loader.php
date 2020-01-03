@@ -8,6 +8,7 @@ $router = new Router\Router();
 $mainController = new Controller\MainController();
 $authenticationController = new Controller\AuthenticationController();
 $discount = new Controller\DiscountController();
+$customer = new Controller\CustomerController();
 
 switch ($authenticationController->role()){
     case 'admin' :
@@ -24,6 +25,8 @@ $categoryController = new Controller\CategoryController();
 
 $discountController = new Controller\DiscountController();
 $userController = new Controller\UserController();
+//$user = new Controller\UserController();
+$customerController = new Controller\CustomerController();
 //$user = new Controller\UserController();
 $productController = new Controller\ProductController();
 
