@@ -648,6 +648,7 @@ echo $sql;
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
+        $this->getColumns();
         var_dump($array);
         if (!empty($array))
         {
