@@ -36,6 +36,15 @@ class Models
             case  'people':
                 $this->getPeople();
                 break;
+            case  'customer':
+                $this->getCustomer();
+                break;
+            case  'Shoppingcart':
+                $this->getShoppingcart();
+                break;
+            case  'address':
+                $this->getAddress();
+                break;
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
@@ -150,7 +159,23 @@ class Models
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
     }
-
+    private function getCustomer()
+    {
+        $this->column = array(
+            "CustomerID" => ['Integer', 'PrimaryKey', 'Required'],
+            "PersonID" => ['People', 'HasOne', 'Required'],
+            "ShoppingCartID" => ['Shoppingcart', 'HasOne', 'Nullable'],
+            "newsletter" => ['Integer', 'Attribute', 'Nullable'],
+        );
+    }
+    private function getShoppingcart()
+    {
+        $this->column = array(
+            "ShoppingCartID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ExpirationDate" => ['Datetime', 'Attribute', 'Required'],
+            "CreationDate" => ['Datetime', 'Attribute', 'Required'],
+        );
+    }
     private function getContent()
     {
         $this->column = array(

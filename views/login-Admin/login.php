@@ -5,7 +5,7 @@ include 'content/backend/display_message.php';
     // Let's test the input of the user.
     if(isset($_POST['login']))
     {
-        $authenticationController->login($_POST['gbrkr'], $_POST['pw']);
+        $userController->login($_POST['gbrkr'], $_POST['pw']);
     }
 
     if (isset($_POST['sendpassword']))
