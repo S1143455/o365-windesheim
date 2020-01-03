@@ -69,11 +69,12 @@ color: $secondary;
 }
 
 .form-control {
-  width: 100%;
+  width: 35%;
 }
 
 .inputCode {
   margin-left: 58px;
+  width: 30%;
 }
 
 .inputPercentage {
@@ -96,7 +97,7 @@ color: $secondary;
 }
 
 .inputEmail {
-  margin-left: 59px;
+  margin-left: 57px;
   width: 45%;
 }
 
@@ -187,4 +188,34 @@ td {
 
 .checkboxOneTime {
   margin: 5px 0px 0px 34px !important;
+}
+
+.collapseButton {
+  background-color: #ddd;
+  color: black;
+}
+
+#tableCollapse {
+  width: 100%;
+}
+
+.tableCollapse {
+  border: 0.5px solid;
+  border-color: #808080;
+}
+
+.collapseTableSearch {
+  margin: 5px 0px 5px 10px;
+}
+
+.selectTableRow {
+  align-self: center;
+}
+
+.labelInputStartDate {
+  margin-top: 10px;
+}
+
+.labelInputPercentage {
+  margin-top: 5px;
 }

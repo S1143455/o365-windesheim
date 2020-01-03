@@ -5,6 +5,8 @@ namespace Controller;
 
 
 use Model\Discount;
+use Model\Category;
+use Model\Product;
 
 class DiscountController
 {
@@ -13,6 +15,8 @@ class DiscountController
     function __construct()
     {
         $this->discount = new Discount();
+        $this->product = new Product();
+        $this->category = new Category();
     }
 
     function GetAllDiscount()
@@ -22,7 +26,7 @@ class DiscountController
         foreach($discounts as $discount){
             $result = '';
             $result .= '<tr>
-                    <td class="col-md-2">' . $discount->getDealCode() . '</td>
+                    <td class="col-md-2">' . $discount->getDealCode() .'</td>
                     <td class="col-md-1">' . $discount->getDiscountPercentage() .'</td>
                     <td class="col-md-1">' . $discount->getOneTime() .'</td>
                     <td class="col-md-1">' . $discount->getActive() .'</td>
@@ -36,15 +40,51 @@ class DiscountController
 
     }
 
+    function GetAllProducts()
+    {
+        $products = $this->product->retrieve();
+        //$discounts = $this->discount->getAllProducts();
+
+        foreach ($products as $product) {
+            $result = '';
+            $result .= '<tr>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectTableRow" id="selectTableRow"></td>
+                   <td class="col-md-2">' . $product->getBrand() . '</td>
+                   <td class="col-md-3">' . $product->getStockItemName() . '</td>
+                   <td class="col-md-1">' . $product->getUnitPrice() . '</td>
+                   <td class="col-md-4">' . $product->getMarketingComments() . '</td>
+                </tr>';
+            echo $result;
+        }
+    }
+
+    function GetAllCategories()
+    {
+        $categorys = $this->category->retrieve();
+        //$discounts = $this->discount->getAllCategories();
+
+        foreach ($categorys as $category) {
+        $result = '';
+        $result .= '<tr>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectTableRow" id="selectTableRow"></td>
+                   <td class="col-md-2">' . $category->getCategoryID() . '</td>
+                   <td class="col-md-4">' . $category->getCategoryName() . '</td>
+                   <td class="col-md-4">' . $category->getParentCategory() . '</td>
+                </tr>';
+        echo $result;
+        }
+    }
 
     public function create()
     {
         print_r($_POST);
         $this->discount = new discount();
         $this->discount->initialize();
-
+        var_dump($this->discount);
+        //die("die");
         //$this->category->setCategoryID();
         $this->discount->setLastEditedBy(1);
+
         $this->store($this->discount);
 
         // return "true";

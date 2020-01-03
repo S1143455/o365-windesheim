@@ -166,16 +166,32 @@ class Discount extends Database
     }
 
     public function getAllSpecialDeals(){
+
         $discounts = new Discount();
         $discounts = $discounts->retrieve();
         return $discounts;
+
     }
 
     public function getProductBasedOnID($ID){
 //where function gebruiken
-        $result = $this->selectStmt('SELECT COUNT(StockItemId) as total FROM stockitem WHERE DealID = '.$ID.';');
+        $result = $this->selectStmt('SELECT COUNT(StockItemId) as total FROM stockitem WHERE SpecialDealID = '.$ID.';');
         return $result[0][0];
     }
+
+//
+//    public function getAllProducts()
+//    {
+//        $result = '';
+//        $result = $this->selectStmt('SELECT * FROM stockitem');
+//        return $result;
+//    }
+//
+//
+//    public function getAllCategories()
+//    {
+//        $result = '';
+//        $result = $this->selectStmt('SELECT * FROM category');
+//        return $result;
+//    }
 }
-
-

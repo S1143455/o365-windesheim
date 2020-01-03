@@ -5,6 +5,7 @@ include 'loader.php';
 <html>
 <head>
     <meta charset="utf-8" />
+
     <title><?php echo $mainController->page_title(); ?> | <?php echo $mainController->site_name(); ?></title>
     <link href="<?php echo $mainController->template_path() ?>style.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $mainController->template_path() ?>custom.css" rel="stylesheet" type="text/css" />

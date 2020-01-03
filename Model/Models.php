@@ -71,8 +71,15 @@ class Models
             }
 
         }
+//        if ($column != null) {
+//            $retrievedRelation = $this->column;
+//            $this->column = $modelColumn;
+//            return $retrievedRelation;
+//        }
+//        return $this->column;
 
     }
+
 
     /**
      * Define array of the product
