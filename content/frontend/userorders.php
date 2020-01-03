@@ -7,7 +7,7 @@ $personId=$_SESSION['USER']['DATA'][0]['PersonID'];
 
 // let's find out if the user has any orders.
 // If there are no order the user will be redirected to the mainpage.
-$orders=$handleDatabase->selectStmt("select * from orders where customerId=".$customerId);
+$orders=$handleDatabase->selectStmt("select * from orders where customerId=".$customerId." order by OrderID desc");
 
 if (!$orders)
 {

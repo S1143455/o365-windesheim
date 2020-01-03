@@ -7,6 +7,7 @@ if (!isset($_SESSION['authenticated']))
 {
     echo display_message('danger','U bent niet ingelogd.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/login\">";;
 }
+
 // If the user is logged in we're going to the page he selected.
 else
 {

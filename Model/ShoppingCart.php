@@ -26,6 +26,23 @@ class ShoppingCart
         $_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']=$getCartId[0]['ShoppingCartID'];
     }
 
+    public function RemoveCart($cartId, $customerId){
+        $handelData=new \Model\Database();
+        // First the customer table will be updated.
+        $updateCustomer=$handelData->UpdateStmt("update customer set ShoppingCartID= null where CustomerID=" . $customerId .";");
+
+        // Remove all rows..
+        $removeCartItems=$handelData->UpdateStmt("Delete from shoppingcart_stockitems where ShoppingCartID=".$cartId);
+
+        //Than we need to remove the cart itself.
+        $removeCart=$handelData->UpdateStmt("Delete from shoppingcart where ShoppingCartID=".$cartId);
+
+        // And last we need to update the array.
+        $_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']='';
+        unset($_SESSION['USER']['SHOPPING_CART']);
+        return 1;
+    }
+
     public function EmptyCart(){
         // Check if there's something to remove.
         if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'])
@@ -34,24 +51,17 @@ class ShoppingCart
             $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
             $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
 
-            // First the customer table will be updated.
-            $updateCustomer=$handelData->UpdateStmt("update customer set ShoppingCartID= null where CustomerID=" . $customerId .";");
-
-            // We also need to remove all the items in the cart.
-            $getCartContense=$handelData->selectStmt('select * from shoppingcart_stockitems');
+                        // We also need to remove all the items in the cart.
+            $getCartContense=$handelData->selectStmt('select * from shoppingcart_stockitems where ShoppingCartID=' . $cartId . ";");
             foreach ($getCartContense as $item)
             {
                 $this->addToStock($item['StockItemID'],$item['StockItemAmount']);
             }
-            // Remove all rows..
-            $removeCartItems=$handelData->UpdateStmt("Delete from shoppingcart_stockitems where ShoppingCartID=".$cartId);
 
-            //Than we need to remove the cart itself.
-            $removeCart=$handelData->UpdateStmt("Delete from shoppingcart where ShoppingCartID=".$cartId);
-
-            // And last we need to update the array.
-            $_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']='';
+            // Remove the Cart
+            $this->RemoveCart($cartId,$customerId);
             return 1;
+
         }
         // If there's nothing the remove we're done.
         return 0;
@@ -86,10 +96,10 @@ class ShoppingCart
         }
 
         // If the user is logged in, we need to check if the user has a cart.
-        if (!$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'])
+        if (!$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']) {
             // No cart is present. So we need to create one.
             $this->CreateCart();
-
+        }
         // There's a cart present. Let's put the the item in the cart.
         $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
         $handelData=new \Model\Database();
@@ -111,13 +121,13 @@ class ShoppingCart
         $itemAlreadyPresent=$handelData->selectStmt("select count(*) as present from shoppingcart_stockitems where StockItemID=". $stockItem );
         if ($itemAlreadyPresent[0]['present']==0) // The selected item is not present in the cart.
         {
-            $insertItem=$handelData->UpdateStmt("INSERT INTO shoppingcart_stockitems(ShoppingCartID, StockItemID, StockItemAmount) VALUES (" . $cartId . "," . $stockItem . ",1)");
+            $insertItem=$handelData->UpdateStmt("INSERT INTO shoppingcart_stockitems(ShoppingCartID, StockItemID, StockItemAmount) VALUES (" . $cartId . "," . $stockItem . ",".$amount.")");
             $this->LowerStock($stockItem,$amount);
         }
         else // If the item is already in the cart we need to add one more.
         {
             $amountOfItemsPresent=$handelData->selectStmt("select *  from shoppingcart_stockitems where StockItemID=". $stockItem );
-            $newAmount=$amountOfItemsPresent[0]['StockItemAmount']+1;
+            $newAmount=$amountOfItemsPresent[0]['StockItemAmount']+$amount;
             $updateItem=$handelData->UpdateStmt("UPDATE shoppingcart_stockitems SET StockItemAmount=" . $newAmount . " where  ShopStockID= " . $amountOfItemsPresent[0]['ShopStockID']);
             $this->LowerStock($stockItem,$amount);
         }
@@ -129,7 +139,6 @@ class ShoppingCart
         else{
             return 1;
         }
-
     }
 
     public function RemoveItem($stockItem,$amount){
@@ -170,14 +179,11 @@ class ShoppingCart
 
     public function ReOrder($orderId){
         $notAllPresent=1;
-        // We need to loop thru all the orderd items and put them in  the cart
+        // We need to loop thru all the ordered items and put them in  the cart
         foreach ($orderId as $item){
             $result=$this->AddItem($item['StockItemID'],$item['ItemAmount']);
             if ($result==9999)$notAllPresent=0;
         }
         return $notAllPresent;
-
     }
-
-
 }
