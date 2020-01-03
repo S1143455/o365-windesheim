@@ -140,10 +140,6 @@ $router->route('/admin/onderhoud-nieuwsbrief', function(){
     return include 'content/backend/onderhoudnieuwsbrief.php';
 });
 
-$router->route('/admin/aanmaken-nieuwsbrief', function(){
-    return include 'content/backend/newsletter/createnewsltr.php';
-});
-
 $router->route('/admin/bestellingoverzicht', function(){
     return include 'content/backend/bestellingoverzicht.php';
 });

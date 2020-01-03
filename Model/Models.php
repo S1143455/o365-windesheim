@@ -191,6 +191,9 @@ class Models
             "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+            "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
+            "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );
     }
 

@@ -190,7 +190,6 @@ class Discount extends Database
         $discounts = new Discount();
         $discounts = $discounts->retrieve();
         return $discounts;
-
     }
 
     public function getProductBasedOnID($ID){
@@ -204,7 +203,7 @@ class Discount extends Database
         return $result[0];
     }
 
-//    public function updateStockItemBasedOnSpecialDeal($SpecialDealID, $StockItemID){
+//    public function updateStockItemWithSpecialDealID($SpecialDealID, $StockItemID){
 //        $result = $this->UpdateStmt('UPDATE stockitem SET SpecialDealID = '.$SpecialDealID.' WHERE StockItemID = '.$StockItemID.';');
 //        return $result;
 //    }

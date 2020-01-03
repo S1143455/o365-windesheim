@@ -54,13 +54,10 @@ foreach ($_SESSION['USER']['SHOPPING_CART']['ITEMS'] as $key)
     $insertOderItems=$handelDataBase->UpdateStmt($insertPart1.$insertPart2);
 }
 
-// Empty the shoppingcart.
+// Clean the cart
 $cart=new \Model\ShoppingCart();
-$emptycart=$cart->EmptyCart();
+$cleanCart=$cart->RemoveCart($cartId,$customerId);
 
-// Unset the $_SESSION
-$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']='';
-unset($_SESSION['USER']['SHOPPING_CART']);
 
 // Let's let the user know all went well.
 ?>
