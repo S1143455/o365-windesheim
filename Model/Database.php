@@ -125,7 +125,6 @@ class Database extends Models
             return $this->newRow();
 
         } else if ($this->getID("value") != null) {
-            return $this->UpdateModal();
             return $this->UpdateEntry();
 
         }

@@ -27,7 +27,7 @@ $discountController = new Controller\DiscountController();
 $user = new Controller\UserController();
 $productController = new Controller\ProductController();
 
-$shoppingcartStockitems= new \Controller\ShoppingcartStockitemsController();
+$shoppingcartStockitems= new Controller\ShoppingcartStockitemsController();
 
 
 

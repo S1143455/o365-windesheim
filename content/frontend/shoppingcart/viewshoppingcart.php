@@ -8,22 +8,20 @@ $cart=new \Model\ShoppingCart();
 
 $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 
-//$category = $categoryController->retrieve($categoryID);
-$inthecart=$shoppingcartStockitems->retrieve($cartId);
+//$anyItemsInCart=$shoppingcartStockitems->getAllItems();
+$anyItemsInCart=$shoppingcartStockitems->where("ShoppingCartID",$cartId);
 
-print_r($inthecart);
+echo "<pre>";print_r($anyItemsInCart);echo "</pre>";
 die;
-
-
-$anyItemsInCart=$handelData->selectStmt('select count(*) as amount from shoppingcart_stockitems');
+//$anyItemsInCart=$handelData->selectStmt('select count(*) as amount from shoppingcart_stockitems '  );
 
 // Let's see if there are any items in the cart.
-if ($anyItemsInCart[0]['amount']==0) {
+//if ($anyItemsInCart[0]['amount']==0) {
+if (!$anyItemsInCart) {
     echo display_message('info','Uw winkelwagen bevat nog geen producten.');
     echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
     die;
 }
-
 
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
 
@@ -71,7 +69,7 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                         <?php $getAllTheProducts=new \Model\Database();
                         $totalCartPrice=0;
                         $allTheProducts=$getAllTheProducts->selectStmt("select sti.StockItemID, sti.StockItemName,sti.MarketingComments, cit.StockItemAmount, sti.RecommendedRetailPrice, sti.Photo,(cit.StockItemAmount*sti.RecommendedRetailPrice) as CartPrice 
-                                                                         from shoppingcart_stockitems cit left join stockitem sti on sti.StockItemID = cit.StockItemID;");
+                                                                         from shoppingcart_stockitems cit left join stockitem sti on sti.StockItemID = cit.StockItemID where cit.ShoppingCartID=". $cartId .";");
                         foreach ($allTheProducts as $item)
                         {
                             $myItemRow='';
