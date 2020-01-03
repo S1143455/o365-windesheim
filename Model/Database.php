@@ -113,23 +113,22 @@ class Database extends Models
     {
 
     }
-
     public function save()
     {
         $this->connection = $this->openConn();
         $table = $this->table;
         $this->getColumns();
         $this->validate();
-
-        if ($this->checkIfExists($this->getID("value")) == null) {
+        var_dump($this->getID("value"));
+        if ($this->checkIfExists($this->getID("value")) == null)
+        {
+            echo "3";
             return $this->newRow();
-
-        } else if ($this->getID("value") != null) {
-            return $this->UpdateModal();
+        }else if($this->getID("value") != null){
             return $this->UpdateEntry();
-
         }
     }
+
 
     /**
      * Finds a single row from the database by id.
@@ -214,7 +213,7 @@ class Database extends Models
         foreach ($values as $parameter => $value) {
             $stmt->bindValue($parameter, $value);
         }
-
+echo $sql;
         return $stmt;
     }
 

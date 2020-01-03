@@ -4,6 +4,7 @@
 namespace Controller;
 
 
+use Model\Database;
 use Model\Discount;
 use Model\Category;
 use Model\Product;
@@ -18,8 +19,19 @@ class DiscountController
         $this->discount = new Discount();
         $this->product = new Product();
         $this->category = new Category();
+        $this->database = new Database();
     }
+    public function retrieve($id){
+        echo "hoi";
+        $discount = new discount();
+        $discount = $discount->retrieve($id);
+        if(empty($discount->getSpecialDealID()))
+        {
+            //header("Location: /404", true);
+        }
 
+        return $discount;
+    }
     function GetAllDiscount()
     {
         $discounts = $this->discount->getAllSpecialDeals();
@@ -49,7 +61,7 @@ class DiscountController
         foreach ($products as $product) {
             $result = '';
             $result .= '<tr>
-                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="StockItemID['.$product->getStockItemID().']" id="selectTableRow"></td>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="StockItemID" id="selectTableRow" value="'. $product->getStockItemID().'"></td>
                    <td class="col-md-2">' . $product->getBrand() . '</td>
                    <td class="col-md-3">' . $product->getStockItemName() . '</td>
                    <td class="col-md-1">' . "€ " . $product->getUnitPrice() . ",- " . '</td>
@@ -74,7 +86,6 @@ class DiscountController
         echo $result;
         }
     }
-
     public function create()
     {
         print_r($_POST);
@@ -86,9 +97,29 @@ class DiscountController
 
         $this->store($this->discount);
 
-        // return "true";
         // include $this->contentpath
         include $this->admin . 'onderhoudkorting.php';
+        return "";
+
+    }
+    public function update()
+    {
+
+        $this->discount = new discount();
+        $this->discount->initialize();
+        //ingelogde gebruiker
+        $this->discount->setLastEditedBy(1);
+        if ($_POST("StockItemID")) {
+            foreach ($_POST["StockItemID"] as $id) {
+                $this->product->retrieve($id);
+                $this->product->setSpecialDealID($this->discount->getSpecialDealID());
+                $this->productController->store($this->product);
+            }
+        }
+        $this->store($this->discount);
+        include $this->admin . 'onderhoudkorting.php';
+        return "";
+
     }
 
     /**
@@ -99,7 +130,7 @@ class DiscountController
      */
     public function store($discount)
     {
-        var_dump($discount);
+        //var_dump($discount);
 
         if (!$discount->initialize())
         {
@@ -108,7 +139,7 @@ class DiscountController
         };
 
         $this->discount = $discount;
-
+var_dump($this->discount);
         if (!$this->discount->save())
         {
             return "Something went wrong.";

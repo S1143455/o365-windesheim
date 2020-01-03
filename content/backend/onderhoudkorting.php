@@ -1,16 +1,35 @@
 <?php
 include_once 'content/backend/header-admin.php';
-
+use Model\Discount;
 if (isset($_POST['id'])) {
     $discountID = $_POST['id'];
     if ($discountID != 0) {
-        $discountID = $discountController->retrieve($discountID);
+        $discount = $discountController->retrieve($discountID);
+        $discount->getSpecialDealID();
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditDiscountDialog').modal('show');   }); </script>";
     }
+
 }
 
+//echo "***********<br>"; print_r($_POST); echo "<br>***********<br>";
+//
+//
+//$invalues='';
+//
+//while ( ($myname=current($_POST['StockItemID'])) !==FALSE ){
+//    $invalues=$invalues.','.key($_POST['StockItemID']);
+//    next($_POST['StockItemID']);
+//
+//}
+//$invalues=substr($invalues,1);
+//echo "***********<br>".$invalues."<br>***********<br>";
+//
+//$sql="update " . $_POST['submit'] . " set y = z where id in (".$invalues. ")";
+//echo $sql."<br>";
+
+
 ?>
-<div class="container-fluid">
+<div class="container-fluid" xmlns="http://www.w3.org/1999/html">
     <div class="row">
 
         <?php
@@ -30,29 +49,33 @@ if (isset($_POST['id'])) {
             <br>
 
             <div class="row">
-                <div class="col-12 col-md-7 col-lg-8">
+                <div class="col-12 col-md-7 col-lg-8 tableDiscount">
                     <!-- Creates a table with headers and data based on function -->
-                    <table class="table table-responsive-lg table-bordered" id="tableViewDiscount">
-                        <thead>
-                        <tr>
-                            <th class="">Manage</th>
-                            <th class="">Code</th>
-                            <th class="">Percentage</th>
-                            <th class="">Eenmalig</th>
-                            <th class="">Actief</th>
-                            <th class="">Omschrijving</th>
-                            <th class="">Product aantal</th>
-                            <th class="">Beginperiode</th>
-                            <th class="">Eindperiode</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php $discount->GetAllDiscount(); ?>
-                        </tbody>
-                    </table>
+                    <form role="form" id="table" method="POST" action="">
+
+                        <table class="table table-responsive-lg table-bordered" id="tableViewDiscount">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">Manage</th>
+                                <th class="col-md-2">Code</th>
+                                <th class="col-md-1">Percentage</th>
+                                <th class="col-md-1">Eenmalig</th>
+                                <th class="col-md-1">Actief</th>
+                                <th class="col-md-3">Omschrijving</th>
+                                <th class="col-md-1">Product aantal</th>
+                                <th class="col-md-1">Beginperiode</th>
+                                <th class="col-md-1">Eindperiode</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $discountController->GetAllDiscount(); ?>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
 
                 <!-- style="" -->
+
                 <div class="col-12 col-md-2 col-lg-2 discountButtons">
                     <!-- discount option buttons  -->
                     <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
@@ -76,7 +99,8 @@ if (isset($_POST['id'])) {
         </div>
     </div>
 </div>
-<!-- modal (popup) eenmalige korting -->
+
+<!-- modal (popup) oneTimeDiscount -->
 <div class="modal fade" id="oneTimeDiscount" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -90,32 +114,32 @@ if (isset($_POST['id'])) {
                 <div class="modal-body">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label" for="inputCodeOT">Code:</label>
-                            <input class="form-control inputCode" type="text" name="DealCode"
+                            <label class="col-3 ml-xs-3 control-label" for="inputCodeOT">Code:</label>
+                            <input class="col-4 form-control inputCode" type="text" name="DealCode"
                                    id="inputCodeOT" placeholder="Code">
-                            <button class="btn btn-outline-secondary" type="button"
+                            <button class="col-4 btn btn-outline-secondary btnGenerateCode" type="button"
                                     onclick="generateCodeOT();">Genereer code
                             </button>
                         </div>
                         <div class="form-group">
-                            <label class="form-check-label" for="checkboxOT">Eenmalig:</label>
+                            <label class="col-3 col-md-3 col-lg-3 control-label" for="checkboxOT">Eenmalig:</label>
                             <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT"
                                    value="1">
                         </div>
                         <div class="form-group">
-                            <label class="labelInputPercentage" for="inputPercentageOT">Percentage:</label>
-                            <input class="form-control inputPercentage" type="text" name="DiscountPercentage"
+                            <label class="col-3 control-label" for="inputPercentageOT">Percentage:</label>
+                            <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
                                    id="inputPercentageOT">
-                            <span class="symbolPercentage">%</span>
+                            <span class="col-1 symbolPercentage">%</span>
                         </div>
                         <div class="form-group">
-                            <label class="labelInputStartDate" for="inputStartDateOT">Begin periode:</label>
-                            <input class="form-control inputStartDate" type="date" name="StartDate"
+                            <label class="col-3 control-label" for="inputStartDateOT">Begin periode:</label>
+                            <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
                                    id="inputStartDateOT">
                         </div>
                         <div class="form-group">
-                            <label for="inputEndDateOT">Einde periode:</label>
-                            <input class="form-control inputEndDate" type="date" name="EndDate"
+                            <label class="col-3 control-label" for="inputEndDateOT">Einde periode:</label>
+                            <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
                                    id="inputEndDateOT">
                         </div>
                     </div>
@@ -155,7 +179,9 @@ if (isset($_POST['id'])) {
                                            placeholder="Waar ben je naar op zoek?"
                                            aria-label="Search" id="myInputProduct"
                                            onkeyup="searchbarProduct()">
-                                    <table class="table table-fixed tableCollapseSP"
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-responsive-lg tableCollapseSP"
                                            id="tableCollapseProduct">
                                         <thead>
                                         <tr>
@@ -167,20 +193,20 @@ if (isset($_POST['id'])) {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php $discount->GetAllProducts(); ?>
+                                        <?php $discountController->GetAllProducts(); ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label class="control-label" for="inputCodePD">Code:</label>
                         <input type="text" class="form-control inputCode" name="DealCode" id="inputCodeDP"
                                placeholder="Code">
-                        <button type="button" class="btn btn-outline-secondary" onclick="generateCodeDP();">
-                            Genereer
-                            code
+                        <button type="button" class="btn btn-outline-secondary"
+                                onclick="generateCodeDP();">Genereer code
                         </button>
                     </div>
                     <div class="form-group">
@@ -213,7 +239,7 @@ if (isset($_POST['id'])) {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                    <button type="submit" class="btn btn-primary" name="submit">Korting aanmaken</button>
+                    <button type="submit" class="btn btn-primary" name="submit" value="deze tael">Korting aanmaken</button>
                 </div>
             </form>
         </div>
@@ -257,7 +283,7 @@ if (isset($_POST['id'])) {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php $discount->GetAllCategories(); ?>
+                                        <?php $discountController->GetAllCategories(); ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -363,49 +389,55 @@ if (isset($_POST['id'])) {
     </div>
 </div>
 
-<!-- modal to change selected row -->
-<div class="modal fade" id="EditDiscountDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal"
-     aria-hidden="true">
+<!-- modal to edit selected table row in a modal -->
+<div class="modal fade" id="EditDiscountDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal" aria-hidden="true">
     <div class="modal-dialog" style="width:1000px;">
         <div class="modal-content">
-            <form role="form" id="CreateDiscount" method="POST" action="CreateDiscount">
+            <form role="form" id="EditDiscount" method="POST" action="UpdateDiscount">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span
                                 aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                 </div>
-
                 <div class="modal-body">
+                    <div class="form-group" style="display: none;">
+                        <label for="SpecialDealID">SpecialDealID:</label>
+                        <input type="text" class="form-control" name="SpecialDealID" id="SpecialDealID"
+                               value="<?php echo($discount->getSpecialDealID()) ?>">
+                    </div>
                     <div class="form-group">
-                        <label class="control-label" for="checkboxMD">Eenmalig:</label>
-                        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxMD"
+                        <label for="DealCode">Code:</label>
+                        <input type="text" class="form-control" name="DealCode" id="DealCode"
                                value="<?php echo($discount->getDealCode()) ?>">
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Eenmalig</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName"
-                               value="<?php echo($discount->getOneTime()) ?>">
+                        <label class="control-label" for="checkboxOT">Eenmalig:</label>
+                        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT"
+                               value="<?php echo($discount->getOneTime()) ?>"
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName"
-                               value="<?php echo($discount->getLastEditedBy()) ?>">
+                        <label for="categoryID">Omschrijving:</label>
+                        <textarea class="form-control dealDescription" name="DealDescription" id="DealDescription"
+                               value="<?php echo($discount->getDealDescription()) ?>"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName"
-                               value="<?php echo($discount->getParentCategory()) ?>">
+                        <label class="col-3 control-label" for="inputPercentageOT">Percentage:</label>
+                        <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
+                               id="inputPercentageOT"
+                               value="<?php echo($discount->getDiscountPercentage()) ?>">
+                        <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        <label class="col-3 control-label" for="inputStartDateOT">Begin periode:</label>
+                        <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
+                               id="inputStartDateOT"
+                               value="<?php echo($discount->getStartDate()) ?>">
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        <label class="col-3 control-label" for="inputEndDateOT">Einde periode:</label>
+                        <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
+                               id="inputEndDateOT"
+                               value="<?php echo($discount->getEndDate()) ?>">
                     </div>
-
-                    <p>some content</p>
-                    <input style="" type="text" name="bookId" id="bookId" value=""/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -443,7 +475,7 @@ if (isset($_POST['id'])) {
 <script>
     $('.load-modal').on('click', function (e) {
         e.preventDefault();
-        $('#createCategory').modal('show');
+        $('#createDiscount').modal('show');
     });
 
     function searchbar() {
@@ -479,7 +511,7 @@ if (isset($_POST['id'])) {
 <script>
     $('.load-modal').on('click', function (e) {
         e.preventDefault();
-        $('#createCategory').modal('show');
+        $('#createDiscount').modal('show');
     });
 
     function searchbarProduct() {
@@ -514,7 +546,7 @@ if (isset($_POST['id'])) {
 <script>
     $('.load-modal').on('click', function (e) {
         e.preventDefault();
-        $('#createCategory').modal('show');
+        $('#createDiscount').modal('show');
     });
 
     function searchbarCategory() {

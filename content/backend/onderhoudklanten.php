@@ -54,12 +54,12 @@ include_once 'content/backend/header-admin.php';
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label" for="checkboxMD">Eenmalig:</label>
-                        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxMD"
+                        <label for="categoryID">Code:</label>
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName"
                                value="<?php echo($discount->getDealCode()) ?>">
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Eenmalig</label>
+                        <label class="control-label" for="checkboxMD">Eenmalig:</label>
                         <input type="text" class="form-control" name="CategoryName" id="CategoryName"
                                value="<?php echo($discount->getOneTime()) ?>">
                     </div>

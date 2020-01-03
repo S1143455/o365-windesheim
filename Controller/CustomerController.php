@@ -15,7 +15,16 @@ class CustomerController
         $this->customer = new Customer();
         $this->people = new People();
     }
+    public function retrieve($id){
+        $discount = new discount();
+        $discount = $discount->retrieve($id);
+        if(empty($discount->getCategoryID()))
+        {
+            //header("Location: /404", true);
+        }
 
+        return $discount;
+    }
     function getAllCustomer()
     {
         $customers = $this->customer->getAllCustomers();
