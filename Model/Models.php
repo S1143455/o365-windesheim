@@ -48,9 +48,7 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
-            case  'customer':
-                $this->getCustomer();
-                break;
+
             default:
                 die('Table not implemented');
         }
@@ -176,15 +174,7 @@ class Models
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
     }
-    private function getCustomer()
-    {
-        $this->column = array(
-            "CustomerID" => ['Integer', 'PrimaryKey', 'Required'],
-            "PersonID" => ['People', 'HasOne', 'Required'],
-            "ShoppingCartID" => ['Shoppingcart', 'HasOne', 'Nullable'],
-            "newsletter" => ['Integer', 'Attribute', 'Nullable'],
-        );
-    }
+
     private function getShoppingcart()
     {
         $this->column = array(

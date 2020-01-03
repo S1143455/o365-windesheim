@@ -1,6 +1,6 @@
 <?php
 include 'loader.php';
-include_once 'content/backend/header.php';
+include_once 'content/backend/header-admin.php';
 include 'content/backend/display_message.php';
     // Let's test the input of the user.
     if(isset($_POST['login']))

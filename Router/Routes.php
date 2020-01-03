@@ -20,7 +20,7 @@ $router->route('/about-us', function(){
  * Passwordrecovery
  */
 
-$router->route('/passwordrecovery', function() use($user){
+$router->route('/passwordrecovery', function() use($userController){
     return include 'content/frontend/passwordrecovery.php';
 });
 
@@ -105,7 +105,7 @@ $router->route('/admin', function(){
     return include 'content/backend/home-admin.php';
 });
 
-$router->route('/admin/passwordrecovery', function() use($user){
+$router->route('/admin/passwordrecovery', function() use($userController){
     return include 'content/backend/passwordrecovery.php';
 });
 
