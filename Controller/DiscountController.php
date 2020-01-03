@@ -22,7 +22,7 @@ class DiscountController
         $this->database = new Database();
     }
     public function retrieve($id){
-        echo "hoi";
+      //  echo "hoi";
         $discount = new discount();
         $discount = $discount->retrieve($id);
         if(empty($discount->getSpecialDealID()))
@@ -61,7 +61,7 @@ class DiscountController
         foreach ($products as $product) {
             $result = '';
             $result .= '<tr>
-                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="StockItemID" id="selectTableRow" value="'. $product->getStockItemID().'"></td>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedIDs[]" id="selectTableRow" value="'. $product->getStockItemID().'"></td>
                    <td class="col-md-2">' . $product->getBrand() . '</td>
                    <td class="col-md-3">' . $product->getStockItemName() . '</td>
                    <td class="col-md-1">' . "€ " . $product->getUnitPrice() . ",- " . '</td>
@@ -88,14 +88,22 @@ class DiscountController
     }
     public function create()
     {
-        print_r($_POST);
+       // print_r($_POST);
         $this->discount = new discount();
         $this->discount->initialize();
-        var_dump($this->discount);
+       // var_dump($this->discount);
 
         $this->discount->setLastEditedBy(1);
+        if ($_POST["selectedIDs"]) {
+            foreach ($_POST["selectedIDs"] as $id) {
+                $this->product = $this->product->retrieve($id);
+                $this->product->setSpecialDealID($this->discount->getSpecialDealID());
 
-        $this->store($this->discount);
+                //var_dump($this->product);
+                $this->storeProduct($this->product);
+            }
+        }
+        $this->storeDiscount($this->discount);
 
         // include $this->contentpath
         include $this->admin . 'onderhoudkorting.php';
@@ -113,7 +121,7 @@ class DiscountController
             foreach ($_POST["StockItemID"] as $id) {
                 $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
-                $this->productController->store($this->product);
+                $this->storeProduct($this->product);
             }
         }
         $this->store($this->discount);
@@ -128,7 +136,7 @@ class DiscountController
      * @param $discount discount
      * @return string
      */
-    public function store($discount)
+    public function storeDiscount($discount)
     {
         //var_dump($discount);
 
@@ -139,8 +147,55 @@ class DiscountController
         };
 
         $this->discount = $discount;
-var_dump($this->discount);
+
         if (!$this->discount->save())
+        {
+            return "Something went wrong.";
+        }
+    }
+
+    /**
+     * Stores the product in the database.
+     *
+     * @param $product product
+     * @return string
+     */
+    public function storeProduct($product)
+    {
+        //var_dump($discount);
+
+        if (!$product->initialize())
+        {
+            print_r($_GET);
+            return false;
+        };
+
+        $this->product = $product;
+        var_dump($product);
+        if (!$this->product->save())
+        {
+            return "Something went wrong.";
+        }
+    }
+
+    /**
+     * Stores the product in the database.
+     *
+     * @param $category Category
+     * @return string
+     */
+    public function storeCategory($category)
+    {
+
+        if (!$category->initialize())
+        {
+            print_r($_GET);
+            return false;
+        };
+
+        $this->category = $category;
+
+        if (!$this->category->save())
         {
             return "Something went wrong.";
         }

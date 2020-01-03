@@ -107,6 +107,7 @@ class Models
             "MarketingComments" => ['LongText', 'Attribute', 'Nullable'],
             "CategoryID" => ['Category', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
         );
     }
 
