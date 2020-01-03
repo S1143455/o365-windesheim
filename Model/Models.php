@@ -39,6 +39,9 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
+            case 'shoppingcart_stockitems':
+                $this->getShoppingcartStockitems();
+                break;
             default:
                 die('Table not implemented');
         }
@@ -187,6 +190,17 @@ class Models
 
         );
     }
+
+    private function getShoppingcartStockitems()
+    {
+        $this->column = array(
+            "ShopStockID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemAmount" => ['Integer', 'Attribute', 'Required'],
+        );
+    }
+
 
     /**
      * Gets the type of the $key

@@ -1,7 +1,19 @@
 <?php
+include 'loader.php';
 // The users is logged in.
+use Model\ShoppingcartStockitems;
+
 $handelData=new \Model\Database();
 $cart=new \Model\ShoppingCart();
+
+$cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
+
+//$category = $categoryController->retrieve($categoryID);
+$inthecart=$shoppingcartStockitems->retrieve($cartId);
+
+print_r($inthecart);
+die;
+
 
 $anyItemsInCart=$handelData->selectStmt('select count(*) as amount from shoppingcart_stockitems');
 
@@ -12,7 +24,7 @@ if ($anyItemsInCart[0]['amount']==0) {
     die;
 }
 
-$cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
+
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
 
 // Check if the users wants to empty the card.
