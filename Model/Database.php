@@ -300,13 +300,16 @@ class Database extends Models
     {
         $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
         if ($checkInput[0] && $checkInput[1] && $checkInput[2]) {
+
             $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
             if ($validArrayLength != 3) {
                 die("Parameters differ in size");
             }
             return "array";
         } else if ($checkInput[0] && $checkInput[2]) {
-            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
+            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 2;
+            echo sizeof($columnKeys);
+            echo sizeof($values);
             if ($validArrayLength != 2) {
                 die("Parameters differ in size");
             }
@@ -646,6 +649,7 @@ class Database extends Models
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
+        var_dump($array);
         if (!empty($array))
         {
             foreach ($array as $key => $value)

@@ -23,8 +23,8 @@ $admin = new Controller\AdminController();
 $categoryController = new Controller\CategoryController();
 
 $discountController = new Controller\DiscountController();
-
-$user = new Controller\UserController();
+$userController = new Controller\UserController();
+//$user = new Controller\UserController();
 $productController = new Controller\ProductController();
 
 

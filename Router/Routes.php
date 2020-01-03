@@ -36,6 +36,7 @@ $router->route('/logout', function(){
     return include 'views/login/logout.php';
 });
 
+
 /**
  * Begin usermainteance
  */
@@ -99,6 +100,25 @@ $router->route('/product/{id}', function($id) use($productController){
 /**
  * Begin admin routes
  */
+
+$router->route('/admin', function(){
+    return include 'content/backend/home-admin.php';
+});
+
+$router->route('/admin/passwordrecovery', function() use($user){
+    return include 'content/backend/passwordrecovery.php';
+});
+
+$router->route('/admin/login', function(){
+    return include 'views/login-Admin/login.php';
+});
+
+$router->route('/admin/logout', function(){
+    return include 'views/login-Admin/logout.php';
+});
+
+
+
 $router->route('/admin/onderhoud', function(){
     return include 'content/backend/onderhoud-admin.php';
 });
@@ -107,9 +127,6 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
     return include 'content/backend/onderhoudhoofdpagina.php';
 });
 
-$router->route('/admin', function(){
-    return include 'content/backend/home-admin.php';
-});
 
 $router->route('/admin/onderhoud-categorieen', function(){
     return include 'content/backend/onderhoudc.php';

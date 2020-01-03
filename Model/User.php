@@ -97,6 +97,9 @@ class User extends Database
     {
         return $this->passwordRecoveryTime=600;
     }
-
+    public function databaseWhere($return, $key, $id){
+        $retrieved = $this->where($return, $key, "=", $id);
+        return $retrieved;
+    }
 
 }
