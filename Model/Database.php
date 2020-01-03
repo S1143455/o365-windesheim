@@ -656,6 +656,8 @@ echo $sql;
                 $modelObject = new $className;
                 foreach ($value as $attrKey => $attrValue)
                 {
+                    var_dump($attrKey);
+                    var_dump($this->column);
                     if (array_key_exists($attrKey, $this->column))
                     {
                         $modelObject->setAttribute($attrKey, $attrValue);

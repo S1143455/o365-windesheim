@@ -41,7 +41,7 @@ class User extends Database
     function __construct()
     {
         Parent::__construct();
-        $this->table = 'People';
+        $this->table = 'people';
     }
     /**
      * @return mixed
