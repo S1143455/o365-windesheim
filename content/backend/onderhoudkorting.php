@@ -402,6 +402,7 @@ if (isset($_POST['id'])) {
                     </button>
                 </div>
                 <div class="modal-body">
+                    <?php echo($discountController->stockitems($discount)) ?>
                     <div class="form-group" style="display: none;">
                         <label class="col-3" for="SpecialDealID">SpecialDealID:</label>
                         <input type="text" class="form-control" name="SpecialDealID" id="SpecialDealID"
