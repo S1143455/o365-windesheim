@@ -36,12 +36,19 @@ class Models
             case  'people':
                 $this->getPeople();
                 break;
-            case  'specialdeals':
-                $this->getSpecialdeals();
-                break;
             case  'customer':
                 $this->getCustomer();
                 break;
+            case  'Shoppingcart':
+                $this->getShoppingcart();
+                break;
+            case  'address':
+                $this->getAddress();
+                break;
+            case  'specialdeals':
+                $this->getSpecialdeals();
+                break;
+
             default:
                 die('Table not implemented');
         }
@@ -168,6 +175,14 @@ class Models
         );
     }
 
+    private function getShoppingcart()
+    {
+        $this->column = array(
+            "ShoppingCartID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ExpirationDate" => ['Datetime', 'Attribute', 'Required'],
+            "CreationDate" => ['Datetime', 'Attribute', 'Required'],
+        );
+    }
     private function getContent()
     {
         $this->column = array(

@@ -9,13 +9,28 @@ class Customer extends Database
     private $CustomerID;
     private $PersonID;
     private $ShoppingCartID;
-    private $Newsletter;
+    private $newsletter;
 
     function __construct()
     {
-        $this->table = "customer";
-        parent::__construct();
+        Parent::__construct();
+        $this->table = 'Customer';
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getCustomerID()
+    {
+        return $this->CustomerID;
+    }
+
+    /**
+     * @param mixed $CustomerID
+     */
+    public function setCustomerID($CustomerID)
+    {
+        $this->CustomerID = $CustomerID;
     }
     /**
      * @return mixed
@@ -35,13 +50,9 @@ class Customer extends Database
         }
         return $this->Newsletter;
     }
-
-    /**
-     * @param mixed $Newsletter
-     */
-    public function setNewsletter($Newsletter)
+    public function setNewsLetter($newsletter)
     {
-        $this->Newsletter = $Newsletter;
+        $this->newsletter = $newsletter;
     }
 
     /**
@@ -76,21 +87,16 @@ class Customer extends Database
         $this->ShoppingCartID = $ShoppingCartID;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCustomerID()
-    {
-        return $this->CustomerID;
-    }
 
-    /**
-     * @param mixed $CustomerID
-     */
-    public function setCustomerID($CustomerID)
-    {
-        $this->CustomerID = $CustomerID;
-    }
+
+
+
+//`CustomerID` int(10) NOT NULL,
+//`PersonID` int(10) NOT NULL,
+//`ShoppingCartID` int(10) DEFAULT NULL,
+//`Gender` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+//`newsletter` tinyint(4) DEFAULT NULL,
+//`TermsAndConditions` tinyint(1) DEFAULT NULL
 
     /**
      * @return mixed
