@@ -1,6 +1,6 @@
 <?php
 use Model\User;
-$user = $userController->GetUserByEmail("FullName, EmailAddress", ["LogonName", "EmailAddress"], [$_POST['LogonName'], $_POST['EmailAddress']]);
+$user = $userController->GetUserBydata("*", ["LogonName", "EmailAddress"], [$_POST['LogonName'], $_POST['EmailAddress']]);
 if (!$user){goto ShowTheMessage;}
 function generateRandomString($length = 55) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@$%^*()_+=-';

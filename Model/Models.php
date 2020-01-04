@@ -50,6 +50,7 @@ class Models
                 break;
 
             default:
+                var_dump($this->table);
                 die('Table not implemented');
         }
 
@@ -196,7 +197,7 @@ class Models
     private function getPeople()
     {
         $this->column = array(
-            "PeopleID" => ['Integer', 'PrimaryKey', 'Required'],
+            "PersonID" => ['Integer', 'PrimaryKey', 'Required'],
             "FullName" => ['Varchar', 'Attribute', 'Required'],
             "LogonName" => ['Varchar', 'HasOne', 'Required'],
             "HashedPassword" => ['Blob', 'Attribute', 'Required'],

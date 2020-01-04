@@ -22,7 +22,16 @@ class UserController
         $this->addres = $this->addres->retrieve($id);
         return $this->addres;
     }
+    public function retrieveUser($id){
+        $user = new user();
+        $user = $user->retrieve($id);
+        if(empty($user->getPersonID()))
+        {
+            //header("Location: /404", true);
+        }
 
+        return $user;
+    }
     public function getUsername()
     {
         if (isset($_SESSION['USER']))
@@ -44,9 +53,9 @@ class UserController
      * Stores the product in the database.
      * @return User
      */
-    public function GetUserByEmail($return, $key, $id){
+    public function GetUserBydata($return, $key, $id){
         $user = $this->user->where($return,$key,$id);
-        return $user;
+        return $user[0];
     }
 
 
@@ -56,7 +65,7 @@ class UserController
      * @param $user User
      * @return string
      */
-    public function store($user)
+    public function storeUser($user)
     {
         if (!$user->initialize())
         {
@@ -69,7 +78,25 @@ class UserController
             return "Something went wrong.";
         }
     }
+    /**
+     * Stores the product in the database.
+     *
+     * @param $address Adress
+     * @return string
+     */
+    public function storeAdress($address)
+    {
+        if (!$address->initialize())
+        {
+            return false;
+        };
+        $this->addres = $address;
 
+        if (!$this->addres->save())
+        {
+            return "Something went wrong.";
+        }
+    }
     /**
      * Stores the product in the database.
      *
@@ -78,7 +105,7 @@ class UserController
      */
     public function update($user1)
     {
-        $this->store($user1);
+        $this->storeUser($user1);
 
     }
     /**
@@ -93,28 +120,19 @@ class UserController
         {
             return $_SESSION['LOGIN_ERROR']=["type"=>'warning', "message"=>'Vul een gebruikersnaam en wachtwoord in.'];
         }
-
         if($this->checkCredentials($username, $password))
         {
             // Check if the passwords match.
-            var_dump($this->user);
             if ($this->verifyPassword($password,$this->user->getHashedPassword()))
             {
                 $_SESSION['authenticated']='true';
                 $_SESSION['USER']= $this->user;
-                $_SESSION['USER']['PersonID']= $this->user->getPersonID();
-                $_SESSION['USER']['LogonName']= $this->user->getLogonName();
-                $_SESSION['USER']['IsSystemUser']= $this->user->getIsSystemUser();
-                $_SESSION['USER']['Role']= $this->user->getRole();
-                $_SESSION['USER']['EmailAddress']= $this->user->getEmailAddress();
-                $_SESSION['USER']['Fullname']= $this->user->getFullname();
-                $customerDetails = $this->getCustomerByID($_SESSION['USER']['PersonID']);
-                $_SESSION['USER']['CUSTOMER_DETAILS']=$customerDetails;
-                $addressDetails = $this->getAdressByID($_SESSION['USER']['PersonID']);
-                $_SESSION['USER']['ADDRESS']=$addressDetails;
-
+                $customerDetails = $this->getCustomerByID($_SESSION['USER']->getPersonID());
+                $_SESSION['CUSTOMER_DETAILS']=$customerDetails;
+                $addressDetails = $this->getAdressByID($_SESSION['USER']->getPersonID());
+                $_SESSION['ADDRESS']=$addressDetails;
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+                //echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/omasbeste/admin\">";
             }
             else
             {
@@ -127,14 +145,9 @@ class UserController
     public function unsetData(){
         unset($_SESSION['authenticated']);
         unset($_SESSION['USER']);
-        unset($_SESSION['USER']['PersonID']);
-        unset($_SESSION['USER']['LogonName']);
-        unset($_SESSION['USER']['IsSystemUser']);
-        unset($_SESSION['USER']['Role']);
-        unset($_SESSION['USER']['EmailAddress']);
-        unset($_SESSION['USER']['Fullname']);
-        unset($_SESSION['USER']['CUSTOMER_DETAILS']);
-        unset($_SESSION['USER']['ADDRESS']);
+        unset($_SESSION['CUSTOMER_DETAILS']);
+        unset($_SESSION['ADDRESS']);
+
 
         $this->user = new user();
     }
@@ -156,7 +169,7 @@ class UserController
      */
     private function verifyPassword($inputPassword, $dbPassword)
     {
-        echo $dbPassword;
+       // echo $dbPassword;
         return password_verify($inputPassword, $dbPassword);
     }
 
@@ -192,20 +205,14 @@ class UserController
 
     public function checkCredentials($logonName,$password)
     {
-
         $user = $this->user->where("*", "LogonName", "=", $logonName);
         if(empty($user))
         {
-            echo "error";
             return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
         }
         else
         {
-            echo "succes";
-            $this->user = $user;
-
-           //var_dump($this->user);
-
+            $this->user = $user[0];
             return true;
         }
     }
