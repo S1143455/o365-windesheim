@@ -49,9 +49,9 @@ class CategoryController extends FileController
         $this->category = $category;
         if(isset($_FILES)){
             $attachmentID = $this->upload($this->category->getLastEditedBy());
-            var_dump($attachmentID);
+            //var_dump($attachmentID);
             $category->setAttachmentID($attachmentID);
-            var_dump($category);
+            //var_dump($category);
 
         }
 

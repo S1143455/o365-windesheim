@@ -42,7 +42,6 @@ class UserController
 
     /**
      * Stores the product in the database.
-     *
      * @return User
      */
     public function GetUserByEmail($return, $key, $id){
@@ -99,30 +98,31 @@ class UserController
         //$this->user->setHashedPassword($password);
         if($this->checkCredentials($username, $password))
         {
-//            // Check if the passwords match.
-//            if ($this->verifyPassword($password,$this->user->getHashedPassword()))
-//            {
-//                $_SESSION['authenticated']='true';
-//                $_SESSION['USER']= $this->user;
-//                $_SESSION['USER']['PersonID']= $this->user->getPersonID();
-//                $_SESSION['USER']['LogonName']= $this->user->getLogonName();
-//                $_SESSION['USER']['IsSystemUser']= $this->user->getIsSystemUser();
-//                $_SESSION['USER']['Role']= $this->user->getRole();
-//                $_SESSION['USER']['EmailAddress']= $this->user->getEmailAddress();
-//                $_SESSION['USER']['Fullname']= $this->user->getFullname();
-//                $customerDetails = $this->getCustomerByID($_SESSION['USER']['PersonID']);
-//                $_SESSION['USER']['CUSTOMER_DETAILS']=$customerDetails;
-//                $addressDetails = $this->getAdressByID($_SESSION['USER']['PersonID']);
-//                $_SESSION['USER']['ADDRESS']=$addressDetails;
-//
-//                $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-//                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
-//            }
-//            else
-//            {
-//                $this->unsetData();
-//                return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
-//            }
+            // Check if the passwords match.
+            var_dump($this->user);
+            if ($this->verifyPassword($password,$this->user->getHashedPassword()))
+            {
+                $_SESSION['authenticated']='true';
+                $_SESSION['USER']= $this->user;
+                $_SESSION['USER']['PersonID']= $this->user->getPersonID();
+                $_SESSION['USER']['LogonName']= $this->user->getLogonName();
+                $_SESSION['USER']['IsSystemUser']= $this->user->getIsSystemUser();
+                $_SESSION['USER']['Role']= $this->user->getRole();
+                $_SESSION['USER']['EmailAddress']= $this->user->getEmailAddress();
+                $_SESSION['USER']['Fullname']= $this->user->getFullname();
+                $customerDetails = $this->getCustomerByID($_SESSION['USER']['PersonID']);
+                $_SESSION['USER']['CUSTOMER_DETAILS']=$customerDetails;
+                $addressDetails = $this->getAdressByID($_SESSION['USER']['PersonID']);
+                $_SESSION['USER']['ADDRESS']=$addressDetails;
+
+                $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+            }
+            else
+            {
+                $this->unsetData();
+                return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
+            }
         }
 
     }
@@ -194,17 +194,20 @@ class UserController
 
     public function checkCredentials($logonName,$password)
     {
-        echo "hoi";
+
         $user = $this->user->where("*", "LogonName", "=", $logonName);
-        echo "doei";
-        var_dump($user);
-        if(!$user)
+        if(empty($user))
         {
+            echo "error";
             return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
         }
         else
         {
+            echo "succes";
             $this->user = $user;
+
+            var_dump($this->user);
+
             return true;
         }
     }
