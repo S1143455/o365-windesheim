@@ -6,7 +6,7 @@
 if (isset($_POST['id'])) {
     $categoryID = $_POST['id'];
     if($categoryID != 0){
-        $category = $categoryController->retrieve($categoryID);
+        $category = $categoryController->retrieveCategory($categoryID);
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditCategorieDialog').modal('show');   }); </script>";
     }
 }
@@ -106,7 +106,7 @@ if (isset($_POST['id'])) {
                         <label for="categoryID">Categorie</label>
 
 
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getCategoryID()) ?>" >
+                        <input type="text" class="form-control" name="CategoryID" id="CategoryID" value="<?php echo($category->getCategoryID()) ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryID">Categorie</label>
@@ -114,26 +114,21 @@ if (isset($_POST['id'])) {
                     </div>
                     <div class="form-group">
                         <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getLastEditedBy()) ?>" >
-                    </div> <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getParentCategory()) ?>"  >
+                        <input type="text" class="form-control" name="LastEditedBy" id="LastEditedBy" value="<?php echo($category->getLastEditedBy()) ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        <input type="text" class="form-control" name="ParentCategory" id="ParentCategory" value="<?php echo($categoryController->getParentCategoryfromCategory($category)) ?>"  >
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        <label for="AttachmentID">Afbeelding</label>
+                        <input type="file" name="AttachmentID" id="AttachmentID" value="<?php echo($categoryController->getAttachmentfromCategory($category)) ?>">
                     </div>
 
-                    <p>some content</p>
-                    <input style="" type="text" name="bookId" id="bookId" value=""/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                    <input type="submit" name="submit" value="Aanpassen" class="btn btn-primary">
                 </div>
             </form>
         </div>
