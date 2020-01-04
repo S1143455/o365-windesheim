@@ -94,8 +94,6 @@ class UserController
             return $_SESSION['LOGIN_ERROR']=["type"=>'warning', "message"=>'Vul een gebruikersnaam en wachtwoord in.'];
         }
 
-        //$this->user->setLogonName($username);
-        //$this->user->setHashedPassword($password);
         if($this->checkCredentials($username, $password))
         {
             // Check if the passwords match.
@@ -206,7 +204,7 @@ class UserController
             echo "succes";
             $this->user = $user;
 
-            var_dump($this->user);
+           //var_dump($this->user);
 
             return true;
         }
