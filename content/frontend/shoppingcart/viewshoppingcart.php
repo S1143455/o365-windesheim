@@ -2,28 +2,19 @@
 include 'loader.php';
 // The users is logged in.
 use Model\ShoppingcartStockitems;
-
 $handelData=new \Model\Database();
 $cart=new \Model\ShoppingCart();
 
-$cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
-
-//$anyItemsInCart=$shoppingcartStockitems->getAllItems();
-$anyItemsInCart=$shoppingcartStockitems->where("ShoppingCartID",$cartId);
-
-echo "<pre>";print_r($anyItemsInCart);echo "</pre>";
-die;
-//$anyItemsInCart=$handelData->selectStmt('select count(*) as amount from shoppingcart_stockitems '  );
-
 // Let's see if there are any items in the cart.
-//if ($anyItemsInCart[0]['amount']==0) {
-if (!$anyItemsInCart) {
+if (!$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']) {
     echo display_message('info','Uw winkelwagen bevat nog geen producten.');
     echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
     die;
 }
 
+$cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
+//$anyItemsInCart=$shoppingcartStockitems->where("ShoppingCartID",$cartId);
 
 // Check if the users wants to empty the card.
 if (isset($_POST['emptycart']))

@@ -20,7 +20,17 @@ class ShoppingcartStockitemsController
     public function where($field,$value){
         $ShoppingcartStockitem = new ShoppingcartStockitems();
         $ShoppingcartStockitem = $ShoppingcartStockitem->where("*",$field,"=",$value);
-        return $ShoppingcartStockitem;
+        $result=array();
+        foreach ($ShoppingcartStockitem as $ShoppingcartStockitem){
+                $temp_array = array(
+                    "ShopStockID" => $ShoppingcartStockitem->getShopStockID(),
+                    "ShoppingCartID" => $ShoppingcartStockitem->getShoppingCartID(),
+                    "StockItemID" => $ShoppingcartStockitem->getStockItemID(),
+                    "StockItemAmount" => $ShoppingcartStockitem->getStockItemAmount(),
+                );
+                array_push($result,$temp_array);
+            }
+        return $result;
 
     }
 
