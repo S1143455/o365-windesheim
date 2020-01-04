@@ -1,4 +1,3 @@
-test
 <?php
 include 'loader.php';
 include_once 'content/frontend/header.php';
@@ -6,7 +5,7 @@ include 'content/frontend/display_message.php';
     // Let's test the input of the user.
     if(isset($_POST['login']))
     {
-        $userController->login($_POST['gbrkr'], $_POST['pw']);
+        $authenticationController->login($_POST['gbrkr'], $_POST['pw']);
     }
 
     if (isset($_POST['sendpassword']))
@@ -14,7 +13,6 @@ include 'content/frontend/display_message.php';
         include "content/frontend/sendemailaddress.php";
     }
 ?>
-test
 <div class="container">
     <div class="row">
         <form role="form" id="table" method="POST" action="">

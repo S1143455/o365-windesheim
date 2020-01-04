@@ -6,7 +6,7 @@ spl_autoload_register(function ($class) {
 });
 $router = new Router\Router();
 $mainController = new Controller\MainController();
-//$authenticationController = new Controller\AuthenticationController();
+$authenticationController = new Controller\AuthenticationController();
 $discount = new Controller\DiscountController();
 $customer = new Controller\CustomerController();
 $userController = new Controller\UserController();

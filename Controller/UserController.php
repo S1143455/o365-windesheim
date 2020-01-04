@@ -34,9 +34,9 @@ class UserController
     }
     public function getUsername()
     {
-        if (isset($_SESSION['USER']))
+        if (isset($_SESSION['USERAdmin']))
         {
-            return $_SESSION['USER']['LogonName'];
+            return $_SESSION['USERAdmin']['LogonNameAdmin'];
         }
         return 'Login';
     }
@@ -125,12 +125,12 @@ class UserController
             // Check if the passwords match.
             if ($this->verifyPassword($password,$this->user->getHashedPassword()))
             {
-                $_SESSION['authenticated']='true';
-                $_SESSION['USER']= $this->user;
-                $customerDetails = $this->getCustomerByID($_SESSION['USER']->getPersonID());
-                $_SESSION['CUSTOMER_DETAILS']=$customerDetails;
-                $addressDetails = $this->getAdressByID($_SESSION['USER']->getPersonID());
-                $_SESSION['ADDRESS']=$addressDetails;
+                $_SESSION['authenticatedAdmin']='true';
+                $_SESSION['USERAdmin']= $this->user;
+                $customerDetails = $this->getCustomerByID($_SESSION['USERAdmin']->getPersonID());
+                $_SESSION['CUSTOMER_DETAILSAdmin']=$customerDetails;
+                $addressDetails = $this->getAdressByID($_SESSION['USERAdmin']->getPersonID());
+                $_SESSION['ADDRESSAdmin']=$addressDetails;
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
                 //echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/omasbeste/admin\">";
             }
@@ -143,10 +143,10 @@ class UserController
 
     }
     public function unsetData(){
-        unset($_SESSION['authenticated']);
-        unset($_SESSION['USER']);
-        unset($_SESSION['CUSTOMER_DETAILS']);
-        unset($_SESSION['ADDRESS']);
+        unset($_SESSION['authenticatedAdmin']);
+        unset($_SESSION['USERAdmin']);
+        unset($_SESSION['CUSTOMER_DETAILSAdmin']);
+        unset($_SESSION['ADDRESSAdmin']);
 
 
         $this->user = new user();
@@ -183,19 +183,19 @@ class UserController
     }
     function logout()
     {
-        if (isset($_SESSION['authenticated'])) {
-            unset($_SESSION['authenticated']);
-            unset($_SESSION['USER']);
+        if (isset($_SESSION['authenticatedAdmin'])) {
+            unset($_SESSION['authenticatedAdmin']);
+            unset($_SESSION['USERAdmin']);
         }
     }
 
     function isAuthenticated()
     {
 
-        if (isset($_SESSION['authenticated'])) {
+        if (isset($_SESSION['authenticatedAdmin'])) {
             return "Welkom, " . $this->user->getLogonName();
         } else {
-            return " | <a class='pull-right' href='/login'>Login</a> | <a class='pull-right' href='/register'>Register</a>";
+            return " | <a class='pull-right' href='/admin/login'>Login</a>";
         }
     }
 
