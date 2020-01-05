@@ -1,8 +1,20 @@
 <?php
 include 'content/frontend/display_message.php';
+$cart=new \Model\ShoppingCart();
 // if the $_POST isset we add the item to the cart.
-if (isset($_POST['add'])){include 'content/frontend/shoppingcart/add_item.php';}
-if (isset($_POST['remove'])){include 'content/frontend/shoppingcart/remove_item.php';}
+if (isset($_POST['add']))
+{
+    $updateCart=$cart->AddItem($_POST['add'],1);
+    if ($updateCart==1){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";}
+    else {echo display_message('info','Helaas is dit product niet meer op voorraad.'). "<META HTTP-EQUIV=Refresh CONTENT=\"3;\">";}
+}
+
+if (isset($_POST['remove'])){
+    $updateCart=$cart->RemoveItem($_POST['remove'],1);
+    if ($updateCart==1){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";}
+    //echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";
+}
+
 ?>
 <html lang="nl">
     <head>

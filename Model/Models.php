@@ -173,6 +173,8 @@ class Models
             "EmailAddress" => ['Varchar', 'Attribute', 'Unique'],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+            "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
+            "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );
     }
 

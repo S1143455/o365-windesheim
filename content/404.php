@@ -1,1 +1,1 @@
-<p>404 - This page does not exist.</p>
+404 - This page does not exist.
