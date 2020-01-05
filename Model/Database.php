@@ -119,7 +119,6 @@ class Database extends Models
         $table = $this->table;
         $this->getColumns();
         $this->validate();
-        //var_dump($this->getID("value"));
         if ($this->checkIfExists($this->getID("value")) == null)
         {
             echo "3";
