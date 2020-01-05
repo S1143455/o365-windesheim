@@ -8,8 +8,12 @@ use Model\Adress;
 
 class UserController
 {
+    private $templatePath;
+    private $contentPath;
     function __construct()
     {
+        $this->templatePath = getenv('TEMPLATEPATH');
+        $this->contentPath = getenv('CONTENTPATH');
         $this->user = new User();
         $this->customer = new Customer();
         $this->addres = new Adress();
@@ -123,7 +127,11 @@ class UserController
         if($this->checkCredentials($username, $password))
         {
             // Check if the passwords match.
-            if ($this->verifyPassword($password,$this->user->getHashedPassword()))
+//            $this->user->setRole("ADMIN");
+//            $this->storeUser($this->user);
+//            $this->user->retrieve($this->user->getPersonID());
+//            var_dump($this->user->getRole());
+            if ($this->verifyPassword($password,$this->user->getHashedPassword()) and $this->user->getRole() == "ADMIN")
             {
                 $_SESSION['authenticatedAdmin']='true';
                 $_SESSION['USERAdmin']= $this->user;
@@ -132,15 +140,25 @@ class UserController
                 $addressDetails = $this->getAdressByID($_SESSION['USERAdmin']->getPersonID());
                 $_SESSION['ADDRESSAdmin']=$addressDetails;
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-                //echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/omasbeste/admin\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/omasbeste/admin\">";
             }
             else
             {
-                $this->unsetData();
-                return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
+                if($this->user->getRole() != "ADMIN"){
+                    $this->unsetData();
+                    return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Dit account is geen Admin.'];
+                }else{
+                    $this->unsetData();
+                    return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
+                }
+
             }
         }
 
+    }
+    function gotoLogin()
+    {
+       echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/". $this->templatePath  . "/admin/login\">";
     }
     public function unsetData(){
         unset($_SESSION['authenticatedAdmin']);

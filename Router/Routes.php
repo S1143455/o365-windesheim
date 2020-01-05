@@ -101,15 +101,20 @@ $router->route('/product/{id}', function($id) use($productController){
  * Begin admin routes
  */
 
-$router->route('/admin', function(){
-    return include 'content/backend/home-admin.php';
+$router->route('/admin', function() {
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/home-admin.php';
+    }
 });
 
-$router->route('/admin/passwordrecovery', function() use($userController){
+$router->route('/admin/passwordrecovery', function() {
     return include 'content/backend/passwordrecovery.php';
 });
 
-$router->route('/admin/login', function(){
+$router->route('/admin/login', function() {
+
     return include 'views/login-Admin/login.php';
 });
 
@@ -120,52 +125,99 @@ $router->route('/admin/logout', function(){
 
 
 $router->route('/admin/onderhoud', function(){
-    return include 'content/backend/onderhoud-admin.php';
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/onderhoud-admin.php';
+    }
+
 });
 
 $router->route('/admin/onderhoud-hoofdpagina', function(){
-    return include 'content/backend/onderhoudhoofdpagina.php';
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/onderhoudhoofdpagina.php';
+    }
 });
 
 
-$router->route('/admin/onderhoud-categorieen', function(){
-    return include 'content/backend/onderhoudc.php';
+$router->route('/admin/onderhoud-categorieen', function() {
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/onderhoudc.php';
+    }
 });
 
 $router->route('/admin/onderhoud-producten', function() use($productController){
-    return $productController->admin();
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return $productController->admin();
+    }
 });
 
 $router->route('/admin/onderhoud-klanten', function(){
-    return include 'content/backend/onderhoudklanten.php';
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/onderhoudklanten.php';
+    }
 });
 $router->route('/admin/CreateCategorie', function() use($categoryController){
-    return $categoryController->create();
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return $categoryController->create();
+    }
 });
 $router->route('/admin/CreateDiscount', function() use($discountController){
-    return $discountController->create();
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return $discountController->create();
+    }
 });
 $router->route('/admin/UpdateDiscount', function() use($discountController){
-    return $discountController->update();
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return $discountController->update();
+    }
 });
 
 $router->route('/admin/onderhoud-korting', function(){
-    return include 'content/backend/onderhoudkorting.php';
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/onderhoudkorting.php';
+    }
 });
 
 $router->route('/admin/onderhoud-nieuwsbrief', function(){
-    return include 'content/backend/onderhoudnieuwsbrief.php';
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/onderhoudnieuwsbrief.php';
+    }
 });
 
 $router->route('/admin/bestellingoverzicht', function(){
-    return include 'content/backend/bestellingoverzicht.php';
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/bestellingoverzicht.php';
+    }
 });
 $router->route('/admin/bestellingoverzicht', function(){
-    return include 'content/backend/bestellingoverzicht.php';
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/bestellingoverzicht.php';
+    }
 });
-$router->route('/admin/upload', function(){
-    return include 'content/backend/upload.php';
-});
+
 /**
  * End AdminController routes
  */
