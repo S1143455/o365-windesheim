@@ -5,7 +5,7 @@ namespace Controller;
 
 use Model\Category;
 use Model\Database;
-use Model\File;
+use Model\Attachments;
 class CategoryController extends FileController
 {
     private $admin = 'content/backend/';
@@ -14,7 +14,7 @@ class CategoryController extends FileController
     {
         $this->category = new category();
     }
-    public function retrieve($id){
+    public function retrieveCategory($id){
         $category = new category();
         $category = $category->retrieve($id);
         if(empty($category->getCategoryID()))
@@ -23,6 +23,32 @@ class CategoryController extends FileController
         }
 
         return $category;
+    }
+    public function retrieveAttachment($id){
+        $attachment = new Attachments();
+        $attachment = $attachment->retrieve($id);
+        if(empty($attachment->getAttachmentID()))
+        {
+            //header("Location: /404", true);
+        }
+        return $attachment;
+    }
+
+    public function getParentCategoryfromCategory($category){
+        if($category->getParentCategory() != null){
+            return $this->retrieveCategory($category->getParentCategory());
+        }else {
+            return null;
+        }
+    }
+
+
+    public function getAttachmentfromCategory($category){
+        if($category->getAttachmentID() != null){
+            return $this->retrieveCategory($category->getAttachmentID());
+        }else {
+            return null;
+        }
     }
     public function create()
     {
@@ -49,9 +75,9 @@ class CategoryController extends FileController
         $this->category = $category;
         if(isset($_FILES)){
             $attachmentID = $this->upload($this->category->getLastEditedBy());
-            var_dump($attachmentID);
+            //var_dump($attachmentID);
             $category->setAttachmentID($attachmentID);
-            var_dump($category);
+            //var_dump($category);
 
         }
 

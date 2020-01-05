@@ -130,10 +130,12 @@ class Database extends Models
 
         var_dump($this->getID("value"));
         if ($this->checkIfExists($this->getID("value")) == null) {
-            echo "3";
-            return $this->newRow();
-        } else if ($this->getID("value") != null) {
-            return $this->UpdateEntry();
+            if ($this->checkIfExists($this->getID("value")) == null) {
+                echo "3";
+                return $this->newRow();
+            } else if ($this->getID("value") != null) {
+                return $this->UpdateEntry();
+            }
         }
     }
 
@@ -668,7 +670,7 @@ echo $sql;
         $className = get_class($this);
         $modelObject = new $className;
         $this->getColumns();
-        var_dump($array);
+      //  var_dump($array);
         if (!empty($array))
         {
             foreach ($array as $key => $value)
@@ -676,8 +678,8 @@ echo $sql;
                 $modelObject = new $className;
                 foreach ($value as $attrKey => $attrValue)
                 {
-                    var_dump($attrKey);
-                    var_dump($this->column);
+                   // var_dump($attrKey);
+                  //  var_dump($this->column);
                     if (array_key_exists($attrKey, $this->column))
                     {
                         $modelObject->setAttribute($attrKey, $attrValue);

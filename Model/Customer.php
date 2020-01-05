@@ -14,7 +14,7 @@ class Customer extends Database
     function __construct()
     {
         Parent::__construct();
-        $this->table = 'Customer';
+        $this->table = 'customer';
     }
 
     /**
