@@ -87,6 +87,7 @@ class CategoryController extends FileController
     function GetAllCategories()
     {
         $categories = $this->category->getAllActiveCategories();
+
         foreach($categories as $category){
             $result = '';
             $result .= '<tr style="height:40px;">

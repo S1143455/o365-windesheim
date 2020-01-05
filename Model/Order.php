@@ -9,7 +9,7 @@ class Order extends Database
     private $orderID;
     private $customerID;
     private $orderDate;
-    private $orderAmmount;
+    private $orderAmount;
 
     function __construct()
     {
@@ -83,13 +83,18 @@ class Order extends Database
 
     public function getAllActiveOrders()
     {
-        $result = '';
-        /**
-         * $result = $this->selectStmt('SELECT * FROM order; ');
-         */
-        $result = $this->selectStmt('SELECT orderID,CustomerID,OrderDate,OrderAmmount FROM order;');
+        $orders = new Order();
+        $orders = $orders->retrieve();
+        return $orders;
 
-        return $result;
+//
+//        $result = '';
+//        /**
+//         * $result = $this->selectStmt('SELECT * FROM order; ');
+//         */
+//      // $result = $this->selectStmt('SELECT * FROM order;');
+//
+//        return $result;
     }
 
 }

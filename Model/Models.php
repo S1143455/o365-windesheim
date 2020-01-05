@@ -42,6 +42,9 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
+            case  'order':
+                $this->getOrder();
+                break;
             default:
                 die('Table not implemented');
         }
@@ -199,6 +202,26 @@ class Models
             "Gender" => ['Varchar', 'Attribute', 'Required'],
             "newsletter" => ['Boolean', 'Attribute', 'Not Required'],
             "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
+        );
+    }
+    private function getOrder()
+    {
+        $this->column = array(
+            "CustomerID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "AddressID" => ['Integer', 'Attribute', 'Unique'],
+            "PersonID" => ['Integer', 'HasOne', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "Gender" => ['Varchar', 'Attribute', 'Required'],
+            "newsletter" => ['Boolean', 'Attribute', 'Not Required'],
+            "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
+        );
+    }
+    private function getOrderStockItem()
+    {
+        $this->column = array(
+            "OrderStockItemID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "OrderID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemID" => ['Integer', 'Attribute', 'Required'],
         );
     }
 
