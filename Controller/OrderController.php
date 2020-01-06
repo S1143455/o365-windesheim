@@ -55,6 +55,7 @@ class OrderController
                         </tr>';
 
         }
+
         echo $result;
 
 
@@ -64,11 +65,12 @@ class OrderController
 
     function GetAllOrders()
     {
-        $order = $this->order->getAllActiveOrders();
-        foreach ($order as $order) {
+        $orders = $this->order->getAllActiveOrders();
+
+        foreach ($orders as $order) {
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-md-3">' . $order->getOrderID() . '</td>
+                            <td class="col-md-3">' . $order['OrderID'] . '</td>
                             <td class="col-md-3">' . $order['CustomerID'] . '</td>
                             <td class="col-md-3">' . $order['OrderDate'] . '</td>
                             <td class="col-md-3">' . $order['OrderAmmount'] . '</td>

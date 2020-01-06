@@ -209,13 +209,14 @@ class Models
     private function getOrder()
     {
         $this->column = array(
-            "CustomerID" => ['Integer', 'PrimaryKey', 'Required' ],
-            "AddressID" => ['Integer', 'Attribute', 'Unique'],
-            "PersonID" => ['Integer', 'HasOne', 'Required'],
-            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
-            "Gender" => ['Varchar', 'Attribute', 'Required'],
-            "newsletter" => ['Boolean', 'Attribute', 'Not Required'],
-            "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
+            "OrderID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "CustomerID" => ['Integer', 'foreign key', 'Required'],
+            "OrderDate" => ['Date', 'Attribute', 'Not Required'],
+            "ExpectedDeliveryDate" => ['Date', 'Attribute', 'Not Required'],
+            "LastEditedBy" => ['Integer', 'foreign key', 'Required'],
+            "DeliveryMethodID" => ['Integer', 'foreign key', 'Required'],
+            "PaymentMethodID" => ['Integer', 'foreign key', 'Not Required'],
+            "SpecialDealID" => ['Integer', 'foreign key', 'Not Required'],
         );
     }
     private function getOrderStockItem()

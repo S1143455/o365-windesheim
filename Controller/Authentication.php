@@ -22,6 +22,7 @@ class Authentication
     {
 
     }
+
     function logout()
     {
         if (isset($_SESSION['authenticated'])) {

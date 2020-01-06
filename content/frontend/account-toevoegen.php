@@ -4,13 +4,13 @@ include_once 'loader.php';
 include_once 'content/frontend/header.php';
 
 use Model\Customer;
+
 if (isset($_POST['submit'])) {
     include 'loader.php';
     $customer = new Customer();
-
-
+    $customer->initialize();
     $customerController->store($customer);
-    die();
+    //die();
 }
 
 ?>

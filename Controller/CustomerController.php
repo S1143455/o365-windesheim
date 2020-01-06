@@ -34,7 +34,8 @@ Class CustomerController
      */
     public function store($customer)
     {
-        //var_dump($_POST);
+        var_dump($customer);
+
         if (!$customer->initialize())
         {
             print_r($_GET);
