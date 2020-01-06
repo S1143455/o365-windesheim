@@ -34,7 +34,6 @@ Class CustomerController
      */
     public function store($customer)
     {
-        var_dump($customer);
 
         if (!$customer->initialize())
         {

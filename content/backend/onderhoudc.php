@@ -1,8 +1,6 @@
 <?php
     include_once 'content/backend/header-admin.php';
     use Model\Category;
-    var_dump($_POST);
-    //var_dump($_GET);
 if (isset($_POST['id'])) {
     $categoryID = $_POST['id'];
     if($categoryID != 0){

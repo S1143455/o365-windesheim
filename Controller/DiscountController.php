@@ -60,7 +60,6 @@ class DiscountController
      */
     public function store($discount)
     {
-        var_dump($discount);
 
         if (!$discount->initialize())
         {

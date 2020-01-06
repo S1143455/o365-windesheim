@@ -17,10 +17,15 @@ class Models
 
     protected function getColumns()
     {
-        var_dump($this->table);
         switch ($this->table) {
             case 'stockitem':
                 $this->getStockItem();
+                break;
+            case 'order':
+                $this->getOrder();
+                break;
+            case 'order_stockitem':
+                $this->getOrderStockItem();
                 break;
             case 'category':
                 $this->getCategory();
@@ -42,9 +47,6 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
-            case  'order':
-                $this->getOrder();
-                break;
             default:
                 die('Table not implemented');
         }
@@ -53,6 +55,12 @@ class Models
             switch ($this->table) {
                 case 'stockitem':
                     $this->getStockItem();
+                    break;
+                case 'order':
+                    $this->getOrder();
+                    break;
+                case 'order_stockitem':
+                    $this->getOrderStockItem();
                     break;
                 case 'category':
                     $this->getCategory();
@@ -210,21 +218,21 @@ class Models
     {
         $this->column = array(
             "OrderID" => ['Integer', 'PrimaryKey', 'Required' ],
-            "CustomerID" => ['Integer', 'foreign key', 'Required'],
+            "CustomerID" => ['customer', 'HasOne', 'Required'],
             "OrderDate" => ['Date', 'Attribute', 'Not Required'],
             "ExpectedDeliveryDate" => ['Date', 'Attribute', 'Not Required'],
-            "LastEditedBy" => ['Integer', 'foreign key', 'Required'],
-            "DeliveryMethodID" => ['Integer', 'foreign key', 'Required'],
-            "PaymentMethodID" => ['Integer', 'foreign key', 'Not Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+            "DeliveryMethodID" => ['Integer', 'Attribute', 'Nullable'],
+            "PaymentMethodID" => ['Integer', 'Attribute', 'Not Nullable'],
             "SpecialDealID" => ['Integer', 'foreign key', 'Not Required'],
         );
     }
     private function getOrderStockItem()
     {
         $this->column = array(
-            "OrderStockItemID" => ['Integer', 'PrimaryKey', 'Required' ],
-            "OrderID" => ['Integer', 'Attribute', 'Required'],
-            "StockItemID" => ['Integer', 'Attribute', 'Required'],
+            "orderStockItemId" => ['Integer', 'PrimaryKey', 'Required' ],
+            "OrderID" => ['Order', 'HasOne', 'Required'],
+            "StockItemID" => ['StockItem', 'HasOne', 'Required'],
         );
     }
 

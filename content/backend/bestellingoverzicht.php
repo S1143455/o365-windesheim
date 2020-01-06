@@ -19,19 +19,24 @@ use Model\Order;
 
     </div>
     <div class="col-md-6">
-        <table id="categoryTable" class="table table-fixed">
-            <thead>
-            <tr>
-                <th class="col-md-3">Bestel nummer</th>
-                <th class="col-md-3">Klant nummer</th>
-                <th class="col-md-3">Bestel datum</th>
-                <th class="col-md-3">Bedrag</th>
-            </tr>
-            </thead>
-            <tbody>
-                <?php $orderController->GetAllOrders(); ?>
-            </tbody>
-        </table>
+        <form role="form" id="table" method="POST" action="">
+
+            <table id="OrderTable" class="table table-fixed">
+                <thead>
+                <tr>
+                    <th class="col-md-1">edit</th>
+                    <th class="col-md-2">Bestel nummer</th>
+                    <th class="col-md-3">Klant nummer</th>
+                    <th class="col-md-3">Bestel datum</th>
+                    <th class="col-md-3">Bedrag</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <?php $orderController->GetAllOrders(); ?>
+                </tbody>
+            </table>
+        </form>
+
     </div>
 
 

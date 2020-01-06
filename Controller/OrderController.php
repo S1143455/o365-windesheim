@@ -3,12 +3,14 @@
 
 namespace Controller;
 
-
+use Model\Product;
 use Model\Order;
+use Model\OrderStockItem;
 
 class OrderController
 {
     private $admin = 'content/backend/';
+
 
     function __construct()
     {
@@ -25,55 +27,52 @@ class OrderController
 
         return $order;
     }
-
-
-    function GetAllCategories()
+    public function retrievestockitem($id)
     {
-        $result = '';
-
-        $orders = $this->order->getAllActiveOrders();
-
-        foreach ($orders as $order) {
-            $orderstockitems = $this->orderstock->getallorderstockitems($order->getOrderID());
-            $i = 0;
-            foreach ($orderstockitems as $order_stockitem) {
-                $aantal = $order_stockitem->getAantla();
-                $prijs = $order_stockitem->getPrijs();
-                $totaal = $aantal * $prijs; //todo zoek uit hoe bereken
-               $i = $i + $totaal;
-            }
-
-
-            // $category = $product->getRelation('Category');
-
-            $result .= '<tr style="height:40px;">
-                            <td class="col-md-1"><button type="submit" name="id" value="' . $category->getCategoryID() . '">Edit</button></td>
-                            <td class="col-md-2">' . $category->getCategoryID() . '</td>
-                            <td class="col-md-5">' . $category->getCategoryName() . '</td>
-                            <td class="col-md-2">' . $i . '</td>
-                            <td class="col-md-2">iets</td>
-                        </tr>';
-
+        $product = new Product();
+        $product = $product->retrieve($id);
+        if (empty($product->getStockItemID())) {
+            header("Location: /404", true);
         }
 
-        echo $result;
+        return $product;
+    }
+    public function retrieveOrderstockitem($id)
+    {
+        $orderStockItems = new OrderStockItem();
+        $orderStockItems = $orderStockItems->where("*", "OrderID", "=", $id);
 
+        if (empty($orderStockItems)) {
+            header("Location: /404", true);
+        }
 
-
+        return $orderStockItems;
     }
 
 
     function GetAllOrders()
     {
-        $orders = $this->order->getAllActiveOrders();
+        $orders = $this->order->getAllOrders();
+
 
         foreach ($orders as $order) {
+            $totaal = 0;
+
+            $orderstockitems = $this->retrieveOrderstockitem($order->getOrderID());
+            var_dump($orderstockitems);
+
+            foreach ($orderstockitems as $orderstockitem) {
+                var_dump($orderstockitem);
+                $product = $this->retrievestockitem($orderstockitem->getStockitemID());
+                $totaal = $totaal + $product->getUnitPrice();
+            }
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-md-3">' . $order['OrderID'] . '</td>
-                            <td class="col-md-3">' . $order['CustomerID'] . '</td>
-                            <td class="col-md-3">' . $order['OrderDate'] . '</td>
-                            <td class="col-md-3">' . $order['OrderAmmount'] . '</td>
+                            <td class="col-md-1"><button type="submit" name="id" value="' . $order->getOrderID() .'">Edit</button></td>
+                            <td class="col-md-2">' . $order->getOrderID() . '</td>
+                            <td class="col-md-3">' . $order->getCustomerID() . '</td>
+                            <td class="col-md-3">' . $order->getOrderdate() . '</td>
+                            <td class="col-md-3">' . $totaal . '</td>
                         </tr>';
 
             echo $result;

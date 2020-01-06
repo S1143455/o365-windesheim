@@ -9,8 +9,7 @@ class Order extends Database
     private $orderID;
     private $customerID;
     private $orderDate;
-    private $orderAmount;
-
+  //  private $orderAmount;
     private $expectedDeliveryDate;
     private $lasteditedby;
     private $deliverymethodID;
@@ -55,11 +54,6 @@ class Order extends Database
         $this->customerID = $customerID;
     }
 
-    public function setExpectedDeliveryDate($expectedDeliveryDate)
-    {
-        $this->expectedDeliveryDate = $expectedDeliveryDate;
-    }
-
     /**
      * @return mixed
      */
@@ -79,40 +73,86 @@ class Order extends Database
     /**
      * @return mixed
      */
-    public function getOrderAmmount()
+    public function getExpectedDeliveryDate()
     {
-        return $this->orderAmmount;
+        return $this->expectedDeliveryDate;
     }
 
     /**
-     * @param mixed $orderAmmount
+     * @param mixed $expectedDeliveryDate
      */
-    public function setOrderAmmount($orderAmmount)
+    public function setExpectedDeliveryDate($expectedDeliveryDate)
     {
-        $this->orderAmmount = $orderAmmount;
+        $this->expectedDeliveryDate = $expectedDeliveryDate;
     }
 
-//    public function getAllActiveOrders()
-//    {
-//        $orders = new Order();
-//        $orders = $orders->retrieve();
-//
-//        return $orders;
-//
-//        $result = '';
-//        /**
-//         * $result = $this->selectStmt('SELECT * FROM order; ');
-//         */
-//      // $result = $this->selectStmt('SELECT * FROM order;');
-//
-//        return $result;
-//    }
-
-    public function getAllActiveOrders()
+    /**
+     * @return mixed
+     */
+    public function getLasteditedby()
     {
-        $orders = $this->selectStmt("SELECT SUM(si.UnitPrice) as OrderAmmount, o.OrderID, o.CustomerID, o.OrderDate, os.StockItemID FROM `order` o LEFT JOIN order_stockitem os on os.orderID = o.OrderID INNER JOIN stockitem si on os.OrderID = si.StockItemID");
+        return $this->lasteditedby;
+    }
 
-        var_dump($orders);
+    /**
+     * @param mixed $lasteditedby
+     */
+    public function setLasteditedby($lasteditedby)
+    {
+        $this->lasteditedby = $lasteditedby;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeliverymethodID()
+    {
+        return $this->deliverymethodID;
+    }
+
+    /**
+     * @param mixed $deliverymethodID
+     */
+    public function setDeliverymethodID($deliverymethodID)
+    {
+        $this->deliverymethodID = $deliverymethodID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaymentmethodID()
+    {
+        return $this->paymentmethodID;
+    }
+
+    /**
+     * @param mixed $paymentmethodID
+     */
+    public function setPaymentmethodID($paymentmethodID)
+    {
+        $this->paymentmethodID = $paymentmethodID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecialdealID()
+    {
+        return $this->specialdealID;
+    }
+
+    /**
+     * @param mixed $specialdealID
+     */
+    public function setSpecialdealID($specialdealID)
+    {
+        $this->specialdealID = $specialdealID;
+    }
+    public function getAllOrders()
+    {
+        $orders = new Order();
+        $orders = $orders->retrieve();
         return $orders;
     }
 
