@@ -14,7 +14,7 @@ class Customer extends Database
     function __construct()
     {
         Parent::__construct();
-        $this->table = 'Customer';
+        $this->table = 'customer';
     }
 
     /**
@@ -39,18 +39,18 @@ class Customer extends Database
     //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
     public function getNewsletter()
     {
-        if ($this->Newsletter == "1"){
-            $this->Newsletter =
-                '<input type="checkbox" name="Newsletter" checked disabled>';
+        if ($this->newsletter == "1"){
+            $this->newsletter =
+                '<input type="checkbox" name="newsletter" checked>';
 
         } else {
-            $this->Newsletter =
-                '<input type="checkbox" name="Newsletter" disabled>';
+            $this->newsletter =
+                '<input type="checkbox" name="newsletter">';
 
         }
-        return $this->Newsletter;
+        return $this->newsletter;
     }
-    public function setNewsLetter($newsletter)
+    public function setnewsletter($newsletter)
     {
         $this->newsletter = $newsletter;
     }
@@ -122,6 +122,30 @@ class Customer extends Database
 
     public function getLastOrderDateOnID($id){
         $result = $this->selectStmt('SELECT MAX(OrderDate) AS "Last Order" FROM `order` WHERE CustomerID = '. $id .';');
+        return $result[0][0];
+    }
+
+    public function getDateOfBirthOnID($id)
+    {
+        $result = $this->selectStmt('SELECT pe.DateOfBirth FROM people AS pe INNER JOIN customer AS cu ON pe.PersonID = cu.PersonID WHERE pe.PersonID = ' . $id . ';');
+        return $result[0][0];
+    }
+
+    public function getAddressOnID($id)
+    {
+        $result = $this->selectStmt('SELECT ad.Address FROM address AS ad INNER JOIN people AS pe ON pe.PersonID = ad.PersonID WHERE pe.PersonID = ' . $id . ';');
+        return $result[0][0];
+    }
+
+    public function getZipCodeOnID($id)
+    {
+        $result = $this->selectStmt('SELECT ad.ZipCode FROM address AS ad INNER JOIN people AS pe ON pe.PersonID = ad.PersonID WHERE pe.PersonID = ' . $id . ';');
+        return $result[0][0];
+    }
+
+    public function getCityOnID($id)
+    {
+        $result = $this->selectStmt('SELECT ad.City FROM address AS ad INNER JOIN people AS pe ON pe.PersonID = ad.PersonID WHERE pe.PersonID = ' . $id . ';');
         return $result[0][0];
     }
 }

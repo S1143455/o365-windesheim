@@ -22,7 +22,6 @@ class DiscountController
         $this->database = new Database();
     }
     public function retrieve($id){
-      //  echo "hoi";
         $discount = new discount();
         $discount = $discount->retrieve($id);
         if(empty($discount->getSpecialDealID()))
@@ -39,7 +38,7 @@ class DiscountController
         foreach($discounts as $discount){
             $result = '';
             $result .= '<tr>
-                    <td class="col-md-1"><button type="submit" name="id" value="' . $discount->getSpecialDealID() .'">Edit</button></td>
+                    <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $discount->getSpecialDealID() .'">Edit</button></td>
                     <td class="col-md-2">' . $discount->getDealCode() . '</td>
                     <td class="col-md-1">' . $discount->getDiscountPercentage() . "%" .'</td>
                     <td class="col-md-1">' . $discount->getOneTime() .'</td>
@@ -61,8 +60,8 @@ class DiscountController
         foreach ($products as $product) {
             $result = '';
             $result .= '<tr>
-                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedIDs[]" id="selectTableRow" value="'. $product->getStockItemID().'"></td>
-                   <td class="col-md-2">' . $product->getBrand() . '</td>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedProductIDs[]" id="selectTableRow" value="'. $product->getStockItemID().'"></td>
+                   <td class="col-md-2">' . $product->getStockItemID() . '</td>
                    <td class="col-md-3">' . $product->getStockItemName() . '</td>
                    <td class="col-md-1">' . "€ " . $product->getUnitPrice() . ",- " . '</td>
                    <td class="col-md-4">' . $product->getMarketingComments() . '</td>
@@ -78,10 +77,11 @@ class DiscountController
         foreach ($categorys as $category) {
         $result = '';
         $result .= '<tr>
-                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectTableRow" id="selectTableRow"></td>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedCategoryIDs[]" id="selectTableRow" value="'. $category->getCategoryID().'"></td>
                    <td class="col-md-2">' . $category->getCategoryID() . '</td>
                    <td class="col-md-4">' . $category->getCategoryName() . '</td>
-                   <td class="col-md-4">' . $category->getParentCategory() . '</td>
+                   <td class="col-md-2">' . $category->getParentCategory() . '</td>
+                   <td class="col-md-2">' . $category->getSpecialDealID() . '</td>
                 </tr>';
         echo $result;
         }
@@ -96,17 +96,24 @@ class DiscountController
         $this->storeDiscount($this->discount);
         var_dump($this->discount);
 
-        if ($_POST["selectedIDs"]) {
-            foreach ($_POST["selectedIDs"] as $id) {
+        if ($_POST["selectedProductIDs"]) {
+            foreach ($_POST["selectedProductIDs"] as $id) {
                 $this->product = $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
                 $this->storeProduct($this->product);
             }
         }
+        elseif ($_POST["selectedCategoryIDs"]) {
+            foreach ($_POST["selectedCategoryIDs"] as $id) {
+                $this->category = $this->category->retrieve($id);
+                $this->category->setSpecialDealID($this->discount->getSpecialDealID());
+                $this->storeCategory($this->category);
+            }
+        }
 
-        // include $this->contentpath
-        include $this->admin . 'onderhoudkorting.php';
-        return "";
+            // include $this->contentpath
+            include $this->admin . 'onderhoudkorting.php';
+            return "";
 
     }
     public function update()
@@ -123,7 +130,14 @@ class DiscountController
                 $this->storeProduct($this->product);
             }
         }
-        $this->store($this->discount);
+        elseif ($_POST("CategoryID")){
+            foreach ($_POST["CategoryID"] as $id) {
+                $this->category->retrieve($id);
+                $this->category->setSpecialDealID($this->category->getSpecialDealID());
+                $this->storeCategory($this->category);
+            }
+        }
+        $this->storeDiscount($this->discount);
         include $this->admin . 'onderhoudkorting.php';
         return "";
 
@@ -133,31 +147,31 @@ class DiscountController
         $stockitems = $this->product->where("*", "SpecialDealID", "=", $discount->getSpecialDealID());
         //kijk hoe je dit checkts
         if($stockitems != null){
-            return '                    <p>
-                        <a class=\"btn btn-secondary collapseButton\" data-toggle=\"collapse\"
-                           href=\"#tableCollapseProduct\"
-                           role=\"button\"
-                           aria-expanded=\"false\" aria-controls=\"tableCollapse\">Product zoeken</a>
+            return '<p>
+                        <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                           href="#tableCollapseProduct"
+                           role="button"
+                           aria-expanded="false" aria-controls="tableCollapse">Product zoeken</a>
                     </p>
-                    <div class=\"tableCollapseProduct\">
-                        <div class=\"collapse multi-collapse\" id=\"tableCollapseProduct\">
-                            <div class=\"card card-body\">
-                                <div class=\"row\">
-                                    <input class=\"form-control collapseTableSearch\" type=\"text\"
-                                           placeholder=\"Waar ben je naar op zoek?\"
-                                           aria-label=\"Search\" id=\"myInputProduct\"
-                                           onkeyup=\"searchbarProduct()\">
+                    <div class="tableCollapseProduct">
+                        <div class="collapse multi-collapse" id="tableCollapseProduct">
+                            <div class="card card-body">
+                                <div class="row">
+                                    <input class="form-control collapseTableSearch" type="text"
+                                           placeholder="Waar ben je naar op zoek?"
+                                           aria-label="Search" id="myInputProduct"
+                                           onkeyup="searchbarProduct()">
                                 </div>
-                                <div class=\"col-12\">
-                                    <table class=\"table table-responsive-lg tableCollapseSP\"
-                                           id=\"tableCollapseProduct\">
+                                <div class="col-12">
+                                    <table class="table table-responsive-lg tableCollapseSP"
+                                           id="tableCollapseProduct">
                                         <thead>
                                         <tr>
-                                            <th class=\"col-md-2\">Select</th>
-                                            <th class=\"col-md-2\">Productnr</th>
-                                            <th class=\"col-md-3\">Productnaam</th>
-                                            <th class=\"col-md-1\">Prijs</th>
-                                            <th class=\"col-md-4\">Opmerkingen</th>
+                                            <th class="col-md-2">Select</th>
+                                            <th class="col-md-2">Productnr</th>
+                                            <th class="col-md-3">Productnaam</th>
+                                            <th class="col-md-1">Prijs</th>
+                                            <th class="col-md-4">Opmerkingen</th>
                                         </tr>
                                         </thead>
                                         <tbody>

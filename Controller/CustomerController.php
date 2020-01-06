@@ -5,6 +5,8 @@ namespace Controller;
 
 use Model\Customer;
 use Model\People;
+use Model\Adress;
+
 
 class CustomerController
 {
@@ -14,32 +16,32 @@ class CustomerController
     {
         $this->customer = new Customer();
         $this->people = new People();
+        $this->addres = new Adress();
+
     }
     public function retrieve($id){
-        $discount = new discount();
-        $discount = $discount->retrieve($id);
-        if(empty($discount->getCategoryID()))
+        $customer = new customer();
+        $customer = $customer->retrieve($id);
+        if(empty($customer->getCustomerID()))
         {
             //header("Location: /404", true);
         }
 
-        return $discount;
+        return $customer;
     }
     function getAllCustomer()
     {
         $customers = $this->customer->getAllCustomers();
 
         foreach ($customers as $customer){
-            $customerId = $customer->getCustomerID();
-            $personId = $customer->getPersonID();
 
             $result = '';
             $result .= '<tr>
-                    <td class="col-md-1"><button type="submit" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
-                    <td class="col-md-2">' . $customer->getCustomerID() . '</td>
-                    <td class="col-md-3">' . $email = $customer->getEmailAddressOnID($personId) . '</td>
-                    <td class="col-md-3">' . $customer->getFullNameOnID($personId) .'</td>
-                    <td class="col-md-2">' . $customer->getLastOrderDateOnID($customerId) .'</td>
+                    <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
+                    <td class="col-md-2">' . $customer->getCustomerID() . '</td> 
+                    <td class="col-md-3">' . $this->customer->getEmailAddressOnID($customer->getPersonID()) .'</td>
+                    <td class="col-md-3">' . $this->customer->getFullNameOnID($customer->getPersonID()) .'</td>
+                    <td class="col-md-2">' . $this->customer->getLastOrderDateOnID($customer->getCustomerID()) .'</td>
                     <td class="col-md-2">' . $customer->getNewsletter() .'</td>
                 </tr>';
             echo $result;

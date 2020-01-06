@@ -60,8 +60,9 @@ if (isset($_POST['id'])) {
         <div class="modal-content">
             <form role="form" id="universalModalForm" method="POST" action="CreateCategorie" enctype="multipart/form-data">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                     <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
+
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                 </div>
                 <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
                     <span class="alert-body"></span>

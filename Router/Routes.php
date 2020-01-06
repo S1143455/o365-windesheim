@@ -136,17 +136,27 @@ $router->route('/admin/onderhoud-producten', function() use($productController){
     return $productController->admin();
 });
 
-$router->route('/admin/onderhoud-klanten', function(){
+$router->route('/admin/onderhoud-klanten', function() {
     return include 'content/backend/onderhoudklanten.php';
 });
+
 $router->route('/admin/CreateCategorie', function() use($categoryController){
     return $categoryController->create();
 });
 $router->route('/admin/CreateDiscount', function() use($discountController){
     return $discountController->create();
 });
+
 $router->route('/admin/UpdateDiscount', function() use($discountController){
     return $discountController->update();
+});
+
+$router->route('/admin/CreateCustomer', function() use($customerController) {
+    return $customerController->create();
+});
+
+$router->route('/admin/UpdateCustomer', function() use($customerController){
+    return $customerController->update();
 });
 
 $router->route('/admin/onderhoud-korting', function(){

@@ -88,7 +88,7 @@ class AdminController
             if($i == $max){
                 $class .= ' last ';
             }
-            $nav_menu .= '<a href=/admin' . $url . ' title=' . $name . ' class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href=/' . $this->site_urlAdmin() .  $url . ' title=' . $name . ' class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
         }
 
         return trim($nav_menu, $sep);
@@ -99,10 +99,10 @@ class AdminController
         $nav_menu = '';
         $nav_items = $this->getConfig('nav_menu');
         foreach ($nav_items as $uri => $name) {
-            $nav_menu .= '<li>';
+            $nav_menu .= '<li class="nav-item">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=/' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a class="nav-link" href=/' . $this->site_urlAdmin() . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);
@@ -150,26 +150,15 @@ class AdminController
 
     public function navigationalmenu(){
         $result = '';
-        $result .=  '
-    <div class="collapse navbar-collapse" id="bas-navbar">
-        <ul class="nav navbar-nav navbar-left">
-        ' . $this->nav_menu() .' 
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    PRODUCTS 
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
+        $result .= '
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
                     ' . $this->nav_menu() .'
-                    <li role="separator" class="divider">
-                    </li>
-                    <li>
-                        <a href="#">Separated link</a>
-                    </li>
                 </ul>
-            </li>
-        </ul>
-    </div>';
+            </div>';
         echo $result;
     }
 

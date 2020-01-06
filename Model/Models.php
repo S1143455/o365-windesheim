@@ -141,6 +141,7 @@ class Models
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
             "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
+            "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
         );
     }
 
@@ -207,7 +208,6 @@ class Models
             "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
-            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
             "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
             "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );

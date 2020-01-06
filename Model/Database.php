@@ -647,7 +647,7 @@ echo $sql;
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
-        var_dump($array);
+        //var_dump($array);
         if (!empty($array))
         {
             foreach ($array as $key => $value)
