@@ -4,7 +4,7 @@
 if (isset($_POST['id'])) {
     $categoryID = $_POST['id'];
     if($categoryID != 0){
-        $category = $categoryController->retrieve($categoryID);
+        $category = $categoryController->retrieveCategory($categoryID);
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditCategorieDialog').modal('show');   }); </script>";
     }
 }
@@ -54,41 +54,41 @@ if (isset($_POST['id'])) {
 
 <!--  modals      -->
 <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="CreateModal" aria-hidden="true">
-            <div class="modal-dialog" style="width:1000px;">
-                <div class="modal-content">
-                    <form role="form" id="universalModalForm" method="POST" action="CreateCategorie" enctype="multipart/form-data">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
-                            <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
-                        </div>
-                        <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
-                            <span class="alert-body"></span>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="categoryID">Categorie</label>
-                                <input type="text" class="form-control" name="CategoryName" id="CategoryName">
-                            </div>
-                            <div class="form-group">
-                                <label for="AttachmentID">Afbeelding</label>
-                                <input type="file" name="fileToUpload" id="fileToUpload">
-                            </div>
-                            <div class="form-group">
-                                <label for="categoryID">Ouder Categorie</label>
-                                <select class="form-control" name="ParentCategory">
-                                    <option value="None">Empty</option>
-                                    <?php $categoryController->ParentCategories() ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
-                        </div>
-                    </form>
+    <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-content">
+            <form role="form" id="universalModalForm" method="POST" action="CreateCategorie" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
                 </div>
-            </div>
+                <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
+                    <span class="alert-body"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="categoryID">Categorie</label>
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                    </div>
+                    <div class="form-group">
+                        <label for="AttachmentID">Afbeelding</label>
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryID">Ouder Categorie</label>
+                        <select class="form-control" name="ParentCategory">
+                            <option value="None">Empty</option>
+                            <?php $categoryController->ParentCategories() ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                </div>
+            </form>
         </div>
+    </div>
+</div>
 
 <div class="modal fade" id="EditCategorieDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal" aria-hidden="true">
     <div class="modal-dialog" style="width:1000px;">
@@ -104,7 +104,7 @@ if (isset($_POST['id'])) {
                         <label for="categoryID">Categorie</label>
 
 
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getCategoryID()) ?>" >
+                        <input type="text" class="form-control" name="CategoryID" id="CategoryID" value="<?php echo($category->getCategoryID()) ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryID">Categorie</label>
@@ -112,26 +112,21 @@ if (isset($_POST['id'])) {
                     </div>
                     <div class="form-group">
                         <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getLastEditedBy()) ?>" >
-                    </div> <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName" value="<?php echo($category->getParentCategory()) ?>"  >
+                        <input type="text" class="form-control" name="LastEditedBy" id="LastEditedBy" value="<?php echo($category->getLastEditedBy()) ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        <input type="text" class="form-control" name="ParentCategory" id="ParentCategory" value="<?php echo($categoryController->getParentCategoryfromCategory($category)) ?>"  >
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        <label for="AttachmentID">Afbeelding</label>
+                        <input type="file" name="AttachmentID" id="AttachmentID" value="<?php echo($categoryController->getAttachmentfromCategory($category)) ?>">
                     </div>
 
-                    <p>some content</p>
-                    <input style="" type="text" name="bookId" id="bookId" value=""/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                    <input type="submit" name="submit" value="Aanpassen" class="btn btn-primary">
                 </div>
             </form>
         </div>

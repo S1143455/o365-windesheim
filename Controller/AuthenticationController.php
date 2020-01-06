@@ -7,9 +7,25 @@ class AuthenticationController
 {
     function __construct()
     {
-
+        $this->user = new User();
     }
 
+
+
+
+    public function checkCredentials($logonName,$password)
+    {
+        $user = $this->user->where("*", "LogonName", "=", $logonName);
+        if(empty($user))
+        {
+            return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
+        }
+        else
+        {
+            $this->user = $user[0];
+            return true;
+        }
+    }
     /**
      * Login for the user.
      * @param $username
@@ -23,20 +39,18 @@ class AuthenticationController
             return $_SESSION['LOGIN_ERROR']=["type"=>'warning', "message"=>'Vul een gebruikersnaam en wachtwoord in.'];
         }
 
-        $user = new User();
-        $user->setUsername($username);
-        $user->setPassword($password);
-        if($user->checkCredentials())
+
+        if($this->checkCredentials($username, $password))
         {
             // Check if the passwords match.
-            if ($this->verifyPassword($user->getPassword(),$user->getDbPassword() ))
+            if ($this->verifyPassword($password,$this->user->getHashedPassword()))
             {
                 // The passwords are a match. The user is authenticated.
                 $_SESSION['authenticated']='true';
                 // Put the username in the $_SESSION array.
-                $_SESSION['USER']['name']=$user->getUsername();
+                $_SESSION['USER']['name']=$this->user->getLogonName();
                 // Place the userdata (an array) into the $_SESSION
-                $_SESSION['USER']['DATA']=$user->getUserDataArray();
+                $_SESSION['USER']['DATA']=$this->user->getUserDataArray();
                 // The rest of the userdata.
                 include 'content/frontend/GetUserDetails.php';
                 // Now were done were going back to the index page.

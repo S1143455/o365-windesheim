@@ -18,7 +18,7 @@ class Product extends Database
     private $marketingComments;
     private $categoryID;
     private $lastEditedBy;
-
+    private $SpecialDealID;
     function __construct()
     {
         $this->table = "stockitem";
@@ -233,5 +233,21 @@ class Product extends Database
         $this->lastEditedBy = $lastEditedBy;
     }
 
+    public function getSpecialDealID()
+    {
+        return $this->SpecialDealID;
+    }
 
+    /**
+     * @param mixed $SpecialDealID
+     */
+
+    public function setSpecialDealID($SpecialDealID)
+    {
+        $this->SpecialDealID = $SpecialDealID;
+    }
+
+    /**
+     * @return mixed
+     */
 }

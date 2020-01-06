@@ -4,9 +4,10 @@
 namespace Model;
 
 
-class Customer extends User
+class Customer extends Database
 {
     private $CustomerID;
+
     private $AddressID;
     private $PersonID;
     private $ShoppingCartID;
@@ -101,22 +102,7 @@ class Customer extends User
         $this->Gender = $Gender;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getNewsletter()
-    {
-        return $this->newsletter;
-    }
-
-    /**
-     * @param mixed $newsletter
-     */
-    public function setNewsletter($newsletter)
-    {
-        $this->newsletter = $newsletter;
-    }
-
+ 
     /**
      * @return mixed
      */
@@ -133,4 +119,46 @@ class Customer extends User
         $this->TermsAndConditions = $TermsAndConditions;
     }
 
+    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
+    public function getNewsletter()
+    {
+        if ($this->Newsletter == "1"){
+            $this->Newsletter =
+                '<input type="checkbox" name="Newsletter" checked disabled>';
+
+        } else {
+            $this->Newsletter =
+                '<input type="checkbox" name="Newsletter" disabled>';
+
+        }
+        return $this->Newsletter;
+    }
+    public function setNewsLetter($newsletter)
+    {
+        $this->newsletter = $newsletter;
+    }
+
+  
+    public function getAllCustomers(){
+
+        $customers = new Customer();
+        $customers = $customers->retrieve();
+        return $customers;
+
+    }
+
+    public function getEmailAddressOnID($id){
+        $result = $this->selectStmt('SELECT pe.EmailAddress FROM people AS pe INNER JOIN customer AS cu ON pe.PersonID = cu.PersonID WHERE pe.PersonID = '. $id .';');
+        return $result[0][0];
+    }
+
+    public function getFullNameOnID($id){
+        $result = $this->selectStmt('SELECT pe.FullName FROM people AS pe INNER JOIN customer AS cu ON pe.PersonID = cu.PersonID WHERE pe.PersonID = '. $id .';');
+        return $result[0][0];
+    }
+
+    public function getLastOrderDateOnID($id){
+        $result = $this->selectStmt('SELECT MAX(OrderDate) AS "Last Order" FROM `order` WHERE CustomerID = '. $id .';');
+        return $result[0][0];
+    }
 }
