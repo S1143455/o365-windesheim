@@ -112,6 +112,16 @@ class UserController
         $this->storeUser($user1);
 
     }
+
+    public function getdata()
+    {
+        $getthedata=new Database();
+        //todofixpls Nope! fixing it would over complicate the shit out if it!
+        $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '". $this->user->getLogonName()  . "'");
+
+        return $sqlreturendsomething;
+
+    }
     /**
      * Login for the user.
      * @param $username
@@ -138,6 +148,7 @@ class UserController
                 $_SESSION['CUSTOMER_DETAILSAdmin']=$customerDetails;
                 $addressDetails = $this->getAdressByID($_SESSION['USERAdmin']->getPersonID());
                 $_SESSION['ADDRESSAdmin']=$addressDetails;
+                $_SESSION['USER']['DATA']=$this->getdata();
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
                 echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/omasbeste/admin\">";
             }
