@@ -9,6 +9,10 @@ class AuthenticationController
     {
         $this->user = new User();
     }
+
+
+
+
     public function checkCredentials($logonName,$password)
     {
         $user = $this->user->where("*", "LogonName", "=", $logonName);
@@ -46,7 +50,7 @@ class AuthenticationController
                 // Put the username in the $_SESSION array.
                 $_SESSION['USER']['name']=$this->user->getLogonName();
                 // Place the userdata (an array) into the $_SESSION
-                $_SESSION['USER']['DATA']=$this->user;
+                $_SESSION['USER']['DATA']=$this->user->getUserDataArray();
                 // The rest of the userdata.
                 include 'content/frontend/GetUserDetails.php';
                 // Now were done were going back to the index page.
