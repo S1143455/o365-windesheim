@@ -29,8 +29,7 @@ if (isset($_POST['id'])) {
             <br>
             <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
             <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?"
-                   aria-label="Search"
-                   id="myInput" onkeyup="searchbar()">
+                   aria-label="Search" id="myInput">
             <br>
 
             <div class="row">
@@ -52,7 +51,7 @@ if (isset($_POST['id'])) {
                                     <th class="col-md-1">Eindperiode</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tbodyCustomer">
                                 <?php $discountController->GetAllDiscount(); ?>
                                 </tbody>
                             </table>
@@ -86,7 +85,7 @@ if (isset($_POST['id'])) {
     </div>
 </div>
 
-<!-- modal (popup) oneTimeDiscount -->
+<!-- modal (popup) OneTimeDiscount -->
 <div class="modal fade" id="oneTimeDiscount" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -102,7 +101,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeOT">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeOT"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -114,8 +113,14 @@ if (isset($_POST['id'])) {
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="checkboxOT">Eenmalig:</label>
-                            <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT"
+                            <input class="checkboxOneTime" type="checkbox" name="OneTime" id="OneTime"
                                    value="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-5 control-label descriptionPopUp"
+                                   for="descriptionOT">Omschrijving:</label>
+                            <textarea class="col-7 form-control dealDescription" name="DealDescription"
+                                      id="descriptionOT" rows="3" placeholder="Omschrijving"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="inputPercentageOT">Percentage:</label>
@@ -124,14 +129,14 @@ if (isset($_POST['id'])) {
                             <span class="col-1 symbolPercentage">%</span>
                         </div>
                         <div class="form-group">
-                            <label class="col-5 control-label" for="inputStartDateOT">Begin periode:</label>
+                            <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                                   id="inputStartDateOT">
+                                   id="StartDate">
                         </div>
                         <div class="form-group">
-                            <label class="col-5 control-label" for="inputEndDateOT">Einde periode:</label>
+                            <label class="col-5 control-label" for="EndDate">Einde periode:</label>
                             <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
-                                   id="inputEndDateOT">
+                                   id="EndDate">
                         </div>
                     </div>
                 </div>
@@ -166,11 +171,10 @@ if (isset($_POST['id'])) {
                             <div class="card card-body">
                                 <input class="form-control collapseTableSearch" type="text"
                                        placeholder="Waar ben je naar op zoek?"
-                                       aria-label="Search" id="myInputProduct"
-                                       onkeyup="searchbarProduct()">
+                                       aria-label="Search" id="myInputProduct">
                                 <div class="row">
                                     <div class="col-12">
-                                        <table class="table table-fixed tableCollapseSP "
+                                        <table class="table table-fixed tableCollapseSP"
                                                id="tableCollapseProduct">
                                             <thead>
                                             <tr>
@@ -181,7 +185,7 @@ if (isset($_POST['id'])) {
                                                 <th class="col-md-4">Opmerkingen</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="tbodyProduct">
                                             <?php $discountController->GetAllProducts(); ?>
                                             </tbody>
                                         </table>
@@ -195,7 +199,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodePD">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeDP"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -207,43 +211,43 @@ if (isset($_POST['id'])) {
                         </div>
                     </div>
 
-                <div class="form-group">
-                    <label class="col-5 control-label" for="checkboxDP">Eenmalig:</label>
-                    <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
+                    <div class="form-group">
+                        <label class="col-5 control-label" for="checkboxDP">Eenmalig:</label>
+                        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-5 control-label descriptionPopUp"
+                               for="descriptionDP">Omschrijving:</label>
+                        <textarea class="form-control dealDescription" name="DealDescription"
+                                  id="descriptionDP" rows="3" placeholder="Omschrijving"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-5 control-label labelInputPercentage"
+                               for="inputPercentageDP">Percentage:</label>
+                        <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
+                               id="inputPercentageDP">
+                        <span class="col-1 symbolPercentage">%</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-5 control-label labelInputStartDate" for="StartDate">
+                            Begin periode:</label>
+                        <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
+                               id="StartDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-5 control-label" for="EndDate">Einde periode:</label>
+                        <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
+                               id="EndDate">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-5 control-label descriptionPopUp"
-                           for="descriptionDP">Omschrijving:</label>
-                    <textarea class="form-control dealDescription" name="DealDescription"
-                              id="descriptionDP" rows="3" placeholder="Omschrijving"></textarea>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <button type="submit" class="btn btn-primary" name="submit" value="deze tael">Korting aanmaken
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label class="col-5 control-label labelInputPercentage"
-                           for="inputPercentageDP">Percentage:</label>
-                    <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                           id="inputPercentageDP">
-                    <span class="col-1 symbolPercentage">%</span>
-                </div>
-                <div class="form-group">
-                    <label class="col-5 control-label labelInputStartDate" for="inputStartDateDP">
-                        Begin periode:</label>
-                    <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                           id="inputStartDateDP">
-                </div>
-                <div class="form-group">
-                    <label class="col-5 control-label" for="inputEndDateDP">Einde periode:</label>
-                    <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
-                           id="inputEndDateDP">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                <button type="submit" class="btn btn-primary" name="submit" value="deze tael">Korting aanmaken
-                </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 
 <!-- modal (popup) korting op categorie -->
@@ -264,39 +268,38 @@ if (isset($_POST['id'])) {
                            role="button"
                            aria-expanded="false" aria-controls="tableCollapseCategory">Categorie zoeken</a>
                     </p>
-                <div class="tableCollapseCategory">
-                    <div class="collapse multi-collapse" id="tableCollapseCategory">
-                        <div class="card card-body">
-                            <input class="form-control collapseTableSearch" type="text"
-                                   placeholder="Waar ben je naar op zoek?"
-                                   aria-label="Search" id="myInputProduct"
-                                   onkeyup="searchbarProduct()">
-                            <div class="row">
-                                <div class="col-12">
-                                    <table class="table table-fixed tableCollapseSP "
-                                           id="tableCollapseProduct">
-                                        <thead>
-                                        <tr>
-                                            <th class="col-md-2">Select</th>
-                                            <th class="col-md-2">Categorie nr</th>
-                                            <th class="col-md-4">Categorie naam</th>
-                                            <th class="col-md-2">Parent Categorie</th>
-                                            <th class="col-md-2">Gekoppelde korting id</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $discountController->GetAllCategories(); ?>
-                                        </tbody>
-                                    </table>
+                    <div class="tableCollapseCategory">
+                        <div class="collapse multi-collapse" id="tableCollapseCategory">
+                            <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputCategory">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP "
+                                               id="tableCollapseProduct">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-2">Select</th>
+                                                <th class="col-md-2">Categorie nr</th>
+                                                <th class="col-md-4">Categorie naam</th>
+                                                <th class="col-md-2">Parent Categorie</th>
+                                                <th class="col-md-2">Gekoppelde korting id</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyCategory">
+                                            <?php $discountController->GetAllCategories(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
                     <div class="col-12">
                         <div class="row">
                             <label class="col-5 control-label" for="inputCodeDC">Code:</label>
-                            <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeDC"
+                            <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
                                    placeholder="Code">
                         </div>
                         <div class="row">
@@ -324,15 +327,15 @@ if (isset($_POST['id'])) {
                         <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
-                        <label class="col-5 control-label labelInputStartDate" for="inputStartDateDC"> Begin periode:
-                                </label>
+                        <label class="col-5 control-label labelInputStartDate" for="StartDate"> Begin periode:
+                        </label>
                         <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                               id="inputStartDateDC">
+                               id="StartDate">
                     </div>
                     <div class="form-group">
-                        <label class="col-5 control-label" for="inputEndDateDC">Einde periode:</label>
+                        <label class="col-5 control-label" for="EndDate">Einde periode:</label>
                         <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
-                               id="inputEndDateDC">
+                               id="EndDate">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -360,7 +363,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeMD">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeMD"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -390,14 +393,14 @@ if (isset($_POST['id'])) {
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label labelInputStartDate"
-                               for="inputPercentageMD">Begin periode:</label>
-                        <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                               id="inputPercentageMD">
+                               for="StartDate">Begin periode:</label>
+                        <input class="col-4 form-control " type="date" name="StartDate"
+                               id="StartDate">
                     </div>
                     <div class="form-group">
-                        <label class="col-5 control-label" for="inputEndDateMD">Einde periode:</label>
+                        <label class="col-5 control-label" for="EndDate">Einde periode:</label>
                         <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
-                               id="inputEndDateMD">
+                               id="EndDate">
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label" for="inputEmail">Email:</label>
@@ -413,7 +416,7 @@ if (isset($_POST['id'])) {
     </div>
 </div>
 
-<!-- modal to edit selected table row in a modal -->
+<!-- modal to edit selected discount -->
 <div class="modal fade" id="EditDiscountDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal"
      aria-hidden="true">
     <div class="modal-dialog" style="width:1000px;">
@@ -434,31 +437,30 @@ if (isset($_POST['id'])) {
                     <div class="tableCollapseProduct">
                         <div class="collapse multi-collapse" id="tableCollapseProduct">
                             <div class="card card-body">
-                                    <input class="form-control collapseTableSearch" type="text"
-                                           placeholder="Waar ben je naar op zoek?"
-                                           aria-label="Search" id="myInputProduct"
-                                           onkeyup="searchbarProduct()">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputEditProduct">
                                 <div class="row">
                                     <div class="col-12">
                                         <table class="table table-fixed tableCollapseSP "
                                                id="tableCollapseProduct">
                                             <thead>
-                                        <tr>
-                                            <th class="col-md-2">Select</th>
-                                            <th class="col-md-2">Product nr</th>
-                                            <th class="col-md-3">Productnaam</th>
-                                            <th class="col-md-1">Prijs</th>
-                                            <th class="col-md-4">Opmerkingen</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $discountController->GetAllProducts(); ?>
-                                        </tbody>
-                                    </table>
+                                            <tr>
+                                                <th class="col-md-2">Select</th>
+                                                <th class="col-md-2">Product nr</th>
+                                                <th class="col-md-3">Productnaam</th>
+                                                <th class="col-md-1">Prijs</th>
+                                                <th class="col-md-4">Opmerkingen</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyEditProduct">
+                                            <?php $discountController->GetAllProducts(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                     <p>
                         <a class="btn btn-secondary collapseButton" data-toggle="collapse"
@@ -469,36 +471,35 @@ if (isset($_POST['id'])) {
                     <div class="tableCollapseCategory">
                         <div class="collapse multi-collapse" id="tableCollapseCategory">
                             <div class="card card-body">
-                                    <input class="form-control collapseTableSearch" type="text"
-                                           placeholder="Waar ben je naar op zoek?"
-                                           aria-label="Search" id="myInputProduct"
-                                           onkeyup="searchbarProduct()">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputEditCategory">
                                 <div class="row">
                                     <div class="col-12">
                                         <table class="table table-fixed tableCollapseSP "
                                                id="tableCollapseProduct">
                                             <thead>
-                                        <tr>
-                                            <th class="col-md-1">Select</th>
-                                            <th class="col-md-2">Categorie nr</th>
-                                            <th class="col-md-4">Categorie naam</th>
-                                            <th class="col-md-2">Parent Categorie</th>
-                                            <th class="col-md-2">Gekoppelde korting id</th>
+                                            <tr>
+                                                <th class="col-md-1">Select</th>
+                                                <th class="col-md-2">Categorie nr</th>
+                                                <th class="col-md-4">Categorie naam</th>
+                                                <th class="col-md-2">Parent Categorie</th>
+                                                <th class="col-md-2">Gekoppelde korting id</th>
 
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $discountController->GetAllCategories(); ?>
-                                        </tbody>
-                                    </table>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyEditCategory">
+                                            <?php $discountController->GetAllCategories(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
                     <div class="form-group" style="display: none;">
                         <label class="col-5" for="SpecialDealID">SpecialDealID:</label>
-                        <input class="col-4 form-control"type="text" name="SpecialDealID" id="SpecialDealID"
+                        <input class="col-4 form-control" type="text" name="SpecialDealID" id="SpecialDealID"
                                value="<?php echo($discount->getSpecialDealID()) ?>">
                     </div>
                     <div class="form-group">
@@ -524,15 +525,15 @@ if (isset($_POST['id'])) {
                         <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
-                        <label class="col-5 control-label" for="inputStartDateOT">Begin periode:</label>
+                        <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                         <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                               id="inputStartDateOT"
+                               id="StartDate"
                                value="<?php echo($discount->getStartDate()) ?>">
                     </div>
                     <div class="form-group">
-                        <label class="col-5 control-label" for="inputEndDateOT">Einde periode:</label>
+                        <label class="col-5 control-label" for="EndDate">Einde periode:</label>
                         <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
-                               id="inputEndDateOT"
+                               id="EndDate"
                                value="<?php echo($discount->getEndDate()) ?>">
                     </div>
                 </div>
@@ -569,113 +570,89 @@ if (isset($_POST['id'])) {
     }
 </script>
 
-
 <script>
-    $('.load-modal').on('click', function (e) {
-        e.preventDefault();
-        $('#createDiscount').modal('show');
-    });
-
-    <!-- scripts for searchbar in each modal-->
-    function searchbar() {
-        var input, filter, table, tr, tds, i, txtValue, tdsearch;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("tableViewDiscount");
-        tr = table.getElementsByTagName("tr");
-        if (filter == '') {
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "";
-            }
-        }
-
-        for (i = 1; i < tr.length; i++) {
-            tdsearch = false;
-            tds = tr[i].getElementsByTagName("td");
-            for (x = 0; x < tds.length; x++) {
-                if (tds[x]) {
-                    txtValue = tds[x].textContent || tds[x].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tdsearch = true;
-                    }
-                }
-            }
-            if (tdsearch == false) {
-                tr[i].style.display = "none";
-            }
-        }
-    }
+    $('#StartDate').date({minDate: 0});
 </script>
 
-<script>
-    $('.load-modal').on('click', function (e) {
-        e.preventDefault();
-        $('#createDiscount').modal('show');
-    });
+<!--<script>-->
+<!--    $('#StartDate').date({-->
+<!--        pickTime: false,-->
+<!--        icons: {-->
+<!--            time: "fa fa-clock-o",-->
+<!--            date: "fa fa-calendar",-->
+<!--            up: "fa fa-arrow-up",-->
+<!--            down: "fa fa-arrow-down"-->
+<!--        },-->
+<!--        minDate: moment()-->
+<!--    });-->
+<!--</script>-->
 
-    function searchbarProduct() {
-        var input, filter, table, tr, tds, i, txtValue, tdsearch;
-        input = document.getElementById("myInputProduct");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("tableCollapseProduct");
-        tr = table.getElementsByTagName("tr");
-        if (filter == '') {
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "";
-            }
-        }
-        for (i = 1; i < tr.length; i++) {
-            tdsearch = false;
-            tds = tr[i].getElementsByTagName("td");
-            for (x = 0; x < tds.length; x++) {
-                if (tds[x]) {
-                    txtValue = tds[x].textContent || tds[x].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tdsearch = true;
-                    }
-                }
-            }
-            if (tdsearch == false) {
-                tr[i].style.display = "none";
-            }
-        }
-    }
+<!-- script to search data in tableViewCustomer using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyCustomer tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 </script>
 
+<!-- script to search data in tableViewProduct using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInputProduct").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyProduct tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!-- script to search data in tableViewCategory using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInputCategory").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyCategory tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!-- script to search data in edit tableViewProduct using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInputEditProduct").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyEditProduct tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!-- script to search data in edit tableViewCategory using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInputEditCategory").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyEditCategory tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
 <script>
     $('.load-modal').on('click', function (e) {
         e.preventDefault();
         $('#createDiscount').modal('show');
     });
-
-    function searchbarCategory() {
-        var input, filter, tale, tr, tds, i, txtValue, tdsearch;
-        input = document.getElementById("myInputCategory");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("tableCollapseCategory");
-        tr = table.getElementsByTagName("tr");
-        if (filter == '') {
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "";
-            }
-        }
-
-        for (i = 1; i < tr.length; i++) {
-            tdsearch = false;
-            tds = tr[i].getElementsByTagName("td");
-            for (x = 0; x < tds.length; x++) {
-                if (tds[x]) {
-                    txtValue = tds[x].textContent || tds[x].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tdsearch = true;
-                    }
-                }
-            }
-            if (tdsearch == false) {
-                tr[i].style.display = "none";
-            }
-        }
-    }
 </script>
 
 <?php
