@@ -127,6 +127,17 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
     return include 'content/backend/onderhoudhoofdpagina.php';
 });
 
+$router->route('/account-toevoegen', function() use($customerController){
+    return $customerController->create();
+});
+//$router->route('/account-toevoegen', function() {
+//    return include 'content/frontend/account-toevoegen.php';
+//});
+//
+
+$router->route('/admin', function(){
+    return include 'content/backend/home-admin.php';
+});
 
 $router->route('/admin/onderhoud-categorieen', function(){
     return include 'content/backend/onderhoudc.php';
@@ -152,7 +163,7 @@ $router->route('/admin/UpdateDiscount', function() use($discountController){
 });
 
 $router->route('/admin/CreateCustomer', function() use($customerController) {
-    return $customerController->create();
+    return $customerController->createBE();
 });
 
 $router->route('/admin/UpdateCustomer', function() use($customerController){
@@ -170,9 +181,7 @@ $router->route('/admin/onderhoud-nieuwsbrief', function(){
 $router->route('/admin/bestellingoverzicht', function(){
     return include 'content/backend/bestellingoverzicht.php';
 });
-$router->route('/admin/bestellingoverzicht', function(){
-    return include 'content/backend/bestellingoverzicht.php';
-});
+
 $router->route('/admin/upload', function(){
     return include 'content/backend/upload.php';
 });

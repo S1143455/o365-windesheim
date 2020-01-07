@@ -1,7 +1,15 @@
 <?php
 
 include_once 'content/header.php';
+<<<<<<< HEAD
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> b2bb1f4d544f81dcbbf97a44c468f2323b034549
+=======
 $database = new Model\Database();
+>>>>>>> 71dba54fefa3d93c63c778db6fcc7195b5a115b2
 ?>
 
     <div class="container">

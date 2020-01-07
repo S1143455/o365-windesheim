@@ -11,6 +11,7 @@ use Model\Adress;
 class CustomerController
 {
     private $admin = 'content/backend/';
+    private $route = 'content/frontend/';
 
     function __construct()
     {
@@ -48,6 +49,20 @@ class CustomerController
         }
 
     }
+    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
+//    public function getNewsletter()
+//    {
+//        if ($this->newsletter == "1"){
+//            $this->newsletter =
+//                '<input type="checkbox" name="newsletter" checked>';
+//
+//        } else {
+//            $this->newsletter =
+//                '<input type="checkbox" name="newsletter">';
+//
+//        }
+//        return $this->newsletter;
+//    }
 
 //    function getCustomerAndPeople()
 //    {
@@ -60,7 +75,7 @@ class CustomerController
 //        }
 //    }
 
-    public function create()
+    public function createBE()
     {
         print_r($_POST);
         $this->customer = new Customer();
@@ -75,6 +90,20 @@ class CustomerController
         // include $this->contentpath
         include $this->admin . 'onderhoudklanten.php';
     }
+    /**
+     * This method should capture the creation of a new object,
+     * Verify its data and commit it to the database.
+     * @param $newCustomer
+     * @return mixed
+     */
+    public function create()
+    {
+        $this->customer = new Customer();
+        $this->customer->setCustomerID(10);
+
+        //iets.php
+        include $this->route . 'account-toevoegen.php';
+    }
 
     /**
      * Stores the product in the database.
@@ -82,21 +111,22 @@ class CustomerController
      * @param $customer customer
      * @return string
      */
+
     public function store($customer)
     {
         var_dump($customer);
 
-        if (!$customer->initialize())
-        {
+        if (!$customer->initialize()) {
             print_r($_GET);
             return false;
         };
 
         $this->customer = $customer;
 
-        if (!$this->customer->save())
-        {
+        if (!$this->customer->save()) {
             return "Something went wrong.";
         }
     }
+
+
 }

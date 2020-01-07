@@ -24,6 +24,8 @@ switch ($userController->role()){
 $admin = new Controller\AdminController();
 $categoryController = new Controller\CategoryController();
 
+$orderController = new Controller\OrderController();
+
 $discountController = new Controller\DiscountController();
 //$user = new Controller\UserController();
 $customerController = new Controller\CustomerController();
@@ -31,6 +33,16 @@ $customerController = new Controller\CustomerController();
 $productController = new Controller\ProductController();
 
 
+$customerController = new Controller\CustomerController();
 
+
+if (isset($_SESSION['authenticated']))
+{
+    echo '<div class="container" style="width:100%">
+    <div class="row">';
+        include_once 'content/frontend/sidebar.php';
+    echo '</div>
+</div>';
+}
 
 

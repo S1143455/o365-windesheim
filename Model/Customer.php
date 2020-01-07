@@ -7,16 +7,20 @@ namespace Model;
 class Customer extends Database
 {
     private $CustomerID;
+    private $AddressID;
     private $PersonID;
     private $ShoppingCartID;
+    private $Gender;
     private $newsletter;
+    private $TermsAndConditions;
+
 
     function __construct()
     {
-        Parent::__construct();
-        $this->table = 'customer';
-    }
+        $this->table = "customer";
+        parent::__construct();
 
+    }
     /**
      * @return mixed
      */
@@ -32,27 +36,21 @@ class Customer extends Database
     {
         $this->CustomerID = $CustomerID;
     }
+
     /**
      * @return mixed
      */
-
-    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
-    public function getNewsletter()
+    public function getAddressID()
     {
-        if ($this->newsletter == "1"){
-            $this->newsletter =
-                '<input type="checkbox" name="newsletter" checked>';
-
-        } else {
-            $this->newsletter =
-                '<input type="checkbox" name="newsletter">';
-
-        }
-        return $this->newsletter;
+        return $this->AddressID;
     }
-    public function setnewsletter($newsletter)
+
+    /**
+     * @param mixed $AddressID
+     */
+    public function setAddressID($AddressID)
     {
-        $this->newsletter = $newsletter;
+        $this->AddressID = $AddressID;
     }
 
     /**
@@ -87,8 +85,53 @@ class Customer extends Database
         $this->ShoppingCartID = $ShoppingCartID;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getGender()
+    {
+        return $this->Gender;
+    }
 
+    /**
+     * @param mixed $Gender
+     */
+    public function setGender($Gender)
+    {
+        $this->Gender = $Gender;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getNewsletter()
+    {
+        return $this->newsletter;
+    }
+
+    /**
+     * @param mixed $newsletter
+     */
+    public function setNewsletter($newsletter)
+    {
+        $this->newsletter = $newsletter;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTermsAndConditions()
+    {
+        return $this->TermsAndConditions;
+    }
+
+    /**
+     * @param mixed $TermsAndConditions
+     */
+    public function setTermsAndConditions($TermsAndConditions)
+    {
+        $this->TermsAndConditions = $TermsAndConditions;
+    }
 
 
 //`CustomerID` int(10) NOT NULL,

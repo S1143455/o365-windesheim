@@ -186,7 +186,7 @@ class Database extends Models
             $attributes = $returnAttr;
         }
 
-        return "SELECT " . $attributes . " FROM " . $this->table . " ";
+        return "SELECT " . $attributes . " FROM `" . $this->table . "` ";
     }
 
 
@@ -278,6 +278,8 @@ echo $sql;
     public function retrieve($id = null)
     {
         //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
+        //TODO : Not using todo and just adding it to task list in whatever method you use
+        //TODO : Not forcing to get all columns
         $this->getColumns();
         if (empty($id)) {
             return $this->batch(null, $this->offset);
@@ -286,7 +288,6 @@ echo $sql;
         }
 
     }
-
 
     /**
      * @param $columnKeys
@@ -653,6 +654,7 @@ echo $sql;
             foreach ($array as $key => $value)
             {
                 $modelObject = new $className;
+
                 foreach ($value as $attrKey => $attrValue)
                 {
                     if (array_key_exists($attrKey, $this->column))
@@ -666,6 +668,7 @@ echo $sql;
         {
             array_push($modelObjects, $modelObject);
         }
+
         return $modelObjects;
     }
 

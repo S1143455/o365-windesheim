@@ -17,6 +17,7 @@ class Models
 
     protected function getColumns()
     {
+        var_dump($this->table);
         switch ($this->table) {
             case 'stockitem':
                 $this->getStockItem();
@@ -48,7 +49,9 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
-
+            case  'order':
+                $this->getOrder();
+                break;
             default:
                 die('Table not implemented');
         }
@@ -78,6 +81,15 @@ class Models
                     break;
                 case  'customer':
                     $this->getCustomer();
+                    break;
+                case  'Shoppingcart':
+                    $this->getShoppingcart();
+                    break;
+                case  'specialdeals':
+                    $this->getSpecialdeals();
+                    break;
+                case  'order':
+                    $this->getOrder();
                     break;
                 default:
                     die('Table not implemented');
@@ -145,15 +157,6 @@ class Models
         );
     }
 
-    private function getCustomer()
-    {
-        $this->column = array(
-            "CustomerID" => ['Integer', 'PrimaryKey', 'Required'],
-            "PersonID" => ['People', 'HasOne', 'Required'],
-            "ShoppingCartID" => ['shoppingcart', 'HasOne', 'Nullable'],
-            "newsletter" => ['Tinyint', 'HasOne', 'Nullable'],
-        );
-    }
     private function getAddress()
     {
         $this->column = array(
@@ -242,6 +245,40 @@ class Models
             "LastEditedBy" => ['Varchar', 'Attribute', 'Required'],
             "AddressID" => ['Address', 'HasOne', 'Required'],
 
+        );
+    }
+
+    private function getCustomer()
+    {
+        $this->column = array(
+            "CustomerID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "AddressID" => ['Integer', 'Attribute', 'Unique'],
+            "PersonID" => ['Integer', 'HasOne', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "Gender" => ['Varchar', 'Attribute', 'Required'],
+            "newsletter" => ['Boolean', 'Attribute', 'Not Required'],
+            "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
+        );
+    }
+    private function getOrder()
+    {
+        $this->column = array(
+            "OrderID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "CustomerID" => ['Integer', 'foreign key', 'Required'],
+            "OrderDate" => ['Date', 'Attribute', 'Not Required'],
+            "ExpectedDeliveryDate" => ['Date', 'Attribute', 'Not Required'],
+            "LastEditedBy" => ['Integer', 'foreign key', 'Required'],
+            "DeliveryMethodID" => ['Integer', 'foreign key', 'Required'],
+            "PaymentMethodID" => ['Integer', 'foreign key', 'Not Required'],
+            "SpecialDealID" => ['Integer', 'foreign key', 'Not Required'],
+        );
+    }
+    private function getOrderStockItem()
+    {
+        $this->column = array(
+            "OrderStockItemID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "OrderID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemID" => ['Integer', 'Attribute', 'Required'],
         );
     }
 
