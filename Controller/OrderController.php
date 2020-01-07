@@ -47,10 +47,11 @@ class OrderController
     public function displayproduct($prod, $orderstockitem){
         $result = '';
         $result .= '<tr style="height:40px;">
-                            <td class="col-md-3">' . $prod->getStockItemName() .'</td>
+                            <td class="col-md-2">' . $prod->getBrand() .'</td>
                             <td class="col-md-3">' . $prod->getBrand() .'</td>
                             <td class="col-md-3">' . $prod->getUnitPrice() .'</td>
-                            <td class="col-md-3">' . $orderstockitem->getAmount() .'</td>
+                            <td class="col-md-2">' . $prod->getUnitPrice() .'</td>
+                            <td class="col-md-2">' . $orderstockitem->getAmount() .'</td>
                             
                             
                         </tr>';
@@ -112,7 +113,7 @@ $person = $this->retrievePeople($customer->getPersonID());
             }
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-md-1"><button type="submit" name="id" value="' . $order->getOrderID() .'">Edit</button></td>
+                            <td class="col-md-1"><button type="submit" name="id" value="' . $order->getOrderID() .'">Details</button></td>
                             <td class="col-md-2">' . $order->getOrderID() . '</td>
                             <td class="col-md-3">' . $person->getFullName() . '</td>
                             <td class="col-md-3">' . $order->getOrderdate() . '</td>

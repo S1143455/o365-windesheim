@@ -18,8 +18,8 @@ if (isset($_POST['id'])) {
 <div class="container" style="width:100%">
     <div class="row">
 <?php
-//    include_once 'content/backend/sidebar-admin.php';
-//?>
+    include_once 'content/backend/sidebar-admin.php';
+?>
 
 <div class="col-md-8">
     <div class="row" style="min-height: 50px;"></div>
@@ -35,7 +35,7 @@ if (isset($_POST['id'])) {
             <table id="OrderTable" class="table table-fixed">
                 <thead>
                 <tr>
-                    <th class="col-md-1">edit</th>
+                    <th class="col-md-1">Details</th>
                     <th class="col-md-2">Bestel nummer</th>
                     <th class="col-md-3">Klant nummer</th>
                     <th class="col-md-3">Bestel datum</th>
@@ -50,16 +50,16 @@ if (isset($_POST['id'])) {
 
     </div>
 
-    <div class="modal fade" id="orderDetailsDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal" aria-hidden="true">
+    <div class="modal fade" id="orderDetailsDialog" tabindex="-1" role="dialog" aria-labelledby="DetailModal" aria-hidden="true">
         <div class="modal-dialog" style="width:1000px;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"></span></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
 
-                        <label for="categoryID">customer Name:  </label>
+                        <label for="customerID">customer Name:  </label>
                         <p><?php echo $person->getFullName() ?></p>
 <!--                        klant, person, stockitem,order,orderstockitem,, mogelijk ook special deal  -->
 <!--                        <input type="text" class="form-control" name="CategoryID" id="CategoryID" value="--><?php //echo($category->getCategoryID()) ?><!--" >-->
@@ -68,10 +68,12 @@ if (isset($_POST['id'])) {
                     <table id="OrderTable" class="table table-fixed">
                         <thead>
                         <tr>
-                            <th class="col-md-3">edit</th>
-                            <th class="col-md-3">Klant nummer</th>
-                            <th class="col-md-3">Bestel datum</th>
-                            <th class="col-md-3">Bedrag</th>
+                            <th class="col-md-2">Naam</th>
+                            <th class="col-md-3">Bezorgadres</th>
+                            <th class="col-md-3">Kostenoverzicht</th>
+                            <th class="col-md-2">Betaal methode</th>
+                            <th class="col-md-2">Verwachte afleverdatum</th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -88,7 +90,7 @@ if (isset($_POST['id'])) {
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 <!--                    <input type="submit" name="submit" value="Aanpassen" class="btn btn-primary">-->
                 </div>
             </div>

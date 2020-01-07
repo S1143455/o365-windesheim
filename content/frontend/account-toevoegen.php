@@ -7,9 +7,7 @@ use Model\Customer;
 
 if (isset($_POST['submit'])) {
     include 'loader.php';
-    $customer = new Customer();
-    $customer->initialize();
-    $customerController->store($customer);
+    $customerController->createMultipleP();
     //die();
 }
 
@@ -18,7 +16,7 @@ if (isset($_POST['submit'])) {
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form role="form" id="universalModalForm" method="POST">
+            <form role="form" id="testmooimaakraymon" method="POST" action="">
                 <div class="form-group">
                     <div class="row">
                         <h4>Aanhef</h4>
@@ -53,9 +51,13 @@ if (isset($_POST['submit'])) {
                 </div>
                 </div>
                 <div class="form-group">
-                    <label for="InputPassword">Wachtwoord</label>
-                    <input type="password" name="HashedPassword" class="form-control" id="InputPassword" placeholder="Wachtwoord">
+                    <label for="DateOfBirth">Geboortedatum</label>
+                    <input type="date" name="dateofbirth" class="form-control" id="dateofbirth" ">
                 </div>
+                <div class="form-group">
+                <label for="InputPassword">Wachtwoord</label>
+                <input type="password" name="pwd" class="form-control" id="InputPassword" placeholder="Wachtwoord">
+        </div>
                 <div class="form-group">
                     <label for="InputRepeatPassword">Herhaal wachtwoord</label>
                     <input type="password" name="RepeatHashedPassword" class="form-control" id="InputRepeatPassword" placeholder="Herhaal Wachtwoord">
@@ -68,9 +70,9 @@ if (isset($_POST['submit'])) {
                     <input type="checkbox" name="TermsAndConditions" class="form-check-input" id="GenConditions">
                     <label class="form-check-label" for="TermsAndConditions">Ik ga akkoord met de algemene voorwaarden*</label>
                 </div>
-                <input type="submit" name="submit" value="Registreren1" class="btn btn-primary">
+<!--                //<input type="submit" name="submit" value="Registreren1" class="btn btn-primary">-->
 
-                <button type="submit" name="register" class="btn btn-primary">Registreren</button>
+                <input type="submit" name="submit" value="Aanpassen" class="btn btn-primary">
             </form>
         </div>
     </div>

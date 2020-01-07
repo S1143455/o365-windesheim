@@ -212,7 +212,7 @@ class Models
             "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
-            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+//            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
             "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
             "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );
@@ -281,7 +281,7 @@ class Models
             "orderStockItemId" => ['Integer', 'PrimaryKey', 'Required' ],
             "OrderID" => ['Order', 'HasOne', 'Required'],
             "StockItemID" => ['StockItem', 'HasOne', 'Required'],
-            "aantal" => ['Integer', 'Attribute', 'Required'],
+            "Amount" => ['Integer', 'Attribute', 'Re``quired'],
         );
     }
 

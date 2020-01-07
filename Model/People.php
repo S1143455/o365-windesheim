@@ -17,10 +17,18 @@ class People extends Database
     private $DateOfBirth;
     private $Photo;
     private $LastEditedBy;
-
+    private $PassWordRecoveryString;
+    private $RecoveryStringTTL;
     function __construct()     {
         Parent::__construct();
         $this->table = 'people';
+    }
+
+
+    public function getAllPeople(){
+        $people = new People();
+        $people = $people->retrieve();
+        return $people;
     }
     /**
      * @return mixed
@@ -198,9 +206,36 @@ class People extends Database
         $this->LastEditedBy = $LastEditedBy;
     }
 
-    public function getAllPeople(){
-        $people = new People();
-        $people = $people->retrieve();
-        return $people;
+    /**
+     * @return mixed
+     */
+    public function getPassWordRecoveryString()
+    {
+        return $this->PassWordRecoveryString;
     }
+
+    /**
+     * @param mixed $PassWordRecoveryString
+     */
+    public function setPassWordRecoveryString($PassWordRecoveryString)
+    {
+        $this->PassWordRecoveryString = $PassWordRecoveryString;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecoveryStringTTL()
+    {
+        return $this->RecoveryStringTTL;
+    }
+
+    /**
+     * @param mixed $RecoveryStringTTL
+     */
+    public function setRecoveryStringTTL($RecoveryStringTTL)
+    {
+        $this->RecoveryStringTTL = $RecoveryStringTTL;
+    }
+
 }
