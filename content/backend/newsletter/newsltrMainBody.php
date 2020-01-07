@@ -1,5 +1,7 @@
 <?php
 // Who's calling?
+echo "<pre>"; print_r($_SESSION); echo "</pre>";
+echo "<pre>"; print_r($_POST); echo "</pre>";
 if (isset($_POST['ChangeNewsletter']))      // The users wants to change the news letter.
 {
     $dataHandler=new \Model\Database();
