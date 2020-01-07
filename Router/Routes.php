@@ -142,7 +142,7 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
 });
 
 $router->route('/account-toevoegen', function() use($customerController){
-    return $customerController->create();
+    return $customerController->createR();
 });
 //$router->route('/account-toevoegen', function() {
 //    return include 'content/frontend/account-toevoegen.php';
@@ -215,18 +215,8 @@ $router->route('/admin/onderhoud-nieuwsbrief', function(){
 });
 
 $router->route('/admin/bestellingoverzicht', function(){
-    if(!isset($_SESSION['authenticatedAdmin'])){
-        return include 'views/login-Admin/login.php';
-    }else{
+
         return include 'content/backend/bestellingoverzicht.php';
-    }
-});
-$router->route('/admin/bestellingoverzicht', function(){
-    if(!isset($_SESSION['authenticatedAdmin'])){
-        return include 'views/login-Admin/login.php';
-    }else{
-        return include 'content/backend/bestellingoverzicht.php';
-    }
 });
 
 /**

@@ -18,6 +18,10 @@ class People extends Database
     private $Photo;
     private $LastEditedBy;
 
+    function __construct()     {
+        Parent::__construct();
+        $this->table = 'people';
+    }
     /**
      * @return mixed
      */

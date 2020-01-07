@@ -9,6 +9,7 @@ class OrderStockItem extends Database
     private $orderstockitemID;
     private $stockitemID;
     private $orderID;
+
     function __construct()
     {
         $this->table = "order_stockitem";

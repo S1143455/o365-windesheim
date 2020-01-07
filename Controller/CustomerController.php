@@ -20,7 +20,7 @@ class CustomerController
      * @param $newCustomer
      * @return mixed
      */
-    public function create()
+    public function createR()
     {
         $this->customer = new Customer();
         $this->customer->setCustomerID(10);
@@ -66,14 +66,9 @@ class CustomerController
         print_r($_POST);
         $this->customer = new Customer();
         $this->customer->initialize();
-        //var_dump($this->customer);
-
-//        $this->customer->setLastEditedBy(1);
 
         $this->store($this->customer);
 
-        // return "true";
-        // include $this->contentpath
         include $this->admin . 'onderhoudklanten.php';
     }
 

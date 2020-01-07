@@ -114,7 +114,7 @@ class Models
     private function getStockItem()
     {
         $this->column = array(
-            "StockItemID" => ['Integer', 'PrimaryKey', 'Required'],
+            "StockItemId" => ['Integer', 'PrimaryKey', 'Required'],
             "StockItemName" => ['Varchar', 'Attribute', 'Required'],
             "SupplierID" => ['Supplier', 'HasOne', 'Required'],
             "Brand" => ['Varchar', 'Attribute', 'Required'],
@@ -157,15 +157,7 @@ class Models
         );
     }
 
-    private function getCustomer()
-    {
-        $this->column = array(
-            "CustomerID" => ['Integer', 'PrimaryKey', 'Required'],
-            "PersonID" => ['People', 'HasOne', 'Required'],
-            "ShoppingCartID" => ['shoppingcart', 'HasOne', 'Nullable'],
-            "newsletter" => ['Tinyint', 'HasOne', 'Nullable'],
-        );
-    }
+
     private function getAddress()
     {
         $this->column = array(
@@ -289,6 +281,7 @@ class Models
             "orderStockItemId" => ['Integer', 'PrimaryKey', 'Required' ],
             "OrderID" => ['Order', 'HasOne', 'Required'],
             "StockItemID" => ['StockItem', 'HasOne', 'Required'],
+            "aantal" => ['Integer', 'Attribute', 'Required'],
         );
     }
 
