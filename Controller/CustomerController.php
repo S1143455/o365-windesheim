@@ -49,6 +49,17 @@ class CustomerController
 
     }
 
+//    function getCustomerAndPeople()
+//    {
+//        $customers = $this->customer->getAllCustomers();
+//
+//        foreach ($customers as $customer){
+//
+//            $result = '';
+//            $result =
+//        }
+//    }
+
     public function create()
     {
         print_r($_POST);
