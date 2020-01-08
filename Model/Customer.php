@@ -122,16 +122,7 @@ class Customer extends Database
     //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
     public function getNewsletter()
     {
-        if ($this->Newsletter == "1"){
-            $this->Newsletter =
-                '<input type="checkbox" name="Newsletter" checked disabled>';
-
-        } else {
-            $this->Newsletter =
-                '<input type="checkbox" name="Newsletter" disabled>';
-
-        }
-        return $this->Newsletter;
+        return $this->newsletter;
     }
     public function setNewsLetter($newsletter)
     {

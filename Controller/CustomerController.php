@@ -75,7 +75,12 @@ class CustomerController
 
         include $this->admin . 'onderhoudklanten.php';
     }
-
+    function Test_Input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
     public function createMultipleP(){
 
         $this->customer = new Customer();
@@ -110,7 +115,10 @@ class CustomerController
                     }
                     break;
                 case "TermsAndConditions":
+//                    var_dump($value);
                     if($value == "on"){
+                        $this->customer->setTermsAndConditions(1);
+                    }else{
                         $this->customer->setTermsAndConditions(1);
                     }
                     break;
@@ -149,8 +157,9 @@ class CustomerController
             //var_dump($key);
         }
         $this->storePeople($this->people);
-        var_dump($this->people);
-        var_dump($this->customer);
+        $this->customer->setPersonID($this->people->getPersonID());
+        $this->store($this->customer);
+
     }
 
     /**
@@ -161,7 +170,7 @@ class CustomerController
      */
     public function store($customer)
     {
-        var_dump($customer);
+//        var_dump($customer);
         if (!$customer->initialize())
         {
             print_r($_GET);
@@ -183,7 +192,7 @@ class CustomerController
      */
     public function storePeople($people)
     {
-        var_dump($people);
+//        var_dump($people);
         if (!$people->initialize())
         {
             return false;
