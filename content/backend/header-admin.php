@@ -10,9 +10,13 @@ include 'admin_scripts.php';
     <meta charset="utf-8" />
     <title><?php echo $admin->page_title(); ?> | <?php echo $admin->site_name(); ?></title>
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
+<<<<<<< HEAD
 <!--    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
 <!--    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
 <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+=======
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+>>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -22,32 +26,13 @@ include 'admin_scripts.php';
 
 </head>
 <body>
-
-<nav class="navbar-expand-lg navbar-light bg-light navbar-navbar"> <!--navbar navbar-expand-sm bg-dark navbar-darknavbar-->
-    <div class="container navcontainer">
-        <div class="row">
-            <div class="col-md-2">
-                <img style="max-height: 50px; max-width: 80px;" class="navbar-brand logo" src="../logo_omasbeste.png" alt="photo" >
-            </div>
-            <div class="col-md-10">
-                <?php $admin->navigationalmenu();?>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="row">
+        <div class="col-md-2">
+            <img class="navbar-brand" style="max-height:80px; max-width:50px;" src="../logo_omasbeste.png" alt="photo" >
+        </div>
+        <div class="col-md-10">
+            <?php $admin->navigationalmenu();?>
         </div>
     </div>
 </nav>
-<!--    <a class="navbar-brand" href="#">Navbar</a>-->
-<!--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--        <span class="navbar-toggler-icon"></span>-->
-<!--    </button>-->
-<!--<nav class="navbar navbar-default navbar-static-top  my-nav">-->
-<!--    <div class="container navcontainer">-->
-<!--        <div class="row" style="width: 100%;">-->
-<!--            <div class="col-md-2">-->
-<!--                <img style="max-height: 50px; max-width: 80px;" class="navbar-brand logo" src="../logo_omasbeste.png" alt="photo" >-->
-<!--            </div>-->
-<!--            <div class="col-md-10 normalnav">-->
-<!--                --><?php //$admin->navigationalmenu();?>
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</nav>-->

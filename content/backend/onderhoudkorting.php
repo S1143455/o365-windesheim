@@ -1,5 +1,6 @@
 <?php
 include_once 'content/backend/header-admin.php';
+
 use Model\Discount;
 
 if (isset($_POST['id'])) {
@@ -11,23 +12,6 @@ if (isset($_POST['id'])) {
     }
 
 }
-
-//echo "***********<br>"; print_r($_POST); echo "<br>***********<br>";
-//
-//
-//$invalues='';
-//
-//while ( ($myname=current($_POST['StockItemID'])) !==FALSE ){
-//    $invalues=$invalues.','.key($_POST['StockItemID']);
-//    next($_POST['StockItemID']);
-//
-//}
-//$invalues=substr($invalues,1);
-//echo "***********<br>".$invalues."<br>***********<br>";
-//
-//$sql="update " . $_POST['submit'] . " set y = z where id in (".$invalues. ")";
-//echo $sql."<br>";
-
 
 ?>
 <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
@@ -45,33 +29,33 @@ if (isset($_POST['id'])) {
             <br>
             <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
             <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?"
-                   aria-label="Search"
-                   id="myInput" onkeyup="searchbar()">
+                   aria-label="Search" id="myInput">
             <br>
 
             <div class="row">
-                <div class="col-12 col-md-7 col-lg-8 tableDiscount">
+                <div class="col-12 col-md-10 col-lg-9 tableDiscount">
                     <!-- Creates a table with headers and data based on function -->
                     <form role="form" id="table" method="POST" action="">
-
-                        <table class="table table-responsive-lg table-bordered" id="tableViewDiscount">
-                            <thead>
-                            <tr>
-                                <th class="col-md-1">Manage</th>
-                                <th class="col-md-2">Code</th>
-                                <th class="col-md-1">Percentage</th>
-                                <th class="col-md-1">Eenmalig</th>
-                                <th class="col-md-1">Actief</th>
-                                <th class="col-md-3">Omschrijving</th>
-                                <th class="col-md-1">Product aantal</th>
-                                <th class="col-md-1">Beginperiode</th>
-                                <th class="col-md-1">Eindperiode</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $discountController->GetAllDiscount(); ?>
-                            </tbody>
-                        </table>
+                        <div class="table-fixed">
+                            <table class="table table-bordered" id="tableViewDiscount">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-1">Manage</th>
+                                    <th class="col-md-2">Code</th>
+                                    <th class="col-md-1">Percentage</th>
+                                    <th class="col-md-1">Eenmalig</th>
+                                    <th class="col-md-1">Actief</th>
+                                    <th class="col-md-3">Omschrijving</th>
+                                    <th class="col-md-1">Product aantal</th>
+                                    <th class="col-md-1">Beginperiode</th>
+                                    <th class="col-md-1">Eindperiode</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbodyCustomer">
+                                <?php $discountController->GetAllDiscount(); ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </form>
                 </div>
 
@@ -101,7 +85,7 @@ if (isset($_POST['id'])) {
     </div>
 </div>
 
-<!-- modal (popup) oneTimeDiscount -->
+<!-- modal (popup) OneTimeDiscount -->
 <div class="modal fade" id="oneTimeDiscount" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -114,34 +98,45 @@ if (isset($_POST['id'])) {
                 </div>
                 <div class="modal-body">
                     <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-3 ml-xs-3 control-label" for="inputCodeOT">Code:</label>
-                            <input class="col-4 form-control inputCode" type="text" name="DealCode"
-                                   id="inputCodeOT" placeholder="Code">
-                            <button class="col-4 btn btn-outline-secondary btnGenerateCode" type="button"
-                                    onclick="generateCodeOT();">Genereer code
-                            </button>
+                        <div class="col-12">
+                            <div class="row">
+                                <label class="col-5 control-label" for="inputCodeOT">Code:</label>
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                       placeholder="Code">
+                            </div>
+                            <div class="row">
+                                <div class="col-5"></div>
+                                <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
+                                        onclick="generateCodeOT();">Genereer code
+                                </button>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-3 col-md-3 col-lg-3 control-label" for="checkboxOT">Eenmalig:</label>
-                            <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT"
+                            <label class="col-5 control-label" for="checkboxOT">Eenmalig:</label>
+                            <input class="checkboxOneTime" type="checkbox" name="OneTime" id="OneTime"
                                    value="1">
                         </div>
                         <div class="form-group">
-                            <label class="col-3 control-label" for="inputPercentageOT">Percentage:</label>
+                            <label class="col-5 control-label descriptionPopUp"
+                                   for="descriptionOT">Omschrijving:</label>
+                            <textarea class="col-7 form-control dealDescription" name="DealDescription"
+                                      id="descriptionOT" rows="3" placeholder="Omschrijving"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-5 control-label" for="inputPercentageOT">Percentage:</label>
                             <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
                                    id="inputPercentageOT">
                             <span class="col-1 symbolPercentage">%</span>
                         </div>
                         <div class="form-group">
-                            <label class="col-3 control-label" for="inputStartDateOT">Begin periode:</label>
+                            <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                                   id="inputStartDateOT">
+                                   id="StartDate">
                         </div>
                         <div class="form-group">
-                            <label class="col-3 control-label" for="inputEndDateOT">Einde periode:</label>
+                            <label class="col-5 control-label" for="EndDate">Einde periode:</label>
                             <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
-                                   id="inputEndDateOT">
+                                   id="EndDate">
                         </div>
                     </div>
                 </div>
@@ -168,79 +163,87 @@ if (isset($_POST['id'])) {
                 <div class="modal-body">
                     <p>
                         <a class="btn btn-secondary collapseButton" data-toggle="collapse"
-                           href="#tableCollapseProduct"
-                           role="button"
+                           href="#tableCollapseProduct" role="button"
                            aria-expanded="false" aria-controls="tableCollapse">Product zoeken</a>
                     </p>
                     <div class="tableCollapseProduct">
                         <div class="collapse multi-collapse" id="tableCollapseProduct">
                             <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputProduct">
                                 <div class="row">
-                                    <input class="form-control collapseTableSearch" type="text"
-                                           placeholder="Waar ben je naar op zoek?"
-                                           aria-label="Search" id="myInputProduct"
-                                           onkeyup="searchbarProduct()">
-                                </div>
-                                <div class="col-12">
-                                    <table class="table table-responsive-lg tableCollapseSP"
-                                           id="tableCollapseProduct">
-                                        <thead>
-                                        <tr>
-                                            <th class="col-md-2">Select</th>
-                                            <th class="col-md-2">Productnr</th>
-                                            <th class="col-md-3">Productnaam</th>
-                                            <th class="col-md-1">Prijs</th>
-                                            <th class="col-md-4">Opmerkingen</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $discountController->GetAllProducts(); ?>
-                                        </tbody>
-                                    </table>
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP"
+                                               id="tableCollapseProduct">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-2">Select</th>
+                                                <th class="col-md-2">Productnr</th>
+                                                <th class="col-md-3">Productnaam</th>
+                                                <th class="col-md-1">Prijs</th>
+                                                <th class="col-md-4">Opmerkingen</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyProduct">
+                                            <?php $discountController->GetAllProducts(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="inputCodePD">Code:</label>
-                        <input type="text" class="form-control inputCode" name="DealCode" id="inputCodeDP"
-                               placeholder="Code">
-                        <button type="button" class="btn btn-outline-secondary"
-                                onclick="generateCodeDP();">Genereer code
-                        </button>
+                        <div class="col-12">
+                            <div class="row">
+                                <label class="col-5 control-label" for="inputCodePD">Code:</label>
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                       placeholder="Code">
+                            </div>
+                            <div class="row">
+                                <div class="col-5"></div>
+                                <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
+                                        onclick="generateCodeDP();">Genereer code
+                                </button>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <label class="control-label" for="checkboxDP">Eenmalig:</label>
+                        <label class="col-5 control-label" for="checkboxDP">Eenmalig:</label>
                         <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
                     </div>
                     <div class="form-group">
-                        <label class="control-label descriptionPopUp" for="descriptionDP">Omschrijving:</label>
+                        <label class="col-5 control-label descriptionPopUp"
+                               for="descriptionDP">Omschrijving:</label>
                         <textarea class="form-control dealDescription" name="DealDescription"
                                   id="descriptionDP" rows="3" placeholder="Omschrijving"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="control-label labelInputPercentage"
+                        <label class="col-5 control-label labelInputPercentage"
                                for="inputPercentageDP">Percentage:</label>
-                        <input type="text" class="form-control inputPercentage" name="DiscountPercentage"
+                        <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
                                id="inputPercentageDP">
-                        <span class="symbolPercentage">%</span>
+                        <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
-                        <label class="control-label labelInputStartDate" for="inputStartDateDP">Begin
-                            periode:</label>
-                        <input type="date" class="form-control inputStartDate" name="StartDate"
-                               id="inputStartDateDP">
+                        <label class="col-5 control-label labelInputStartDate" for="StartDate">
+                            Begin periode:</label>
+                        <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
+                               id="StartDate">
                     </div>
                     <div class="form-group">
-                        <label for="control-label inputEndDateDP">Einde periode:</label>
-                        <input type="date" class="form-control inputEndDate" name="EndDate"
-                               id="inputEndDateDP">
+                        <label class="col-5 control-label" for="EndDate">Einde periode:</label>
+                        <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
+                               id="EndDate">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                    <button type="submit" class="btn btn-primary" name="submit" value="deze tael">Korting aanmaken</button>
+                    <button type="submit" class="btn btn-primary" name="submit" value="deze tael">Korting aanmaken
+                    </button>
                 </div>
             </form>
         </div>
@@ -268,59 +271,71 @@ if (isset($_POST['id'])) {
                     <div class="tableCollapseCategory">
                         <div class="collapse multi-collapse" id="tableCollapseCategory">
                             <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputCategory">
                                 <div class="row">
-                                    <input class="form-control collapseTableSearch" type="text"
-                                           placeholder="Waar ben je naar op zoek?"
-                                           aria-label="Search" id="myInputCategory"
-                                           onkeyup="searchbarCategory()">
-                                    <table class="table table-fixed tableCollapseSC"
-                                           id="tableCollapseCategory">
-                                        <thead>
-                                        <tr>
-                                            <th class="col-md-2">Select</th>
-                                            <th class="col-md-2">Categorie nr</th>
-                                            <th class="col-md-4">Categorie naam</th>
-                                            <th class="col-md-4">Parent Categorie</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php $discountController->GetAllCategories(); ?>
-                                        </tbody>
-                                    </table>
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP "
+                                               id="tableCollapseProduct">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-2">Select</th>
+                                                <th class="col-md-2">Categorie nr</th>
+                                                <th class="col-md-4">Categorie naam</th>
+                                                <th class="col-md-2">Parent Categorie</th>
+                                                <th class="col-md-2">Gekoppelde korting id</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyCategory">
+                                            <?php $discountController->GetAllCategories(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label" for="inputCodeDC">Code:</label>
-                        <input type="text" class="form-control inputCode" name="DealCode" id="inputCodeDC"
-                               placeholder="Code">
-                        <button type="button" class="btn btn-outline-secondary"
-                                onclick="generateCodeDC();">Genereer code
-                        </button>
+                    <div class="col-12">
+                        <div class="row">
+                            <label class="col-5 control-label" for="inputCodeDC">Code:</label>
+                            <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                   placeholder="Code">
+                        </div>
+                        <div class="row">
+                            <div class="col-5"></div>
+                            <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
+                                    onclick="generateCodeDC();">Genereer code
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label descriptionPopUp" for="descriptionDC">Omschrijving:</label>
-                        <textarea class="form-control dealDescription" name="DealDescription"
+                        <label class="col-5 control-label" for="checkboxDP">Eenmalig:</label>
+                        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-5 control-label descriptionPopUp"
+                               for="descriptionDC">Omschrijving:</label>
+                        <textarea class="col-7 form-control dealDescription" name="DealDescription"
                                   id="descriptionDC" rows="3" placeholder="Omschrijving"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="control-label labelInputPercentage"
+                        <label class="col-5 control-label labelInputPercentage"
                                for="inputPercentageDC">Percentage:</label>
-                        <input type="text" class="form-control inputPercentage" name="DiscountPercentage"
+                        <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
                                id="inputPercentageDC">
-                        <span class="symbolPercentage">%</span>
+                        <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
-                        <label class="control-label labelInputStartDate" for="inputStartDateDC">Begin
-                            periode:</label>
-                        <input type="date" class="form-control inputStartDate" name="StartDate"
-                               id="inputStartDateDC">
+                        <label class="col-5 control-label labelInputStartDate" for="StartDate"> Begin periode:
+                        </label>
+                        <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
+                               id="StartDate">
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="inputEndDateDC">Einde periode:</label>
-                        <input type="date" class="form-control inputEndDate" name="EndDate"
-                               id="inputEndDateDC">
+                        <label class="col-5 control-label" for="EndDate">Einde periode:</label>
+                        <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
+                               id="EndDate">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -345,40 +360,51 @@ if (isset($_POST['id'])) {
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label" for="inputFullName">Eenmalig:</label>
-                        <input class="form-control" type="text" name="inputFullName" id="inputFullName">
+                        <div class="col-12">
+                            <div class="row">
+                                <label class="col-5 control-label" for="inputCodeMD">Code:</label>
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                       placeholder="Code">
+                            </div>
+                            <div class="row">
+                                <div class="col-5"></div>
+                                <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
+                                        onclick="generateCodeMD();">Genereer code
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="inputEmailCustomer">Code:</label>
-                        <input type="email" class="form-control inputEmailCustomer" name="EmailCustomer" id="EmailCustomer"
-                               placeholder="Code">
+                        <label class="col-5 control-label" for="checkboxMD">Eenmalig:</label>
+                        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxMD">
                     </div>
                     <div class="form-group">
-                        <label class="control-label descriptionPopUp" for="descriptionMD">Omschrijving:</label>
-                        <textarea class="form-control dealDescription" name="DealDescription"
+                        <label class="col-5 control-label descriptionPopUp"
+                               for="descriptionMD">Omschrijving:</label>
+                        <textarea class="col-7 form-control dealDescription" name="DealDescription"
                                   id="descriptionMD" rows="3" placeholder="Omschrijving"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="control-label labelInputPercentage"
+                        <label class="col-5 control-label labelInputPercentage"
                                for="inputPercentageMD">Percentage:</label>
-                        <input type="text" class="form-control inputPercentage" name="DiscountPercentage"
+                        <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
                                id="inputPercentageMD">
-                        <span class="symbolPercentage">%</span>
+                        <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
-                        <label class="control-label labelInputStartDate" for="inputPercentageMD">Begin
-                            periode:</label>
-                        <input type="date" class="form-control inputStartDate" name="StartDate"
-                               id="inputPercentageMD">
+                        <label class="col-5 control-label labelInputStartDate"
+                               for="StartDate">Begin periode:</label>
+                        <input class="col-4 form-control " type="date" name="StartDate"
+                               id="StartDate">
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="inputEndDateMD">Einde periode:</label>
-                        <input type="date" class="form-control inputEndDate" name="EndDate"
-                               id="inputEndDateMD">
+                        <label class="col-5 control-label" for="EndDate">Einde periode:</label>
+                        <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
+                               id="EndDate">
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="inputEmail">Email:</label>
-                        <input type="email" class="form-control inputEmail" id="inputEmail" placeholder="Email">
+                        <label class="col-5 control-label" for="inputEmail">Email:</label>
+                        <input class="col-7 form-control inputEmail" type="email" id="inputEmail" placeholder="Email">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -390,8 +416,9 @@ if (isset($_POST['id'])) {
     </div>
 </div>
 
-<!-- modal to edit selected table row in a modal -->
-<div class="modal fade" id="EditDiscountDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal" aria-hidden="true">
+<!-- modal to edit selected discount -->
+<div class="modal fade" id="EditDiscountDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal"
+     aria-hidden="true">
     <div class="modal-dialog" style="width:1000px;">
         <div class="modal-content">
             <form role="form" id="EditDiscount" method="POST" action="UpdateDiscount">
@@ -402,44 +429,111 @@ if (isset($_POST['id'])) {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <?php echo($discountController->stockitems($discount)) ?>
+                    <p>
+                        <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                           href="#tableCollapseProduct" role="button"
+                           aria-expanded="false" aria-controls="tableCollapse">Product zoeken</a>
+                    </p>
+                    <div class="tableCollapseProduct">
+                        <div class="collapse multi-collapse" id="tableCollapseProduct">
+                            <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputEditProduct">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP "
+                                               id="tableCollapseProduct">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-2">Select</th>
+                                                <th class="col-md-2">Product nr</th>
+                                                <th class="col-md-3">Productnaam</th>
+                                                <th class="col-md-1">Prijs</th>
+                                                <th class="col-md-4">Opmerkingen</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyEditProduct">
+                                            <?php $discountController->GetAllProducts(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>
+                        <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                           href="#tableCollapseCategory"
+                           role="button"
+                           aria-expanded="false" aria-controls="tableCollapseCategory">Categorie zoeken</a>
+                    </p>
+                    <div class="tableCollapseCategory">
+                        <div class="collapse multi-collapse" id="tableCollapseCategory">
+                            <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputEditCategory">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP "
+                                               id="tableCollapseProduct">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-1">Select</th>
+                                                <th class="col-md-2">Categorie nr</th>
+                                                <th class="col-md-4">Categorie naam</th>
+                                                <th class="col-md-2">Parent Categorie</th>
+                                                <th class="col-md-2">Gekoppelde korting id</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyEditCategory">
+                                            <?php $discountController->GetAllCategories(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group" style="display: none;">
-                        <label class="col-3" for="SpecialDealID">SpecialDealID:</label>
-                        <input type="text" class="form-control" name="SpecialDealID" id="SpecialDealID"
+                        <label class="col-5" for="SpecialDealID">SpecialDealID:</label>
+                        <input class="col-4 form-control" type="text" name="SpecialDealID" id="SpecialDealID"
                                value="<?php echo($discount->getSpecialDealID()) ?>">
                     </div>
                     <div class="form-group">
-                        <label class="col-3" for="DealCode">Code:</label>
-                        <input type="text" class="form-control" name="DealCode" id="DealCode"
+                        <label class="col-5" for="DealCode">Code:</label>
+                        <input class="col-4 form-control" type="text" name="DealCode" id="DealCode"
                                value="<?php echo($discount->getDealCode()) ?>">
                     </div>
                     <div class="form-group">
-                        <label class="col-3 control-label" for="checkboxOT">Eenmalig:</label>
+                        <label class="col-5 control-label" for="checkboxOT">Eenmalig:</label>
                         <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT"
-                               value="<?php echo($discount->getOneTime())?>
+                               value="<?php echo($discount->getOneTime()) ?>
+                    </div>
+                    <div class=" form-group">
+                        <label class="col-5" for="categoryID">Omschrijving:</label>
+                        <textarea class="col-7 form-control dealDescription" name="DealDescription" id="DealDescription"
+                                  rows="3"><?php echo($discount->getDealDescription()) ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="col-3" for="categoryID">Omschrijving:</label>
-                        <textarea class="form-control dealDescription" name="DealDescription" id="DealDescription"
-                               value="<?php echo($discount->getDealDescription()) ?>"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-3 control-label" for="inputPercentageOT">Percentage:</label>
+                        <label class="col-5 control-label" for="inputPercentageOT">Percentage:</label>
                         <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
                                id="inputPercentageOT"
                                value="<?php echo($discount->getDiscountPercentage()) ?>">
                         <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
-                        <label class="col-3 control-label" for="inputStartDateOT">Begin periode:</label>
+                        <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                         <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                               id="inputStartDateOT"
+                               id="StartDate"
                                value="<?php echo($discount->getStartDate()) ?>">
                     </div>
                     <div class="form-group">
-                        <label class="col-3 control-label" for="inputEndDateOT">Einde periode:</label>
+                        <label class="col-5 control-label" for="EndDate">Einde periode:</label>
                         <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
-                               id="inputEndDateOT"
+                               id="EndDate"
                                value="<?php echo($discount->getEndDate()) ?>">
                     </div>
                 </div>
@@ -451,7 +545,6 @@ if (isset($_POST['id'])) {
         </div>
     </div>
 </div>
-
 
 
 <!-- scripts to generate a random code for each modal-->
@@ -477,112 +570,89 @@ if (isset($_POST['id'])) {
     }
 </script>
 
-<!-- scripts for searchbar in each modal-->
 <script>
-    $('.load-modal').on('click', function (e) {
-        e.preventDefault();
-        $('#createDiscount').modal('show');
-    });
-
-    function searchbar() {
-        var input, filter, table, tr, tds, i, txtValue, tdsearch;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("tableViewDiscount");
-        tr = table.getElementsByTagName("tr");
-        if (filter == '') {
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "";
-            }
-        }
-
-        for (i = 1; i < tr.length; i++) {
-            tdsearch = false;
-            tds = tr[i].getElementsByTagName("td");
-            for (x = 0; x < tds.length; x++) {
-                if (tds[x]) {
-                    txtValue = tds[x].textContent || tds[x].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tdsearch = true;
-                    }
-                }
-            }
-            if (tdsearch == false) {
-                tr[i].style.display = "none";
-            }
-        }
-    }
+    $('#StartDate').date({minDate: 0});
 </script>
 
-<script>
-    $('.load-modal').on('click', function (e) {
-        e.preventDefault();
-        $('#createDiscount').modal('show');
-    });
+<!--<script>-->
+<!--    $('#StartDate').date({-->
+<!--        pickTime: false,-->
+<!--        icons: {-->
+<!--            time: "fa fa-clock-o",-->
+<!--            date: "fa fa-calendar",-->
+<!--            up: "fa fa-arrow-up",-->
+<!--            down: "fa fa-arrow-down"-->
+<!--        },-->
+<!--        minDate: moment()-->
+<!--    });-->
+<!--</script>-->
 
-    function searchbarProduct() {
-        var input, filter, table, tr, tds, i, txtValue, tdsearch;
-        input = document.getElementById("myInputProduct");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("tableCollapseProduct");
-        tr = table.getElementsByTagName("tr");
-        if (filter == '') {
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "";
-            }
-        }
-        for (i = 1; i < tr.length; i++) {
-            tdsearch = false;
-            tds = tr[i].getElementsByTagName("td");
-            for (x = 0; x < tds.length; x++) {
-                if (tds[x]) {
-                    txtValue = tds[x].textContent || tds[x].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tdsearch = true;
-                    }
-                }
-            }
-            if (tdsearch == false) {
-                tr[i].style.display = "none";
-            }
-        }
-    }
+<!-- script to search data in tableViewCustomer using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyCustomer tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 </script>
 
+<!-- script to search data in tableViewProduct using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInputProduct").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyProduct tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!-- script to search data in tableViewCategory using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInputCategory").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyCategory tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!-- script to search data in edit tableViewProduct using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInputEditProduct").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyEditProduct tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<!-- script to search data in edit tableViewCategory using the searchbar-->
+<script>
+    $(document).ready(function () {
+        $("#myInputEditCategory").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tbodyEditCategory tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
 <script>
     $('.load-modal').on('click', function (e) {
         e.preventDefault();
         $('#createDiscount').modal('show');
     });
-
-    function searchbarCategory() {
-        var input, filter, tale, tr, tds, i, txtValue, tdsearch;
-        input = document.getElementById("myInputCategory");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("tableCollapseCategory");
-        tr = table.getElementsByTagName("tr");
-        if (filter == '') {
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "";
-            }
-        }
-
-        for (i = 1; i < tr.length; i++) {
-            tdsearch = false;
-            tds = tr[i].getElementsByTagName("td");
-            for (x = 0; x < tds.length; x++) {
-                if (tds[x]) {
-                    txtValue = tds[x].textContent || tds[x].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tdsearch = true;
-                    }
-                }
-            }
-            if (tdsearch == false) {
-                tr[i].style.display = "none";
-            }
-        }
-    }
 </script>
 
 <?php

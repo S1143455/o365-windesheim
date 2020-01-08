@@ -648,8 +648,12 @@ echo $sql;
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
+<<<<<<< HEAD
         $this->getColumns();
       //  var_dump($array);
+=======
+        //var_dump($array);
+>>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
         if (!empty($array))
         {
             foreach ($array as $key => $value)

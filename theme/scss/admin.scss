@@ -41,6 +41,9 @@ body {
   color: $secondary;
 }
 
+.sidebarStyle {
+  padding-left: 0px;
+}
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
@@ -163,10 +166,10 @@ h4 {
   color: $textcolor;
 }
 
-.table-responsive-lg {
+.table-fixed {
   //margin-left: 10px;
   //width: 95%;
-  font-size: 12px;
+  font-size: 12px!important;
   background-color: $background;
   display: block;
   overflow-y: auto;
@@ -244,32 +247,47 @@ td {
 }
 
 .collapseTableSearch {
-  margin: 5px 0px 5px 10px;
+  margin: 5px 0px 5px 0px;
+  width: 60%;
 }
 
-.selectTableRow {
+.tableCollapseSP{
+  height: 350px !important;
+}
+
+.tableEditButton {
   align-self: center;
-}
-
-.labelInputStartDate {
-  //margin-top: 10px;
-}
-
-.labelInputPercentage {
-  //margin-top: 5px;
+  padding: 6px 8px 6px 8px;
+  font-size: 10px;
 }
 
 .tableDiscount {
-  height: 300px;
+  height: 450px;
   width: 100%;
-  //overflow: hidden;
 }
 
-.btnGenerateCode {
-  margin-left: 20px;
+.loginAdminCenter {
+  margin: auto;
 }
 
-#tableCollapseProduct {
-  height: 25%;
-  overflow-y: auto;
+.inputUserAdminLogin {
+  width: 100%;
+}
+
+.inputPasswordAdminLogin {
+  width: 100%;
+}
+
+.tableViewCustomer {
+  width: 100%;
+  height: 100%;
+}
+
+#tableViewDiscount {
+  font-size: 12px;
+}
+
+#tableViewCustomer {
+  font-size: 12px;
+  max-height: 100%;
 }

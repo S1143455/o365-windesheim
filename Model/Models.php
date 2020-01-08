@@ -54,7 +54,13 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
+<<<<<<< HEAD
 
+=======
+            case  'order':
+                $this->getOrder();
+                break;
+>>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
             default:
                 var_dump($this->table);
                 die('Table not implemented');
@@ -91,6 +97,15 @@ class Models
                     break;
                 case  'customer':
                     $this->getCustomer();
+                    break;
+                case  'Shoppingcart':
+                    $this->getShoppingcart();
+                    break;
+                case  'specialdeals':
+                    $this->getSpecialdeals();
+                    break;
+                case  'order':
+                    $this->getOrder();
                     break;
                 default:
                     die('Table not implemented');
@@ -154,10 +169,14 @@ class Models
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
             "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
+            "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
         );
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
     private function getAddress()
     {
         $this->column = array(
@@ -212,7 +231,10 @@ class Models
             "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+<<<<<<< HEAD
 //            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+=======
+>>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
             "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
             "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );

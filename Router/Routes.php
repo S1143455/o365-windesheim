@@ -169,13 +169,19 @@ $router->route('/admin/onderhoud-producten', function() use($productController){
     }
 });
 
+<<<<<<< HEAD
 $router->route('/admin/onderhoud-klanten', function(){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
         return include 'content/backend/onderhoudklanten.php';
     }
+=======
+$router->route('/admin/onderhoud-klanten', function() {
+    return include 'content/backend/onderhoudklanten.php';
+>>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
 });
+
 $router->route('/admin/CreateCategorie', function() use($categoryController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
@@ -190,12 +196,21 @@ $router->route('/admin/CreateDiscount', function() use($discountController){
         return $discountController->create();
     }
 });
+
 $router->route('/admin/UpdateDiscount', function() use($discountController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
         return $discountController->update();
     }
+});
+
+$router->route('/admin/CreateCustomer', function() use($customerController) {
+    return $customerController->createBE();
+});
+
+$router->route('/admin/UpdateCustomer', function() use($customerController){
+    return $customerController->update();
 });
 
 $router->route('/admin/onderhoud-korting', function(){
@@ -215,14 +230,21 @@ $router->route('/admin/onderhoud-nieuwsbrief', function(){
 });
 
 $router->route('/admin/bestellingoverzicht', function(){
+<<<<<<< HEAD
 
         return include 'content/backend/bestellingoverzicht.php';
+=======
+    return include 'content/backend/bestellingoverzicht.php';
+});
+
+$router->route('/admin/upload', function(){
+    return include 'content/backend/upload.php';
+>>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
 });
 
 /**
  * End AdminController routes
  */
-//>>>>>>> b2bb1f4d544f81dcbbf97a44c468f2323b034549
 
 
 $router->route("/404", function()

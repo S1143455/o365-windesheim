@@ -202,10 +202,4 @@ class Discount extends Database
         $result = $this->selectStmt('SELECT MAX(SpecialDealID) FROM specialdeals;');
         return $result[0];
     }
-
-//    public function updateStockItemWithSpecialDealID($SpecialDealID, $StockItemID){
-//        $result = $this->UpdateStmt('UPDATE stockitem SET SpecialDealID = '.$SpecialDealID.' WHERE StockItemID = '.$StockItemID.';');
-//        return $result;
-//    }
-
 }
