@@ -2,39 +2,24 @@
 include 'loader.php';
 // The users is logged in.
 use Model\ShoppingcartStockitems;
-
 $handelData=new \Model\Database();
 $cart=new \Model\ShoppingCart();
-
-$cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
-
-//$category = $categoryController->retrieve($categoryID);
-$inthecart=$shoppingcartStockitems->retrieve($cartId);
-
-print_r($inthecart);
-die;
-
-
-$anyItemsInCart=$handelData->selectStmt('select count(*) as amount from shoppingcart_stockitems');
-
 // Let's see if there are any items in the cart.
-if ($anyItemsInCart[0]['amount']==0) {
+if (!$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']) {
     echo display_message('info','Uw winkelwagen bevat nog geen producten.');
     echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
     die;
 }
-
-
+$cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
-
+//$anyItemsInCart=$shoppingcartStockitems->where("ShoppingCartID",$cartId);
 // Check if the users wants to empty the card.
 if (isset($_POST['emptycart']))
-    {
+{
     $cleanCart=$cart->EmptyCart();
     if ($cleanCart==1){echo display_message('success','Uw winkelwagen is met succes verwijderd.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";die;}
     else {echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/\">";}
-    }
-
+}
 // if the $_POST isset we add or remove an item.
 if (isset($_POST['add']))
 {
@@ -42,15 +27,12 @@ if (isset($_POST['add']))
     if ($updateCart==1){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";}
     else {echo display_message('info','Helaas is dit product niet meer op voorraad.'). "<META HTTP-EQUIV=Refresh CONTENT=\"3;\">";}
 }
-
 if (isset($_POST['remove'])){
     $updateCart=$cart->RemoveItem($_POST['remove'],1);
     echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";
 }
-
 // Validate a discount code.
 if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkdiscount.php';}
-
 ?>
 
 <div class="container">
@@ -71,7 +53,7 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                         <?php $getAllTheProducts=new \Model\Database();
                         $totalCartPrice=0;
                         $allTheProducts=$getAllTheProducts->selectStmt("select sti.StockItemID, sti.StockItemName,sti.MarketingComments, cit.StockItemAmount, sti.RecommendedRetailPrice, sti.Photo,(cit.StockItemAmount*sti.RecommendedRetailPrice) as CartPrice 
-                                                                         from shoppingcart_stockitems cit left join stockitem sti on sti.StockItemID = cit.StockItemID;");
+                                                                         from shoppingcart_stockitems cit left join stockitem sti on sti.StockItemID = cit.StockItemID where cit.ShoppingCartID=". $cartId .";");
                         foreach ($allTheProducts as $item)
                         {
                             $myItemRow='';
@@ -103,7 +85,6 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                             <hr>';
                             $totalCartPrice=$totalCartPrice+$item['CartPrice'];
                             echo $myItemRow;
-
                         }
                         // create a SESSION array with the cart items
                         $_SESSION['USER']['SHOPPING_CART']['ITEMS']=$allTheProducts;
@@ -122,7 +103,6 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                                     <input type="text" class="form-control input-sm" placeholder="Kortingscode" name="DiscountCode" value="<?php if(isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
                                     {
                                         echo $percentage=$_SESSION['USER']['SHOPPING_CART']['DISCOUNT']['DealCode'];
-
                                     }  ?>">
                                 </div>
                                 <div class="col-xs-3">
@@ -133,17 +113,16 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                                         <?php if(isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
                                         {
                                             echo "Uw Korting is " . number_format($percentage=$_SESSION['USER']['SHOPPING_CART']['DISCOUNT']['DiscountPercentage'], 2, ',', '.')." %";
-
                                         }
                                         ?><strong>
-                                    <?php if(isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
-                                    {
-                                        $percentage=$_SESSION['USER']['SHOPPING_CART']['DISCOUNT']['DiscountPercentage'];
-                                        $sumOfDiscount=(($totalCartPrice/100)*$percentage);
-                                        $newTotalCartPrice=$totalCartPrice-$sumOfDiscount;
-                                        echo number_format($sumOfDiscount, 2, ',', '.');
-                                    }
-                                    ?></strong></h4>
+                                            <?php if(isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
+                                            {
+                                                $percentage=$_SESSION['USER']['SHOPPING_CART']['DISCOUNT']['DiscountPercentage'];
+                                                $sumOfDiscount=(($totalCartPrice/100)*$percentage);
+                                                $newTotalCartPrice=$totalCartPrice-$sumOfDiscount;
+                                                echo number_format($sumOfDiscount, 2, ',', '.');
+                                            }
+                                            ?></strong></h4>
                                 </div>
                             </div>
                         </div>
