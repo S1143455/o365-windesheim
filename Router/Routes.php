@@ -99,6 +99,9 @@ $router->route('/product/{id}', function($id) use($productController){
 /**
  * Begin admin routes
  */
+$router->route('admin/product/{id}', function($id) use($admin){
+    return $admin->showProduct($id);
+});
 $router->route('/admin/onderhoud', function(){
     return include 'content/backend/onderhoud-admin.php';
 });
