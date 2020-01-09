@@ -100,6 +100,9 @@ $router->route('/product/{id}', function($id) use($productController){
 /**
  * Begin admin routes
  */
+//$router->route('admin/product/{id}', function($id) use($admin){
+//    return $admin->showProduct($id);
+//});
 
 $router->route('/admin', function() {
     if(!isset($_SESSION['authenticatedAdmin'])){
@@ -121,8 +124,6 @@ $router->route('/admin/login', function() {
 $router->route('/admin/logout', function(){
     return include 'views/login-Admin/logout.php';
 });
-
-
 
 $router->route('/admin/onderhoud', function(){
     if(!isset($_SESSION['authenticatedAdmin'])){
