@@ -156,7 +156,7 @@ class UserController
                 $_SESSION['ADDRESSAdmin']=$addressDetails;
                 $_SESSION['USER']['DATA']=$this->getdata();
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOTAdmin') . "\">";
             }
             else
             {
