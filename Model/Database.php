@@ -301,7 +301,7 @@ class Database extends Models
     {
         //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
         $this->getColumns();
-        if (empty($id))
+        if ($id == null)
         {
             return $this->batch(null, $this->offset);
         } else
