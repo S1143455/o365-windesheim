@@ -100,10 +100,10 @@ class MainController
             unset($nav_items['login']);
         }
         foreach ($nav_items as $uri => $name) {
-            $nav_menu .= '<li>';
+            $nav_menu .= '<li class="nav-item mr-4 mt-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);
@@ -115,10 +115,10 @@ class MainController
         $nav_items = $this->getConfig('user_menu_item');
 
         foreach ($nav_items as $uri => $name) {
-            $nav_menu .= '<li>';
+            $nav_menu .= '<li class="nav-item mr-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);
@@ -134,10 +134,10 @@ class MainController
         } else  $nav_items['winkelwagen']='Winkelwagen';
 
         foreach ($nav_items as $uri => $name) {
-             $nav_menu .= '<li>';
+             $nav_menu .= '<li class="nav-item mt-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=winkelwagen title=Winkelwagen>' . $nav_items['winkelwagen']  . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=winkelwagen title=Winkelwagen>' . $nav_items['winkelwagen']  . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
 
@@ -246,12 +246,15 @@ class MainController
     public function navigationalmenu()
     {
        $result = '';
-       $result = '<div class="collapse navbar-collapse" id="bas-navbar">
-                    <ul class="nav navbar-nav navbar-left">
+       $result = '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
                         ' . $this->nav_menu() .' 
                         ' . $this->usermenu() .'
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
+                        <li class="dropdown nav-item mt-2">
+                            <a href="#" class="dropdown-toggle navbarFE" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 ' . $this->nav_menu() .'   
                                 ' . $this->usermenu() .'                        

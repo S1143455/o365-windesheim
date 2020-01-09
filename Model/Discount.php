@@ -24,8 +24,19 @@ class Discount extends Database
     /**
      * @return mixed
      */
+
+    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
     public function getOneTime()
     {
+        if ($this->OneTime == "1"){
+          $this->OneTime =
+            '<input type="checkbox" name="OneTime" checked>';
+
+        } else {
+            $this->OneTime =
+            '<input type="checkbox" name="OneTime">';
+
+        }
         return $this->OneTime;
     }
 
@@ -42,6 +53,15 @@ class Discount extends Database
      */
     public function getActive()
     {
+        if ($this->Active == "1"){
+            $this->Active =
+                '<input type="checkbox" name="Active" checked>';
+
+        } else {
+            $this->Active =
+                '<input type="checkbox" name="Active">';
+
+        }
         return $this->Active;
     }
 
@@ -166,6 +186,7 @@ class Discount extends Database
     }
 
     public function getAllSpecialDeals(){
+
         $discounts = new Discount();
         $discounts = $discounts->retrieve();
         return $discounts;
@@ -174,10 +195,12 @@ class Discount extends Database
     public function getProductBasedOnID($ID){
 //where function gebruiken
         $product = new Product();
-        $product = $product->where('*', "DealID?",'=', $ID);
-        $result = $this->selectStmt('SELECT COUNT(StockItemId) as total FROM stockitem WHERE DealID = '.$ID.';');
-        return $result[0][0];
+        $product = $product->where('COUNT(StockItemId) as total', "SpecialDealID",'=', $ID);
+        return $product[0];
+    }
+
+    public function getMaxSpecialDealID(){
+        $result = $this->selectStmt('SELECT MAX(SpecialDealID) FROM specialdeals;');
+        return $result[0];
     }
 }
-
-
