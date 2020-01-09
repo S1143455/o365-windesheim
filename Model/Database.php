@@ -143,7 +143,7 @@ class Database extends Models
 
             return $this->UpdateEntry();
         }
-    }
+    }}
 
 
     /**
