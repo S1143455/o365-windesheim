@@ -133,7 +133,7 @@ $router->route('/account-toevoegen', function() use($customerController){
 //$router->route('/account-toevoegen', function() {
 //    return include 'content/frontend/account-toevoegen.php';
 //});
-//
+
 
 $router->route('/admin', function(){
     return include 'content/backend/home-admin.php';

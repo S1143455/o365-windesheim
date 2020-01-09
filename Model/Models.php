@@ -49,7 +49,7 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
-            case  'order':
+            case  'orders':
                 $this->getOrder();
                 break;
             default:
@@ -88,7 +88,7 @@ class Models
                 case  'specialdeals':
                     $this->getSpecialdeals();
                     break;
-                case  'order':
+                case  'orders':
                     $this->getOrder();
                     break;
                 default:

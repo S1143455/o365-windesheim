@@ -96,14 +96,14 @@ class DiscountController
         $this->storeDiscount($this->discount);
         var_dump($this->discount);
 
-        if ($_POST["selectedProductIDs"]) {
+        if (isset($_POST["selectedProductIDs"])) {
             foreach ($_POST["selectedProductIDs"] as $id) {
                 $this->product = $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
                 $this->storeProduct($this->product);
             }
         }
-        if ($_POST["selectedCategoryIDs"]) {
+        if (isset($_POST["selectedCategoryIDs"])) {
             foreach ($_POST["selectedCategoryIDs"] as $id) {
                 $this->category = $this->category->retrieve($id);
                 $this->category->setSpecialDealID($this->discount->getSpecialDealID());
@@ -123,15 +123,15 @@ class DiscountController
         $this->discount->initialize();
         //ingelogde gebruiker
         $this->discount->setLastEditedBy(1);
-        if ($_POST("StockItemID")) {
-            foreach ($_POST["StockItemID"] as $id) {
+        if (isset($_POST["selectedProductIDs"])) {
+            foreach ($_POST["selectedProductIDs"] as $id) {
                 $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
                 $this->storeProduct($this->product);
             }
         }
-        if ($_POST("CategoryID")){
-            foreach ($_POST["CategoryID"] as $id) {
+        if (isset($_POST["selectedCategoryIDs"])) {
+            foreach ($_POST["selectedCategoryIDs"] as $id) {
                 $this->category->retrieve($id);
                 $this->category->setSpecialDealID($this->category->getSpecialDealID());
                 $this->storeCategory($this->category);
@@ -188,7 +188,7 @@ class DiscountController
         }
 //    }
     /**
-     * Stores the product in the database.
+     * Stores the discount in the database.
      *
      * @param $discount discount
      * @return string
@@ -236,7 +236,7 @@ class DiscountController
     }
 
     /**
-     * Stores the product in the database.
+     * Stores the category in the database.
      *
      * @param $category Category
      * @return string

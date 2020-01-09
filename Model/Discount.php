@@ -198,8 +198,8 @@ class Discount extends Database
         return $result[0][0];
     }
 
-    public function getMaxSpecialDealID(){
-        $result = $this->selectStmt('SELECT MAX(SpecialDealID) FROM specialdeals;');
-        return $result[0];
-    }
+//    public function getMaxSpecialDealID(){
+//        $result = $this->selectStmt('SELECT MAX(SpecialDealID) FROM specialdeals;');
+//        return $result[0];
+//    }
 }

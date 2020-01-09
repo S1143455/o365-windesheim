@@ -71,83 +71,80 @@ if (isset($_POST['id'])) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="form-group col-12">
-                                <label class="col-5" for="CustomerID">Klant gegevens van klantnummer:</label>
-                                <span class="col-4" id="CustomerID"
-                                      style="padding-left: 0px;"><?php echo($customer->getCustomerID()) ?>
-                            </div>
-                            <div class="form-group col-12">
-                                <label class="col-5" for="FullName">Volledige naam:</label>
-                                <input class="col-7 form-control" type="text" name="FullName" id="FullName"
-                                       value="<?php echo($customer->getFullNameOnID($customerID)) ?>">
-                            </div>
-                            <div class="form-group col-12">
-                                <label class="col-5" for="DateOfBirth">Geboortedatum:</label>
-                                <input class="col-2 form-control" type="date" name="DateOfBirth" id="DateOfBirth"
-                                       value="<?php echo($customer->getDateOfBirthOnID($customerID)) ?>">
-                            </div>
-                            <div class="form-group col-12">
-                                <label class="col-5 control-label" for="Adress">Straat:</label>
-                                <input class="col-7 form-control" type="text" name="Adress" id="Adress"
-                                       value="<?php echo($customer->getAddressOnID($customerID)) ?>">
-                            </div>
-                            <div class="form-group col-12">
-                                <label class="col-5 control-label" for="Zipcode">Postcode:</label>
-                                <input class="col-2 form-control" type="text" name="Zipcode" id="Zipcode"
-                                       value="<?php echo($customer->getZipCodeOnID($customerID)) ?>">
-                            </div>
-                            <div class=" form-group col-12">
-                                <label class="col-5" for="City">Woonplaats:</label>
-                                <input class="col-7 form-control" name="City" id="City"
-                                       value="<?php echo($customer->getCityOnID($customerID)) ?>">
-                            </div>
-                            <div class=" form-group col-12">
-                                <label class="col-5" for="EmailAddress">Email:</label>
-                                <input class="col-7 form-control" name="EmailAddress" id="EmailAddress"
-                                       value="<?php echo($customer->getEmailAddressOnID($customerID)) ?>">
-                            </div>
-                            <div class="form-group col-12">
-                                <label class="col-5 control-label">Nieuwsbrief:</label>
-                                <input class="checkboxOneTime" type="checkbox" name="newsletter" id="newsletter"
-                                       value="<?php echo($customer->getNewsletter()) ?>
-                            </div>
-                            <div class=" col-12">
-                                <button class="col-3 btn btn-outline-secondary" type="button">Wachtwoord resetten
-                                </button>
-                            </div>
+                        <div class="form-group col-12">
+                            <label class="col-5" for="CustomerID">Klant gegevens van klantnummer:</label>
+                            <span class="col-4" id="CustomerID" style="padding-left: 0px;">
+                                    <?php echo($customer->getCustomerID()) ?>
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="col-5" for="FullName">Volledige naam:</label>
+                            <input class="col-7 form-control" type="text" name="FullName" id="FullName"
+                                   value="<?php echo($customer->getFullNameOnID($customerID)) ?>">
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="col-5" for="DateOfBirth">Geboortedatum:</label>
+                            <input class="col-2 form-control" type="date" name="DateOfBirth" id="DateOfBirth"
+                                   value="<?php echo($customer->getDateOfBirthOnID($customerID)) ?>">
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="col-5 control-label" for="Adress">Straat:</label>
+                            <input class="col-7 form-control" type="text" name="Adress" id="Adress"
+                                   value="<?php echo($customer->getAddressOnID($customerID)) ?>">
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="col-5 control-label" for="Zipcode">Postcode:</label>
+                            <input class="col-2 form-control" type="text" name="Zipcode" id="Zipcode"
+                                   value="<?php echo($customer->getZipCodeOnID($customerID)) ?>">
+                        </div>
+                        <div class=" form-group col-12">
+                            <label class="col-5" for="City">Woonplaats:</label>
+                            <input class="col-7 form-control" name="City" id="City"
+                                   value="<?php echo($customer->getCityOnID($customerID)) ?>">
+                        </div>
+                        <div class=" form-group col-12">
+                            <label class="col-5" for="EmailAddress">Email:</label>
+                            <input class="col-7 form-control" name="EmailAddress" id="EmailAddress"
+                                   value="<?php echo($customer->getEmailAddressOnID($customerID)) ?>">
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="col-5 control-label">Nieuwsbrief:</label>
+                            <input class="checkboxOneTime" type="checkbox" name="newsletter" id="newsletter"
+                                   value="<?php echo($customer->getNewsletter()) ?>">
+                        </div>
+                        <div class="col-12">
+                            <button class="col-3 btn btn-outline-secondary" type="button">Wachtwoord resetten</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                        <input type="submit" name="submit" value="Klant aanpassen" class="btn btn-primary">
-                    </div>
-                </form>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <input type="submit" name="submit" value="Klant aanpassen" class="btn btn-primary">
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 
-    <!-- script to search data in edit tableViewCategory using the searchbar-->
-    <script>
-        $(document).ready(function () {
-            $("#myInputCustomer").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tbodyCustomer tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
+<!-- script to search data in edit tableViewCategory using the searchbar-->
+<script>
+   $(document).ready(function () {
+       $("#myInputCustomer").on("keyup", function () {
+           var value = $(this).val().toLowerCase();
+           $("#tbodyCustomer tr").filter(function () {
+               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+           });
+       });
+   });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#id").click(function () {
+            $("#EditCustomerDialog").modal();
         });
-    </script>
+    });
+</script>
 
-    <!-- scripts for searchbar in each modal-->
-    <script>
-        $(document).ready(function () {
-            $("#id").click(function () {
-                $("#EditCustomerDialog").modal();
-            });
-        });
-    </script>
 
 <?php
 include_once 'content/backend/footer-admin.php';

@@ -194,9 +194,9 @@ class People extends Database
         $this->LastEditedBy = $LastEditedBy;
     }
 
-    public function getAllPeople(){
-        $people = new People();
-        $people = $people->retrieve();
-        return $people;
+    public function getAllPeoples(){
+        $peoples = new People();
+        $peoples = $peoples->retrieve();
+        return $peoples;
     }
 }

@@ -153,18 +153,19 @@ class Customer extends Database
 
     }
 
+
     public function getEmailAddressOnID($id){
         $result = $this->selectStmt('SELECT pe.EmailAddress FROM people AS pe INNER JOIN customer AS cu ON pe.PersonID = cu.PersonID WHERE pe.PersonID = '. $id .';');
-        return $result[0][0];
+        return $result[0];
     }
 
     public function getFullNameOnID($id){
         $result = $this->selectStmt('SELECT pe.FullName FROM people AS pe INNER JOIN customer AS cu ON pe.PersonID = cu.PersonID WHERE pe.PersonID = '. $id .';');
-        return $result[0][0];
+        return $result[0];
     }
 
     public function getLastOrderDateOnID($id){
-        $result = $this->selectStmt('SELECT MAX(OrderDate) AS "Last Order" FROM `order` WHERE CustomerID = '. $id .';');
+        $result = $this->selectStmt('SELECT MAX(OrderDate) AS "Last Order" FROM `orders` WHERE CustomerID = '. $id .';');
         return $result[0][0];
     }
 

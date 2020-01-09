@@ -34,8 +34,16 @@ class CustomerController
     {
         $customers = $this->customer->getAllCustomers();
 
+//If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
+//  if($customer->getNewsletter() == "1")
+//      echo'<input type="checkbox" name="newsletter" id="newsletter" checked>';
+//  else
+//      echo'<input type="checkbox" name="newsletter" id="newsletter">';
+//
+
         foreach ($customers as $customer){
 
+        var_dump($customer->getEmailAddressOnID($customer->getPersonID()));
             $result = '';
             $result .= '<tr>
                     <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
@@ -49,31 +57,6 @@ class CustomerController
         }
 
     }
-    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
-//    public function getNewsletter()
-//    {
-//        if ($this->newsletter == "1"){
-//            $this->newsletter =
-//                '<input type="checkbox" name="newsletter" checked>';
-//
-//        } else {
-//            $this->newsletter =
-//                '<input type="checkbox" name="newsletter">';
-//
-//        }
-//        return $this->newsletter;
-//    }
-
-//    function getCustomerAndPeople()
-//    {
-//        $customers = $this->customer->getAllCustomers();
-//
-//        foreach ($customers as $customer){
-//
-//            $result = '';
-//            $result =
-//        }
-//    }
 
     public function createBE()
     {

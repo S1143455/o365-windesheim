@@ -102,7 +102,7 @@ if (isset($_POST['id'])) {
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeOT">Code:</label>
                                 <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
-                                       placeholder="Code">
+                                       placeholder="Code" required="required">
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
@@ -125,13 +125,13 @@ if (isset($_POST['id'])) {
                         <div class="form-group">
                             <label class="col-5 control-label" for="inputPercentageOT">Percentage:</label>
                             <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                                   id="inputPercentageOT">
+                                   id="inputPercentageOT" required="required">
                             <span class="col-1 symbolPercentage">%</span>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                                   id="StartDate">
+                                   id="StartDate" required="required" min="">
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -149,9 +149,9 @@ if (isset($_POST['id'])) {
     </div>
 </div>
 
-<!-- modal (popup) korting op product -->
+<!-- modal DiscountProduct -->
 <div class="modal fade" id="DiscountProduct" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" style="1500px" role="document">
         <div class="modal-content">
             <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
                 <div class="modal-header">
@@ -213,7 +213,7 @@ if (isset($_POST['id'])) {
 
                     <div class="form-group">
                         <label class="col-5 control-label" for="checkboxDP">Eenmalig:</label>
-                        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP">
+                        <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxDP" required="required">
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label descriptionPopUp"
@@ -225,14 +225,14 @@ if (isset($_POST['id'])) {
                         <label class="col-5 control-label labelInputPercentage"
                                for="inputPercentageDP">Percentage:</label>
                         <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                               id="inputPercentageDP">
+                               id="inputPercentageDP" required="required">
                         <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label labelInputStartDate" for="StartDate">
                             Begin periode:</label>
                         <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                               id="StartDate">
+                               id="StartDate" required="required">
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -300,7 +300,7 @@ if (isset($_POST['id'])) {
                         <div class="row">
                             <label class="col-5 control-label" for="inputCodeDC">Code:</label>
                             <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
-                                   placeholder="Code">
+                                   placeholder="Code" required="required">
                         </div>
                         <div class="row">
                             <div class="col-5"></div>
@@ -323,14 +323,15 @@ if (isset($_POST['id'])) {
                         <label class="col-5 control-label labelInputPercentage"
                                for="inputPercentageDC">Percentage:</label>
                         <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                               id="inputPercentageDC">
+                               id="inputPercentageDC" required="required">
                         <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
-                        <label class="col-5 control-label labelInputStartDate" for="StartDate"> Begin periode:
+                        <label class="col-5 control-label labelInputStartDate" for="StartDate" required="required">
+                                Begin periode:
                         </label>
                         <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                               id="StartDate">
+                               id="StartDate" required="required">
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -364,7 +365,7 @@ if (isset($_POST['id'])) {
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeMD">Code:</label>
                                 <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
-                                       placeholder="Code">
+                                       placeholder="Code" required="required">
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
@@ -388,14 +389,14 @@ if (isset($_POST['id'])) {
                         <label class="col-5 control-label labelInputPercentage"
                                for="inputPercentageMD">Percentage:</label>
                         <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                               id="inputPercentageMD">
+                               id="inputPercentageMD" required="required">
                         <span class="col-1 symbolPercentage">%</span>
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label labelInputStartDate"
                                for="StartDate">Begin periode:</label>
                         <input class="col-4 form-control " type="date" name="StartDate"
-                               id="StartDate">
+                               id="StartDate" required="required">
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -404,7 +405,8 @@ if (isset($_POST['id'])) {
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label" for="inputEmail">Email:</label>
-                        <input class="col-7 form-control inputEmail" type="email" id="inputEmail" placeholder="Email">
+                        <input class="col-7 form-control inputEmail" type="email" id="inputEmail"
+                                placeholder="Email" required="required">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -505,7 +507,7 @@ if (isset($_POST['id'])) {
                     <div class="form-group">
                         <label class="col-5" for="DealCode">Code:</label>
                         <input class="col-4 form-control" type="text" name="DealCode" id="DealCode"
-                               value="<?php echo($discount->getDealCode()) ?>">
+                               value="<?php echo($discount->getDealCode()) ?>" required="required">
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label" for="checkboxOT">Eenmalig:</label>
@@ -520,7 +522,7 @@ if (isset($_POST['id'])) {
                     <div class="form-group">
                         <label class="col-5 control-label" for="inputPercentageOT">Percentage:</label>
                         <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                               id="inputPercentageOT"
+                               id="inputPercentageOT required="required""
                                value="<?php echo($discount->getDiscountPercentage()) ?>">
                         <span class="col-1 symbolPercentage">%</span>
                     </div>
@@ -528,7 +530,7 @@ if (isset($_POST['id'])) {
                         <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                         <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
                                id="StartDate"
-                               value="<?php echo($discount->getStartDate()) ?>">
+                               value="<?php echo($discount->getStartDate()) ?>" required="required">
                     </div>
                     <div class="form-group">
                         <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -570,9 +572,9 @@ if (isset($_POST['id'])) {
     }
 </script>
 
-<script>
-    $('#StartDate').date({minDate: 0});
-</script>
+<!--<script>-->
+<!--    $('#StartDate').date({minDate: 0});-->
+<!--</script>-->
 
 <!--<script>-->
 <!--    $('#StartDate').date({-->
