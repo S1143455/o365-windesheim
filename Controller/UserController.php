@@ -41,7 +41,7 @@ class UserController
     }
     public function GetEmailByName($return, $key, $id){
         $user = $this->user->databaseWhere($return,$key,$id);
-        var_dump($user);
+        //var_dump($user);
         return true;
     }
 

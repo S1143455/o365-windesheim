@@ -17,7 +17,7 @@ class Models
 
     protected function getColumns()
     {
-        var_dump($this->table);
+        //var_dump($this->table);
         switch ($this->table) {
             case 'stockitem':
                 $this->getStockItem();

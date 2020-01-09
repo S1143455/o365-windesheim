@@ -80,7 +80,7 @@ class CustomerController
         print_r($_POST);
         $this->customer = new Customer();
         $this->customer->initialize();
-        var_dump($this->customer);
+        //var_dump($this->customer);
 
 //        $this->customer->setLastEditedBy(1);
 
@@ -114,7 +114,7 @@ class CustomerController
 
     public function store($customer)
     {
-        var_dump($customer);
+        //var_dump($customer);
 
         if (!$customer->initialize()) {
             print_r($_GET);

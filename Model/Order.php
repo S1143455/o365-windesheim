@@ -112,7 +112,7 @@ class Order extends Database
     {
         $orders = $this->selectStmt("SELECT SUM(si.UnitPrice) as OrderAmmount, o.OrderID, o.CustomerID, o.OrderDate, os.StockItemID FROM `order` o LEFT JOIN order_stockitem os on os.orderID = o.OrderID INNER JOIN stockitem si on os.OrderID = si.StockItemID");
 
-        var_dump($orders);
+        //var_dump($orders);
         return $orders;
     }
 
