@@ -1,6 +1,6 @@
 <?php
 // Check ik the user wants to remove his account
-if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/accountverwijderen\">";}
+if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "accountverwijderen\">";}
 // echo "<pre>";print_r($_SESSION);echo "</pre>";
 ?>
 

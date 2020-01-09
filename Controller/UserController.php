@@ -111,7 +111,7 @@ class UserController
                 $_SESSION['USER']['ADDRESS']=$addressDetails;
 
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "\">";
             }
             else
             {

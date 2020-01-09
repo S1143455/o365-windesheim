@@ -11,7 +11,7 @@ $orders=$handleDatabase->selectStmt("select * from orders where customerId=".$cu
 
 if (!$orders)
 {
-    echo display_message('info','Uw heeft nog geen bestelling geplaatst. U wordt doorgestuurd naar de hoofdpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+    echo display_message('info','Uw heeft nog geen bestelling geplaatst. U wordt doorgestuurd naar de hoofdpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "\">";
 }
 // Clean the orderdetails.
 $_SESSION['USER']['ORDER']=array();

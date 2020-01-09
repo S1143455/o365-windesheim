@@ -5,7 +5,7 @@ include_once 'content/frontend/header.php';
 if (!isset($_SESSION['authenticated']))
 {
     Echo "<h2><b>U bent niet ingelogd.<br>U wordt door gestuurd naar de inlogpagina.</b></h2>";
-    echo "<META HTTP-EQUIV=Refresh CONTENT=\";URL=/login\">";
+    echo "<META HTTP-EQUIV=Refresh CONTENT=\";URL=/" . getenv('ROOT') . "login\">";
 }
 // If the user is logged in we're going to the page he selected.
 else
