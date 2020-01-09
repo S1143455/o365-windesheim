@@ -21,11 +21,11 @@ class Models
             case 'stockitem':
                 $this->getStockItem();
                 break;
-            case 'order':
+            case 'orders':
                 $this->getOrder();
                 break;
-            case 'order_stockitem':
-                $this->getOrderStockItem();
+            case 'Orderlines':
+                $this->getOrderLines();
                 break;
             case 'category':
                 $this->getCategory();
@@ -55,6 +55,7 @@ class Models
                 $this->getSpecialdeals();
                 break;
             default:
+                echo $this->table;
                 die('Table not implemented');
         }
 
@@ -66,8 +67,8 @@ class Models
                 case 'order':
                     $this->getOrder();
                     break;
-                case 'order_stockitem':
-                    $this->getOrderStockItem();
+                case 'Orderlines':
+                    $this->getOrderLines();
                     break;
                 case 'category':
                     $this->getCategory();
@@ -100,6 +101,7 @@ class Models
                     $this->getOrder();
                     break;
                 default:
+                    echo $this->table;
                     die('Table not implemented');
             }
 
@@ -296,13 +298,22 @@ class Models
         );
     }
 
-    private function getOrderStockItem()
+    private function getOrderLines()
     {
         $this->column = array(
-            "orderStockItemId" => ['Integer', 'PrimaryKey', 'Required' ],
+            "OrderLineID" => ['Integer', 'PrimaryKey', 'Required' ],
             "OrderID" => ['Order', 'HasOne', 'Required'],
             "StockItemID" => ['StockItem', 'HasOne', 'Required'],
-            "Amount" => ['Integer', 'Attribute', 'Re``quired'],
+            "Description" => ['varchar',  'Attribute', 'Not Required'],
+            "PackageTypeIDIndex" => ['Integer',  'Attribute', 'Not Required'],
+            "UnitPriceIndex" => ['Integer',  'Attribute', 'Required'],
+            "TaxRate" => ['Integer',  'Attribute', 'Required'],
+            "PickedQuantityIndex" => ['Integer',  'Attribute', 'Required'],
+            "PickingCompletedWhenIndex" => ['Date', 'Attribute', 'Not Required'],
+            "PickedQuantityIndex" => ['Integer',  'Attribute', 'Required'],
+            "LastEditedByIndex" => ['People',  'Attribute', 'Required'],
+            "LastEditedWhen" => ['Date',  'Attribute', 'Required'],
+
         );
     }
 

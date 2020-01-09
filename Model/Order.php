@@ -18,7 +18,7 @@ class Order extends Database
 
     function __construct()
     {
-        $this->table = "order";
+        $this->table = "orders";
         parent::__construct();
 
     }
@@ -149,6 +149,7 @@ class Order extends Database
     {
         $this->specialdealID = $specialdealID;
     }
+    /** @return Order */
     public function getAllOrders()
     {
         $orders = new Order();
