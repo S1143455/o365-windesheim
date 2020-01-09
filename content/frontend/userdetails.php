@@ -154,7 +154,7 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
 
     <!-- The form for changing user details. -->
             <div class="modal fade" id="changeuser" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
-                <div class="modal-dialog" style="width:1000px;">
+                <div class="modal-dialog" >
                     <div class="modal-content">
                         <form role="form" id="changeuserForm" method="POST" action="">
                             <div class="modal-header">
@@ -166,28 +166,28 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                             </div>
                             <div class="modal-body">
                                 <div class="form-row">
-                                    <div class="form-group col-md-1">
+                                    <div class="form-group col-md-2">
                                         <b>Aanhef</b>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <label for="male">De heer</label>
                                         <input type="radio" name="Gender" id="male" value="MALE" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'male'){echo "checked";} ?>>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <label for="female">Mevrouw</label>
                                         <input type="radio" name="Gender" id="female" value="FEMALE" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'female'){echo "checked";} ?>>
                                     </div>
-                                    <div class="form-group col-md-7">
+                                    <div class="form-group col-md-3">
                                         <label for="unknown">Onbekend</label>
                                         <input type="radio" name="Gender" id="unknown" value="UNKNOWN" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'unknown'){echo "checked";} ?>>
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-10">
+                                    <div class="form-group col-md-9">
                                         <label for="FullName">Naam</label>
                                         <input type="text" class="form-control" name="FullName" id="FullName" value="<?php echo $_SESSION['USER']['DATA'][0]['FullName'];?>">
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <label for="DateOfBirth">Geboortedatum</label>
                                         <input type="text" class="form-control" name="DateOfBirth" id="DateOfBirth" value="<?php $show_date= new DateTime($_SESSION['USER']['DATA'][0]['DateOfBirth']); echo date_format($show_date, 'j-m-Y');?>">
                                     </div>
@@ -271,52 +271,49 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                     </div>
                 </div>
             </div>
-    <!-- The form for deleting the entire account -->
-        <div class="modal fade container" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
-            <div class="row">
-                <form role="form" id="deleteaccount" method="POST" action="">
-                    <div class="col-xs-8 col-xs-offset-2">
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">
-                                <div class="panel-title">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <h4><span class="glyphicon glyphicon-warning-sign"></span> Account verwijderen</h4>
-                                        </div>
-                                    </div>
+
+        <!-- The form for deleting the entire account -->
+        <div class="modal fade" id="deleteaccount" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width:auto;">
+                <div class="modal-content">
+                    <form role="form" id="changepasswordForm" method="POST" action="" onsubmit="return ValidatePassword()">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                            <h4 class="modal-title"><span class="modal-title">Wachtwoord wijzigen</span></h4>
+                        </div>
+                        <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
+                            <span class="alert-body"></span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4><strong>Weet u zeker dat u uw account bij Oma's Beste wilt verwijderen?</strong></h4>
                                 </div>
                             </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <h4><strong>Weet u zeker dat u uw account bij Oma's Beste wilt verwijderen?</strong></h4>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <h4><strong>Als u uw account heeft verwijderd, is er geen mogelijkheid om deze te herstellen!</strong></h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <div class="row text-center">
-                                    <div class="col-xs-12">
-                                        <button type="button" class="btn btn-success btn-block" data-dismiss="modal">
-                                            Nee, ik wil mijn account niet verwijderen
-                                        </button><br>
-                                    </div>
-                                </div>
-                                <div class="row text-center">
-                                    <div class="col-xs-12">
-                                        <button type="submit" class="btn btn-danger btn-block" name="removeaccount" value="true">
-                                            Ja, ik wil mijn account verwijderen
-                                        </button>
-                                    </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4><strong>Als u uw account heeft verwijderd, is er geen mogelijkheid om deze te herstellen!</strong></h4>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <div class="row text-center">
+                                <div class="col-xs-12">
+                                    <button type="button" class="btn btn-success btn-block" data-dismiss="modal">
+                                        Nee, ik wil mijn account niet verwijderen
+                                    </button><br>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col-xs-12">
+                                    <button type="submit" class="btn btn-danger btn-block" name="removeaccount" value="true">
+                                        Ja, ik wil mijn account verwijderen
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </body>
