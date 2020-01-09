@@ -121,6 +121,7 @@ class Database extends Models
         $this->validate();
 
 
+
         if ($this->checkIfExists($this->getID("value")) == null) {
             return $this->newRow();
 
@@ -133,6 +134,13 @@ class Database extends Models
             echo "3";
             return $this->newRow();
         } else if ($this->getID("value") != null) {
+
+        if ($this->checkIfExists($this->getID("value")) == null)
+        {
+            echo "3";
+            return $this->newRow();
+        }else if($this->getID("value") != null){
+
             return $this->UpdateEntry();
         }
     }
@@ -195,7 +203,7 @@ class Database extends Models
             $attributes = $returnAttr;
         }
 
-        return "SELECT " . $attributes . " FROM " . $this->table . " ";
+        return "SELECT " . $attributes . " FROM `" . $this->table . "` ";
     }
 
 
@@ -221,7 +229,10 @@ class Database extends Models
         foreach ($values as $parameter => $value) {
             $stmt->bindValue($parameter, $value);
         }
+
         echo $sql;
+
+echo $sql;
         return $stmt;
     }
 
@@ -287,6 +298,8 @@ class Database extends Models
     public function retrieve($id = null)
     {
         //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
+        //TODO : Not using todo and just adding it to task list in whatever method you use
+        //TODO : Not forcing to get all columns
         $this->getColumns();
         if (empty($id)) {
             return $this->batch(null, $this->offset);
@@ -295,7 +308,6 @@ class Database extends Models
         }
 
     }
-
 
     /**
      * @param $columnKeys
@@ -307,9 +319,6 @@ class Database extends Models
     {
         $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
         if ($checkInput[0] && $checkInput[1] && $checkInput[2]) {
-
-
-
             $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
             if ($validArrayLength != 3) {
                 die("Parameters differ in size");
@@ -317,7 +326,12 @@ class Database extends Models
             return "array";
         } else if ($checkInput[0] && $checkInput[2]) {
 
+
             $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
+
+            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 2;
+            echo sizeof($columnKeys);
+            echo sizeof($values);
 
             $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 2;
             echo sizeof($columnKeys);
@@ -373,12 +387,15 @@ class Database extends Models
         return $retVal;
     }
 
-    //  function commented because of error
-    //  private function UpdateModal()
 
     //  function commented because of error
     //  private function UpdateModal()
 
+    //  function commented because of error
+    //  private function UpdateModal()
+
+  //  function commented because of error
+  //  private function UpdateModal()
 
     private function UpdateEntry()
 
@@ -667,13 +684,16 @@ class Database extends Models
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
+
         $this->getColumns();
+
         //var_dump($array);
         if (!empty($array))
         {
             foreach ($array as $key => $value)
             {
                 $modelObject = new $className;
+
                 foreach ($value as $attrKey => $attrValue)
                 {
                    // var_dump($attrKey);
@@ -689,6 +709,7 @@ class Database extends Models
         {
             array_push($modelObjects, $modelObject);
         }
+
         return $modelObjects;
     }
 

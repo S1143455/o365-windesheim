@@ -56,41 +56,42 @@ if (isset($_POST['id'])) {
 
 <!--  modals      -->
 <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="CreateModal" aria-hidden="true">
-            <div class="modal-dialog" style="width:1000px;">
-                <div class="modal-content">
-                    <form role="form" id="universalModalForm" method="POST" action="CreateCategorie" enctype="multipart/form-data">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
-                            <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
-                        </div>
-                        <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
-                            <span class="alert-body"></span>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="categoryID">Categorie</label>
-                                <input type="text" class="form-control" name="CategoryName" id="CategoryName">
-                            </div>
-                            <div class="form-group">
-                                <label for="AttachmentID">Afbeelding</label>
-                                <input type="file" name="fileToUpload" id="fileToUpload">
-                            </div>
-                            <div class="form-group">
-                                <label for="categoryID">Ouder Categorie</label>
-                                <select class="form-control" name="ParentCategory">
-                                    <option value="None">Empty</option>
-                                    <?php $categoryController->ParentCategories() ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
-                        </div>
-                    </form>
+    <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-content">
+            <form role="form" id="universalModalForm" method="POST" action="CreateCategorie" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span>Aanmaken <span class="modal-title">Categorie</span></h4>
+
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                 </div>
-            </div>
+                <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
+                    <span class="alert-body"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="categoryID">Categorie</label>
+                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                    </div>
+                    <div class="form-group">
+                        <label for="AttachmentID">Afbeelding</label>
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryID">Ouder Categorie</label>
+                        <select class="form-control" name="ParentCategory">
+                            <option value="None">Empty</option>
+                            <?php $categoryController->ParentCategories() ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" name="submit" value="Aanmaken" class="btn btn-primary">
+                </div>
+            </form>
         </div>
+    </div>
+</div>
 
 <div class="modal fade" id="EditCategorieDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal" aria-hidden="true">
     <div class="modal-dialog" style="width:1000px;">

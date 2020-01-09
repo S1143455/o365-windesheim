@@ -11,6 +11,7 @@ class Category extends Database
     private $lastEditedBy;
     private $parentCategory;
     private $AttachmentID;
+    private $SpecialDealID;
 
     function __construct()
     {
@@ -97,6 +98,23 @@ class Category extends Database
         $this->attachmentID = $attachmentID;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSpecialDealID()
+    {
+        return $this->SpecialDealID;
+    }
+
+    /**
+     * @param mixed $SpecialDealID
+     */
+    public function setSpecialDealID($SpecialDealID)
+    {
+        $this->SpecialDealID = $SpecialDealID;
+    }
+
+
     public function SpecialGetcategories()
     {
         $result = '';
@@ -110,6 +128,5 @@ class Category extends Database
         $categories = $categories->retrieve();
         return $categories;
     }
-
 
 }
