@@ -78,14 +78,14 @@ $billingaddress=$userName . '<br>' . $addressLine1 . '<br>' . $addressLine2;
                     </div>
                     <div class="panel-footer">
                         <div class="row text-center">
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <button type="submit" class="btn btn-success btn-block" name="backtocart">
                                     <span class="glyphicon glyphicon-arrow-left"></span> Terug naar winkelwagen
                                 </button>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <button type="submit" class="btn btn-success btn-block" name="paycart">
                                     Betalen <span class="glyphicon glyphicon-arrow-right"></span>
                                 </button>
