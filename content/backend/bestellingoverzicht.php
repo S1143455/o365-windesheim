@@ -32,7 +32,7 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="row" style="min-height: 50px;">
         <div class="col-12 col-md-9 col-lg-10">
         <h3 class="mb-4">
-            Bestelling overzicht
+            Bestelling Overzicht
         </h3>
         </div>
 
