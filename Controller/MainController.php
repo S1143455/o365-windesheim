@@ -4,6 +4,8 @@ namespace Controller;
 
 use Model\Database;
 use Model\Category;
+use Model\Attachments;
+
 class MainController
 
 {
@@ -79,6 +81,8 @@ class MainController
     function index(){
         $category = new category();
         $categories = $category->retrieve();
+
+        $attachment = new Attachments();
 
         $main = $this;
         include_once('views/index.php');

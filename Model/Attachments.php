@@ -2,13 +2,13 @@
 
 namespace Model;
 
-
 class Attachments extends Database
 {
     private $attachmentID;
     private $alternateText;
     private $fileLocation;
     private $lastEditedBy;
+
     function __construct()
     {
         $this->table = "attachments";
