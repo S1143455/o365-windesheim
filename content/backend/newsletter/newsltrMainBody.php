@@ -1,4 +1,5 @@
 <?php
+include_once 'content/backend/header-admin.php';
 // Who's calling?
 if (isset($_POST['ChangeNewsletter']))      // The users wants to change the news letter.
 {
