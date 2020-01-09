@@ -30,7 +30,6 @@ if (isset($_POST['id'])) {
             <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
             <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?"
                    aria-label="Search" id="myInput">
-            <br>
 
             <div class="row">
                 <div class="col-12 col-md-10 col-lg-9 tableDiscount">

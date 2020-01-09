@@ -19,16 +19,25 @@ if (isset($_POST['id'])) {
 ?>
 
 <div class="col-md-8">
-    <div class="row" style="min-height: 50px;"></div>
     <div class="row" style="min-height: 50px;">
-        <div class="col-md-7">
+        <div class="col-md-12">
+        <h3>
+            Onderhoud Producten
+        </h3>
+        <br>
+        </div>
+    </div>
+    <div class="row" style="min-height: 50px;">
+        <div class="col-md-12">
             <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
         </div>
 
     </div>
     <div class="row">
+        <div class="col-12 col-md-10 col-lg-9 tableDiscount">
         <form role="form" id="table" method="POST" action="">
-            <table id="categoryTable" class="table table-fixed">
+            <div class="table-fixed">
+                <table class="table table-bordered" id="categoryTable">
                 <thead>
                 <tr>
                     <th class="col-md-1">manage</th>
