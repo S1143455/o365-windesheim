@@ -19,8 +19,9 @@ class Customer extends Database
     {
         $this->table = "customer";
         parent::__construct();
-
     }
+
+
     /**
      * @return mixed
      */

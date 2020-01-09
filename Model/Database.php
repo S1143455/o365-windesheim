@@ -119,12 +119,23 @@ class Database extends Models
         $table = $this->table;
         $this->getColumns();
         $this->validate();
-        if ($this->checkIfExists($this->getID("value")) == null)
-        {
-            echo "3";
+
+
+        if ($this->checkIfExists($this->getID("value")) == null) {
             return $this->newRow();
-        }else if($this->getID("value") != null){
-            return $this->UpdateEntry();
+
+        } else if ($this->getID("value") != null) {
+            return $this->UpdateModal();
+        }
+
+        var_dump($this->getID("value"));
+        if ($this->checkIfExists($this->getID("value")) == null) {
+            if ($this->checkIfExists($this->getID("value")) == null) {
+                echo "3";
+                return $this->newRow();
+            } else if ($this->getID("value") != null) {
+                return $this->UpdateEntry();
+            }
         }
     }
 
@@ -212,7 +223,7 @@ class Database extends Models
         foreach ($values as $parameter => $value) {
             $stmt->bindValue($parameter, $value);
         }
-echo $sql;
+        //echo $sql;
         return $stmt;
     }
 
@@ -300,15 +311,21 @@ echo $sql;
         $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
         if ($checkInput[0] && $checkInput[1] && $checkInput[2]) {
 
+
+
             $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
             if ($validArrayLength != 3) {
                 die("Parameters differ in size");
             }
             return "array";
         } else if ($checkInput[0] && $checkInput[2]) {
+
+            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
+
             $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 2;
-            echo sizeof($columnKeys);
-            echo sizeof($values);
+//            echo sizeof($columnKeys);
+//            echo sizeof($values);
+
             if ($validArrayLength != 2) {
                 die("Parameters differ in size");
             }
@@ -358,8 +375,13 @@ echo $sql;
         $this->closeConnection();
         return $retVal;
     }
+
+    //  function commented because of error
+    //  private function UpdateModal()
+
   //  function commented because of error
   //  private function UpdateModal()
+
 
     private function UpdateEntry()
 
@@ -386,10 +408,10 @@ echo $sql;
         try
         {
             $stmt->execute();
-           $lastInsertID = $this->connection->lastInsertId();
-           $primaryKey = $this->getID("key");
+            $lastInsertID = $this->connection->lastInsertId();
+            $primaryKey = $this->getID("key");
 
-           $this->setAttribute($primaryKey,$lastInsertID);
+            $this->setAttribute($primaryKey,$lastInsertID);
         } catch (Exception $e)
         {
             return false;
@@ -648,7 +670,7 @@ echo $sql;
         $modelObjects = [];
         $className = get_class($this);
         $modelObject = new $className;
-        //var_dump($array);
+        $this->getColumns();
         if (!empty($array))
         {
             foreach ($array as $key => $value)

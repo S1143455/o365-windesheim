@@ -9,6 +9,9 @@ $mainController = new Controller\MainController();
 //$authenticationController = new Controller\AuthenticationController();
 //$discount = new Controller\DiscountController();
 //$customer = new Controller\CustomerController();
+$authenticationController = new Controller\AuthenticationController();
+$discount = new Controller\DiscountController();
+$customer = new Controller\CustomerController();
 $userController = new Controller\UserController();
 
 switch ($userController->role()){
@@ -31,6 +34,8 @@ $discountController = new Controller\DiscountController();
 $customerController = new Controller\CustomerController();
 //$user = new Controller\UserController();
 $productController = new Controller\ProductController();
+
+$shoppingcartStockitems= new \Controller\ShoppingcartStockitemsController();
 
 
 $customerController = new Controller\CustomerController();

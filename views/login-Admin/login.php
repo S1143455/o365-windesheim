@@ -2,7 +2,6 @@
 include 'loader.php';
 include_once 'content/backend/header-admin.php';
 include 'content/backend/display_message.php';
-    // Let's test the input of the user.
     if(isset($_POST['login']))
     {
         $userController->login($_POST['gbrkr'], $_POST['pw']);
@@ -16,12 +15,12 @@ include 'content/backend/display_message.php';
 <div class="container" style="margin: auto;">
     <div class="row">
         <form role="form" class="loginAdminCenter" id="table" method="POST" action="">
-        <div class="col-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Inloggen</h3>
-                </div>
-                <div class="panel-body" style="width: 550px">
+            <div class="col-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Inloggen</h3>
+                    </div>
+                    <div class="panel-body" style="width: 550px">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control inputUserAdminLogin" type="text" name="gbrkr" placeholder="E-mail">
@@ -49,6 +48,15 @@ include 'content/backend/display_message.php';
                                 </div>
                             </div>
                         </fieldset>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row text-center">
+                            <div class="col-xs-4">
+                                <button type="submit" name="login" class="btn btn-success btn-block" data-toggle="modal">
+                                    <span class="glyphicon glyphicon-log-in"></span> Inloggen
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -153,4 +161,3 @@ include 'content/backend/display_message.php';
         </div>
     </div>
 </div>
-

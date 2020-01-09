@@ -1,7 +1,7 @@
 <?php
 include 'loader.php';
 $database = new Model\Database();
-//$authenticationController = new Controller\AuthenticationController();
+$authenticationController = new Controller\AuthenticationController();
 $user = new Controller\UserController();
 
 

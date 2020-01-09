@@ -17,7 +17,6 @@ class Models
 
     protected function getColumns()
     {
-        var_dump($this->table);
         switch ($this->table) {
             case 'stockitem':
                 $this->getStockItem();
@@ -51,6 +50,9 @@ class Models
                 break;
             case  'order':
                 $this->getOrder();
+                break;
+            case 'shoppingcart_stockitems':
+                $this->getShoppingcartStockitems();
                 break;
             default:
                 die('Table not implemented');
@@ -200,7 +202,7 @@ class Models
     private function getPeople()
     {
         $this->column = array(
-            "PeopleID" => ['Integer', 'PrimaryKey', 'Required'],
+            "PersonID" => ['Integer', 'PrimaryKey', 'Required'],
             "FullName" => ['Varchar', 'Attribute', 'Required'],
             "LogonName" => ['Varchar', 'HasOne', 'Required'],
             "HashedPassword" => ['Blob', 'Attribute', 'Required'],
@@ -260,6 +262,7 @@ class Models
             "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
         );
     }
+
     private function getOrder()
     {
         $this->column = array(
@@ -273,6 +276,7 @@ class Models
             "SpecialDealID" => ['Integer', 'foreign key', 'Not Required'],
         );
     }
+
     private function getOrderStockItem()
     {
         $this->column = array(
@@ -281,6 +285,17 @@ class Models
             "StockItemID" => ['Integer', 'Attribute', 'Required'],
         );
     }
+
+    private function getShoppingcartStockitems()
+    {
+        $this->column = array(
+            "ShopStockID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemAmount" => ['Integer', 'Attribute', 'Required'],
+        );
+    }
+
 
     /**
      * Gets the type of the $key
