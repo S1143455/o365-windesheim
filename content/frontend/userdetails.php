@@ -1,6 +1,7 @@
 <?php
 // Check ik the user wants to remove his account
 if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/accountverwijderen\">";}
+// echo "<pre>";print_r($_SESSION);echo "</pre>";
 ?>
 
 <html lang="NL">
@@ -72,11 +73,15 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                                                         </div>
                                                         <div class="form-group col-md-2">
                                                             <label for="male0">De heer</label>
-                                                            <input type="radio" disabled id="male0" value="<?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] == 'Man'){echo 'true';} ?>" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] == 'Man'){echo "checked";} ?>>
+                                                            <input type="radio" disabled id="male0" value="<?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'male'){echo 'true';} ?>" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'male'){echo "checked";} ?>>
                                                         </div>
-                                                        <div class="form-group col-md-9">
+                                                        <div class="form-group col-md-2">
                                                             <label for="female0">Mevrouw</label>
-                                                            <input type="radio" disabled id="female0" value="<?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] != 'Man'){echo 'true';} ?>" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] != 'Man'){echo "checked";} ?>>
+                                                            <input type="radio" disabled id="female0" value="<?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'female'){echo 'true';} ?>" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'female'){echo "checked";} ?>>
+                                                        </div>
+                                                        <div class="form-group col-md-7">
+                                                            <label for="unknown0">Onbekend</label>
+                                                            <input type="radio" disabled id="unknown0" value="<?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'unknown'){echo 'true';} ?>" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'unknown'){echo "checked";} ?>>
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
@@ -166,11 +171,15 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="male">De heer</label>
-                                        <input type="radio" name="Gender" id="male" value="male" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] == 'Man'){echo "checked";} ?>>
+                                        <input type="radio" name="Gender" id="male" value="MALE" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'male'){echo "checked";} ?>>
                                     </div>
-                                    <div class="form-group col-md-9">
+                                    <div class="form-group col-md-2">
                                         <label for="female">Mevrouw</label>
-                                        <input type="radio" name="Gender" id="female" value="female" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] != 'Man'){echo "checked";} ?>>
+                                        <input type="radio" name="Gender" id="female" value="FEMALE" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'female'){echo "checked";} ?>>
+                                    </div>
+                                    <div class="form-group col-md-7">
+                                        <label for="unknown">Onbekend</label>
+                                        <input type="radio" name="Gender" id="unknown" value="UNKNOWN" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'unknown'){echo "checked";} ?>>
                                     </div>
                                 </div>
                                 <div class="form-row">
