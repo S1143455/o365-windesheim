@@ -121,21 +121,14 @@ class Database extends Models
         $this->validate();
 
 
+        //var_dump($this->getID("value"));
         if ($this->checkIfExists($this->getID("value")) == null) {
             return $this->newRow();
-
         } else if ($this->getID("value") != null) {
-            return $this->UpdateModal();
-        }
 
-        var_dump($this->getID("value"));
-        if ($this->checkIfExists($this->getID("value")) == null) {
-            if ($this->checkIfExists($this->getID("value")) == null) {
-                echo "3";
-                return $this->newRow();
-            } else if ($this->getID("value") != null) {
+
                 return $this->UpdateEntry();
-            }
+
         }
     }
 
@@ -223,7 +216,6 @@ class Database extends Models
         foreach ($values as $parameter => $value) {
             $stmt->bindValue($parameter, $value);
         }
-        //echo $sql;
         return $stmt;
     }
 
@@ -288,9 +280,6 @@ class Database extends Models
      */
     public function retrieve($id = null)
     {
-        //TODO : Pagination to retrieve x amount; // Find a way to make the $limit $offset . Global variables.
-        //TODO : Not using todo and just adding it to task list in whatever method you use
-        //TODO : Not forcing to get all columns
         $this->getColumns();
         if (empty($id)) {
             return $this->batch(null, $this->offset);
@@ -310,9 +299,6 @@ class Database extends Models
     {
         $checkInput = [is_array($columnKeys), is_array($compareTypes), is_array($values)];
         if ($checkInput[0] && $checkInput[1] && $checkInput[2]) {
-
-
-
             $validArrayLength = (sizeof($columnKeys) + sizeof($compareTypes) + sizeof($values)) / 3;
             if ($validArrayLength != 3) {
                 die("Parameters differ in size");
@@ -320,11 +306,17 @@ class Database extends Models
             return "array";
         } else if ($checkInput[0] && $checkInput[2]) {
 
+
+
             $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 3;
 
             $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 2;
-//            echo sizeof($columnKeys);
-//            echo sizeof($values);
+            echo sizeof($columnKeys);
+            echo sizeof($values);
+
+            $validArrayLength = (sizeof($columnKeys) + sizeof($values)) / 2;
+            echo sizeof($columnKeys);
+            echo sizeof($values);
 
             if ($validArrayLength != 2) {
                 die("Parameters differ in size");
@@ -375,13 +367,6 @@ class Database extends Models
         $this->closeConnection();
         return $retVal;
     }
-
-    //  function commented because of error
-    //  private function UpdateModal()
-
-  //  function commented because of error
-  //  private function UpdateModal()
-
 
     private function UpdateEntry()
 
@@ -679,6 +664,8 @@ class Database extends Models
 
                 foreach ($value as $attrKey => $attrValue)
                 {
+                   // var_dump($attrKey);
+                    //var_dump($this->column);
                     if (array_key_exists($attrKey, $this->column))
                     {
                         $modelObject->setAttribute($attrKey, $attrValue);

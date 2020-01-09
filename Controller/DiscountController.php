@@ -94,7 +94,7 @@ class DiscountController
         //hierzou ie een special deal id moeten hebben
         $this->discount->setLastEditedBy(1);
         $this->storeDiscount($this->discount);
-        var_dump($this->discount);
+        //var_dump($this->discount);
 
         if ($_POST["selectedProductIDs"]) {
             foreach ($_POST["selectedProductIDs"] as $id) {
@@ -228,7 +228,7 @@ class DiscountController
         };
 
         $this->product = $product;
-        var_dump($product);
+        //var_dump($product);
         if (!$this->product->save())
         {
             return "Something went wrong.";

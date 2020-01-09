@@ -1,6 +1,6 @@
 <?php
 // The salutation in an array
-$salutationarray=['MAN'=>'De heer','VROUW'=>'Mevrouw'];
+$salutationarray=['MALE'=>'De heer','FEMALE'=>'Mevrouw','UNKNOWN'=>''];
 $saluation=$salutationarray[strtoupper($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'])];
 
 // The addresslines fro billing (and intial shipping)
@@ -43,12 +43,16 @@ $billingaddress=$userName . '<br>' . $addressLine1 . '<br>' . $addressLine2;
                         <div class="row">
                             <div class="form-group col-xs-3">
                                 <b>Aanhef (*) </b>
-                                <label for="male"> De heer </label>
-                                <input type="radio" name="Gender" id="male" value="male" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] == 'Man'){echo "checked";} ?>>
+                                <label for="male">De heer</label>
+                                <input type="radio" name="Gender" id="male" value="MALE" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'male'){echo "checked";} ?>>
                             </div>
-                            <div class="form-group col-xs-5">
+                            <div class="form-group col-xs-3">
                                 <label for="female">Mevrouw</label>
-                                <input type="radio" name="Gender" id="female" value="female" <?php if($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender'] != 'Man'){echo "checked";} ?>>
+                                <input type="radio" name="Gender" id="female" value="FEMALE" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'female'){echo "checked";} ?>>
+                            </div>
+                            <div class="form-group col-xs-3">
+                                <label for="female">Onbekend</label>
+                                <input type="radio" name="Gender" id="unknown" value="UNKNOWN" <?php if(strtolower($_SESSION['USER']['CUSTOMER_DETAILS'][0]['Gender']) == 'unknown'){echo "checked";} ?>>
                             </div>
                         </div>
                         <div class="row">

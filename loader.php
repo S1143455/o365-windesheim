@@ -6,7 +6,7 @@ spl_autoload_register(function ($class) {
 });
 $router = new Router\Router();
 $mainController = new Controller\MainController();
-//$authenticationController = new Controller\AuthenticationController();
+$authenticationController = new Controller\AuthenticationController();
 //$discount = new Controller\DiscountController();
 //$customer = new Controller\CustomerController();
 $authenticationController = new Controller\AuthenticationController();
@@ -35,7 +35,7 @@ $customerController = new Controller\CustomerController();
 //$user = new Controller\UserController();
 $productController = new Controller\ProductController();
 
-$shoppingcartStockitems= new \Controller\ShoppingcartStockitemsController();
+$shoppingcartStockitems= new Controller\ShoppingcartStockitemsController();
 
 
 $customerController = new Controller\CustomerController();

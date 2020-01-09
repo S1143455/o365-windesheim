@@ -250,6 +250,17 @@ class Models
         );
     }
 
+    private function getShoppingcartStockitems()
+    {
+        $this->column = array(
+            "ShopStockID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemAmount" => ['Integer', 'Attribute', 'Required'],
+        );
+    }
+
+
     private function getCustomer()
     {
         $this->column = array(
@@ -285,17 +296,6 @@ class Models
             "StockItemID" => ['Integer', 'Attribute', 'Required'],
         );
     }
-
-    private function getShoppingcartStockitems()
-    {
-        $this->column = array(
-            "ShopStockID" => ['Integer', 'PrimaryKey', 'Required'],
-            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
-            "StockItemID" => ['Integer', 'Attribute', 'Required'],
-            "StockItemAmount" => ['Integer', 'Attribute', 'Required'],
-        );
-    }
-
 
     /**
      * Gets the type of the $key

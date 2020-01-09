@@ -57,9 +57,15 @@ class UserController
      * Stores the product in the database.
      * @return User
      */
-    public function GetUserBydata($return, $key, $id){
-        $user = $this->user->where($return,$key,$id);
+    public function GetUserBydata($return, $key, $id)
+    {
+        $user = $this->user->where($return, $key, $id);
         return $user[0];
+    }
+    public function GetEmailByName($return, $key, $id){
+        $user = $this->user->databaseWhere($return,$key,$id);
+        //var_dump($user);
+        return true;
     }
 
 

@@ -4,6 +4,7 @@ include 'loader.php';
 use Model\ShoppingcartStockitems;
 $handelData=new \Model\Database();
 $cart=new \Model\ShoppingCart();
+
 // Let's see if there are any items in the cart.
 if (!$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']) {
     echo display_message('info','Uw winkelwagen bevat nog geen producten.');
@@ -13,6 +14,7 @@ if (!$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']) {
 $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
 //$anyItemsInCart=$shoppingcartStockitems->where("ShoppingCartID",$cartId);
+
 // Check if the users wants to empty the card.
 if (isset($_POST['emptycart']))
 {

@@ -30,6 +30,7 @@ class ShoppingcartStockitemsController
             );
             array_push($result,$temp_array);
         }
+
         return $result;
 
     }

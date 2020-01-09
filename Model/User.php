@@ -287,4 +287,11 @@ class User extends Database
     {
         $this->RecoveryStringTTL = $RecoveryStringTTL;
     }
+
+    // this sets the TTL of the passwordrecovery link.
+    public function passwordRecoveryTime()
+    {
+        return $this->passwordRecoveryTime=600;
+    }
+
 }

@@ -1,4 +1,5 @@
 <?php
+include_once 'content/backend/header-admin.php';
 // Who's calling?
 echo "<pre>"; print_r($_SESSION); echo "</pre>";
 echo "<pre>"; print_r($_POST); echo "</pre>";
