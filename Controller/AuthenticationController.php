@@ -1,15 +1,53 @@
 <?php
 
 namespace Controller;
+use Model\Database;
 use Model\User;
 
 class AuthenticationController
 {
     function __construct()
     {
+        $this->user = new User();
+    }
+
+    public function getdata()
+    {
+        $getthedata=new Database();
+        $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '". $this->user->getLogonName()  . "'");
+
+        return $sqlreturendsomething;
 
     }
 
+    public function getCustomerDetails()
+    {
+        $getthedata=new Database();
+        $customerDetails=$getthedata->selectStmt("SELECT * FROM customer WHERE PersonID = '". $_SESSION['USER']['DATA'][0]['PersonID'] . "'");
+        return $customerDetails;
+    }
+
+    public function getAddressDetails()
+    {
+        $getthedata=new Database();
+        $addressDetails=$getthedata->selectStmt("SELECT * FROM address WHERE PersonID = '". $_SESSION['USER']['DATA'][0]['PersonID'] . "'");
+        return $addressDetails;
+    }
+
+
+    public function checkCredentials($logonName,$password)
+    {
+        $user = $this->user->where("*", "LogonName", "=", $logonName);
+        if(empty($user))
+        {
+            return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
+        }
+        else
+        {
+            $this->user = $user[0];
+            return true;
+        }
+    }
     /**
      * Login for the user.
      * @param $username
@@ -23,20 +61,20 @@ class AuthenticationController
             return $_SESSION['LOGIN_ERROR']=["type"=>'warning', "message"=>'Vul een gebruikersnaam en wachtwoord in.'];
         }
 
-        $user = new User();
-        $user->setUsername($username);
-        $user->setPassword($password);
-        if($user->checkCredentials())
+
+        if($this->checkCredentials($username, $password))
         {
             // Check if the passwords match.
-            if ($this->verifyPassword($user->getPassword(),$user->getDbPassword() ))
+            if ($this->verifyPassword($password,$this->user->getHashedPassword()))
             {
                 // The passwords are a match. The user is authenticated.
                 $_SESSION['authenticated']='true';
                 // Put the username in the $_SESSION array.
-                $_SESSION['USER']['name']=$user->getUsername();
+                $_SESSION['USER']['name']=$this->user->getLogonName();
                 // Place the userdata (an array) into the $_SESSION
-                $_SESSION['USER']['DATA']=$user->getUserDataArray();
+                $_SESSION['USER']['DATA']=$this->getdata();
+                $_SESSION['USER']['CUSTOMER_DETAILS']=$this->getCustomerDetails();
+                $_SESSION['USER']['ADDRESS']=$this->getAddressDetails();
                 // The rest of the userdata.
                 include 'content/frontend/GetUserDetails.php';
                 // Now were done were going back to the index page.
