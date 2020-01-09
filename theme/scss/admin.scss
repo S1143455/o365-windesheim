@@ -291,3 +291,8 @@ td {
   font-size: 12px;
   max-height: 100%;
 }
+
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+  max-width: 100%;
+  width: 100%;
+}

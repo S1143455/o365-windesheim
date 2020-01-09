@@ -156,7 +156,7 @@ class UserController
                 $_SESSION['ADDRESSAdmin']=$addressDetails;
                 $_SESSION['USER']['DATA']=$this->getdata();
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/omasbeste/admin\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=". $this->siteurl() ."\">";
             }
             else
             {

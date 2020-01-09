@@ -44,7 +44,6 @@ class FileController
                     $out .= "Sorry, there was an error uploading your file.";
                 }
             }
-            echo $out;
             $attachment = new Attachments();
             $attachment->setLastEditedBy($lastEditedBy);
             $attachment->setAlternateText(basename( $_FILES["fileToUpload"]["name"]));
