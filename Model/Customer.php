@@ -102,22 +102,7 @@ class Customer extends Database
         $this->Gender = $Gender;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getNewsletter()
-    {
-        return $this->newsletter;
-    }
-
-    /**
-     * @param mixed $newsletter
-     */
-    public function setNewsletter($newsletter)
-    {
-        $this->newsletter = $newsletter;
-    }
-
+ 
     /**
      * @return mixed
      */
@@ -135,17 +120,28 @@ class Customer extends Database
     }
 
 
-//`CustomerID` int(10) NOT NULL,
-//`PersonID` int(10) NOT NULL,
-//`ShoppingCartID` int(10) DEFAULT NULL,
-//`Gender` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-//`newsletter` tinyint(4) DEFAULT NULL,
-//`TermsAndConditions` tinyint(1) DEFAULT NULL
-
     /**
      * @return mixed
      */
+    public function getNewsletter()
+    {
+        if ($this->Newsletter == "1"){
+            $this->Newsletter =
+                '<input type="checkbox" name="Newsletter" checked disabled>';
 
+        } else {
+            $this->Newsletter =
+                '<input type="checkbox" name="Newsletter" disabled>';
+
+        }
+        return $this->Newsletter;
+    }
+    public function setNewsLetter($newsletter)
+    {
+        $this->newsletter = $newsletter;
+    }
+
+  
     public function getAllCustomers(){
 
         $customers = new Customer();

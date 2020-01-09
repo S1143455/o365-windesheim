@@ -142,7 +142,7 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
 });
 
 $router->route('/account-toevoegen', function() use($customerController){
-    return $customerController->create();
+    return $customerController->createR();
 });
 //$router->route('/account-toevoegen', function() {
 //    return include 'content/frontend/account-toevoegen.php';

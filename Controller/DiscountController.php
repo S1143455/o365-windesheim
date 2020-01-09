@@ -195,8 +195,6 @@ class DiscountController
      */
     public function storeDiscount($discount)
     {
-        //var_dump($discount);
-
         if (!$discount->initialize())
         {
             print_r($_GET);

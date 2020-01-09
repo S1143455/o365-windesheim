@@ -21,6 +21,12 @@ class Models
             case 'stockitem':
                 $this->getStockItem();
                 break;
+            case 'order':
+                $this->getOrder();
+                break;
+            case 'order_stockitem':
+                $this->getOrderStockItem();
+                break;
             case 'category':
                 $this->getCategory();
                 break;
@@ -48,12 +54,6 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
-            case  'order':
-                $this->getOrder();
-                break;
-            case 'shoppingcart_stockitems':
-                $this->getShoppingcartStockitems();
-                break;
             default:
                 die('Table not implemented');
         }
@@ -62,6 +62,12 @@ class Models
             switch ($this->table) {
                 case 'stockitem':
                     $this->getStockItem();
+                    break;
+                case 'order':
+                    $this->getOrder();
+                    break;
+                case 'order_stockitem':
+                    $this->getOrderStockItem();
                     break;
                 case 'category':
                     $this->getCategory();
@@ -115,7 +121,7 @@ class Models
     private function getStockItem()
     {
         $this->column = array(
-            "StockItemID" => ['Integer', 'PrimaryKey', 'Required'],
+            "StockItemId" => ['Integer', 'PrimaryKey', 'Required'],
             "StockItemName" => ['Varchar', 'Attribute', 'Required'],
             "SupplierID" => ['Supplier', 'HasOne', 'Required'],
             "Brand" => ['Varchar', 'Attribute', 'Required'],
@@ -158,6 +164,7 @@ class Models
             "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
         );
     }
+
 
     private function getAddress()
     {
@@ -213,6 +220,7 @@ class Models
             "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+//            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
             "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
             "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );
@@ -278,12 +286,12 @@ class Models
     {
         $this->column = array(
             "OrderID" => ['Integer', 'PrimaryKey', 'Required' ],
-            "CustomerID" => ['Integer', 'foreign key', 'Required'],
+            "CustomerID" => ['customer', 'HasOne', 'Required'],
             "OrderDate" => ['Date', 'Attribute', 'Not Required'],
             "ExpectedDeliveryDate" => ['Date', 'Attribute', 'Not Required'],
-            "LastEditedBy" => ['Integer', 'foreign key', 'Required'],
-            "DeliveryMethodID" => ['Integer', 'foreign key', 'Required'],
-            "PaymentMethodID" => ['Integer', 'foreign key', 'Not Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+            "DeliveryMethodID" => ['Integer', 'Attribute', 'Nullable'],
+            "PaymentMethodID" => ['Integer', 'Attribute', 'Not Nullable'],
             "SpecialDealID" => ['Integer', 'foreign key', 'Not Required'],
         );
     }
@@ -291,9 +299,10 @@ class Models
     private function getOrderStockItem()
     {
         $this->column = array(
-            "OrderStockItemID" => ['Integer', 'PrimaryKey', 'Required' ],
-            "OrderID" => ['Integer', 'Attribute', 'Required'],
-            "StockItemID" => ['Integer', 'Attribute', 'Required'],
+            "orderStockItemId" => ['Integer', 'PrimaryKey', 'Required' ],
+            "OrderID" => ['Order', 'HasOne', 'Required'],
+            "StockItemID" => ['StockItem', 'HasOne', 'Required'],
+            "Amount" => ['Integer', 'Attribute', 'Re``quired'],
         );
     }
 
