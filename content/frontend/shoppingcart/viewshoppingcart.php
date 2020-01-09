@@ -44,13 +44,13 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
 
 <div class="container">
     <div class="row">
-        <form role="form" id="table" method="POST" action="">
-            <div class="col-xs-8 col-xs-offset-2">
+        <form role="form" id="table" method="POST" action="" style="width:100%">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="panel-title">
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-md-6">
                                     <h4><span class="glyphicon glyphicon-shopping-cart"></span> Uw winkelwagen</h4>
                                 </div>
                             </div>
@@ -66,25 +66,25 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                             $myItemRow='';
                             $myItemRow.='
                             <div class="row">
-                                <div class="col-xs-2"><img class="img-responsive" src="' . $item['Photo'] .'"></div>
-                                <div class="col-xs-6">
+                                <div class="col-md-2"><img class="img-responsive" src="' . $item['Photo'] .'"></div>
+                                <div class="col-md-6">
                                     <h4 class="product-name"><strong>' . $item['StockItemName'] .'</strong></h4><h4><small>' . $item['MarketingComments'] .'</small></h4>
                                 </div>
-                                <div class="col-xs-4">
-                                    <div class="col-xs-2 text-right">
+                                <div class="col-md-4">
+                                    <div class="col-md-2 text-right">
                                         <h6><strong>' . number_format($item['RecommendedRetailPrice'], 2, ',', '.') .'</strong></h6>
                                     </div>                                    
-                                    <div class="col-xs-4">
+                                    <div class="col-md-4">
                                         <span>
-                                            <button type="submit" class="btn-sm btn-danger btn-block" name="remove" value="' . $item['StockItemID'].'"><span class="glyphicon glyphicon-minus"></button>
+                                            <button type="submit" class="btn-sm btn-danger btn-block" name="remove" value="' . $item['StockItemID'].'"> - <span class="glyphicon glyphicon-minus"></button>
                                         </span>
                                      </div>
-                                     <div class="col-xs-1">
+                                     <div class="col-md-1">
                                         <h4 class="justify-content-center"><strong>' . $item['StockItemAmount'] .'</strong></h4>
                                      </div>
-                                     <div class="col-xs-4">
+                                     <div class="col-md-4">
                                         <span>
-                                            <button type="submit" class="btn-sm btn-success btn-block input-group-prepend" name="add" value="' . $item['StockItemID'].'"><span class="glyphicon glyphicon-plus"></span></button>
+                                            <button type="submit" class="btn-sm btn-success btn-block input-group-prepend" name="add" value="' . $item['StockItemID'].'"> + <span class="glyphicon glyphicon-plus"></span></button>
                                         </span>
                                      </div>
                                 </div>
@@ -100,24 +100,24 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                         ?>
                         <div class="row">
                             <div class="text-center">
-                                <div class="col-xs-12">
+                                <div class="col-md-12">
                                     <h4 class="text-right">Subtotaal <strong><?php echo number_format($totalCartPrice, 2, ',', '.'); ?></strong></h4>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="text-center">
-                                <div class="col-xs-3">
+                                <div class="col-md-3">
                                     <input type="text" class="form-control input-sm" placeholder="Kortingscode" name="DiscountCode" value="<?php if(isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
                                     {
                                         echo $percentage=$_SESSION['USER']['SHOPPING_CART']['DISCOUNT']['DealCode'];
 
                                     }  ?>">
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-md-3">
                                     <button type="submit" class="btn-sm btn-primary btn-block input-group-prepend" name="FindDiscount" value="FindDiscount"><span class="glyphicon glyphicon-search"></span><strong> Zoek code</strong></button>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-md-6">
                                     <h4 class="text-right">
                                         <?php if(isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
                                         {
@@ -138,7 +138,7 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                         </div>
                         <div class="row">
                             <div class="text-center">
-                                <div class="col-xs-12">
+                                <div class="col-md-12">
                                     <h4 class="text-right">Totaal <strong><?php if(!isset($_SESSION['USER']['SHOPPING_CART']['DISCOUNT']))
                                             {
                                                 echo number_format($totalCartPrice, 2, ',', '.');
@@ -156,17 +156,17 @@ if (isset($_POST['FindDiscount'])){include 'content/frontend/shoppingcart/checkd
                     </div>
                     <div class="panel-footer">
                         <div class="row text-center">
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <button type="submit" class="btn btn-success btn-block" name="backtomainpage">
                                     <span class="glyphicon glyphicon-arrow-left"></span> Terug naar hoofdpagina
                                 </button>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <button type="submit" class="btn btn-danger btn-block" name="emptycart">
                                     <span class="glyphicon glyphicon-trash"></span> Leegmaken
                                 </button>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-md-4">
                                 <button type="submit" class="btn btn-success btn-block" name="checkaddress">
                                     Adres controleren <span class="glyphicon glyphicon-arrow-right"></span>
                                 </button>
