@@ -7,10 +7,7 @@ namespace Model;
 class Customer extends Database
 {
     private $CustomerID;
-<<<<<<< HEAD
 
-=======
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
     private $AddressID;
     private $PersonID;
     private $ShoppingCartID;
@@ -122,8 +119,6 @@ class Customer extends Database
         $this->TermsAndConditions = $TermsAndConditions;
     }
 
-<<<<<<< HEAD
-    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
     public function getNewsletter()
     {
         return $this->newsletter;
@@ -133,21 +128,12 @@ class Customer extends Database
         $this->newsletter = $newsletter;
     }
 
-  
-=======
 
-//`CustomerID` int(10) NOT NULL,
-//`PersonID` int(10) NOT NULL,
-//`ShoppingCartID` int(10) DEFAULT NULL,
-//`Gender` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-//`newsletter` tinyint(4) DEFAULT NULL,
-//`TermsAndConditions` tinyint(1) DEFAULT NULL
 
     /**
      * @return mixed
      */
 
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
     public function getAllCustomers(){
 
         $customers = new Customer();

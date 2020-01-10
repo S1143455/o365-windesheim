@@ -10,28 +10,24 @@ use Model\Adress;
 
 class CustomerController
 {
-<<<<<<< HEAD
     private $viewPath = 'content/frontend/';
 
     private $admin = 'content/backend/';
-=======
-    private $admin = 'content/backend/';
     private $route = 'content/frontend/';
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
-
     function __construct()
     {
         $this->customer = new Customer();
-<<<<<<< HEAD
         $this->people = new People();
 
     }
+
     /**
      * This method should capture the creation of a new object,
      * Verify its data and commit it to the database.
      * @param $newCustomer
      * @return mixed
      */
+
     public function createR()
     {
         $this->customer = new Customer();
@@ -39,8 +35,6 @@ class CustomerController
 
         //iets.php
         include  $this->viewPath . 'account-toevoegen.php';
-=======
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
         $this->people = new People();
         $this->addres = new Adress();
 
@@ -194,36 +188,26 @@ class CustomerController
         $this->storePeople($this->people);
         $this->customer->setPersonID($this->people->getPersonID());
         $this->store($this->customer);
-
-<<<<<<< HEAD
-=======
-        //iets.php
+       //iets.php
         include $this->route . 'account-toevoegen.php';
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
     }
 
     /**
      * Stores the product in the database.
      *
-<<<<<<< HEAD
      * @param $customer Customer
-=======
      * @param $customer customer
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
      * @return string
      */
 
     public function store($customer)
     {
-<<<<<<< HEAD
 //        var_dump($customer);
         if (!$customer->initialize())
         {
-=======
         var_dump($customer);
-
+}
         if (!$customer->initialize()) {
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
             print_r($_GET);
             return false;
         };
@@ -234,7 +218,6 @@ class CustomerController
             return "Something went wrong.";
         }
     }
-<<<<<<< HEAD
     /**
      * Stores the product in the database.
      *
@@ -255,8 +238,6 @@ class CustomerController
             return "Something went wrong.";
         }
     }
-=======
 
 
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
 }
