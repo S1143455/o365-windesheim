@@ -150,7 +150,7 @@ if (isset($_POST['id'])) {
 
 <!-- modal (popup) korting op product -->
 <div class="modal fade" id="DiscountProduct" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
                 <div class="modal-header">
@@ -251,7 +251,7 @@ if (isset($_POST['id'])) {
 
 <!-- modal (popup) korting op categorie -->
 <div class="modal fade" id="DiscountCategory" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
                 <div class="modal-header">
@@ -550,7 +550,7 @@ include_once 'content/backend/footer-admin.php';
 
 ?>
 <!-- scripts to generate a random code for each modal-->
-<script>
+<script xmlns:line-height="http://www.w3.org/1999/xhtml">
     function generateCodeOT() {
         var x = document.getElementById("inputCodeOT")
         x.value = Math.floor((Math.random() * 900000000) + 100000000);

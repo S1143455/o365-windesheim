@@ -122,7 +122,7 @@ class OrderController
             }
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-md-1"><button type="submit" name="id" value="' . $order->getOrderID() .'">Details</button></td>
+                            <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary" name="id" value="' . $order->getOrderID() .'">Details</button></td>
                             <td class="col-md-2">' . $order->getOrderID() . '</td>
                             <td class="col-md-3">' . $person->getFullName() . '</td>
                             <td class="col-md-3">' . $order->getOrderdate() . '</td>
