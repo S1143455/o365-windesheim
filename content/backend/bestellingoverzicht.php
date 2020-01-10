@@ -83,11 +83,11 @@ include_once 'content/backend/sidebar-admin.php';
                         <table id="OrderTable" class="table table-bordered">
                         <thead>
                         <tr>
-                            <th class="col-md-4">omschrijving</th>
+                            <th class="col-md-1">omschrijving</th>
                             <th class="col-md-2">hoeveelheid</th>
-                            <th class="col-md-2">belastings percentage</th>
-                            <th class="col-md-2">prijs Excl btw</th>
-                            <th class="col-md-2">prijs Incl btw</th>
+                            <th class="col-md-3">belastings percentage</th>
+                            <th class="col-md-3">prijs Excl btw</th>
+                            <th class="col-md-3">prijs Incl btw</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -112,7 +112,7 @@ include_once 'content/backend/sidebar-admin.php';
     </div>
     <script>
         $("#orderDetailsDialog").on("hidden.bs.modal", function () {
-            location.reload();
+//            location.reload();
         });
     </script>
 

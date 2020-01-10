@@ -57,11 +57,11 @@ class OrderController
     public function displayproduct($prod, $orderLine){
         $result = '';
         $result .= '<tr style="height:40px;">
-                            <td class="col-md-4">' . $orderLine->getDescription() .'</td>
+                            <td class="col-md-1">' . $orderLine->getDescription() .'</td>
                             <td class="col-md-2">' . $orderLine->getQuantity() .'</td>
-                            <td class="col-md-2">' . $orderLine->getTaxRate() .'</td>
-                            <td class="col-md-2">' . $orderLine->getUnitPrice()  .'</td>
-                            <td class="col-md-2">' . $this->calculate($orderLine) .'</td>                          
+                            <td class="col-md-3">' . $orderLine->getTaxRate() .'</td>
+                            <td class="col-md-3">' . $orderLine->getUnitPrice()  .'</td>
+                            <td class="col-md-3">' . $this->calculate($orderLine) .'</td>                          
                         </tr>';
 
         echo $result;
