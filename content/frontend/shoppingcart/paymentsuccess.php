@@ -44,13 +44,16 @@ $getOrderId=$handelDataBase->selectStmt( "select OrderID from orders where Custo
 $oderId=$getOrderId[0]['OrderID'];
 
 // Put the ordered items in th database
-$insertPart1="INSERT INTO order_stockitem(OrderID, StockItemID, ItemAmount, TotalCartPrice)";
+$insertPart1="INSERT INTO orderlines(OrderID, StockItemID, Description, Quantity, UnitPrice,TaxRate,LastEditedBy)";
 foreach ($_SESSION['USER']['SHOPPING_CART']['ITEMS'] as $key)
 {
     $insertPart2=" VALUES(".$oderId. ","
         .$key['StockItemID'] . ","
+        ."\"" . $key['StockItemName'] . "\","
         .$key['StockItemAmount'] . ","
-        .$key['CartPrice'].")";
+        .$key['RecommendedRetailPrice']. ","
+        . "21" . ","
+        . $_SESSION['USER']['DATA'][0]['PersonID'] . ")";
     $insertOderItems=$handelDataBase->UpdateStmt($insertPart1.$insertPart2);
 }
 

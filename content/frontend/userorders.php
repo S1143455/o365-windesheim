@@ -25,8 +25,8 @@ foreach ($orders as $orderkey)
     $_SESSION['USER']['ORDER'][$theOrders[0]['OrderID']]['ORDER_DETAILS']=$theOrders[0];
 
     // Add the order details
-    $theOrdersDetails=$handleDatabase->selectStmt('select ost.*,sti.Photo,sti.StockItemName,sti.MarketingComments 
-                                                        from order_stockitem ost left join StockItem sti on sti.StockItemID=ost.StockItemID where ost.orderid='.$orderkey['OrderID']);
+    $theOrdersDetails=$handleDatabase->selectStmt('select ost.*,sti.Photo,sti.StockItemName,sti.MarketingComments,ost.Quantity as ItemAmount,(ost.Quantity * ost.UnitPrice) as TotalCartPrice
+                                                        from orderlines ost left join StockItem sti on sti.StockItemID=ost.StockItemID where ost.orderid="'.$orderkey['OrderID'].'"');
 
     // Remove the numbered keys from the array
     foreach ($theOrdersDetails as $key => $value){foreach ($value as $newkey =>$newvalue){if (is_numeric ($newkey)){unset($theOrdersDetails[$key][$newkey]);}}}
