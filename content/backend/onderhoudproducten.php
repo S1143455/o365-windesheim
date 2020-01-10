@@ -11,12 +11,12 @@ use Model\Product;
             <div class="col-12 col-md-10 col-lg-9">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>
-                            Onderhoud Producten
-                        </h3>
-                        <br>
+                    <h3>
+                        Onderhoud Producten
+                    </h3>
+                    <br>
                     </div>
-
+                </div>
                 <div class="row" style="min-height: 50px;">
                     <div class="col-md-7">
                         <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
@@ -45,7 +45,7 @@ use Model\Product;
             </div>
             <div class="row">
                 <div class="col-12 col-md-1 col-lg-1">
-                <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#createProduct">
+                <button type="button" class="firstdiscountButton btn btn-primary tableEditButton" data-toggle="modal" data-target="#createProduct">
                     Product toevoegen
                 </button>
             </div>
