@@ -39,13 +39,14 @@ if (isset($_POST['id'])) {
             <div class="table-fixed">
                 <table class="table table-bordered" id="categoryTable">
                 <thead>
-                <tr>
-                    <th class="col-md-1">manage</th>
-                    <th class="col-md-2">Categorie ID</th>
-                    <th class="col-md-5">Omschrijving</th>
-                    <th class="col-md-2">Parent Categorie</th>
-                    <th class="col-md-2">Acties </th>
-                </tr>
+
+                    <tr>
+                        <th class="col-md-2">manage</th>
+                        <th class="col-md-2">Categorie ID</th>
+                        <th class="col-md-5">Omschrijving</th>
+                        <th class="col-md-3">Parent Categorie</th>
+                    </tr>
+
                 </thead>
                 <tbody>
                     <?php $categoryController->GetAllCategories(); ?>
