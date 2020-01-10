@@ -103,7 +103,7 @@ class MainController
             $nav_menu .= '<li class="nav-item mr-4 mt-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a class="navbarFE" href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=/'. $this->site_url() . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);
@@ -123,7 +123,7 @@ class MainController
             $nav_menu .= '<li class="nav-item mr-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a class="navbarFE" href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=/'. $this->site_url() . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);
@@ -142,7 +142,7 @@ class MainController
              $nav_menu .= '<li class="nav-item mt-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a class="navbarFE" href=winkelwagen title=Winkelwagen>' . $nav_items['winkelwagen']  . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=/'. $this->site_url() .'/winkelwagen title=Winkelwagen>' . $nav_items['winkelwagen']  . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
 
@@ -167,7 +167,7 @@ class MainController
             if($i == $max){
                 $class .= ' last ';
             }
-            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href="'. $this->site_url() . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
         }
 
         return trim($nav_menu, $sep);
