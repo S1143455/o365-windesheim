@@ -16,7 +16,7 @@ use Model\Product;
                         </h3>
                         <br>
                     </div>
-                
+
                 <div class="row" style="min-height: 50px;">
                     <div class="col-md-7">
                         <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">

@@ -100,7 +100,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeOT">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeOT"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -198,7 +198,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodePD">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodePD"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -298,7 +298,7 @@ if (isset($_POST['id'])) {
                     <div class="col-12">
                         <div class="row">
                             <label class="col-5 control-label" for="inputCodeDC">Code:</label>
-                            <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                            <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeDC"
                                    placeholder="Code">
                         </div>
                         <div class="row">
@@ -362,7 +362,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeMD">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeMD"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -550,7 +550,7 @@ include_once 'content/backend/footer-admin.php';
 
 ?>
 <!-- scripts to generate a random code for each modal-->
-<script xmlns:line-height="http://www.w3.org/1999/xhtml">
+<script>
     function generateCodeOT() {
         var x = document.getElementById("inputCodeOT")
         x.value = Math.floor((Math.random() * 900000000) + 100000000);
