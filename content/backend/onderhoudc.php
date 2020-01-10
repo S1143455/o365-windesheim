@@ -56,7 +56,7 @@ if (isset($_POST['id'])) {
 </div>
 <div class="col-md-2">
     <div class="row">
-        <button type="button" class="first discountButton btn btn-primary" data-toggle="modal" data-target="#createCategory">
+        <button type="button" class="first discountButton btn btn-success" data-toggle="modal" data-target="#createCategory">
             Aanmaken Categorie
         </button>
     </div>

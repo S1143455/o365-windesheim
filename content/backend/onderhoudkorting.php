@@ -62,19 +62,19 @@ if (isset($_POST['id'])) {
 
                 <div class="col-12 col-md-2 col-lg-2 discountButtons">
                     <!-- discount option buttons  -->
-                    <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
+                    <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                             data-target="#oneTimeDiscount">
                         Eenmalige korting
                     </button>
-                    <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
+                    <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                             data-target="#DiscountProduct">
                         Korting op product(en)
                     </button>
-                    <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
+                    <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                             data-target="#DiscountCategory">
                         Korting op categorie(ën)
                     </button>
-                    <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
+                    <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                             data-target="#MailDiscount">
                         Korting mailen naar klant
                     </button>
@@ -545,7 +545,10 @@ if (isset($_POST['id'])) {
     </div>
 </div>
 
+<?php
+include_once 'content/backend/footer-admin.php';
 
+?>
 <!-- scripts to generate a random code for each modal-->
 <script xmlns:line-height="http://www.w3.org/1999/xhtml">
     function generateCodeOT() {
