@@ -19,16 +19,25 @@ if (isset($_POST['id'])) {
 ?>
 
 <div class="col-md-8">
-    <div class="row" style="min-height: 50px;"></div>
     <div class="row" style="min-height: 50px;">
-        <div class="col-md-7">
+        <div class="col-md-12">
+        <h3>
+            Onderhoud Categorieën
+        </h3>
+        <br>
+        </div>
+    </div>
+    <div class="row" style="min-height: 50px;">
+        <div class="col-md-12">
             <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
         </div>
 
     </div>
     <div class="row">
+        <div class="col-12 col-md-10 col-lg-9 tableDiscount">
         <form role="form" id="table" method="POST" action="">
-            <table id="categoryTable" class="table table-fixed">
+            <div class="table-fixed">
+                <table class="table table-bordered" id="categoryTable">
                 <thead>
                 <tr>
                     <th class="col-md-1">manage</th>
@@ -82,6 +91,36 @@ if (isset($_POST['id'])) {
                             <?php $categoryController->ParentCategories() ?>
                         </select>
                     </div>
+                    <p>
+                        <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                           href="#tableCollapseProduct" role="button"
+                           aria-expanded="false" aria-controls="tableCollapse">Kortingscode zoeken</a>
+                    </p>
+                    <div class="tableCollapseProduct">
+                        <div class="collapse multi-collapse" id="tableCollapseProduct">
+                            <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search" id="myInputProduct">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP" id="tableCollapsespecialdeal">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2">Select</th>
+
+                                                    <th class="col-md-4">Korting omschrijving</th>
+                                                    <th class="col-md-2">korting's percentage</th>
+                                                    <th class="col-md-4">Korting actief</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbodyProduct">
+                                                <?php $categoryController->GetAllDiscountsForcategorie(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -125,6 +164,39 @@ if (isset($_POST['id'])) {
                         <input type="file" name="AttachmentID" id="AttachmentID" value="<?php echo($categoryController->getAttachmentfromCategory($category)) ?>">
                     </div>
 
+                    <p>
+                        <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                           href="#tableCollapseProduct" role="button"
+                           aria-expanded="false" aria-controls="tableCollapse">Kortingscode veranderen</a>
+                    </p>
+                    <div class="tableCollapseProduct">
+                        <div class="collapse multi-collapse" id="tableCollapseProduct">
+                            <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputProduct">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP"
+                                               id="tableCollapsespecialdeal">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-2">Select</th>
+                                                <th class="col-md-2">Productnr</th>
+                                                <th class="col-md-3">Productnaam</th>
+                                                <th class="col-md-1">Prijs</th>
+                                                <th class="col-md-4">Opmerkingen</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyProduct">
+                                            <?php $categoryController->GetAllDiscountsForActiveCategorie($category); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

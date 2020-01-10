@@ -23,7 +23,7 @@ if (isset($_POST['SaveNewPassword']))
             $setClearTheData=new \Model\Database();
             $clearTheData=$setClearTheData->UpdateStmt("UPDATE people SET PassWordRecoveryString=NULL ,RecoveryStringTTL=NULL WHERE PersonID='" . $_POST['PersonID'] ."'");
             // We're done now. Let's inform the user.
-            echo display_message('success', $changepassword['message']) . '<META HTTP-EQUIV=Refresh CONTENT="3;URL=/login">';
+            echo display_message('success', $changepassword['message']) . '<META HTTP-EQUIV=Refresh CONTENT="3;URL=/" . getenv(\'ROOT\') . "login">';
         }
     }
 else

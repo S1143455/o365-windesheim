@@ -281,7 +281,9 @@ class Database extends Models
     public function retrieve($id = null)
     {
         $this->getColumns();
-        if (empty($id)) {
+
+        if ($id == null)
+        {
             return $this->batch(null, $this->offset);
         } else {
             return $this->find($id);

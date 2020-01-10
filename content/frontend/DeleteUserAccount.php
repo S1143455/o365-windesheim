@@ -4,7 +4,7 @@ include 'content/frontend/display_message.php';
 // Check if the user is logged in.
 if (!isset($_SESSION['authenticated']))
 {
-    echo display_message('info','U kunt deze handeling nu niet uitvoeren.<br>U wordt door gestuurd naar de hoofdpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+    echo display_message('info','U kunt deze handeling nu niet uitvoeren.<br>U wordt door gestuurd naar de hoofdpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "\">";
     die;
 }
 
@@ -14,7 +14,7 @@ if (isset($_POST['removeaccount']))
 
 {
     // The user wishes to stay...
-    if (!$_POST['removeaccount']){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/onderhoudaccount\">";}
+    if (!$_POST['removeaccount']){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "onderhoudaccount\">";}
     // the user really wants to go.
     if ($_POST['removeaccount'])
     {
@@ -33,7 +33,7 @@ if (isset($_POST['removeaccount']))
         $removePeople=$handleDatabase->UpdateStmt("delete from people where personId=".$personId);
         // Empty the $_SESSION array
         session_unset();
-        echo display_message('success','Uw gegevens zijn succesvol verwijderd.<br>U bent succesvol uitgelogd.<br>U keert zo terug naar de hoofdpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+        echo display_message('success','Uw gegevens zijn succesvol verwijderd.<br>U bent succesvol uitgelogd.<br>U keert zo terug naar de hoofdpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "\">";
         die;
     }
 }

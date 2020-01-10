@@ -3,6 +3,7 @@
 namespace Controller;
 use Model\Database;
 use Model\User;
+use Controller\MainController;
 
 class AuthenticationController
 {
@@ -48,6 +49,11 @@ class AuthenticationController
             return true;
         }
     }
+
+    function siteurl()
+    {
+        return getenv('ROOT');
+    }
     /**
      * Login for the user.
      * @param $username
@@ -79,7 +85,7 @@ class AuthenticationController
                 include 'content/frontend/GetUserDetails.php';
                 // Now were done were going back to the index page.
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "\">";
             }
             else
             {

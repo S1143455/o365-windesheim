@@ -88,22 +88,22 @@ class DiscountController
     }
     public function create()
     {
-       // print_r($_POST);
+       print_r($_POST);
         $this->discount = new discount();
         $this->discount->initialize();
+        var_dump($this->discount);
         //hierzou ie een special deal id moeten hebben
         $this->discount->setLastEditedBy(1);
         $this->storeDiscount($this->discount);
-        //var_dump($this->discount);
 
-        if ($_POST["selectedProductIDs"]) {
+        if (isset($_POST["selectedProductIDs"])) {
             foreach ($_POST["selectedProductIDs"] as $id) {
                 $this->product = $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
                 $this->storeProduct($this->product);
             }
         }
-        if ($_POST["selectedCategoryIDs"]) {
+        if (isset($_POST["selectedCategoryIDs"])) {
             foreach ($_POST["selectedCategoryIDs"] as $id) {
                 $this->category = $this->category->retrieve($id);
                 $this->category->setSpecialDealID($this->discount->getSpecialDealID());
