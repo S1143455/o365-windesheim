@@ -5,6 +5,8 @@ namespace Controller;
 use Model\Category;
 use Model\Product;
 use Model\Supplier;
+use Model\Attachments;
+use Model\ShoppingCart;
 
 Class ProductController
 {
@@ -12,6 +14,8 @@ Class ProductController
     private $product;
     private $category;
     private $supplier;
+    private $attachments;
+    private $cart;
 
     /**
      * This should return the index page of the products.
@@ -151,5 +155,16 @@ Class ProductController
 
     public function calculatePrice($price,$btw){
         return $price - ($price/100*$btw);
+    }
+
+    public function productDetail(){
+        if(isset($_POST['srchProduct'])){
+
+            $cart= new shoppingCart();
+            $attachment = new attachments();
+            $product = new product();
+            $prod = $product->retrieve($_POST['productID']);
+            include_once('views/product/productdetail.php');
+        }
     }
 }

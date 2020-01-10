@@ -9,6 +9,7 @@ include 'loader.php';
     <link href="<?php echo $mainController->template_path() ?>style.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $mainController->template_path() ?>custom.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $mainController->template_path() ?>home.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $mainController->template_path() ?>productDetail.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">

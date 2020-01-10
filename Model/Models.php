@@ -90,6 +90,7 @@ class Models
             "BarCode" => ['Varchar', 'Attribute', 'Required'],
             "TaxRate" => ['Integer', 'Attribute', 'Required'],
             "UnitPrice" => ['Integer', 'Attribute', 'Required'],
+            "RecommendedRetailPrice" =>['decimal', 'Attribute', 'Required'],
             "MarketingComments" => ['LongText', 'Attribute', 'Nullable'],
             "CategoryID" => ['Category', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],

@@ -17,7 +17,9 @@ class Product extends Database
     private $unitPrice;
     private $marketingComments;
     private $categoryID;
+    private $attachmentID;
     private $lastEditedBy;
+    private $recommendedRetailPrice;
 
     function __construct()
     {
@@ -220,6 +222,22 @@ class Product extends Database
     /**
      * @return mixed
      */
+    public function getAttachmentID()
+    {
+        return $this->attachmentID;
+    }
+
+    /**
+     * @param mixed $attachmentID
+     */
+    public function setAttachmentID($attachmentID)
+    {
+        $this->attachmentID = $attachmentID;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getLastEditedBy()
     {
         return $this->lastEditedBy;
@@ -231,6 +249,22 @@ class Product extends Database
     public function setLastEditedBy($lastEditedBy)
     {
         $this->lastEditedBy = $lastEditedBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecommendedRetailPrice()
+    {
+        return $this->recommendedRetailPrice;
+    }
+
+    /**
+     * @param mixed $recommendedRetailPrice
+     */
+    public function setRecommendedRetailPrice($recommendedRetailPrice)
+    {
+        $this->recommendedRetailPrice = $recommendedRetailPrice;
     }
 
 

@@ -81,6 +81,10 @@ $router->route('/betalenmislukt', function(){
 /**
  * Begin product routes
  */
+$router->route('/productdetail', function() use($productController){
+    return $productController->productDetail();
+});
+
 $router->route('/product', function() use($productController){
     return $productController->index();
 });
