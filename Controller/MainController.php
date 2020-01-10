@@ -239,8 +239,8 @@ class MainController
     {
         $showusermenu='';
         $showusermenu='
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Uw gegevens<span class="caret"></span></a>
+        <li class="dropdown nav-item mr-4 mt-2">
+            <a href="#" class="dropdown-toggle navbarFE" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Uw gegevens<span class="caret"></span></a>
             <ul class="dropdown-menu">
                 ' . $this->user_menu_items() .'
             </ul>
