@@ -12,8 +12,8 @@ class ContentController
     {
         $content = new Content();
         $content->retrieve();
-
-        return include $this->viewPath . 'index.php';
+       // include $this->viewPath . 'index.php'
+        return "";
     }
 
     /**

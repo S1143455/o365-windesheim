@@ -3,7 +3,9 @@
 include_once 'loader.php';
 include_once 'content/frontend/header.php';
 ?>
-    <div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
         <div id="adv">
             //img
         </div>
@@ -35,6 +37,9 @@ include_once 'content/frontend/header.php';
                 ?>
             </div>
         </div>
+    </div>
+    </div>
+</div>
     </div>
 <?php
 include 'content/frontend/itemlist.php';

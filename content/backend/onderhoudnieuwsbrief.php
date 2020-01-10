@@ -29,3 +29,7 @@ if (isset($_POST['reSendNewNewsletter']))
 if (isset($_POST['CreateNewsletter'])){include 'content/backend/newsletter/newsltrMainBody.php';}
 elseif (isset($_POST['ChangeNewsletter'])){include 'content/backend/newsletter/newsltrMainBody.php';}
 else include 'content/backend/newsletter/mainnewsltr.php';
+
+
+include_once 'content/backend/footer-admin.php';
+

@@ -37,10 +37,10 @@ $customerController = new Controller\CustomerController();
 
 if (isset($_SESSION['authenticated']) && !isset($_SESSION['authenticatedAdmin']))
 {
-    echo '<div class="container" style="width:100%">
-            <div class="row">';
-    include_once 'content/frontend/sidebar.php';
-    echo '</div> </div>';
+//    echo '<div class="container-fluid">
+//            <div class="row">';
+//    include_once 'content/frontend/sidebar.php';
+//    echo '</div> </div>';
 }
 
 
