@@ -30,7 +30,7 @@ if (isset($_POST['id'])) {
             <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
             <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?"
                    aria-label="Search" id="myInput">
-
+            <br>
             <div class="row">
                 <div class="col-12 col-md-10 col-lg-9 tableDiscount">
                     <!-- Creates a table with headers and data based on function -->
@@ -418,7 +418,7 @@ if (isset($_POST['id'])) {
 <!-- modal to edit selected discount -->
 <div class="modal fade" id="EditDiscountDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal"
      aria-hidden="true">
-    <div class="modal-dialog" style="width:1000px;">
+    <div class="modal-dialog modal-lg" style="width:1000px;">
         <div class="modal-content">
             <form role="form" id="EditDiscount" method="POST" action="UpdateDiscount">
                 <div class="modal-header">

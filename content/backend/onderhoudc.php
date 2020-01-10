@@ -64,7 +64,7 @@ if (isset($_POST['id'])) {
 
 <!--  modals      -->
 <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="CreateModal" aria-hidden="true">
-    <div class="modal-dialog" style="width:1000px;">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form role="form" id="universalModalForm" method="POST" action="CreateCategorie" enctype="multipart/form-data">
                 <div class="modal-header">
@@ -77,16 +77,16 @@ if (isset($_POST['id'])) {
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        <label class="col-md-3" for="categoryID">Categorie</label>
+                        <input type="text" class="col-md-5 form-control" name="CategoryName" id="CategoryName">
                     </div>
                     <div class="form-group">
-                        <label for="AttachmentID">Afbeelding</label>
+                        <label class="col-md-3" for="AttachmentID">Afbeelding</label>
                         <input type="file" name="fileToUpload" id="fileToUpload">
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Ouder Categorie</label>
-                        <select class="form-control" name="ParentCategory">
+                        <label class="col-md-3" for="categoryID">Ouder Categorie</label>
+                        <select class="col-md-4 form-control" name="ParentCategory">
                             <option value="None">Empty</option>
                             <?php $categoryController->ParentCategories() ?>
                         </select>

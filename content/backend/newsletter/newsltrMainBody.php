@@ -85,9 +85,9 @@ else                                        // The user wants to create a new ne
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <div class="form-group">
+                                        <div class="form-group col-md-12">
                                             <div class="col-md-12">
-                                                <textarea id="txtEditor" name="txtEditor" rows="50"></textarea>
+                                                <textarea id="txtEditor" name="txtEditor" rows="50" style="width: 100%;"></textarea>
                                             </div>
                                         </div>
                                     </div>

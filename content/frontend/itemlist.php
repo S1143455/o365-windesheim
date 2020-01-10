@@ -19,10 +19,12 @@ if (isset($_POST['remove'])){
 <html lang="nl">
     <head>
         <body>
+    <div class="container-fluid">
             <div class="col-md-8">
                    <div class="row">
                     <form role="form" id="table" method="POST" action="">
-                        <table id="categoryTable" class="table table-fixed">
+                        <div class="table-fixed">
+                            <table class="table table-bordered" id="categoryTable">
                             <thead>
                                 <tr>
                                     <th class="col-md-6">Omschrijving</th>
@@ -54,6 +56,7 @@ if (isset($_POST['remove'])){
                 </div>
             </div>
             <div class="col-md-8"><?php // echo "<pre>"; print_r($allTheProducts); echo "</pre><br>"; ?></div>
+    </div>
         </body>
     </head>
 </html>
