@@ -281,7 +281,9 @@ echo $sql;
         //TODO : Not using todo and just adding it to task list in whatever method you use
         //TODO : Not forcing to get all columns
         $this->getColumns();
-        if (empty($id)) {
+
+        if ($id == null)
+        {
             return $this->batch(null, $this->offset);
         } else {
             return $this->find($id);

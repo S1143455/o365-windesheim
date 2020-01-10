@@ -1,5 +1,14 @@
 <?php
-include_once 'content/backend/header-admin.php';
+use Model\Product;
+
+if (isset($_POST['id'])) {
+    $productID = $_POST['id'];
+    $this->show1($productID);
+}else{
+    include_once 'content/backend/header-admin.php';
+}
+
+
 ?>
     <div class="container" style="width:100%">
         <div class="row">
@@ -19,40 +28,44 @@ include_once 'content/backend/header-admin.php';
                 </div>
 
                 <div class="row">
-                    <table id="productTable" class="table table-fixed">
-                        <thead>
-                        <tr>
-                            <th class="col-xs-1">Productnr</th>
-                            <th class="col-xs-2">Categorie</th>
-                            <th class="col-xs-2">Omschrijving</th>
-                            <th class="col-xs-2">Merk</th>
-                            <th class="col-xs-1">Formaat</th>
-                            <th class="col-xs-1">Barcode</th>
-                            <th class="col-xs-1">Inkoopprijs</th>
-                            <th class="col-xs-1">BTW (%)</th>
-                            <th class="col-xs-1">Totaal (€)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                            foreach($products as $prod){
-                                $categories = $category->retrieve($prod->getCategoryID());
+                    <form role="form" id="table" method="POST" action="">
+                        <table id="productTable" class="table table-fixed">
+                            <thead>
+                            <tr>
+                                <th class="col-xs-1">Productnr</th>
+                                <th class="col-xs-2">Categorie</th>
+                                <th class="col-xs-2">Omschrijving</th>
+                                <th class="col-xs-2">Merk</th>
+                                <th class="col-xs-1">Formaat</th>
+                                <th class="col-xs-1">Barcode</th>
+                                <th class="col-xs-1">Inkoopprijs</th>
+                                <th class="col-xs-1">BTW (%)</th>
+                                <th class="col-xs-1">Totaal (€)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                foreach($products as $prod){
+                                    $categories = $category->retrieve($prod->getCategoryID());
 
-                                echo '<tr>';
-                                    echo '<td class="col-xs-1">' . $prod->getStockItemID() . '</td>';
-                                    echo '<td class="col-xs-2">' . $categories->getCategoryName() . '</td>';
-                                    echo '<td class="col-xs-2">' . $prod->getStockItemName() . '</td>';
-                                    echo '<td class="col-xs-2">' . $prod->getBrand() . '</td>';
-                                    echo '<td class="col-xs-1">' . $this->getSizeString($prod->getSize()) . '</td>';
-                                    echo '<td class="col-xs-1">' . $prod->getBarcode() . '</td>';
-                                    echo '<td class="col-xs-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
-                                    echo '<td class="col-xs-1">' . number_format($prod->getTaxRate(),2) . '%</td>';
-                                    echo '<td class="col-xs-1">€' . number_Format($this->calculatePrice($prod->getUnitPrice(),$prod->getTaxRate()),2) . '</td>';
-                                echo '</td>';
-                            }
-                        ?>
-                        </tbody>
-                    </table>
+                                    echo '<tr>';
+                                        echo '<td class="col-xs-1"> <button type="submit" name="id" value="' . $prod->getStockItemID() .'">Edit</button></td>';
+                                        echo '<td class="col-xs-1">' . $prod->getStockItemID() . '</td>';
+                                        echo '<td class="col-xs-2">' . $categories->getCategoryName() . '</td>';
+                                        echo '<td class="col-xs-2">' . $prod->getStockItemName() . '</td>';
+                                        echo '<td class="col-xs-1">' . $prod->getBrand() . '</td>';
+                                        echo '<td class="col-xs-1">' . $this->getSizeString($prod->getSize()) . '</td>';
+                                        echo '<td class="col-xs-1">' . $prod->getBarcode() . '</td>';
+                                        echo '<td class="col-xs-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
+                                        echo '<td class="col-xs-1">' . number_format($prod->getTaxRate(),2) . '%</td>';
+                                        echo '<td class="col-xs-1">€' . number_Format($this->calculatePrice($prod->getUnitPrice(),$prod->getTaxRate()),2) . '</td>';
+                                    echo '</td>';
+                                }
+                            ?>
+                            </tbody>
+                        </table>
+                    </form>
+
                 </div>
             </div>
 

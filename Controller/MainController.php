@@ -109,6 +109,11 @@ class MainController
         return trim($nav_menu, $sep);
     }
 
+    function nav_menu_side_fe()
+    {
+        // empty.
+    }
+
     function user_menu_items($sep = '')
     {
         $nav_menu = '';
