@@ -143,9 +143,9 @@ class UserController
         if($this->checkCredentials($username, $password))
         {
             // Check if the passwords match.
-//            $this->user->setRole("ADMIN");
-//            $this->storeUser($this->user);
-//            $this->user->retrieve($this->user->getPersonID());
+            $this->user->setRole("ADMIN");
+            $this->storeUser($this->user);
+            $this->user->retrieve($this->user->getPersonID());
             if ($this->verifyPassword($password,$this->user->getHashedPassword()) and $this->user->getRole() == "ADMIN")
             {
                 $_SESSION['authenticatedAdmin']='true';
@@ -234,7 +234,8 @@ class UserController
     }
 
     function role(){
-        return 'role';
+
+        return $this->user->getRole();
     }
 
     public function checkCredentials($logonName,$password)

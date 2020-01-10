@@ -145,14 +145,6 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
 $router->route('/account-toevoegen', function() use($customerController){
     return $customerController->createR();
 });
-//$router->route('/account-toevoegen', function() {
-//    return include 'content/frontend/account-toevoegen.php';
-//});
-//
-
-$router->route('/admin', function(){
-    return include 'content/backend/home-admin.php';
-});
 
 $router->route('/admin/onderhoud-categorieen', function() {
     if(!isset($_SESSION['authenticatedAdmin'])){
