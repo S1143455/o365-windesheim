@@ -6,7 +6,9 @@ include 'content/frontend/display_message.php';
     if (isset($_POST['login'])) {
     $authenticationController->login($_POST['gbrkr'], $_POST['pw']);
     }
-
+if (isset($_POST['create'])) {
+    $authenticationController->createbas();
+}
     if (isset($_POST['sendpassword'])) {
     include "content/frontend/sendemailaddress.php";
     }

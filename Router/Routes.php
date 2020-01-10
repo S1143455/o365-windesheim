@@ -145,14 +145,6 @@ $router->route('/admin/onderhoud-hoofdpagina', function(){
 $router->route('/account-toevoegen', function() use($customerController){
     return $customerController->createR();
 });
-//$router->route('/account-toevoegen', function() {
-//    return include 'content/frontend/account-toevoegen.php';
-//});
-//
-
-$router->route('/admin', function(){
-    return include 'content/backend/home-admin.php';
-});
 
 $router->route('/admin/onderhoud-categorieen', function() {
     if(!isset($_SESSION['authenticatedAdmin'])){
@@ -170,17 +162,12 @@ $router->route('/admin/onderhoud-producten', function() use($productController){
     }
 });
 
-<<<<<<< HEAD
 $router->route('/admin/onderhoud-klanten', function(){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
         return include 'content/backend/onderhoudklanten.php';
     }
-=======
-$router->route('/admin/onderhoud-klanten', function() {
-    return include 'content/backend/onderhoudklanten.php';
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
 });
 
 $router->route('/admin/CreateCategorie', function() use($categoryController){
@@ -231,16 +218,19 @@ $router->route('/admin/onderhoud-nieuwsbrief', function(){
 });
 
 $router->route('/admin/bestellingoverzicht', function(){
-<<<<<<< HEAD
-
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
         return include 'content/backend/bestellingoverzicht.php';
-=======
-    return include 'content/backend/bestellingoverzicht.php';
+    }
 });
 
-$router->route('/admin/upload', function(){
-    return include 'content/backend/upload.php';
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
+$router->route('/admin/bestellingoverzicht', function(){
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/bestellingoverzicht.php';
+    }
 });
 
 /**

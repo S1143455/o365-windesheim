@@ -83,8 +83,8 @@ class Category extends Database
         $this->parentCategory = $parentCategory;
     }
     /**
- * @return mixed
- */
+     * @return mixed
+     */
     public function getAttachmentID()
     {
         return $this->attachmentID;
@@ -117,9 +117,9 @@ class Category extends Database
 
     public function SpecialGetcategories()
     {
-       $result = '';
-       $result = $this->selectStmt("SELECT a.FileLocation FROM content CON INNER JOIN content_category cc on CON.ContentID = cc.ContentID INNER JOIN category c on cc.CategoryID = c.CategoryID INNER JOIN attachments a on c.CategoryID = a.CategoryID WHERE CON.Section = 'Categories' AND CON.Upddt = (SELECT MAX(CONN.Upddt) FROM content CONN WHERE CONN.Section = CON.Section);");
-       return $result;
+        $result = '';
+        $result = $this->selectStmt("SELECT a.FileLocation FROM content CON INNER JOIN content_category cc on CON.ContentID = cc.ContentID INNER JOIN category c on cc.CategoryID = c.CategoryID INNER JOIN attachments a on c.CategoryID = a.CategoryID WHERE CON.Section = 'Categories' AND CON.Upddt = (SELECT MAX(CONN.Upddt) FROM content CONN WHERE CONN.Section = CON.Section);");
+        return $result;
     }
 
     public function getAllActiveCategories()

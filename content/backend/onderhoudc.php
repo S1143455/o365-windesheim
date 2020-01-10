@@ -1,6 +1,7 @@
 <?php
     include_once 'content/backend/header-admin.php';
     use Model\Category;
+
 if (isset($_POST['id'])) {
     $categoryID = $_POST['id'];
     if($categoryID != 0){
@@ -18,16 +19,25 @@ if (isset($_POST['id'])) {
 ?>
 
 <div class="col-md-8">
-    <div class="row" style="min-height: 50px;"></div>
     <div class="row" style="min-height: 50px;">
-        <div class="col-md-7">
+        <div class="col-md-12">
+        <h3>
+            Onderhoud Categorieën
+        </h3>
+        <br>
+        </div>
+    </div>
+    <div class="row" style="min-height: 50px;">
+        <div class="col-md-12">
             <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
         </div>
 
     </div>
     <div class="row">
+        <div class="col-12 col-md-10 col-lg-9 tableDiscount">
         <form role="form" id="table" method="POST" action="">
-            <table id="categoryTable" class="table table-fixed">
+            <div class="table-fixed">
+                <table class="table table-bordered" id="categoryTable">
                 <thead>
                 <tr>
                     <th class="col-md-1">manage</th>
@@ -46,7 +56,7 @@ if (isset($_POST['id'])) {
 </div>
 <div class="col-md-2">
     <div class="row">
-        <button type="button" class="first discountButton btn btn-primary" data-toggle="modal" data-target="#createCategory">
+        <button type="button" class="first discountButton btn btn-success" data-toggle="modal" data-target="#createCategory">
             Aanmaken Categorie
         </button>
     </div>
@@ -54,7 +64,7 @@ if (isset($_POST['id'])) {
 
 <!--  modals      -->
 <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="CreateModal" aria-hidden="true">
-    <div class="modal-dialog" style="width:1000px;">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form role="form" id="universalModalForm" method="POST" action="CreateCategorie" enctype="multipart/form-data">
                 <div class="modal-header">
@@ -67,19 +77,49 @@ if (isset($_POST['id'])) {
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="categoryID">Categorie</label>
-                        <input type="text" class="form-control" name="CategoryName" id="CategoryName">
+                        <label class="col-md-3" for="categoryID">Categorie</label>
+                        <input type="text" class="col-md-5 form-control" name="CategoryName" id="CategoryName">
                     </div>
                     <div class="form-group">
-                        <label for="AttachmentID">Afbeelding</label>
+                        <label class="col-md-3" for="AttachmentID">Afbeelding</label>
                         <input type="file" name="fileToUpload" id="fileToUpload">
                     </div>
                     <div class="form-group">
-                        <label for="categoryID">Ouder Categorie</label>
-                        <select class="form-control" name="ParentCategory">
+                        <label class="col-md-3" for="categoryID">Ouder Categorie</label>
+                        <select class="col-md-4 form-control" name="ParentCategory">
                             <option value="None">Empty</option>
                             <?php $categoryController->ParentCategories() ?>
                         </select>
+                    </div>
+                    <p>
+                        <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                           href="#tableCollapseProduct" role="button"
+                           aria-expanded="false" aria-controls="tableCollapse">Kortingscode zoeken</a>
+                    </p>
+                    <div class="tableCollapseProduct">
+                        <div class="collapse multi-collapse" id="tableCollapseProduct">
+                            <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search" id="myInputProduct">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP" id="tableCollapsespecialdeal">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2">Select</th>
+
+                                                    <th class="col-md-4">Korting omschrijving</th>
+                                                    <th class="col-md-2">korting's percentage</th>
+                                                    <th class="col-md-4">Korting actief</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbodyProduct">
+                                                <?php $categoryController->GetAllDiscountsForcategorie(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -124,6 +164,39 @@ if (isset($_POST['id'])) {
                         <input type="file" name="AttachmentID" id="AttachmentID" value="<?php echo($categoryController->getAttachmentfromCategory($category)) ?>">
                     </div>
 
+                    <p>
+                        <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                           href="#tableCollapseProduct" role="button"
+                           aria-expanded="false" aria-controls="tableCollapse">Kortingscode veranderen</a>
+                    </p>
+                    <div class="tableCollapseProduct">
+                        <div class="collapse multi-collapse" id="tableCollapseProduct">
+                            <div class="card card-body">
+                                <input class="form-control collapseTableSearch" type="text"
+                                       placeholder="Waar ben je naar op zoek?"
+                                       aria-label="Search" id="myInputProduct">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-fixed tableCollapseSP"
+                                               id="tableCollapsespecialdeal">
+                                            <thead>
+                                            <tr>
+                                                <th class="col-md-2">Select</th>
+                                                <th class="col-md-2">Productnr</th>
+                                                <th class="col-md-3">Productnaam</th>
+                                                <th class="col-md-1">Prijs</th>
+                                                <th class="col-md-4">Opmerkingen</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tbodyProduct">
+                                            <?php $categoryController->GetAllDiscountsForActiveCategorie($category); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

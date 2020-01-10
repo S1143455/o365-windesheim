@@ -7,7 +7,7 @@ use Model\Customer;
 use Model\People;
 use Model\Product;
 use Model\Order;
-use Model\OrderStockItem;
+use Model\Orderline;
 
 class OrderController
 {
@@ -40,24 +40,35 @@ class OrderController
 
         return $product;
     }
+    public function retrievestockitemwhere($id)
+    {
+        $products = new Product();
+        $products = $products->where("*", "StockItemID", "=", $id);
+        if (empty($products)) {
+            header("Location: /404", true);
+        }
+
+        return $products;
+    }
     /**
      * @param $prod Product
-     * @param $orderstockitem OrderStockItem
+     * @param $orderLine Orderline
      */
-    public function displayproduct($prod, $orderstockitem){
+    public function displayproduct($prod, $orderLine){
         $result = '';
         $result .= '<tr style="height:40px;">
-                            <td class="col-md-2">' . $prod->getBrand() .'</td>
-                            <td class="col-md-3">' . $prod->getBrand() .'</td>
-                            <td class="col-md-3">' . $prod->getUnitPrice() .'</td>
-                            <td class="col-md-2">' . $prod->getUnitPrice() .'</td>
-                            <td class="col-md-2">' . $orderstockitem->getAmount() .'</td>
-                            
-                            
+                            <td class="col-md-4">' . $orderLine->getDescription() .'</td>
+                            <td class="col-md-2">' . $orderLine->getQuantity() .'</td>
+                            <td class="col-md-2">' . $orderLine->getTaxRate() .'</td>
+                            <td class="col-md-2">' . $orderLine->getUnitPrice()  .'</td>
+                            <td class="col-md-2">' . $this->calculate($orderLine) .'</td>                          
                         </tr>';
 
         echo $result;
-        return "iets";
+    }
+    public function calculate($orderLine)
+    {
+        return $orderLine->getUnitPrice() * $orderLine->getTaxRate() ;
     }
     public function retrievePeople($id)
     {
@@ -81,16 +92,16 @@ class OrderController
 
         return $customer;
     }
-    public function retrieveOrderstockitem($id)
+    public function retrieveOrderLine($id)
     {
-        $orderStockItems = new OrderStockItem();
-        $orderStockItems = $orderStockItems->where("*", "OrderID", "=", $id);
+        $orderlines = new Orderline();
+        $orderlines = $orderlines->where("*", "OrderID", "=", $id);
 
-        if (empty($orderStockItems)) {
+        if (empty($orderlines)) {
             header("Location: /404", true);
         }
 
-        return $orderStockItems;
+        return $orderlines;
     }
 
 
@@ -100,13 +111,11 @@ class OrderController
         foreach ($orders as $order) {
             $totaal = 0;
 
-            $orderstockitems = $this->retrieveOrderstockitem($order->getOrderID());
-           // var_dump($orderstockitems);
-$customer = $this->retrieveCustomer($order->getCustomerID());
-$person = $this->retrievePeople($customer->getPersonID());
-            foreach ($orderstockitems as $orderstockitem) {
-              //  var_dump($orderstockitem);
-                $products = $this->retrievestockitem($orderstockitem->getStockitemID());
+            $orderLines = $this->retrieveOrderLine($order->getOrderID());
+            $customer = $this->retrieveCustomer($order->getCustomerID());
+            $person = $this->retrievePeople($customer->getPersonID());
+            foreach ($orderLines as $orderLine) {
+                $products = $this->retrievestockitem($orderLine->getStockitemID());
                 foreach ($products as $prod){
                     $totaal = $totaal + $prod->getUnitPrice();
                 }

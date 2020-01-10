@@ -57,9 +57,15 @@ class UserController
      * Stores the product in the database.
      * @return User
      */
-    public function GetUserBydata($return, $key, $id){
-        $user = $this->user->where($return,$key,$id);
+    public function GetUserBydata($return, $key, $id)
+    {
+        $user = $this->user->where($return, $key, $id);
         return $user[0];
+    }
+    public function GetEmailByName($return, $key, $id){
+        $user = $this->user->databaseWhere($return,$key,$id);
+        //var_dump($user);
+        return true;
     }
 
 
@@ -112,6 +118,16 @@ class UserController
         $this->storeUser($user1);
 
     }
+
+    public function getdata()
+    {
+        $getthedata=new Database();
+        //todofixpls Nope! fixing it would over complicate the shit out if it!
+        $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '". $this->user->getLogonName()  . "'");
+
+        return $sqlreturendsomething;
+
+    }
     /**
      * Login for the user.
      * @param $username
@@ -138,8 +154,9 @@ class UserController
                 $_SESSION['CUSTOMER_DETAILSAdmin']=$customerDetails;
                 $addressDetails = $this->getAdressByID($_SESSION['USERAdmin']->getPersonID());
                 $_SESSION['ADDRESSAdmin']=$addressDetails;
+                $_SESSION['USER']['DATA']=$this->getdata();
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/omasbeste/admin\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOTAdmin') . "\">";
             }
             else
             {
@@ -217,7 +234,8 @@ class UserController
     }
 
     function role(){
-        return 'role';
+
+        return $this->user->getRole();
     }
 
     public function checkCredentials($logonName,$password)

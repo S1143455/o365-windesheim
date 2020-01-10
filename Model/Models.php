@@ -21,11 +21,11 @@ class Models
             case 'stockitem':
                 $this->getStockItem();
                 break;
-            case 'order':
+            case 'orders':
                 $this->getOrder();
                 break;
-            case 'order_stockitem':
-                $this->getOrderStockItem();
+            case 'Orderlines':
+                $this->getOrderLines();
                 break;
             case 'category':
                 $this->getCategory();
@@ -54,15 +54,8 @@ class Models
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
-<<<<<<< HEAD
-
-=======
-            case  'order':
-                $this->getOrder();
-                break;
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
             default:
-                var_dump($this->table);
+                echo $this->table;
                 die('Table not implemented');
         }
 
@@ -71,11 +64,11 @@ class Models
                 case 'stockitem':
                     $this->getStockItem();
                     break;
-                case 'order':
+                case 'orders':
                     $this->getOrder();
                     break;
-                case 'order_stockitem':
-                    $this->getOrderStockItem();
+                case 'Orderlines':
+                    $this->getOrderLines();
                     break;
                 case 'category':
                     $this->getCategory();
@@ -104,10 +97,8 @@ class Models
                 case  'specialdeals':
                     $this->getSpecialdeals();
                     break;
-                case  'order':
-                    $this->getOrder();
-                    break;
                 default:
+                    echo $this->table;
                     die('Table not implemented');
             }
 
@@ -173,10 +164,6 @@ class Models
         );
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
     private function getAddress()
     {
         $this->column = array(
@@ -231,10 +218,8 @@ class Models
             "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
-<<<<<<< HEAD
 //            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
-=======
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
+//            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
             "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
             "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );
@@ -272,6 +257,17 @@ class Models
         );
     }
 
+    private function getShoppingcartStockitems()
+    {
+        $this->column = array(
+            "ShopStockID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemAmount" => ['Integer', 'Attribute', 'Required'],
+        );
+    }
+
+
     private function getCustomer()
     {
         $this->column = array(
@@ -284,6 +280,7 @@ class Models
             "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
         );
     }
+
     private function getOrder()
     {
         $this->column = array(
@@ -297,13 +294,23 @@ class Models
             "SpecialDealID" => ['Integer', 'foreign key', 'Not Required'],
         );
     }
-    private function getOrderStockItem()
+
+    private function getOrderLines()
     {
         $this->column = array(
-            "orderStockItemId" => ['Integer', 'PrimaryKey', 'Required' ],
+            "OrderLineID" => ['Integer', 'PrimaryKey', 'Required' ],
             "OrderID" => ['Order', 'HasOne', 'Required'],
             "StockItemID" => ['StockItem', 'HasOne', 'Required'],
-            "Amount" => ['Integer', 'Attribute', 'Re``quired'],
+            "Description" => ['varchar',  'Attribute', 'Not Required'],
+            "PackageTypeIDIndex" => ['Integer',  'Attribute', 'Not Required'],
+            "UnitPriceIndex" => ['Integer',  'Attribute', 'Required'],
+            "TaxRate" => ['Integer',  'Attribute', 'Required'],
+            "PickedQuantityIndex" => ['Integer',  'Attribute', 'Required'],
+            "PickingCompletedWhenIndex" => ['Date', 'Attribute', 'Not Required'],
+            "PickedQuantityIndex" => ['Integer',  'Attribute', 'Required'],
+            "LastEditedByIndex" => ['People',  'Attribute', 'Required'],
+            "LastEditedWhen" => ['Date',  'Attribute', 'Required'],
+
         );
     }
 

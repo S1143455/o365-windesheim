@@ -14,6 +14,7 @@ class CustomerController
 
     private $admin = 'content/backend/';
     private $route = 'content/frontend/';
+
     function __construct()
     {
         $this->customer = new Customer();
@@ -32,8 +33,6 @@ class CustomerController
     {
         $this->customer = new Customer();
         $this->customer->setCustomerID(10);
-
-        //iets.php
         include  $this->viewPath . 'account-toevoegen.php';
         $this->people = new People();
         $this->addres = new Adress();
@@ -96,7 +95,6 @@ class CustomerController
 
     public function createBE()
     {
-        print_r($_POST);
         $this->customer = new Customer();
         $this->customer->initialize();
 
@@ -110,6 +108,7 @@ class CustomerController
         $data = htmlspecialchars($data);
         return $data;
     }
+
     public function createMultipleP(){
 
         $this->customer = new Customer();
@@ -188,14 +187,12 @@ class CustomerController
         $this->storePeople($this->people);
         $this->customer->setPersonID($this->people->getPersonID());
         $this->store($this->customer);
-       //iets.php
         include $this->route . 'account-toevoegen.php';
     }
 
     /**
      * Stores the product in the database.
      *
-     * @param $customer Customer
      * @param $customer customer
      * @return string
      */
@@ -238,6 +235,4 @@ class CustomerController
             return "Something went wrong.";
         }
     }
-
-
 }

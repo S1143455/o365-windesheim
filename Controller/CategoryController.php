@@ -6,12 +6,16 @@ namespace Controller;
 use Model\Category;
 use Model\Database;
 use Model\Attachments;
+use Model\Discount;
+
 class CategoryController extends FileController
 {
     private $admin = 'content/backend/';
 
     function __construct()
     {
+        $this->discount = new Discount();
+
         $this->category = new category();
     }
     public function retrieveCategory($id){
@@ -59,7 +63,42 @@ class CategoryController extends FileController
 
         include $this->admin . 'onderhoudc.php';
     }
+    public function GetAllDiscountsForcategorie()
+    {
+        $specialdeals = $this->discount->retrieve();
 
+        foreach ($specialdeals as $specialdeal) {
+            $result = '';
+            $result .= '<tr>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedProductIDs[]" id="selectTableRow" value="'. $specialdeal->getSpecialDealID().'"></td>
+                   <td class="col-md-4">' . $specialdeal->getDealDescription() . '</td>
+                   <td class="col-md-2">' . $specialdeal->getDiscountPercentage() . '</td>
+                   <td class="col-md-4">' . $specialdeal->getActive() . '</td>
+                </tr>';
+            echo $result;
+        }
+    }
+    public function GetAllDiscountsForActiveCategorie($categorie)
+    {
+        $specialdealActive = $this->discount->retrieve($categorie->getSpecialDealID());
+        $specialdeals = $this->discount->retrieve();
+
+        foreach ($specialdeals as $specialdeal) {
+            $result = '';
+            $result .= '<tr>';
+            if($specialdeal->getSpecialDealID() == $specialdealActive->getSpecialDealID()){
+                $result .= '<td class="col-md-2"><input class="selectTableRow" checked type="checkbox" name="selectedProductIDs[]" id="selectTableRow" value="'. $specialdeal->getSpecialDealID().'"></td>';
+            }else{
+                $result .= '<td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedProductIDs[]" id="selectTableRow" value="'. $specialdeal->getSpecialDealID().'"></td>';
+            }
+            $result .= '<td class="col-md-4">' . $specialdeal->getDealDescription() . '</td>
+                   <td class="col-md-2">' . $specialdeal->getDiscountPercentage() . '</td>
+                   <td class="col-md-4">' . $specialdeal->getActive() . '</td>
+                </tr>';
+        }
+         echo $result;
+
+    }
     /**
      * Stores the product in the database.
      *
@@ -73,9 +112,11 @@ class CategoryController extends FileController
             return false;
         };
         $this->category = $category;
-        if(isset($_FILES)){
+        if(isset($_FILES) && $_FILES['fileToUpload'] != null && $_FILES["fileToUpload"]["tmp_name"] != null){
             $attachmentID = $this->upload($this->category->getLastEditedBy());
             $category->setAttachmentID($attachmentID);
+        }else{
+            $category->setAttachmentID(null);
         }
 
         if (!$this->category->save())
@@ -114,7 +155,7 @@ class CategoryController extends FileController
         foreach($categories as $category){
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-md-1"><button type="submit" name="id" value="' . $category->getCategoryID() .'">Edit</button></td>
+                            <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $category->getCategoryID() .'">Edit</button></td>
                             <td class="col-md-2">' . $category->getCategoryID() .'</td>
                             <td class="col-md-5">' . $category->getCategoryName() .'</td>
                             <td class="col-md-2">' . $category->getParentCategory() .'</td>

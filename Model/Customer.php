@@ -7,7 +7,6 @@ namespace Model;
 class Customer extends Database
 {
     private $CustomerID;
-
     private $AddressID;
     private $PersonID;
     private $ShoppingCartID;
@@ -20,8 +19,9 @@ class Customer extends Database
     {
         $this->table = "customer";
         parent::__construct();
-
     }
+
+
     /**
      * @return mixed
      */
@@ -119,20 +119,27 @@ class Customer extends Database
         $this->TermsAndConditions = $TermsAndConditions;
     }
 
+
+    /**
+     * @return mixed
+     */
     public function getNewsletter()
     {
+        if ($this->newsletter == "1"){
+            $this->newsletter =
+                '<input type="checkbox" name="Newsletter" checked disabled>';
+
+        } else {
+            $this->newsletter =
+                '<input type="checkbox" name="Newsletter" disabled>';
+
+        }
         return $this->newsletter;
     }
     public function setNewsLetter($newsletter)
     {
         $this->newsletter = $newsletter;
     }
-
-
-
-    /**
-     * @return mixed
-     */
 
     public function getAllCustomers(){
 
@@ -144,40 +151,54 @@ class Customer extends Database
 
     public function getEmailAddressOnID($id){
         $result = $this->selectStmt('SELECT pe.EmailAddress FROM people AS pe INNER JOIN customer AS cu ON pe.PersonID = cu.PersonID WHERE pe.PersonID = '. $id .';');
-        return $result[0][0];
+        if(!empty($result)){
+            return $result[0][0];
+        }
     }
 
     public function getFullNameOnID($id){
         $result = $this->selectStmt('SELECT pe.FullName FROM people AS pe INNER JOIN customer AS cu ON pe.PersonID = cu.PersonID WHERE pe.PersonID = '. $id .';');
-        return $result[0][0];
+        if(!empty($result)){
+            return $result[0][0];
+        }
     }
 
     public function getLastOrderDateOnID($id){
-        $result = $this->selectStmt('SELECT MAX(OrderDate) AS "Last Order" FROM `order` WHERE CustomerID = '. $id .';');
-        return $result[0][0];
+        $result = $this->selectStmt('SELECT MAX(OrderDate) AS "Last Order" FROM `orders` WHERE CustomerID = '. $id .';');
+        if(!empty($result)){
+            return $result[0][0];
+        }
     }
 
     public function getDateOfBirthOnID($id)
     {
         $result = $this->selectStmt('SELECT pe.DateOfBirth FROM people AS pe INNER JOIN customer AS cu ON pe.PersonID = cu.PersonID WHERE pe.PersonID = ' . $id . ';');
-        return $result[0][0];
+        if(!empty($result)){
+            return $result[0][0];
+        }
     }
 
     public function getAddressOnID($id)
     {
         $result = $this->selectStmt('SELECT ad.Address FROM address AS ad INNER JOIN people AS pe ON pe.PersonID = ad.PersonID WHERE pe.PersonID = ' . $id . ';');
-        return $result[0][0];
+        if(!empty($result)){
+            return $result[0][0];
+        }
     }
 
     public function getZipCodeOnID($id)
     {
         $result = $this->selectStmt('SELECT ad.ZipCode FROM address AS ad INNER JOIN people AS pe ON pe.PersonID = ad.PersonID WHERE pe.PersonID = ' . $id . ';');
-        return $result[0][0];
+        if(!empty($result)){
+            return $result[0][0];
+        }
     }
 
     public function getCityOnID($id)
     {
         $result = $this->selectStmt('SELECT ad.City FROM address AS ad INNER JOIN people AS pe ON pe.PersonID = ad.PersonID WHERE pe.PersonID = ' . $id . ';');
-        return $result[0][0];
+        if(!empty($result)){
+            return $result[0][0];
+        }
     }
 }

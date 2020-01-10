@@ -1,7 +1,9 @@
 <?php
 
 namespace Controller;
+use Model\Database;
 use Model\User;
+use Controller\MainController;
 
 class AuthenticationController
 {
@@ -10,7 +12,28 @@ class AuthenticationController
         $this->user = new User();
     }
 
+    public function getdata()
+    {
+        $getthedata=new Database();
+        $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '". $this->user->getLogonName()  . "'");
 
+            return $sqlreturendsomething;
+
+    }
+
+    public function getCustomerDetails()
+    {
+        $getthedata=new Database();
+        $customerDetails=$getthedata->selectStmt("SELECT * FROM customer WHERE PersonID = '". $_SESSION['USER']['DATA'][0]['PersonID'] . "'");
+        return $customerDetails;
+    }
+
+    public function getAddressDetails()
+    {
+        $getthedata=new Database();
+        $addressDetails=$getthedata->selectStmt("SELECT * FROM address WHERE PersonID = '". $_SESSION['USER']['DATA'][0]['PersonID'] . "'");
+        return $addressDetails;
+    }
 
 
     public function checkCredentials($logonName,$password)
@@ -25,6 +48,11 @@ class AuthenticationController
             $this->user = $user[0];
             return true;
         }
+    }
+
+    function siteurl()
+    {
+        return getenv('ROOT');
     }
     /**
      * Login for the user.
@@ -50,12 +78,14 @@ class AuthenticationController
                 // Put the username in the $_SESSION array.
                 $_SESSION['USER']['name']=$this->user->getLogonName();
                 // Place the userdata (an array) into the $_SESSION
-                $_SESSION['USER']['DATA']=$this->user->getUserDataArray();
+                $_SESSION['USER']['DATA']=$this->getdata();
+                $_SESSION['USER']['CUSTOMER_DETAILS']=$this->getCustomerDetails();
+                $_SESSION['USER']['ADDRESS']=$this->getAddressDetails();
                 // The rest of the userdata.
                 include 'content/frontend/GetUserDetails.php';
                 // Now were done were going back to the index page.
                 $_SESSION['LOGIN_ERROR']=['type'=>'success', 'message'=>'U bent ingelogd'];
-                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+                echo "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "\">";
             }
             else
             {

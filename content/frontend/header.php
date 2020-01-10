@@ -132,4 +132,3 @@ include 'loader.php';
 <!--                    </div>-->
 <!--                </div>-->
 <!--            </nav>-->
-<div class="container">

@@ -194,9 +194,8 @@ class Discount extends Database
 
     public function getProductBasedOnID($ID){
 //where function gebruiken
-        $product = new Product();
-        $product = $product->where('COUNT(StockItemId) as total', "SpecialDealID",'=', $ID);
-        return $product[0];
+        $result = $this->selectStmt('SELECT COUNT(StockItemId) as total FROM stockitem WHERE SpecialDealID = '.$ID.';');
+        return $result[0][0];
     }
 
     public function getMaxSpecialDealID(){

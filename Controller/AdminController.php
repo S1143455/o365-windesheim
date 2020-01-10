@@ -102,15 +102,8 @@ class AdminController
             $nav_menu .= '<li class="nav-item">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-<<<<<<< HEAD
-<<<<<<< HEAD
-            $nav_menu .= '<a href=/' . $this->templatePath .'' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
-=======
-            $nav_menu .= '<a class="nav-link" href=/' . $this->site_urlAdmin() . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
->>>>>>> 30e993e85d6bf3250c551600a75f0c7332055670
-=======
+
             $nav_menu .= '<a class="nav-link" href=/'. $this->site_url() . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
->>>>>>> f1f6b944236c547d5cab0a63767506bcb9061079
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);

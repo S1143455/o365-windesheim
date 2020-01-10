@@ -84,7 +84,7 @@ if (isset($_POST['id'])) {
                             </div>
                             <div class="form-group col-12">
                                 <label class="col-5" for="DateOfBirth">Geboortedatum:</label>
-                                <input class="col-2 form-control" type="date" name="DateOfBirth" id="DateOfBirth"
+                                <input class="col-3 form-control" type="date" name="DateOfBirth" id="DateOfBirth"
                                        value="<?php echo($customer->getDateOfBirthOnID($customerID)) ?>">
                             </div>
                             <div class="form-group col-12">

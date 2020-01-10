@@ -5,23 +5,26 @@ use Model\Product;
 ?>
     <div class="container" style="width:100%">
         <div class="row">
-
             <?php
             include_once 'content/backend/sidebar-admin.php';
             ?>
+            <div class="col-12 col-md-10 col-lg-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>
+                            Onderhoud Producten
+                        </h3>
+                        <br>
+                    </div>
 
-            <div class="col-md-10">
-                <div class="row" style="min-height: 50px;">
-
-                </div>
                 <div class="row" style="min-height: 50px;">
                     <div class="col-md-7">
                         <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
                     </div>
-                </div>
-
+                <div class="col-12 col-md-7 col-lg-9">
                 <div class="row">
-                    <table id="productTable" class="table table-fixed">
+                    <div class="table-fixed">
+                        <table id="productTable" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th class="col-xs-1">Productnummer</th>
@@ -37,10 +40,11 @@ use Model\Product;
                             <?php $productController->tableProducts(); ?>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
-
             <div class="row">
+                <div class="col-12 col-md-1 col-lg-1">
                 <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#createProduct">
                     Product toevoegen
                 </button>
