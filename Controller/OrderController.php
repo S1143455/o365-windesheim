@@ -59,22 +59,16 @@ class OrderController
         $result .= '<tr style="height:40px;">
                             <td class="col-md-1">' . $orderLine->getDescription() .'</td>
                             <td class="col-md-2">' . $orderLine->getQuantity() .'</td>
-                            <td class="col-md-3">' . $orderLine->getTaxRate() .'</td>
-                            <td class="col-md-3">' . $orderLine->getUnitPrice()  .'</td>
-                            <td class="col-md-3">' . $this->Calculate($orderLine) .'</td>                          
+                            <td class="col-md-3">' . (int)$orderLine->getTaxRate() .'%</td>
+                            <td class="col-md-3">€' . $orderLine->getUnitPrice()  .'</td>
+                            <td class="col-md-3">€' . $this->Calculate($orderLine) .'</td>                          
                         </tr>';
 
         echo $result;
     }
     public function Calculate($orderLine)
     {
-        $test = $this->retrieveOrderLine($orderLine->getOrderLineID());
-        var_dump($test);
-        var_dump($orderLine->getStockItemID());
-        var_dump($orderLine->getUnitPrice());
-        var_dump($orderLine->getQuantity());
-        var_dump($orderLine->getTaxRate());
-        return $orderLine->getUnitPrice() * $orderLine->getQuantity() * $orderLine->getTaxRate() ;
+        return $orderLine->getUnitPrice() * $orderLine->getQuantity() * 1.15 ;
     }
     public function retrievePeople($id)
     {
@@ -121,18 +115,17 @@ class OrderController
             $customer = $this->retrieveCustomer($order->getCustomerID());
             $person = $this->retrievePeople($customer->getPersonID());
             foreach ($orderLines as $orderLine) {
-                $products = $this->retrievestockitem($orderLine->getStockitemID());
-                foreach ($products as $prod){
-                    $totaal = $totaal + $prod->getUnitPrice();
-                }
+              $totaal = $totaal + $this->Calculate($orderLine);
             }
             $result = '';
             $result .= '<tr style="height:40px;">
                             <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary" name="id" value="' . $order->getOrderID() .'">Details</button></td>
-                            <td class="col-md-2">' . $order->getOrderID() . '</td>
-                            <td class="col-md-3">' . $person->getFullName() . '</td>
-                            <td class="col-md-3">' . $order->getOrderdate() . '</td>
-                            <td class="col-md-3">' . $totaal . '</td>
+                            <td class="col-md-1">' . $order->getOrderID() . '</td>
+                            <td class="col-md-2">' . $customer->getCustomerID() . '</td>
+                            <td class="col-md-2">' . $person->getFullName() . '</td>
+                            <td class="col-md-2">' . $person->getEmailAddress() . '</td>
+                            <td class="col-md-2">' . $order->getOrderdate() . '</td>
+                            <td class="col-md-2">€' . $totaal . '</td>
                         </tr>';
 
             echo $result;
@@ -140,3 +133,4 @@ class OrderController
 
     }
 }
+
