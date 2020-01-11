@@ -275,7 +275,6 @@ class Models
     {
         $this->column = array(
             "CustomerID" => ['Integer', 'PrimaryKey', 'Required' ],
-            "AddressID" => ['Integer', 'Attribute', 'Unique'],
             "PersonID" => ['Integer', 'HasOne', 'Required'],
             "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
             "Gender" => ['Varchar', 'Attribute', 'Required'],
