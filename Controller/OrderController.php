@@ -61,14 +61,20 @@ class OrderController
                             <td class="col-md-2">' . $orderLine->getQuantity() .'</td>
                             <td class="col-md-3">' . $orderLine->getTaxRate() .'</td>
                             <td class="col-md-3">' . $orderLine->getUnitPrice()  .'</td>
-                            <td class="col-md-3">' . $this->calculate($orderLine) .'</td>                          
+                            <td class="col-md-3">' . $this->Calculate($orderLine) .'</td>                          
                         </tr>';
 
         echo $result;
     }
-    public function calculate($orderLine)
+    public function Calculate($orderLine)
     {
-        return $orderLine->getUnitPrice() * $orderLine->getTaxRate() ;
+        $test = $this->retrieveOrderLine($orderLine->getOrderLineID());
+        var_dump($test);
+        var_dump($orderLine->getStockItemID());
+        var_dump($orderLine->getUnitPrice());
+        var_dump($orderLine->getQuantity());
+        var_dump($orderLine->getTaxRate());
+        return $orderLine->getUnitPrice() * $orderLine->getQuantity() * $orderLine->getTaxRate() ;
     }
     public function retrievePeople($id)
     {
