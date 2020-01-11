@@ -123,15 +123,16 @@ class DiscountController
         $this->discount->initialize();
         //ingelogde gebruiker
         $this->discount->setLastEditedBy(1);
-        if ($_POST("StockItemID")) {
-            foreach ($_POST["StockItemID"] as $id) {
+        var_dump($_POST);
+        if (isset($_POST["selectedProductIDs"])) {
+            foreach ($_POST["selectedProductIDs"] as $id) {
                 $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
                 $this->storeProduct($this->product);
             }
         }
-        if ($_POST("CategoryID")){
-            foreach ($_POST["CategoryID"] as $id) {
+        if (isset($_POST["selectedCategoryIDs"])){
+            foreach ($_POST["selectedCategoryIDs"] as $id) {
                 $this->category->retrieve($id);
                 $this->category->setSpecialDealID($this->category->getSpecialDealID());
                 $this->storeCategory($this->category);

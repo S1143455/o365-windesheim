@@ -30,7 +30,7 @@ if (isset($_POST['id'])) {
             <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
             <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?"
                    aria-label="Search" id="myInput">
-
+            <br>
             <div class="row">
                 <div class="col-12 col-md-10 col-lg-9 tableDiscount">
                     <!-- Creates a table with headers and data based on function -->
@@ -62,19 +62,19 @@ if (isset($_POST['id'])) {
 
                 <div class="col-12 col-md-2 col-lg-2 discountButtons">
                     <!-- discount option buttons  -->
-                    <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
+                    <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                             data-target="#oneTimeDiscount">
                         Eenmalige korting
                     </button>
-                    <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
+                    <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                             data-target="#DiscountProduct">
                         Korting op product(en)
                     </button>
-                    <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
+                    <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                             data-target="#DiscountCategory">
                         Korting op categorie(ën)
                     </button>
-                    <button type="button" class="discountButton btn btn-primary" data-toggle="modal"
+                    <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                             data-target="#MailDiscount">
                         Korting mailen naar klant
                     </button>
@@ -100,7 +100,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeOT">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeOT"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -150,7 +150,7 @@ if (isset($_POST['id'])) {
 
 <!-- modal (popup) korting op product -->
 <div class="modal fade" id="DiscountProduct" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
                 <div class="modal-header">
@@ -198,7 +198,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodePD">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodePD"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -251,7 +251,7 @@ if (isset($_POST['id'])) {
 
 <!-- modal (popup) korting op categorie -->
 <div class="modal fade" id="DiscountCategory" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
                 <div class="modal-header">
@@ -298,7 +298,7 @@ if (isset($_POST['id'])) {
                     <div class="col-12">
                         <div class="row">
                             <label class="col-5 control-label" for="inputCodeDC">Code:</label>
-                            <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                            <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeDC"
                                    placeholder="Code">
                         </div>
                         <div class="row">
@@ -362,7 +362,7 @@ if (isset($_POST['id'])) {
                         <div class="col-12">
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeMD">Code:</label>
-                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="DealCode"
+                                <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeMD"
                                        placeholder="Code">
                             </div>
                             <div class="row">
@@ -418,7 +418,7 @@ if (isset($_POST['id'])) {
 <!-- modal to edit selected discount -->
 <div class="modal fade" id="EditDiscountDialog" tabindex="-1" role="dialog" aria-labelledby="EditModal"
      aria-hidden="true">
-    <div class="modal-dialog" style="width:1000px;">
+    <div class="modal-dialog modal-lg" style="width:1000px;">
         <div class="modal-content">
             <form role="form" id="EditDiscount" method="POST" action="UpdateDiscount">
                 <div class="modal-header">
@@ -545,7 +545,10 @@ if (isset($_POST['id'])) {
     </div>
 </div>
 
+<?php
+include_once 'content/backend/footer-admin.php';
 
+?>
 <!-- scripts to generate a random code for each modal-->
 <script xmlns:line-height="http://www.w3.org/1999/xhtml">
     function generateCodeOT() {

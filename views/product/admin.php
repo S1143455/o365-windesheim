@@ -10,37 +10,44 @@ if (isset($_POST['id'])) {
 
 
 ?>
-    <div class="container" style="width:100%">
+    <div class="container-fluid">
         <div class="row">
 
             <?php
             include_once 'content/backend/sidebar-admin.php';
             ?>
+    <div class="col-12 col-md-10 col-lg-9">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                Onderhoud Producten
+            </h3>
+            <br>
+        </div>
+    </div>
+    <div class="row" style="min-height: 50px;">
+        <div class="col-md-12">
+            <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
+            <br>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-12 col-md-10 col-lg-10">
 
-            <div class="col-md-10">
-                <div class="row" style="min-height: 50px;">
-
-                </div>
-                <div class="row" style="min-height: 50px;">
-                    <div class="col-md-7">
-                        <input class="form-control" id="myInput" onkeyup="searchbar()" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <form role="form" id="table" method="POST" action="">
-                        <table id="productTable" class="table table-fixed">
+                <div class="table-fixed">
+                    <table id="productTable" class="table table-bordered">
                             <thead>
                             <tr>
-                                <th class="col-xs-1">Productnr</th>
-                                <th class="col-xs-2">Categorie</th>
-                                <th class="col-xs-2">Omschrijving</th>
-                                <th class="col-xs-2">Merk</th>
-                                <th class="col-xs-1">Formaat</th>
-                                <th class="col-xs-1">Barcode</th>
-                                <th class="col-xs-1">Inkoopprijs</th>
-                                <th class="col-xs-1">BTW (%)</th>
-                                <th class="col-xs-1">Totaal (€)</th>
+                                <th class="col-md-1">Productnr</th>
+                                <th class="col-md-2">Categorie</th>
+                                <th class="col-md-2">Omschrijving</th>
+                                <th class="col-md-2">Merk</th>
+                                <th class="col-md-1">Formaat</th>
+                                <th class="col-md-1">Barcode</th>
+                                <th class="col-md-1">Inkoopprijs</th>
+                                <th class="col-md-1">Totaal (€)</th>
+                                <th class="col-md-1">BTW (%)</th>
+                                <th class="col-md-1">Unit price (€)</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,16 +56,16 @@ if (isset($_POST['id'])) {
                                     $categories = $category->retrieve($prod->getCategoryID());
 
                                     echo '<tr>';
-                                        echo '<td class="col-xs-1"> <button type="submit" name="id" value="' . $prod->getStockItemID() .'">Edit</button></td>';
-                                        echo '<td class="col-xs-1">' . $prod->getStockItemID() . '</td>';
-                                        echo '<td class="col-xs-2">' . $categories->getCategoryName() . '</td>';
-                                        echo '<td class="col-xs-2">' . $prod->getStockItemName() . '</td>';
-                                        echo '<td class="col-xs-1">' . $prod->getBrand() . '</td>';
-                                        echo '<td class="col-xs-1">' . $this->getSizeString($prod->getSize()) . '</td>';
-                                        echo '<td class="col-xs-1">' . $prod->getBarcode() . '</td>';
-                                        echo '<td class="col-xs-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
-                                        echo '<td class="col-xs-1">' . number_format($prod->getTaxRate(),2) . '%</td>';
-                                        echo '<td class="col-xs-1">€' . number_Format($this->calculatePrice($prod->getUnitPrice(),$prod->getTaxRate()),2) . '</td>';
+                                        echo '<td class="col-md-1"> <button class="tableEditButton btn btn-outline-secondary" type="submit" name="id" value="' . $prod->getStockItemID() .'">Edit</button></td>';
+                                        echo '<td class="col-md-1">' . $prod->getStockItemID() . '</td>';
+                                        echo '<td class="col-md-2">' . $categories->getCategoryName() . '</td>';
+                                        echo '<td class="col-md-2">' . $prod->getStockItemName() . '</td>';
+                                        echo '<td class="col-md-1">' . $prod->getBrand() . '</td>';
+                                        echo '<td class="col-md-1">' . $this->getSizeString($prod->getSize()) . '</td>';
+                                        echo '<td class="col-md-1">' . $prod->getBarcode() . '</td>';
+                                        echo '<td class="col-md-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
+                                        echo '<td class="col-md-1">' . number_format($prod->getTaxRate(),2) . '%</td>';
+                                        echo '<td class="col-md-1">€' . number_Format($this->calculatePrice($prod->getUnitPrice(),$prod->getTaxRate()),2) . '</td>';
                                     echo '</td>';
                                 }
                             ?>
@@ -68,21 +75,22 @@ if (isset($_POST['id'])) {
 
                 </div>
             </div>
-
-            <div class="row">
-                <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#createProduct">
+        <div class="col-12 col-md-2 col-lg-2 discountButtons">
+            <button type="button" class="firstdiscountButton btn btn-success" data-toggle="modal" data-target="#createProduct">
                     Product toevoegen
                 </button>
             </div>
         </div>
+    </div>
+</div>
 
         <div class="modal fade" id="createProduct" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width:1000px;">
                 <div class="modal-content">
                     <form role="form" id="universalModalForm" method="POST" action="test">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                             <h4 class="modal-title"><span class="glyphicon glyphicon-pencil"></span><span class="modal-title"> Toevoegen product</span></h4>
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                         </div>
                         <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
                             <span class="alert-body"></span>
@@ -132,8 +140,8 @@ if (isset($_POST['id'])) {
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="loadTimeDays">Aanvulling voorraad (in dagen)</label>
-                                        <input type="number" class="form-control" name="loadTimeDays" id="loadTimeDays" required>
+                                        <label for="LeadTimeDays">Aanvulling voorraad (in dagen)</label>
+                                        <input type="number" class="form-control" name="LeadTimeDays" id="LeadTimeDays" required>
                                     </div>
                                     <br>
                                     <div class="col-md-12">

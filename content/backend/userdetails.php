@@ -49,17 +49,17 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                             <div class="container">
                                 <div class="row">
                                     <form role="form" id="table" method="POST" action="">
-                                        <div class="col-xs-12">
+                                        <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <div class="panel-title">
                                                         <div class="row">
-                                                            <div class="col-xs-12">
+                                                            <div class="col-md-12">
                                                                 <h3><strong>Uw klant nummer is <?php echo $_SESSION['USER']['DATA'][0]['PersonID']; ?>.</strong></h3>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-xs-12">
+                                                            <div class="col-md-12">
                                                                 <h3>Hieronder staan de gegevens zoals deze bij ons bekend zijn.</h3>
                                                             </div>
                                                         </div>
@@ -112,9 +112,9 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                                                             <label for="LogonNam0e">Inlognaam</label>
                                                             <input type="text" readonly class="form-control" id="LogonName0" placeholder="<?php echo $_SESSION['USER']['DATA'][0]['LogonName'];?>">
                                                         </div>
+                                                        <hr>
                                                         <div class="form-row">
                                                             <div class="form-group col-md-12">
-                                                                <hr>
                                                                 <label for="newsletter0">Ja! Ik ontvang graag de Nieuwsbrief van Oma's Beste.</label>
                                                                 <input type="checkbox" disabled id="newsletter0" <?php if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['newsletter']==1) {echo "checked";} ?>>
                                                             </div>
@@ -124,13 +124,13 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                                                 <div class="panel-footer">
                                                     <div class="row text-center">
                                                         <div class="form-row">
-                                                            <div class="col-xs-4">
+                                                            <div class="col-md-4">
                                                                 <button type="button" class="firstdiscountButton btn btn-primary btn-block" data-toggle="modal" data-target="#changeuser">Gegevens aanpassen</button>
                                                             </div>
-                                                            <div class="col-xs-4">
+                                                            <div class="col-md-4">
                                                                 <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteaccount">Account verwijderen</button>
                                                             </div>
-                                                            <div class="col-xs-4">
+                                                            <div class="col-md-4">
                                                                 <button type="button" class="firstdiscountButton btn btn-primary btn-block" data-toggle="modal" data-target="#changepassword">Wachtwoord aanpassen</button>
                                                             </div>
                                                         </div>
@@ -153,8 +153,8 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                     <div class="modal-content">
                         <form role="form" id="changeuserForm" method="POST" action="">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                                 <h4 class="modal-title"><span class="modal-title">Aanpassen gegevens</span></h4>
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                             </div>
                             <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
                                 <span class="alert-body"></span>
@@ -231,8 +231,8 @@ if (isset($_POST['removeaccount'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;U
                     <div class="modal-content">
                         <form role="form" id="changepasswordForm" method="POST" action="" onsubmit="return ValidatePassword()">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                                 <h4 class="modal-title"><span class="modal-title">Wachtwoord wijzigen</span></h4>
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
                             </div>
                             <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
                                 <span class="alert-body"></span>

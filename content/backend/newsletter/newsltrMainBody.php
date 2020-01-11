@@ -1,8 +1,6 @@
 <?php
 include_once 'content/backend/header-admin.php';
 // Who's calling?
-echo "<pre>"; print_r($_SESSION); echo "</pre>";
-echo "<pre>"; print_r($_POST); echo "</pre>";
 if (isset($_POST['ChangeNewsletter']))      // The users wants to change the news letter.
 {
     $dataHandler=new \Model\Database();
@@ -85,9 +83,9 @@ else                                        // The user wants to create a new ne
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <div class="form-group">
+                                        <div class="form-group col-md-12">
                                             <div class="col-md-12">
-                                                <textarea id="txtEditor" name="txtEditor" rows="50"></textarea>
+                                                <textarea id="txtEditor" name="txtEditor" rows="50" style="width: 100%;"></textarea>
                                             </div>
                                         </div>
                                     </div>
