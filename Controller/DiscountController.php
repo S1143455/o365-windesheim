@@ -88,10 +88,10 @@ class DiscountController
     }
     public function create()
     {
-        print_r($_POST);
+       // print_r($_POST);
         $this->discount = new discount();
         $this->discount->initialize();
-        var_dump($this->discount);
+
         //hierzou ie een special deal id moeten hebben
         $this->discount->setLastEditedBy(1);
         $this->storeDiscount($this->discount);
@@ -197,7 +197,7 @@ class DiscountController
     {
         if (!$discount->initialize())
         {
-            print_r($_GET);
+            //print_r($_GET);
             return false;
         };
 
@@ -217,11 +217,11 @@ class DiscountController
      */
     public function storeProduct($product)
     {
-        //var_dump($discount);
+
 
         if (!$product->initialize())
         {
-            print_r($_GET);
+            //print_r($_GET);
             return false;
         };
 
@@ -244,7 +244,7 @@ class DiscountController
 
         if (!$category->initialize())
         {
-            print_r($_GET);
+            //print_r($_GET);
             return false;
         };
 

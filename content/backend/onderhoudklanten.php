@@ -7,7 +7,6 @@ if (isset($_POST['id'])) {
     $customerID = $_POST['id'];
     if ($customerID != 0) {
         $customer = $customerController->retrieve($customerID);
-        $customer->getCustomerID();
 
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditCustomerDialog').modal('show');   }); </script>";
     }
