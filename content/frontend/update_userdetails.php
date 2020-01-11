@@ -14,7 +14,8 @@ and PersonId='" . $_POST['PersonID'] . "'");
 // Update the people table
 $updatePeople=$pushthedata->UpdateStmt('UPDATE people SET  
 FullName="' . $_POST['FullName']	. '" ,
-DateOfBirth= "' .date('Y-m-d',strtotime($_POST['DateOfBirth'])) .  '"
+DateOfBirth= "' .date('Y-m-d',strtotime($_POST['DateOfBirth'])) .  '",
+EmailAddress = "' . $_POST['EmailAddress'] .'"
 WHERE PersonId="'  . $_POST['PersonID'] . '"');
 
 // Update the customer
