@@ -140,8 +140,8 @@ if (isset($_POST['id'])) {
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="loadTimeDays">Aanvulling voorraad (in dagen)</label>
-                                        <input type="number" class="form-control" name="loadTimeDays" id="loadTimeDays" required>
+                                        <label for="LeadTimeDays">Aanvulling voorraad (in dagen)</label>
+                                        <input type="number" class="form-control" name="LeadTimeDays" id="LeadTimeDays" required>
                                     </div>
                                     <br>
                                     <div class="col-md-12">

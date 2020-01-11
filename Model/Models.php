@@ -123,12 +123,12 @@ class Models
     private function getStockItem()
     {
         $this->column = array(
-            "StockItemId" => ['Integer', 'PrimaryKey', 'Required'],
+            "StockItemID" => ['Integer', 'PrimaryKey', 'Required'],
             "StockItemName" => ['Varchar', 'Attribute', 'Required'],
             "SupplierID" => ['Supplier', 'HasOne', 'Required'],
             "Brand" => ['Varchar', 'Attribute', 'Required'],
             "Size" => ['Integer', 'Attribute', 'Nullable'],
-            "LoadTimeDays" => ['Integer', 'Attribute', 'Nullable'],
+            "LeadTimeDays" => ['Integer', 'Attribute', 'Nullable'],
             "IsChillerStock" => ['Boolean', 'Attribute', 'Nullable'],
             "BarCode" => ['Varchar', 'Attribute', 'Required'],
             "TaxRate" => ['Integer', 'Attribute', 'Required'],

@@ -178,11 +178,8 @@ class CustomerController
     /**
      * Stores the product in the database.
      *
-<<<<<<< HEAD
      * @param $customer customer
-=======
      * @param $customer Customer
->>>>>>> 468c56999caddc47984e6c3f9d04f595a147224a
      * @return string
      */
 
