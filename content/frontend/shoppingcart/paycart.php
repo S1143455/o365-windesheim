@@ -152,14 +152,14 @@ $monthArray=['01','02','03','04','05','06','07','08','09','10','11','12'];
                         <div class="row text-center">
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-success btn-block" name="checkaddress">
-                                    <span class="glyphicon glyphicon-arrow-left"></span> Terug naar adres controleren
+                                    <i class="fas fa-arrow-circle-left"></i> Terug naar adres controleren
                                 </button>
                             </div>
                             <div class="col-md-4">
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-success btn-block" name="handlepayment">
-                                    Betaling afronden <span class="glyphicon glyphicon-arrow-right"></span>
+                                    Betaling afronden <i class="fas fa-arrow-circle-right"></i></span>
                                 </button>
                             </div>
                         </div>
