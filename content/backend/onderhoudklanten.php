@@ -7,7 +7,6 @@ if (isset($_POST['id'])) {
     $customerID = $_POST['id'];
     if ($customerID != 0) {
         $customer = $customerController->retrieve($customerID);
-        $customer->getCustomerID();
 
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditCustomerDialog').modal('show');   }); </script>";
     }
@@ -107,15 +106,24 @@ if (isset($_POST['id'])) {
                                 <input class="col-7 form-control" name="EmailAddress" id="EmailAddress"
                                        value="<?php echo($customer->getEmailAddressOnID($customerID)) ?>">
                             </div>
+                            <div class="form-group col-4">
+                                <div>
+                                    <label class="control-label" for="orderid">Bestelnummer:</label>
+                                </div>
+                                <div>
+                                    <input class="form-control" type="text" name="orderid" id="orderid">
+                                </div>
+                            </div>
                             <div class="form-group col-12">
                                 <label class="col-5 control-label">Nieuwsbrief:</label>
                                 <input class="checkboxOneTime" type="checkbox" name="newsletter" id="newsletter"
                                        value="<?php echo($customer->getNewsletter()) ?>
                             </div>
-                            <div class=" col-12">
+                            <div class="col-12">
                                 <button class="col-3 btn btn-outline-secondary" type="button">Wachtwoord resetten
                                 </button>
                             </div>
+                            <br>
                         </div>
                     </div>
                     <div class="modal-footer">

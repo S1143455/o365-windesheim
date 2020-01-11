@@ -159,7 +159,6 @@ class CategoryController extends FileController
                             <td class="col-md-2">' . $category->getCategoryID() .'</td>
                             <td class="col-md-5">' . $category->getCategoryName() .'</td>
                             <td class="col-md-2">' . $category->getParentCategory() .'</td>
-                            <td class="col-md-2">iets</td>
                         </tr>';
 
             echo $result;

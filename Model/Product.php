@@ -5,13 +5,13 @@ namespace Model;
 class Product extends Database
 {
 
-    private $stockItemID;
+    private $StockItemID;
     private $stockItemName;
     private $supplierID;
     private $brand;
     private $barcode;
     private $size;
-    private $loadTimeDays;
+    private $LeadTimeDays;
     private $isChillerStock;
     private $taxRate;
     private $unitPrice;
@@ -31,15 +31,15 @@ class Product extends Database
      */
     public function getStockItemID()
     {
-        return $this->stockItemID;
+        return $this->StockItemID;
     }
 
     /**
-     * @param mixed $stockItemID
+     * @param mixed $StockItemID
      */
-    public function setStockItemID($stockItemID)
+    public function setStockItemID($StockItemID)
     {
-        $this->stockItemID = $stockItemID;
+        $this->StockItemID = $StockItemID;
     }
 
     /**
@@ -124,17 +124,17 @@ class Product extends Database
     /**
      * @return mixed
      */
-    public function getLoadTimeDays()
+    public function getLeadTimeDays()
     {
-        return $this->loadTimeDays;
+        return $this->LeadTimeDays;
     }
 
     /**
-     * @param mixed $loadTimeDays
+     * @param mixed $LeadTimeDays
      */
-    public function setLoadTimeDays($loadTimeDays)
+    public function setLeadTimeDays($LeadTimeDays)
     {
-        $this->loadTimeDays = $loadTimeDays;
+        $this->LeadTimeDays = $LeadTimeDays;
     }
 
     /**

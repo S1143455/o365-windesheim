@@ -4,6 +4,7 @@
 namespace Controller;
 
 use Model\Customer;
+use Model\Order;
 use Model\People;
 use Model\Adress;
 
@@ -18,6 +19,8 @@ class CustomerController
     {
         $this->customer = new Customer();
         $this->people = new People();
+        $this->adress = new Adress();
+        $this->order = new Order();
 
     }
     /**
@@ -32,7 +35,7 @@ class CustomerController
         $this->customer->setCustomerID(10);
         include  $this->viewPath . 'account-toevoegen.php';
         $this->people = new People();
-        $this->addres = new Adress();
+        $this->adress = new Adress();
 
     }
     public function retrieve($id){
@@ -45,18 +48,30 @@ class CustomerController
 
         return $customer;
     }
+    public function retrievePerson($id){
+        $person = new People();
+        $person = $person->retrieve($id);
+        if(empty($person->getPersonID()))
+        {
+            //header("Location: /404", true);
+        }
+
+        return $person;
+    }
     function getAllCustomer()
     {
         $customers = $this->customer->getAllCustomers();
 
         foreach ($customers as $customer){
+            $person =  $this->retrievePerson($customer->getPersonID());
+            $orderdate = $this->order->where("MAX(OrderDate)","CustomerID","=",$customer->getCustomerID());
 
             $result = '';
             $result .= '<tr>
                     <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
-                    <td class="col-md-2">' . $customer->getCustomerID() . '</td> 
-                    <td class="col-md-3">' . $this->customer->getEmailAddressOnID($customer->getPersonID()) .'</td>
-                    <td class="col-md-3">' . $this->customer->getFullNameOnID($customer->getPersonID()) .'</td>
+                    <td class="col-md-2">' . $customer->getCustomerID() . '</td>                 
+                    <td class="col-md-3">' . $person->getEmailAddress() .'</td>
+                    <td class="col-md-3">' . $person->getFullName() .'</td>
                     <td class="col-md-2">' . $this->customer->getLastOrderDateOnID($customer->getCustomerID()) .'</td>
                     <td class="col-md-2">' . $customer->getNewsletter() .'</td>
                 </tr>';
@@ -178,11 +193,8 @@ class CustomerController
     /**
      * Stores the product in the database.
      *
-<<<<<<< HEAD
      * @param $customer customer
-=======
      * @param $customer Customer
->>>>>>> 468c56999caddc47984e6c3f9d04f595a147224a
      * @return string
      */
 
@@ -191,7 +203,7 @@ class CustomerController
 
         if (!$customer->initialize())
         {
-            print_r($_GET);
+            //print_r($_GET);
             return false;
         };
 

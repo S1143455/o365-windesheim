@@ -27,8 +27,8 @@ if (isset($_POST['submit'])) {
         <input type="text" class="form-control" name="Brand" id="brand">
     </div>
     <div class="form-group">
-        <label for="loadTimeDays">LoadTimeDays</label>
-        <input type="number" class="form-control" name="LoadTimeDays" id="loadTimeDays">
+        <label for="LeadTimeDays">LeadTimeDays</label>
+        <input type="number" class="form-control" name="LeadTimeDays" id="LeadTimeDays">
     </div>
     <div class="form-group">
         <label for="isChillerStock">IsChillerStock</label>
