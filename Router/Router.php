@@ -57,7 +57,7 @@ class Router
             }
             else
             {
-                $_POST['recoverystring']=str_replace(strtok($_SERVER['REQUEST_URI'],'?').'?','',$_SERVER['REQUEST_URI']);    strtok($_SERVER['REQUEST_URI'],'?');  // $_SERVER['REQUEST_URI'], 2);
+                $_POST['recoverystring']=str_replace(strtok($_SERVER['REQUEST_URI'],'?').'?','',$_SERVER['REQUEST_URI']);    strtok($_SERVER['REQUEST_URI'],'?'); // $_SERVER['REQUEST_URI'], 2);
                 return include "content/frontend/passwordrecovery.php";
             }
         }
