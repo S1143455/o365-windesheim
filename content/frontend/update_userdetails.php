@@ -23,13 +23,8 @@ if (isset($_POST['newsletter']))
 else
     $newsletter=0;
 
-if ($_POST['Gender']=='male')
-    $gender='Man';
-else
-    $gender='Vrouw';
-
 $savethecustomer=$pushthedata->UpdateStmt("UPDATE customer SET 
-Gender=\"" . $gender	. "\" ,
+Gender=\"" . $_POST['Gender']	. "\" ,
 newsletter=\"" . $newsletter . "\" 
 WHERE CustomerID ='" . $_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'] . "'");
 

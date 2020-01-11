@@ -8,19 +8,19 @@ if (strlen($_POST['paymentmethod'])>1)
 }
 
 // The easiest payment is Afterpay. This payment will always result in a success.
-if ($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']=='afterpay'){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/betalengelukt\">";die;}
+if ($_SESSION['USER']['SHOPPING_CART']['PAYMENT_METHOD']=='afterpay'){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "betalengelukt\">";die;}
 
 // If the payment is by bank or by CreditCard you can choose the payment result.
 if (isset($_POST['paymentresult']))
 {
     if ($_POST['paymentresult']=='success')
     {
-        echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/betalengelukt\">";
+        echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "betalengelukt\">";
 
     }
     else
     {
-        echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/betalenmislukt\">";
+        echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "betalenmislukt\">";
     }
 }
 

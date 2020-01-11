@@ -51,6 +51,7 @@ class MainController
         $this->database=new Database();
         $this->category = new category();
         $this->product = new product();
+        $this->attachment = new Attachments();
     }
 
     /**
@@ -82,9 +83,9 @@ class MainController
      */
     function index(){
         $category = new category();
-        $categories = $category->retrieve();
+
         $product = new product();
-        $products = $product->retrieve();
+
         $attachment = new Attachments();
 
         $main = $this;
@@ -107,13 +108,18 @@ class MainController
             unset($nav_items['login']);
         }
         foreach ($nav_items as $uri => $name) {
-            $nav_menu .= '<li>';
+            $nav_menu .= '<li class="nav-item mr-4 mt-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=/'. $this->site_url() . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);
+    }
+
+    function nav_menu_side_fe()
+    {
+        // empty.
     }
 
     function user_menu_items($sep = '')
@@ -122,10 +128,10 @@ class MainController
         $nav_items = $this->getConfig('user_menu_item');
 
         foreach ($nav_items as $uri => $name) {
-            $nav_menu .= '<li>';
+            $nav_menu .= '<li class="nav-item mr-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=' . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=/'. $this->site_url() . $url . ' title=' . $name . '>' . $name . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
         return trim($nav_menu, $sep);
@@ -141,10 +147,10 @@ class MainController
         } else  $nav_items['winkelwagen']='Winkelwagen';
 
         foreach ($nav_items as $uri => $name) {
-             $nav_menu .= '<li>';
+             $nav_menu .= '<li class="nav-item mt-2">';
             $class = str_replace('page=', '', $_SERVER['QUERY_STRING']) == $uri ? ' active' : '';
             $url = '/' . ($this->getConfig('pretty_uri') || $uri == '' ? '' : '?page=') . $uri;
-            $nav_menu .= '<a href=winkelwagen title=Winkelwagen>' . $nav_items['winkelwagen']  . '</a>' . $sep;
+            $nav_menu .= '<a class="navbarFE" href=/'. $this->site_url() .'/winkelwagen title=Winkelwagen>' . $nav_items['winkelwagen']  . '</a>' . $sep;
             $nav_menu .= '</li>';
         }
 
@@ -169,7 +175,7 @@ class MainController
             if($i == $max){
                 $class .= ' last ';
             }
-            $nav_menu .= '<a href="' . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href="'. $this->site_url() . $url . '" title="' . $name . '" class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
         }
 
         return trim($nav_menu, $sep);
@@ -241,8 +247,8 @@ class MainController
     {
         $showusermenu='';
         $showusermenu='
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Uw gegevens<span class="caret"></span></a>
+        <li class="dropdown nav-item mr-4 mt-2">
+            <a href="#" class="dropdown-toggle navbarFE" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Uw gegevens<span class="caret"></span></a>
             <ul class="dropdown-menu">
                 ' . $this->user_menu_items() .'
             </ul>
@@ -253,12 +259,15 @@ class MainController
     public function navigationalmenu()
     {
        $result = '';
-       $result = '<div class="collapse navbar-collapse" id="bas-navbar">
-                    <ul class="nav navbar-nav navbar-left">
+       $result = '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
                         ' . $this->nav_menu() .' 
                         ' . $this->usermenu() .'
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
+                        <li class="dropdown nav-item mt-2">
+                            <a href="#" class="dropdown-toggle navbarFE" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 ' . $this->nav_menu() .'   
                                 ' . $this->usermenu() .'                        
@@ -287,6 +296,23 @@ class MainController
      */
     function showContent($section){
         echo $this->getContent($section);
+    }
+
+    function showAttachment($attachmentID, $productDetail, $styleClass){
+        if($attachmentID == '' || $attachmentID == 0){
+            echo '<img class="' . $styleClass . '" src="/' . getenv('ROOT') . '/uploads/dummyImage.png">';
+        }else{
+            $att = $this->attachment->retrieve($attachmentID);
+            if(substr($att->getFileLocation(),0,4) == 'http'){
+                if(!$productDetail) {
+                    echo '<img class="' . $styleClass . '" src="/' . getenv('ROOT') . '/uploads/dummyImage.png">';
+                }else{
+                    echo '<iframe height="100%" width="100%" src="' . $att->getFileLocation() . '"></iframe>';
+                }
+            }else {
+                echo '<img class="' . $styleClass . '" src="/' . getenv('ROOT') . '/' . $att->getFileLocation() . '">';
+            }
+        }
     }
 }
 ?>

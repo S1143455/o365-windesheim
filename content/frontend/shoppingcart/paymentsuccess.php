@@ -8,7 +8,7 @@ include 'content/frontend/display_message.php';
 // needs to be unset.
 
 // Let's check if the user want's to return home.
-if (isset($_POST{'ReturnHome'})){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/\">";die;}
+if (isset($_POST{'ReturnHome'})){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "\">";die;}
 
 $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];

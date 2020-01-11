@@ -20,6 +20,7 @@ class Product extends Database
     private $attachmentID;
     private $lastEditedBy;
     private $recommendedRetailPrice;
+    private $SpecialDealID;
 
     function __construct()
     {
@@ -267,5 +268,21 @@ class Product extends Database
         $this->recommendedRetailPrice = $recommendedRetailPrice;
     }
 
+    public function getSpecialDealID()
+    {
+        return $this->SpecialDealID;
+    }
 
+    /**
+     * @param mixed $SpecialDealID
+     */
+
+    public function setSpecialDealID($SpecialDealID)
+    {
+        $this->SpecialDealID = $SpecialDealID;
+    }
+
+    /**
+     * @return mixed
+     */
 }

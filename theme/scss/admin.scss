@@ -1,39 +1,49 @@
-$primary : black;
-$secondary : #fff3e6;
+$primary: black;
+$secondary: #fff3e6;
 $textcolor: #818181;
 $background: #f8f8f8;
-.navbar{
+.navbar {
   margin-bottom: 0px !important;
 }
 
-body{
+.container {
+  margin: 0px 0px 0px 0px;
+}
+
+body {
   color: $primary;
-  h1{
+
+  h1 {
     color: $secondary;
   }
 }
-.my-nav{
+
+.my-nav {
   padding-top: 10px !important;
 }
 
 .sidenav {
-  height: 89%;
+  min-height: 100%;
+  min-width: max-content;
   background-color: $secondary;
   overflow-x: hidden;
 }
 
 .sidenav a {
-padding: 6px 8px 6px 16px;
-text-decoration: none;
-font-size: 20px;
-color: $textcolor;
-display: block;
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: $textcolor;
+  display: block;
 }
 
 .sidenav a:hover {
-color: $secondary;
+  color: $secondary;
 }
 
+.sidebarStyle {
+  padding-left: 0px;
+}
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
   font-size: 28px; /* Increased text to enable scrolling */
@@ -41,13 +51,23 @@ color: $secondary;
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .discountButton {
+    width: 100% !important;
+  }
 }
 
 .padding10 {
-  margin:10px;
-  font-size:12px !important;
+  margin: 10px;
+  font-size: 12px !important;
 }
 
 .first {
@@ -55,11 +75,16 @@ color: $secondary;
 }
 
 .discountButton {
-  display: inline-block;
+  display: block;
   white-space: nowrap;
   background-color: #808080 !important;
   margin-top: 1%;
   width: 200px;
+}
+
+.modal-body{
+  overflow:auto;
+
 }
 
 .wrapper {
@@ -69,20 +94,35 @@ color: $secondary;
 }
 
 .form-control {
-  width: 100%;
+  width: 35%;
 }
 
 .inputCode {
-  margin-left: 58px;
+  //margin-left: 58px;
+  width: 30%;
+}
+
+@media screen and (max-width: 991px) {
+  .form-control {
+    width: 100%;
+
+  .inputCode {
+    width: 100%;
+    }
+  }
+
+  .inputCode{
+    width: 35%;
+  }
 }
 
 .inputPercentage {
-  margin-left: 19px;
+  //margin-left: 21px;
   width: 55px;
 }
 
 .inputStartDate {
-  margin: 5px 35px 10px 4px;
+  //margin: 5px 0px 10px 7px;
   width: 20%;
   text-align: center;
   padding: 0px;
@@ -91,17 +131,17 @@ color: $secondary;
 .inputEndDate {
   text-align: center;
   width: 20%;
-  margin: -7px 0px 0 5px;
+  //margin: -7px 0px 0 7px;
   padding: 0px;
 }
 
 .inputEmail {
-  margin-left: 59px;
+  //margin-left: 57px;
   width: 45%;
 }
 
 .dealDescription {
-  margin-left: 11px;
+  //margin-left: 11px;
   width: 60%;
 }
 
@@ -111,10 +151,7 @@ color: $secondary;
   border-radius: 0px 3px 3px 0px;
   padding: 6px;
   margin-left: -7px;
-}
-
-.btn-outline-secondary {
-  margin-left: 20px;
+  text-align: center;
 }
 
 label {
@@ -130,31 +167,37 @@ h4 {
 }
 
 .table-fixed {
-  margin-left: 10px;
-  width: 95%;
-  font-size: 12px;
+  //margin-left: 10px;
+  //width: 95%;
+  font-size: 12px!important;
   background-color: $background;
-  tbody{
-    height:200px;
-    overflow-y:auto;
-    width: 100%;
+  display: block;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 450px;
+
+  //tbody {
+  //  height: 200px;
+  //  overflow-y: auto;
+  //  width: 100%;
+  //}
+
+  thead, tbody, tr, td, th {
+    //display:block;
   }
 
-  thead,tbody,tr,td,th {
-    display:block;
-  }
-
-  tbody{
-    td{
-      float:left;
+  tbody {
+    td {
+      //float:left;
     }
   }
+
   thead {
-    tr{
-      th{
-        float:left;
+    tr {
+      th {
+        //float:left;
         background-color: $secondary;
-        border-color:#ffad54;
+        border-color: #ffad54;
       }
     }
   }
@@ -173,12 +216,12 @@ td {
   height: 30px;
 }
 
-.nopadding{
-  padding:0px !important;
+.nopadding {
+  padding: 0px !important;
 }
 
-.width100{
-  width:100% !important;
+.width100 {
+  width: 100% !important;
 }
 
 .height15pct {
@@ -186,5 +229,76 @@ td {
 }
 
 .checkboxOneTime {
-  margin: 5px 0px 0px 34px !important;
+  //margin: 5px 0px 0px 34px !important;
+}
+
+.collapseButton {
+  background-color: #ddd;
+  color: black;
+}
+
+#tableCollapse {
+  width: 100%;
+}
+
+.tableCollapse {
+  border: 0.5px solid;
+  border-color: #808080;
+}
+
+.collapseTableSearch {
+  margin: 5px 0px 5px 0px;
+  width: 60%;
+}
+
+.tableCollapseSP{
+  height: 350px !important;
+}
+
+.tableEditButton {
+  align-self: center;
+  padding: 6px 8px 6px 8px;
+  font-size: 10px;
+}
+
+.tableDiscount {
+  height: 450px;
+  width: 100%;
+}
+
+.loginAdminCenter {
+  margin: auto;
+}
+
+.inputUserAdminLogin {
+  width: 100%;
+}
+
+.inputPasswordAdminLogin {
+  width: 100%;
+}
+
+.tableViewCustomer {
+  width: 100%;
+  height: 450px;
+}
+
+#tableViewDiscount {
+  font-size: 12px;
+}
+
+#tableViewCustomer {
+  font-size: 12px;
+}
+
+#OrderTable {
+  font-size: 12px;
+}
+
+#categoryTable {
+  font-size: 12px;
+}
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+  max-width: 100%;
+  width: 100%;
 }

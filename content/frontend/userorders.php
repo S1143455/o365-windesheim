@@ -11,7 +11,7 @@ $orders=$handleDatabase->selectStmt("select * from orders where customerId=".$cu
 
 if (!$orders)
 {
-    echo display_message('info','Uw heeft nog geen bestelling geplaatst. U wordt doorgestuurd naar de hoofdpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/\">";
+    echo display_message('info','Uw heeft nog geen bestelling geplaatst. U wordt doorgestuurd naar de hoofdpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "\">";
 }
 // Clean the orderdetails.
 $_SESSION['USER']['ORDER']=array();
@@ -60,15 +60,16 @@ if (isset($_POST['reorder']))
 
 //echo "<pre>";print_r( $_SESSION['USER']['ORDER'][$_POST['reorder']]['ORDER_DETAILS']['ORDER_ITEMS']);echo "</pre><br>";
 ?>
+
 <div class="container">
     <div class="row">
-        <form role="form" id="table" method="POST" action="">
-            <div class="col-xs-8 col-xs-offset-2">
+        <form role="form" id="table" method="POST" action="" style="width:100%">
+            <div class="col-md-12">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <div class="panel-title">
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-md-6">
                                     <h4>Uw Bestellingen</h4>
                                 </div>
                             </div>
@@ -76,32 +77,27 @@ if (isset($_POST['reorder']))
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="text-left">
-                                <div class="col-xs-2 text-right"><h4>Bestelnummer</h4></div>
-                                <div class="col-xs-2 text-center"><h4>Besteldatum</h4></div>
-                                <div class="col-xs-2 text-right"><h4>Bedrag</h4></div>
-                                <div class="col-xs-6 text-center"></div>
-                            </div>
+                            <div class="col-2 text-center">Bestelnummer</div>
+                            <div class="col-2 text-center">Besteldatum</div>
+                            <div class="col-2 text-center">Bedrag</div>
                         </div>
                         <?php
                         foreach($_SESSION['USER']['ORDER'] as $key)
                         {
-                        echo '<hr>
+                            echo '<hr>
                         <div class="row">
-                            <div class="text-center">
-                                <div class="col-xs-2 text-right">' . $key['ORDER_DETAILS']['OrderID'] .'</div>
-                                <div class="col-xs-2 text-center">' . date( 'd-m-Y',strtotime($key['ORDER_DETAILS']['OrderDate'] )).'</div>
-                                <div class="col-xs-2 text-right">' . number_format($key['ORDER_DETAILS']['TOTALORDERPRICE'], 2, ',', '.')  .'</div>
-                                <div class="col-xs-2 text-right">
-                                    <button class="btn btn-success btn-block" type="button" data-toggle="collapse" data-target="#Details' . $key['ORDER_DETAILS']['OrderID']  . '" aria-expanded="false" aria-controls="collapse' . $key['ORDER_DETAILS']['OrderID']  . '">
-                                    Details
-                                    </button>
-                                </div>
-                                <div class="col-xs-4 text-right">
-                                    <button type="submit" class="btn btn-success btn-block" name="reorder" value="' . $key['ORDER_DETAILS']['OrderID'] .'">
-                                        Bestelling opnieuw plaatsen
-                                    </button>
-                                </div>
+                            <div class="col-2 text-center">' . $key['ORDER_DETAILS']['OrderID'] .'</div>
+                            <div class="col-2 text-center">' . date( 'd-m-Y',strtotime($key['ORDER_DETAILS']['OrderDate'] )).'</div>
+                            <div class="col-2 text-center">' . number_format($key['ORDER_DETAILS']['TOTALORDERPRICE'], 2, ',', '.')  .'</div>
+                            <div class="col-2 text-right">
+                                <button class="btn btn-success btn-block" type="button" data-toggle="collapse" data-target="#Details' . $key['ORDER_DETAILS']['OrderID']  . '" aria-expanded="false" aria-controls="collapse' . $key['ORDER_DETAILS']['OrderID']  . '">
+                                Details
+                                </button>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button type="submit" class="btn btn-success btn-block" name="reorder" value="' . $key['ORDER_DETAILS']['OrderID'] .'">
+                                    Bestelling opnieuw plaatsen
+                                </button>
                             </div>
                         </div>
                         <div class="collapse" id="Details' . $key['ORDER_DETAILS']['OrderID']  . '"><br>
@@ -109,48 +105,48 @@ if (isset($_POST['reorder']))
                                 <div class="container">
                                     <div class="row">
                                         <form role="form" id="detailstable" method="POST" action="">
-                                            <div class="col-xs-7">
+                                            <div class="col-12">
                                                 <div class="panel panel-info">
                                                 <div class="panel-heading">
                                                     <div class="panel-title">
                                                         <div class="row">
-                                                            <div class="col-xs-6">
+                                                            <div class="col-md-12">
                                                                 <h4></span>Details van uw bestelling</h4>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="panel-body">';
-                                                $countrows=0;
-                                                foreach ($key['ORDER_DETAILS']['ORDER_ITEMS'] as $item)
-                                                {
-                                                    if ($countrows>0){echo "<hr>";}
-                                                    echo '
+                            $countrows=0;
+                            foreach ($key['ORDER_DETAILS']['ORDER_ITEMS'] as $item)
+                            {
+                                if ($countrows>0){echo "<hr>";}
+                                echo '
                                                     <div class="row">
-                                                        <div class="col-xs-2"><img class="img-responsive" src="' . $item['Photo'] .'"></div>
-                                                        <div class="col-xs-4">
+                                                        <div class="col-md-2"><img class="img-responsive" src="' . $item['Photo'] .'"></div>
+                                                        <div class="col-md-4">
                                                             <h4 class="product-name"><strong>' . $item['StockItemName'] .'</strong></h4><h4><small>' . $item['MarketingComments'] .'</small></h4>
                                                         </div>
-                                                        <div class="col-xs-6">
-                                                            <div class="col-xs-2 text-right">
+                                                        <div class="col-md-6">
+                                                            <div class="col-3">
                                                                 <h6><strong>' . number_format($item['TotalCartPrice'], 2, ',', '.') .'</strong></h6>
                                                             </div>
-                                                            <div class="col-xs-2">
+                                                            <div class="col-2">
                                                                 <h4 class="justify-content-center"><strong>' . $item['ItemAmount'] .'</strong></h4>
                                                             </div>
-                                                            <div class="col-xs-7">
+                                                            <div class="col-7">
                                                                 <span>
                                                                     <button type="submit" class="btn-sm btn-success btn-block input-group-prepend" name="add" value="'. $item['StockItemID'].'">
                                                                         Item opnieuw bestellen
                                                                     </button>
                                                                 </span>
-                                                            </div>
+                                                            </div>  
                                                         </div>
                                                     </div>
                                                     ';
-                                                    $countrows++;
-                                                }
-                                                echo'</div>
+                                $countrows++;
+                            }
+                            echo'</div>
                                                 </div>
                                             </div>
                                         </form>
@@ -160,6 +156,10 @@ if (isset($_POST['reorder']))
                         </div>';
                         }
                         ?>
+
+                    </div>
+                    <div class="panel-footer">
+
                     </div>
                 </div>
             </div>

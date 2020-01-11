@@ -6,90 +6,189 @@ namespace Model;
 
 class User extends Database
 {
-    private $username;
-    private $password;
-    protected $table;
-    private $dbPassword;
-    private  $UserDataArray;
-    private $passwordRecoveryTime;
+    private $PersonID;
+    private $Fullname;
+    private $LogonName;
+    private $HashedPassword;
+    private $IsSystemUser;
+    private $Role;
+    private $PhoneNumber;
+    private $EmailAddress;
+    private $DateOfBirth;
+    private $Photo;
+    private $LastEditedBy;
+    private $PassWordRecoveryString;
+    private $RecoveryStringTTL;
 
     function __construct()
     {
         Parent::__construct();
-        $this->table = 'People';
+        $this->table = 'people';
     }
-
     /**
      * @return mixed
      */
-    public function getPassword()
+    public function getPersonID()
     {
-        return $this->password;
+        return $this->PersonID;
     }
-
     /**
-     * @param mixed $password
+    * @param mixed $PersonID
+    */
+    public function setPersonID($PersonID)
+    {
+        $this->PersonID = $PersonID;
+    }
+    /**
+    * @return mixed
+    */
+    public function getFullname()
+    {
+    return $this->Fullname;
+    }/**
+     * @param mixed $Fullname
      */
-    public function setPassword($password)
+    public function setFullname($Fullname)
     {
-        $this->password = $password;
-    }
-
-    /**
+        $this->Fullname = $Fullname;
+    }/**
      * @return mixed
      */
-    public function getUsername()
+    public function getLogonName()
     {
-        return $this->username;
-    }
-
-    /**
-     * @param mixed $username
+        return $this->LogonName;
+    }/**
+     * @param mixed $LogonName
      */
-    public function setUsername($username)
+    public function setLogonName($LogonName)
     {
-        $this->username = $username;
-    }
-
-    /**
-     * @param $dbPassword
+        $this->LogonName = $LogonName;
+    }/**
+     * @return mixed
      */
-    public function setDbPassword($dbPassword)
+    public function getHashedPassword()
     {
-        $this->dbPassword = $dbPassword;
+        return $this->HashedPassword;
+    }/**
+     * @param mixed $HashedPassword
+     */
+    public function setHashedPassword($HashedPassword)
+    {
+        $this->HashedPassword = $HashedPassword;
+    }/**
+     * @return mixed
+     */
+    public function getIsSystemUser()
+    {
+        return $this->IsSystemUser;
+    }/**
+     * @param mixed $IsSystemUser
+     */
+    public function setIsSystemUser($IsSystemUser)
+    {
+        $this->IsSystemUser = $IsSystemUser;
+    }/**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->Role;
+    }/**
+     * @param mixed $Role
+     */
+    public function setRole($Role)
+    {
+        $this->Role = $Role;
+    }/**
+     * @return mixed
+     */
+    public function getPhoneNumber()
+    {
+        return $this->PhoneNumber;
+    }/**
+     * @param mixed $PhoneNumber
+     */
+    public function setPhoneNumber($PhoneNumber)
+    {
+        $this->PhoneNumber = $PhoneNumber;
+    }/**
+     * @return mixed
+     */
+    public function getEmailAddress()
+    {
+        return $this->EmailAddress;
+    }/**
+     * @param mixed $EmailAddress
+     */
+    public function setEmailAddress($EmailAddress)
+    {
+        $this->EmailAddress = $EmailAddress;
+    }/**
+     * @return mixed
+     */
+    public function getDateOfBirth()
+    {
+        return $this->DateOfBirth;
+    }/**
+     * @param mixed $DateOfBirth
+     */
+    public function setDateOfBirth($DateOfBirth)
+    {
+        $this->DateOfBirth = $DateOfBirth;
+    }/**
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->Photo;
+    }/**
+     * @param mixed $Photo
+     */
+    public function setPhoto($Photo)
+    {
+        $this->Photo = $Photo;
     }
-
-    public function getDbPassword()
+    /**
+    * @return mixed
+    */
+    public function getLastEditedBy()
     {
-        return $this->dbPassword;
+        return $this->LastEditedBy;
     }
-
-    public function setUserDataArray($sqlreturendsomething)
+    /**
+    * @param mixed $LastEditedBy
+    */
+    public function setLastEditedBy($LastEditedBy)
     {
-        $this->UserDataArray = $sqlreturendsomething;
+        $this->LastEditedBy = $LastEditedBy;
     }
-
-    public function  getUserDataArray()
+    /**
+    * @return mixed
+    */
+    public function getPassWordRecoveryString()
     {
-        return $this->UserDataArray;
+        return $this->PassWordRecoveryString;
     }
-
-    public function checkCredentials()
+    /**
+    * @param mixed $PassWordRecoveryString
+    */
+    public function setPassWordRecoveryString($PassWordRecoveryString)
     {
-        $getthedata=new Database();
-        //todofixpls Nope! fixing it would over complicate the shit out if it!
-        $sqlreturendsomething=$getthedata->selectStmt("SELECT * FROM people WHERE LogonName = '".$this->username . "'");
-        if(!$sqlreturendsomething)
-        {
-            return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
-        }
-        else
-        {
-            // return the password found in te database and place the userdata in a variable.
-            $this->setUserDataArray($sqlreturendsomething);
-            $this->setDbPassword($sqlreturendsomething[0]['HashedPassword']);
-            return true;
-        }
+        $this->PassWordRecoveryString = $PassWordRecoveryString;
+    }
+    /**
+    * @return mixed
+    */
+    public function getRecoveryStringTTL()
+    {
+        return $this->RecoveryStringTTL;
+    }
+    /**
+    * @param mixed $RecoveryStringTTL
+    */
+    public function setRecoveryStringTTL($RecoveryStringTTL)
+    {
+        $this->RecoveryStringTTL = $RecoveryStringTTL;
     }
 
     // this sets the TTL of the passwordrecovery link.

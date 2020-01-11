@@ -5,16 +5,20 @@ namespace Controller;
 
 use Model\Category;
 use Model\Database;
-use Model\File;
+use Model\Attachments;
+use Model\Discount;
+
 class CategoryController extends FileController
 {
     private $admin = 'content/backend/';
 
     function __construct()
     {
+        $this->discount = new Discount();
+
         $this->category = new category();
     }
-    public function retrieve($id){
+    public function retrieveCategory($id){
         $category = new category();
         $category = $category->retrieve($id);
         if(empty($category->getCategoryID()))
@@ -23,6 +27,32 @@ class CategoryController extends FileController
         }
 
         return $category;
+    }
+    public function retrieveAttachment($id){
+        $attachment = new Attachments();
+        $attachment = $attachment->retrieve($id);
+        if(empty($attachment->getAttachmentID()))
+        {
+            //header("Location: /404", true);
+        }
+        return $attachment;
+    }
+
+    public function getParentCategoryfromCategory($category){
+        if($category->getParentCategory() != null){
+            return $this->retrieveCategory($category->getParentCategory());
+        }else {
+            return null;
+        }
+    }
+
+
+    public function getAttachmentfromCategory($category){
+        if($category->getAttachmentID() != null){
+            return $this->retrieveCategory($category->getAttachmentID());
+        }else {
+            return null;
+        }
     }
     public function create()
     {
@@ -33,7 +63,42 @@ class CategoryController extends FileController
 
         include $this->admin . 'onderhoudc.php';
     }
+    public function GetAllDiscountsForcategorie()
+    {
+        $specialdeals = $this->discount->retrieve();
 
+        foreach ($specialdeals as $specialdeal) {
+            $result = '';
+            $result .= '<tr>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedProductIDs[]" id="selectTableRow" value="'. $specialdeal->getSpecialDealID().'"></td>
+                   <td class="col-md-4">' . $specialdeal->getDealDescription() . '</td>
+                   <td class="col-md-2">' . $specialdeal->getDiscountPercentage() . '</td>
+                   <td class="col-md-4">' . $specialdeal->getActive() . '</td>
+                </tr>';
+            echo $result;
+        }
+    }
+    public function GetAllDiscountsForActiveCategorie($categorie)
+    {
+        $specialdealActive = $this->discount->retrieve($categorie->getSpecialDealID());
+        $specialdeals = $this->discount->retrieve();
+
+        foreach ($specialdeals as $specialdeal) {
+            $result = '';
+            $result .= '<tr>';
+            if($specialdeal->getSpecialDealID() == $specialdealActive->getSpecialDealID()){
+                $result .= '<td class="col-md-2"><input class="selectTableRow" checked type="checkbox" name="selectedProductIDs[]" id="selectTableRow" value="'. $specialdeal->getSpecialDealID().'"></td>';
+            }else{
+                $result .= '<td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedProductIDs[]" id="selectTableRow" value="'. $specialdeal->getSpecialDealID().'"></td>';
+            }
+            $result .= '<td class="col-md-4">' . $specialdeal->getDealDescription() . '</td>
+                   <td class="col-md-2">' . $specialdeal->getDiscountPercentage() . '</td>
+                   <td class="col-md-4">' . $specialdeal->getActive() . '</td>
+                </tr>';
+        }
+         echo $result;
+
+    }
     /**
      * Stores the product in the database.
      *
@@ -47,12 +112,11 @@ class CategoryController extends FileController
             return false;
         };
         $this->category = $category;
-        if(isset($_FILES)){
+        if(isset($_FILES) && $_FILES['fileToUpload'] != null && $_FILES["fileToUpload"]["tmp_name"] != null){
             $attachmentID = $this->upload($this->category->getLastEditedBy());
-            var_dump($attachmentID);
             $category->setAttachmentID($attachmentID);
-            var_dump($category);
-
+        }else{
+            $category->setAttachmentID(null);
         }
 
         if (!$this->category->save())
@@ -87,6 +151,7 @@ class CategoryController extends FileController
     function GetAllCategories()
     {
         $categories = $this->category->getAllActiveCategories();
+
         foreach($categories as $category){
             $result = '';
             $result .= '<tr style="height:40px;">

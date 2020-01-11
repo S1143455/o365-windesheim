@@ -7,11 +7,14 @@ use Model\Product;
 use Model\Supplier;
 use Model\Attachments;
 use Model\ShoppingCart;
+use Controller\MainController;
 
 Class ProductController
 {
     private $viewPath = 'views/product/';
+
     private $product;
+
     private $category;
     private $supplier;
     private $attachments;
@@ -37,7 +40,6 @@ Class ProductController
 
         $categories = new Category();
         $categories = $categories->retrieve();
-
 
         return include $this->viewPath . 'index.php';
     }
@@ -116,9 +118,25 @@ Class ProductController
         }
 
         echo '<br>'. $product->getStockItemName() .'<br>';
+        var_dump($this->viewPath);
         return include_once $this->viewPath . 'show.php';
     }
+    public function show1($id)
+    {
+        $product = new Product();
+        $product = $product->retrieve($id);
+        if(empty($product->getStockItemID()))
+        {
+//            header("Location: /404", true);
+        }
 
+        echo '<br>'. $product->getStockItemName() .'<br>';
+        var_dump($this->viewPath);
+        var_dump(getenv('template'));
+        header("Location: /".  getenv('ROOTAdmin') ."/product/". $product->getStockItemID() . "");
+        return true;
+        //return include_once $this->viewPath . 'show.php';
+    }
     public function admin(){
         $product = new Product();
         $products = $product->retrieve();
@@ -127,9 +145,18 @@ Class ProductController
 
         $supplier = new Supplier();
         $suppliers = $supplier->retrieve();
+        //var_dump($this->viewPath);
         return include_once $this->viewPath . 'admin.php';
     }
-
+    function searchProduct($products, $field, $value)
+    {
+        foreach($products as $key => $product)
+        {
+            if ( $product[$field] === $value )
+                return $key;
+        }
+        return false;
+    }
     public function getSizeString($sz){
         switch ($sz) {
             case 1:
@@ -160,6 +187,7 @@ Class ProductController
     public function productDetail(){
         if(isset($_POST['srchProduct'])){
 
+            $main = new MainController();
             $cart= new shoppingCart();
             $attachment = new attachments();
             $product = new product();

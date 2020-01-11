@@ -5,6 +5,7 @@ include_once 'content/frontend/header.php';
 
 $cat_srch = false;
 $prod_srch = false;
+$productsPerPage = 11;
 $prod_counter = 1;
 $last = false;
 $i = 1;
@@ -17,19 +18,16 @@ if(isset($_POST['previous'])){
         $cat_srch = true;
     }
 
-    $prod_counter = $_POST['prodCounter'] - 6;
+    $prod_counter = $_POST['prodCounter'] - $productsPerPage;
 }
+
 if(isset($_POST['next'])){
     $cat_to_srch = $_POST['categoryID'];
 
     if($cat_to_srch != '') {
         $cat_srch = true;
     }
-    $prod_counter = $_POST['prodCounter'] + 6;
-}
-
-if ($prod_counter < 1){
-    $prod_counter = 1;
+    $prod_counter = $_POST['prodCounter'] + $productsPerPage;
 }
 
 //product search
@@ -37,8 +35,15 @@ if(isset($_POST['srchProduct'])){
     $prod_srch = true;
 }
 
-//category search OR back from productDetail
-if(isset($_POST['srchCategory']) || isset($_POST['prdBack'])){
+//category search
+if(isset($_POST['srchCategory'])){
+    $cat_srch = true;
+    $cat_to_srch = $_POST['categoryID'];
+    $prod_counter = 1;
+}
+
+//back from productDetail
+if(isset($_POST['prdBack']) && (!$_POST['home'])){
     $cat_srch = true;
     $cat_to_srch = $_POST['categoryID'];
     $prod_counter = 1;
@@ -60,16 +65,21 @@ if($cat_srch){
     $cat_parent = '';
     $categories = $category->retrieve();
 }
+
+if ($prod_counter < 1){
+    $prod_counter = 1;
+}
+
 ?>
     <div>
         <?php if($cat_srch){
-            echo '<form method="post" action="'. $this->root . '" >';
+            echo '<form method="post" action="'. $this->root . '" class="padding-top1em">';
             echo '<input type="text" name="categoryID" style="display:none;" value="' . $cat_parent->getCategoryID() . '">';
             echo '<button name="back" type="submit">Terug</button>';
             echo '</form>';
         };?>
 
-        <div id="adv" class="col-md-12 banner">
+        <div id="adv" class="col-md-12 banner padding-top1em">
         <?php if ($cat_srch and $cat_parent->getCategoryID() != ''){echo '<h3>' . $cat_parent->getCategoryName() . '</h3>';}; ?>
         </div>
 
@@ -89,7 +99,6 @@ if($cat_srch){
                 echo '<h3>Kies je lekkerste chocoladesoort...</h3>';
             };?>
             <div class="row">
-
                 <?php
                 foreach($categories as $cat){
                     if (!$cat_srch or $cat->getCategoryID() == ''){
@@ -97,22 +106,25 @@ if($cat_srch){
                             continue;
                         }
                     }
-                    $attachment = $attachment->retrieve($cat->getAttachmentID());
 
-                    echo '<form method="post" action="' . $this->root . '" >';
-                        echo '<input type="text" name="categoryID" style="display:none;" value="' . $cat->getCategoryID() . '">';
-                        echo '<button name="srchCategory" type="submit" value="search category" class="categorybox col-md-2">';
-                        echo '<div class="cat-title">' . $cat->getCategoryName() . '</div>';
-                        echo '<img class="img-responsive img-fit" src="' . $attachment->getFileLocation() .'">';
-                        echo '</button>';
-                    echo '</form>';
+                    echo '<div class="col-md-2">';
+                        echo '<div class="categorybox">';
+                            echo '<form method="post" action="' . $this->root . '" class="">';
+                                echo '<input type="text" name="categoryID" style="display:none;" value="' . $cat->getCategoryID() . '">';
+                                echo '<button name="srchCategory" type="submit" value="search category">';
+                                echo '<div class="cat-title">' . $cat->getCategoryName() . '</div>';
+                                $this->showAttachment($cat->getAttachmentID(), false,'img-responsive cat-img');
+                                echo '</button>';
+                            echo '</form>';
+                        echo '</div>';
+
+                    echo '</div>';
                 }
                     ?>
             </div>
         </div>
-
         <div id = "products" class="padding-top1em">
-            <?php echo (!$cat_srch) ? '<h3>Onze producten</h3>' : '<h3>Producten</h3>'; ?>
+            <?php echo (!$cat_srch) ? '<h4>Onze producten</h4>' : '<h4>Producten</h4>'; ?>
             <div class="row">
                 <?php
                 //get products based on category, or all products if none category is chosen
@@ -125,36 +137,38 @@ if($cat_srch){
                 $one = false;
 
                 foreach($products as $prod){
-                    if($i < $prod_counter || $i > $prod_counter + 5){
+                    if($i < $prod_counter || $i > $prod_counter + $productsPerPage){
                         $i++;
                         continue;
-                    }else{
-                        if ($i >=  $prod_counter + 6){
-                            $last = true;
-                        }
-                    }
-                    if($prod->getStockItemID() == ''){
-                        continue;
                     }
 
-                    if ($prod->getAttachmentID() != 0) {
-                        $attachment = $attachment->retrieve($prod->getAttachmentID());
-                    }else{
-                        $attachment =  '';
+                    if($prod->getStockItemName() == ''){
+                       continue;
                     }
+
                     $one = true;
+                    echo '<div class="col-md-4 padding-bottom1em">';
+                        echo '<div class="productbox">';
 
-                    echo '<form method="post" action="' . $this->root . '/productdetail" >';
-                    echo '<input type="text" name="productID" style="display:none;" value="' . $prod->getStockItemID() . '">';
-                    echo '<div class="productbox col-md-5">';
-                    echo '<img class="img-responsive img-fit" src="' . ($attachment == '') ? '' : $attachment->getFileLocation() . '">';
-                    echo '<button name="srchProduct" type="submit" value="search product" class="productButton">';
-                    echo 'Bekijken';
-                    echo '</button>';
-                    echo $prod->getStockItemName();
-                    echo $prod->getRecommendedRetailPrice();
+                            echo '<div class="imagebox">';
+                            $this->showAttachment($prod->getAttachmentID(), false, 'img-responsive img-fit');
+                            echo '</div>';
+
+                            echo '<div class="productDetail">';
+                                echo '<form method="post" action="' . $this->root . '/productdetail">';
+                                echo '<input type="text" name="home" style="display:none;" value="' . (($cat_srch) ? false : true) . '">';
+                                echo '<input type="text" name="productID" style="display:none;" value="' . $prod->getStockItemID() . '">';
+                                echo '<b>' . $prod->getStockItemName() . '</b><br>';
+                                echo '€' . $prod->getRecommendedRetailPrice();
+                                    echo '<button name="srchProduct" type="submit" value="search product" class="productButton">';
+                                    echo 'Bekijken';
+                                    echo '</button>';
+                                echo '<br>';
+                                echo '</form>';
+                            echo '</div>';
+
+                        echo '</div>';
                     echo '</div>';
-                    echo '</form>';
                     $i++;
                 }
                 if (!$one){
@@ -166,21 +180,13 @@ if($cat_srch){
             <div id="navigator">
                 <?php echo '<form method="post" action="' . $this->root . '">';
                 echo '<input type="text" name="prodCounter" style="display:none;" value ="' . $prod_counter . '">';
+                echo '<input type="text" name="categoryID" style="display:none;" value="' . (($cat_srch) ? $cat_parent->getCategoryID() : '') . '">';
 
-                $catID='';
-                if ($cat_srch){
-                    $catID = $cat_parent->getCategoryID();
-                }
-                echo '<input type="text" name="categoryID" style="display:none;" value="' . $catID . '">';
-
-                if($prod_counter - 5 > 0){
+                if($prod_counter - $productsPerPage > 0){
                     echo '<button type="submit" name="previous">Vorige..</button>';
                 }
 
-                if(count($products)<=6){
-                    $last = true;
-                }
-                if(!$last) {
+                if((count($products) - $productsPerPage) > 12) {
                     echo '<button type="submit" name="next">Volgende..</button>';
                 }
                 ?>

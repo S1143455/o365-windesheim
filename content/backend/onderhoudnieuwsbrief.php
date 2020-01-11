@@ -1,6 +1,6 @@
 <?php
 include_once 'content/backend/header-admin.php';
-include_once 'content/backend/sidebar-admin.php';
+//include_once 'content/backend/sidebar-admin.php';
 include 'content/frontend/display_message.php';
 //include_once 'content/backend/footer-admin.php';
 
