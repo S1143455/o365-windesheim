@@ -75,20 +75,20 @@ class DiscountController
         $categorys = $this->category->retrieve();
 
         foreach ($categorys as $category) {
-        $result = '';
-        $result .= '<tr>
+            $result = '';
+            $result .= '<tr>
                    <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedCategoryIDs[]" id="selectTableRow" value="'. $category->getCategoryID().'"></td>
                    <td class="col-md-2">' . $category->getCategoryID() . '</td>
                    <td class="col-md-4">' . $category->getCategoryName() . '</td>
                    <td class="col-md-2">' . $category->getParentCategory() . '</td>
                    <td class="col-md-2">' . $category->getSpecialDealID() . '</td>
                 </tr>';
-        echo $result;
+            echo $result;
         }
     }
     public function create()
     {
-       print_r($_POST);
+        print_r($_POST);
         $this->discount = new discount();
         $this->discount->initialize();
         var_dump($this->discount);
@@ -123,16 +123,15 @@ class DiscountController
         $this->discount->initialize();
         //ingelogde gebruiker
         $this->discount->setLastEditedBy(1);
-        var_dump($_POST);
-        if (isset($_POST["selectedProductIDs"])) {
-            foreach ($_POST["selectedProductIDs"] as $id) {
+        if ($_POST("StockItemID")) {
+            foreach ($_POST["StockItemID"] as $id) {
                 $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
                 $this->storeProduct($this->product);
             }
         }
-        if (isset($_POST["selectedCategoryIDs"])){
-            foreach ($_POST["selectedCategoryIDs"] as $id) {
+        if ($_POST("CategoryID")){
+            foreach ($_POST["CategoryID"] as $id) {
                 $this->category->retrieve($id);
                 $this->category->setSpecialDealID($this->category->getSpecialDealID());
                 $this->storeCategory($this->category);
@@ -185,8 +184,8 @@ class DiscountController
 //                    </div>
 //';
 //        }else{
-            return "";
-        }
+        return "";
+    }
 //    }
     /**
      * Stores the product in the database.
