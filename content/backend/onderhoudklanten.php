@@ -2,12 +2,14 @@
 include_once 'content/backend/header-admin.php';
 
 use Model\Customer;
-
+use Model\People;
+use Model\Adress;
 if (isset($_POST['id'])) {
     $customerID = $_POST['id'];
     if ($customerID != 0) {
         $customer = $customerController->retrieve($customerID);
-        $customer->getCustomerID();
+        $person =  $userController->retrieveUser($customer->getPersonID());
+        $adress = $adressController->retrieveWhereP($person->getPersonID());
 
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditCustomerDialog').modal('show');   }); </script>";
     }
@@ -43,7 +45,7 @@ if (isset($_POST['id'])) {
                                         <th class="col-md-3">Email</th>
                                         <th class="col-md-3">Naam</th>
                                         <th class="col-md-2">Laatste bestelling</th>
-                                        <th class="col-md-2">Nieuwsbrief</th>
+                                        <th class="col-md-1">Nieuwsbrief</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tbodyCustomer">
@@ -77,45 +79,69 @@ if (isset($_POST['id'])) {
                                 <span class="col-4" id="CustomerID"
                                       style="padding-left: 0px;"><?php echo($customer->getCustomerID()) ?>
                             </div>
+                            <div class="form-group" style="display: none;">
+                                <label class="col-5" for="CustomerID">CustomerID:</label>
+                                <input class="col-4 form-control" type="text" name="CustomerID" id="CustomerID"
+                                       value="<?php echo($customer->getCustomerID()) ?>">
+                            </div>
+                            <div class="form-group" style="display: none;">
+                                <label class="col-5" for="PersonID">PersonID:</label>
+                                <input class="col-4 form-control" type="text" name="PersonID" id="PersonID"
+                                       value="<?php echo($person->getPersonID()) ?>">
+                            </div>
+                            <div class="form-group" style="display: none;">
+                                <label class="col-5" for="AddressId">AddressId:</label>
+                                <input class="col-4 form-control" type="text" name="AddressId" id="AddressId"
+                                       value="<?php echo($adress->getAddressId()) ?>">
+                            </div>
                             <div class="form-group col-12">
                                 <label class="col-5" for="FullName">Volledige naam:</label>
                                 <input class="col-7 form-control" type="text" name="FullName" id="FullName"
-                                       value="<?php echo($customer->getFullNameOnID($customerID)) ?>">
+                                       value="<?php echo($person->getFullName()) ?>">
                             </div>
                             <div class="form-group col-12">
                                 <label class="col-5" for="DateOfBirth">Geboortedatum:</label>
                                 <input class="col-3 form-control" type="date" name="DateOfBirth" id="DateOfBirth"
-                                       value="<?php echo($customer->getDateOfBirthOnID($customerID)) ?>">
+                                       value="<?php echo($person->getDateOfBirth()) ?>">
                             </div>
                             <div class="form-group col-12">
                                 <label class="col-5 control-label" for="Adress">Straat:</label>
                                 <input class="col-7 form-control" type="text" name="Adress" id="Adress"
-                                       value="<?php echo($customer->getAddressOnID($customerID)) ?>">
+                                       value="<?php echo($adress->getAddress()) ?>">
                             </div>
                             <div class="form-group col-12">
                                 <label class="col-5 control-label" for="Zipcode">Postcode:</label>
                                 <input class="col-2 form-control" type="text" name="Zipcode" id="Zipcode"
-                                       value="<?php echo($customer->getZipCodeOnID($customerID)) ?>">
+                                       value="<?php echo($adress->getZipcode()) ?>">
                             </div>
                             <div class=" form-group col-12">
                                 <label class="col-5" for="City">Woonplaats:</label>
                                 <input class="col-7 form-control" name="City" id="City"
-                                       value="<?php echo($customer->getCityOnID($customerID)) ?>">
+                                       value="<?php echo($adress->getCity()) ?>">
                             </div>
                             <div class=" form-group col-12">
                                 <label class="col-5" for="EmailAddress">Email:</label>
                                 <input class="col-7 form-control" name="EmailAddress" id="EmailAddress"
-                                       value="<?php echo($customer->getEmailAddressOnID($customerID)) ?>">
+                                       value="<?php echo($person->getEmailAddress()) ?>">
+                            </div>
+                            <div class="form-group col-4">
+                                <div>
+                                    <label class="control-label" for="orderid">Bestelnummer:</label>
+                                </div>
+                                <div>
+                                    <input class="form-control" type="text" name="orderid" id="orderid">
+                                </div>
                             </div>
                             <div class="form-group col-12">
                                 <label class="col-5 control-label">Nieuwsbrief:</label>
                                 <input class="checkboxOneTime" type="checkbox" name="newsletter" id="newsletter"
                                        value="<?php echo($customer->getNewsletter()) ?>
                             </div>
-                            <div class=" col-12">
+                            <div class="col-12">
                                 <button class="col-3 btn btn-outline-secondary" type="button">Wachtwoord resetten
                                 </button>
                             </div>
+                            <br>
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -4,6 +4,7 @@ include_once 'loader.php';
 include_once 'content/frontend/header.php';
 
 $cat_srch = false;
+$cat_to_srch = '';
 $prod_srch = false;
 $productsPerPage = 11;
 $prod_counter = 1;
@@ -58,6 +59,7 @@ if(isset($_POST['back'])){
     $prod_counter = 1;
 }
 
+//if category is searched, then load new category and categories belonging to searched category
 if($cat_srch){
     $cat_parent = $category->retrieve($cat_to_srch);
     $categories = $category->where("*", "ParentCategory", "=", $cat_parent->getCategoryID());
@@ -66,13 +68,16 @@ if($cat_srch){
     $categories = $category->retrieve();
 }
 
+//reset product_counter
 if ($prod_counter < 1){
     $prod_counter = 1;
 }
 
 ?>
     <div>
-        <?php if($cat_srch){
+        <?php
+        //if category is searched, then show back button
+        if($cat_srch){
             echo '<form method="post" action="'. $this->root . '" class="padding-top1em">';
             echo '<input type="text" name="categoryID" style="display:none;" value="' . $cat_parent->getCategoryID() . '">';
             echo '<button name="back" type="submit">Terug</button>';
@@ -83,7 +88,9 @@ if ($prod_counter < 1){
         <?php if ($cat_srch and $cat_parent->getCategoryID() != ''){echo '<h3>' . $cat_parent->getCategoryName() . '</h3>';}; ?>
         </div>
 
-        <?php if (!$cat_srch){ ?>
+        <?php
+        //if no category searched, then show content from homepage
+        if (!$cat_srch){ ?>
         <div id="info">
             <?php $this->showContent("TITLE"); ?>
             <br>
@@ -102,11 +109,12 @@ if ($prod_counter < 1){
                 <?php
                 foreach($categories as $cat){
                     if (!$cat_srch or $cat->getCategoryID() == ''){
-                        if($cat->getParentCategory() != $cat_srch){
+                        if($cat->getParentCategory() != $cat_to_srch){
                             continue;
                         }
                     }
 
+                    //show category boxes
                     echo '<div class="col-md-2">';
                         echo '<div class="categorybox">';
                             echo '<form method="post" action="' . $this->root . '" class="">';
@@ -127,7 +135,7 @@ if ($prod_counter < 1){
             <?php echo (!$cat_srch) ? '<h4>Onze producten</h4>' : '<h4>Producten</h4>'; ?>
             <div class="row">
                 <?php
-                //get products based on category, or all products if none category is chosen
+                //get products based on category, or all products if no category is chosen
                 if(!$cat_srch){
                     $products = $product->retrieve();
                 }else {
@@ -137,11 +145,14 @@ if ($prod_counter < 1){
                 $one = false;
 
                 foreach($products as $prod){
+
+                    //check prod_counter for navigation to determine products to show on chosen page
                     if($i < $prod_counter || $i > $prod_counter + $productsPerPage){
                         $i++;
                         continue;
                     }
 
+                    //if there ain't a description, don't show product
                     if($prod->getStockItemName() == ''){
                        continue;
                     }
@@ -177,6 +188,7 @@ if ($prod_counter < 1){
                 ?>
             </div>
 
+            <!-- navigator buttons -->
             <div id="navigator">
                 <?php echo '<form method="post" action="' . $this->root . '">';
                 echo '<input type="text" name="prodCounter" style="display:none;" value ="' . $prod_counter . '">';
@@ -193,6 +205,9 @@ if ($prod_counter < 1){
                 </form>
             </div>
         </div>
+    </div>
+    </div>
+</div>
     </div>
 <?php
 //include 'content/frontend/itemlist.php';

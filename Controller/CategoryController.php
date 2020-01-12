@@ -155,11 +155,10 @@ class CategoryController extends FileController
         foreach($categories as $category){
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-md-1"><button type="submit" name="id" value="' . $category->getCategoryID() .'">Edit</button></td>
+                            <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $category->getCategoryID() .'">Edit</button></td>
                             <td class="col-md-2">' . $category->getCategoryID() .'</td>
                             <td class="col-md-5">' . $category->getCategoryName() .'</td>
                             <td class="col-md-2">' . $category->getParentCategory() .'</td>
-                            <td class="col-md-2">iets</td>
                         </tr>';
 
             echo $result;

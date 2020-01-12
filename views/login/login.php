@@ -6,8 +6,8 @@ include 'content/frontend/display_message.php';
     if (isset($_POST['login'])) {
     $authenticationController->login($_POST['gbrkr'], $_POST['pw']);
     }
-if (isset($_POST['create'])) {
-    $authenticationController->createbas();
+if (isset($_POST['createaccount'])) {
+    echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "account-toevoegen\">";
 }
     if (isset($_POST['sendpassword'])) {
     include "content/frontend/sendemailaddress.php";
@@ -116,7 +116,7 @@ if (isset($_POST['create'])) {
 <!--                                </button>-->
 <!--                            </div>-->
 <!--                        </div>-->
-<!--                    </div>-->
+<!--                    </div>-->s
 <!--                </div>-->
 <!--            </div>-->
 <!--        </form>-->

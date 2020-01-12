@@ -128,7 +128,7 @@ class Models
             "SupplierID" => ['Supplier', 'HasOne', 'Required'],
             "Brand" => ['Varchar', 'Attribute', 'Required'],
             "Size" => ['Integer', 'Attribute', 'Nullable'],
-            "LoadTimeDays" => ['Integer', 'Attribute', 'Nullable'],
+            "LeadTimeDays" => ['Integer', 'Attribute', 'Nullable'],
             "IsChillerStock" => ['Boolean', 'Attribute', 'Nullable'],
             "BarCode" => ['Varchar', 'Attribute', 'Required'],
             "TaxRate" => ['Integer', 'Attribute', 'Required'],
@@ -277,7 +277,6 @@ class Models
     {
         $this->column = array(
             "CustomerID" => ['Integer', 'PrimaryKey', 'Required' ],
-            "AddressID" => ['Integer', 'Attribute', 'Unique'],
             "PersonID" => ['Integer', 'HasOne', 'Required'],
             "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
             "Gender" => ['Varchar', 'Attribute', 'Required'],

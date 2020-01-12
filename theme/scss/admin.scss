@@ -77,7 +77,7 @@ body {
 .discountButton {
   display: block;
   white-space: nowrap;
-  background-color: #808080 !important;
+  //background-color: #808080 !important;
   margin-top: 1%;
   width: 200px;
 }
@@ -176,26 +176,26 @@ h4 {
   width: 100%;
   max-height: 450px;
 
-  //tbody {
-  //  height: 200px;
-  //  overflow-y: auto;
-  //  width: 100%;
-  //}
+  tbody {
+    height: 200px;
+    overflow-y: auto;
+    width: 100%;
+  }
 
   thead, tbody, tr, td, th {
-    //display:block;
+    display:block;
   }
 
   tbody {
     td {
-      //float:left;
+      float:left;
     }
   }
 
   thead {
     tr {
       th {
-        //float:left;
+        float:left;
         background-color: $secondary;
         border-color: #ffad54;
       }

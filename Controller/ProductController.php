@@ -67,7 +67,7 @@ Class ProductController
     {
         if (!$product->initialize())
         {
-            print_r($_GET);
+            //print_r($_GET);
             return false;
         };
 
@@ -118,7 +118,7 @@ Class ProductController
         }
 
         echo '<br>'. $product->getStockItemName() .'<br>';
-        var_dump($this->viewPath);
+        //var_dump($this->viewPath);
         return include_once $this->viewPath . 'show.php';
     }
     public function show1($id)
@@ -131,8 +131,8 @@ Class ProductController
         }
 
         echo '<br>'. $product->getStockItemName() .'<br>';
-        var_dump($this->viewPath);
-        var_dump(getenv('template'));
+        //var_dump($this->viewPath);
+        //var_dump(getenv('template'));
         header("Location: /".  getenv('ROOTAdmin') ."/product/". $product->getStockItemID() . "");
         return true;
         //return include_once $this->viewPath . 'show.php';

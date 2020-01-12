@@ -1,7 +1,7 @@
 <?php
 /**
  * ALL Routes the website uses will be defined here.
-*/
+ */
 
 $router->route('/', function() use ($mainController){
     //return include 'content/frontend/home.php';
@@ -194,7 +194,13 @@ $router->route('/admin/UpdateDiscount', function() use($discountController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
-        return $discountController->update();
+        $test = true;
+        $_POST['test'] = true;
+        if($test){
+            return include 'content/backend/onderhoudkorting.php';
+        }else{
+            return $discountController->update();
+        }
     }
 });
 

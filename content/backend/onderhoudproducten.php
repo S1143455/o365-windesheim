@@ -45,7 +45,7 @@ use Model\Product;
             </div>
             <div class="row">
                 <div class="col-12 col-md-1 col-lg-1">
-                <button type="button" class="firstdiscountButton btn btn-primary" data-toggle="modal" data-target="#createProduct">
+                <button type="button" class="firstdiscountButton btn btn-primary tableEditButton" data-toggle="modal" data-target="#createProduct">
                     Product toevoegen
                 </button>
             </div>
@@ -113,8 +113,8 @@ use Model\Product;
                                 </div>
                                 <div class="col-md-12">
                                     <br>
-                                    <label for="loadTimeDays">Aanvulling voorraad (in dagen)</label>
-                                    <input type="number" class="form-control" name="loadTimeDays" id="loadTimeDays" required>
+                                    <label for="LeadTimeDays">Aanvulling voorraad (in dagen)</label>
+                                    <input type="number" class="form-control" name="LeadTimeDays" id="LeadTimeDays" required>
                                 </div>
                                 <div class="col-md-12">
                                     <br>

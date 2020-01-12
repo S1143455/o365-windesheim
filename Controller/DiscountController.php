@@ -75,23 +75,23 @@ class DiscountController
         $categorys = $this->category->retrieve();
 
         foreach ($categorys as $category) {
-        $result = '';
-        $result .= '<tr>
+            $result = '';
+            $result .= '<tr>
                    <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedCategoryIDs[]" id="selectTableRow" value="'. $category->getCategoryID().'"></td>
                    <td class="col-md-2">' . $category->getCategoryID() . '</td>
                    <td class="col-md-4">' . $category->getCategoryName() . '</td>
                    <td class="col-md-2">' . $category->getParentCategory() . '</td>
                    <td class="col-md-2">' . $category->getSpecialDealID() . '</td>
                 </tr>';
-        echo $result;
+            echo $result;
         }
     }
     public function create()
     {
-       print_r($_POST);
+       // print_r($_POST);
         $this->discount = new discount();
         $this->discount->initialize();
-        var_dump($this->discount);
+
         //hierzou ie een special deal id moeten hebben
         $this->discount->setLastEditedBy(1);
         $this->storeDiscount($this->discount);
@@ -184,8 +184,8 @@ class DiscountController
 //                    </div>
 //';
 //        }else{
-            return "";
-        }
+        return "";
+}
 //    }
     /**
      * Stores the product in the database.
@@ -197,7 +197,7 @@ class DiscountController
     {
         if (!$discount->initialize())
         {
-            print_r($_GET);
+            //print_r($_GET);
             return false;
         };
 
@@ -217,11 +217,9 @@ class DiscountController
      */
     public function storeProduct($product)
     {
-        //var_dump($discount);
-
         if (!$product->initialize())
         {
-            print_r($_GET);
+            //print_r($_GET);
             return false;
         };
 
@@ -244,7 +242,7 @@ class DiscountController
 
         if (!$category->initialize())
         {
-            print_r($_GET);
+            //print_r($_GET);
             return false;
         };
 

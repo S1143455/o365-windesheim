@@ -20,6 +20,7 @@ $orderController = new Controller\OrderController();
 $orderLineController = new Controller\OrderlineController();
 $customerController = new Controller\CustomerController();
 $shoppingcartStockitems= new Controller\ShoppingcartStockitemsController();
+$adressController = new Controller\AdressController();
 
 switch ($userController->role()){
     case 'admin' :
@@ -30,16 +31,13 @@ switch ($userController->role()){
         break;
     default:
         break;
+
+
 }
 
-
-if (isset($_SESSION['authenticated']) && !isset($_SESSION['authenticatedAdmin']))
-{
+if (isset($_SESSION['authenticated']) && !isset($_SESSION['authenticatedAdmin'])) {
     echo '<div class="container" style="width:100%">
             <div class="row">';
     include_once 'content/frontend/sidebar.php';
     echo '</div> </div>';
 }
-
-
-
