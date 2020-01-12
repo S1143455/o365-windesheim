@@ -19,9 +19,11 @@ use Model\People;
 use Model\Adress;
 if (isset($_POST['id'])) {
     $customerID = $_POST['id'];
+    $customers = $customerController->getallcustomers();
+
     if ($customerID != 0) {
         $customer = $customerController->retrieve($customerID);
-        var_dump($customer->getCustomerID());
+//        var_dump($customer->getCustomerID());
         $orders = $customerController->retrieveOrder($customer->getCustomerID());
         $person =  $userController->retrieveUser($customer->getPersonID());
         $adress = $adressController->retrieveWhereP($person->getPersonID());
@@ -159,48 +161,60 @@ if (isset($_POST['id'])) {
                             <?php if(!empty($orders) && $orders[0] != null && $orders[0]->getOrderID() != null){
                             echo "<form role='form' id='table' method='POST' action=''>";
                                 foreach($orders as $order){
-                                echo ' <div class="accordion" id="accordionExample">
+                                echo ' <div class="accordion" id="orderDetail">
                                             <div class="card">
-                                                <div class="card-header" id="headingOne">
+                                                <div class="card-header" id="heading'. $order->getOrderID() .'">
                                                     <div class="row">
                                                         <div class="form-group col-md-12">
                                                         <span class="col-md-4">
-                                                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            '. $order->getOrderID() .'
-                                                        </button></span>
+                                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse'. $order->getOrderID() .'" aria-expanded="true" aria-controls="collapse'. $order->getOrderID() .'">
+                                                                '. $order->getOrderID() .'
+                                                            </button>
+                                                        </span>
                                                             <span class="col-md-4" id="orderdate">'. $order->getOrderDate() .'</span>
                                                             <span class="col-md-4" id="orderamount">'. $order->getOrderDate() .'</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div id="collapse'. $order->getOrderID() .'" class="collapse" aria-labelledby="heading'. $order->getOrderID() .'" data-parent="#orderDetail">
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="table-fixed">
-                                                                <div class="table-fixed">
-                                                                    <table id="OrderTable" class="table table-bordered">
+                                                                <table id="OrderTable" class="table table-bordered">
                                                                     <thead>
-                                                                    <tr>
-                                                                        <th class="col-md-4">Omschrijving</th>
-                                                                        <th class="col-md-2">Aantal</th>
-                                                                        <th class="col-md-2">Belastingspercentage</th>
-                                                                        <th class="col-md-2">Prijs excl. btw</th>
-                                                                        <th class="col-md-2">Prijs incl. btw</th>
-                                                                    </tr>
+                                                                        <tr>
+                                                                            <th class="col-md-4">Omschrijving</th>
+                                                                            <th class="col-md-2">Aantal</th>
+                                                                            <th class="col-md-2">Belastingspercentage</th>
+                                                                            <th class="col-md-2">Prijs excl. btw</th>
+                                                                            <th class="col-md-2">Prijs incl. btw</th>
+                                                                        </tr>
                                                                     </thead>
-                                                                    <tbody>';
-                                                                   $orderlines = $orderController->retrieveOrderLine($order->getOrderID());
-                                                                   var_dump($orderlines);
+                                                                <tbody>';
+                                                               $orderlines = $orderController->retrieveOrderLine($order->getOrderID());
 //                                                                    haal hier orderlines op  en products heb je niet nodig he
 //                                                                   alles staat op orderlines al, wel als je het totaal bedrag etc. wil berekenen?
-                                                                    foreach ($orderlines as $orderline) {
-
-                                                                    } 
-                                                                 echo'   </tbody>
-                                                                </table>
-                                                            </div>
+                                                                foreach ($orderlines as $orderline) {
+                                                                    echo '<tr>
+                                                                        <td class="col-md-4">' .$orderline->getDescription() .'</td>
+                                                                        <td class="col-md-2">' .$orderline->getQuantity() .'</td>
+                                                                        <td class="col-md-2">' .round($orderline->getTaxRate()) .'%</td>
+                                                                        <td class="col-md-2">' .$orderline->getUnitPrice() .'</td>
+                                                                        <td class="col-md-2">' .$orderController->calculateTotalPrice($orderline) .'</td>
+                                                                        </tr>';
+                                                                }
+                                                                echo '<tr>
+                                                                    <td class="col-md-4"></td>
+                                                                    <td class="col-md-2"></td>
+                                                                    <td class="col-md-2"></td>
+                                                                    <td class="col-md-2">Totaal prijs:</td>
+                                                                    <td class="col-md-2">' .$orderController->totaltotalprice($orderlines) .'</td>
+                                                                </tr>';
+                                                             echo'
+                                                               </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>

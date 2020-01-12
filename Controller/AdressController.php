@@ -29,7 +29,7 @@ class AdressController
     public function retrieve($id){
         $adress = new Adress();
         $adress = $adress->retrieve($id);
-        var_dump($adress);
+//        var_dump($adress);
         if(empty($adress->getAddressId()))
         {
             //header("Location: /404", true);

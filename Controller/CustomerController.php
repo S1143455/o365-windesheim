@@ -94,7 +94,6 @@ class CustomerController
     public function SearchCustomers($value){
         $customers = $this->customer->getAllCustomers();
 //        $people
-        var_dump($customers);
 
         $input = preg_quote('bl', '~'); // don't forget to quote input string!
         $data = array('orange', 'blue', 'green', 'red', 'pink', 'brown', 'black');
@@ -124,7 +123,7 @@ class CustomerController
             $person =  $this->retrievePerson($customer->getPersonID());
             $adress = $this->retrieveWhereP($person->getPersonID());
             if($adress != null){
-                var_dump($customer->getCustomerID());
+//                var_dump($customer->getCustomerID());
             }
             $result = '';
             $result .= '<tr>
@@ -246,12 +245,9 @@ class CustomerController
 
     public function store($customer)
     {
-//        var_dump($customer);
-        if (!$customer->initialize())
-        {
-}
+
         if (!$customer->initialize()) {
-            print_r($_GET);
+//            print_r($_GET);
             return false;
         };
 

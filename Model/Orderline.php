@@ -117,7 +117,7 @@ class Orderline extends Database
      */
     public function setQuantity($Quantity)
     {
-        $this->QuantityIndex = $Quantity;
+        $this->Quantity = $Quantity;
     }
     /**
      * @return mixed

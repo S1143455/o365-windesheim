@@ -69,13 +69,38 @@ class OrderController
     public function Calculate($orderLine)
     {
         $test = $this->retrieveOrderLine($orderLine->getOrderLineID());
-        var_dump($test);
-        var_dump($orderLine->getStockItemID());
-        var_dump($orderLine->getUnitPrice());
-        var_dump($orderLine->getQuantity());
-        var_dump($orderLine->getTaxRate());
+//        var_dump($test);
+//        var_dump($orderLine->getStockItemID());
+//        var_dump($orderLine->getUnitPrice());
+//        var_dump($orderLine->getQuantity());
+//        var_dump($orderLine->getTaxRate());
         return $orderLine->getUnitPrice() * $orderLine->getQuantity() * $orderLine->getTaxRate() ;
     }
+    public function totaltotalprice($orderlines){
+        $prijs = 0;
+        foreach($orderlines as $orderline){
+            $prijs = $prijs + $this->calculateTotalPrice($orderline);
+        }
+        return $prijs;
+    }
+    public function calculateTotalPrice($orderLine)
+    {
+        $unitPrice = $orderLine->getUnitPrice();
+        $amount = $orderLine->getQuantity();
+        $taxRate = round($orderLine->getTaxRate());
+
+
+        $base = 100;
+        $tax = $base + $taxRate;
+
+        $price = ($unitPrice / 100) * $tax;
+        $total = $amount * $price;
+
+        return $total;
+
+    }
+
+
     public function retrievePeople($id)
     {
         $person = new People();
@@ -120,6 +145,7 @@ class OrderController
             $orderLines = $this->retrieveOrderLine($order->getOrderID());
             $customer = $this->retrieveCustomer($order->getCustomerID());
             $person = $this->retrievePeople($customer->getPersonID());
+            var_dump($person);
             foreach ($orderLines as $orderLine) {
                 $products = $this->retrievestockitem($orderLine->getStockitemID());
                 foreach ($products as $prod){
@@ -138,33 +164,5 @@ class OrderController
             echo $result;
         }
 
-    }
-
-    function getCustomerOrders()
-    {
-        $orders = $this->order->getAllOrders();
-        foreach ($orders as $order) {
-            $totaal = 0;
-
-            $orderLines = $this->retrieveOrderLine($order->getOrderID());
-            $customer = $this->retrieveCustomer($order->getCustomerID());
-            $person = $this->retrievePeople($customer->getPersonID());
-            foreach ($orderLines as $orderLine) {
-                $products = $this->retrievestockitem($orderLine->getStockitemID());
-                foreach ($products as $prod){
-                    $totaal = $totaal + $prod->getUnitPrice();
-                }
-            }
-            $result = '';
-            $result .= '<tr style="height:40px;">
-                            <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary" name="id" value="' . $order->getOrderID() .'">Details</button></td>
-                            <td class="col-md-2">' . $order->getOrderID() . '</td>
-                            <td class="col-md-3">' . $person->getFullName() . '</td>
-                            <td class="col-md-3">' . $order->getOrderdate() . '</td>
-                            <td class="col-md-3">' . $totaal . '</td>
-                        </tr>';
-
-            echo $result;
-        }
     }
 }

@@ -95,7 +95,7 @@ include_once 'content/backend/sidebar-admin.php';
                         foreach ($orderlines as $orderline) {
                             $products = $orderController->retrievestockitemwhere($orderline->getStockItemID());
                             foreach ($products as $prod) {
-                                var_dump($orderline);
+//                                var_dump($orderline);
                                 $orderController->DisplayProduct($prod, $orderline);
                             }
                         }
