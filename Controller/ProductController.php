@@ -185,14 +185,15 @@ Class ProductController
     }
 
     public function productDetail(){
-        if(isset($_POST['srchProduct']) || isset($_POST['add'])){
+        $main = new MainController();
+        $cart= new shoppingCart();
+        $attachment = new attachments();
+        $product = new product();
 
-            $main = new MainController();
-            $cart= new shoppingCart();
-            $attachment = new attachments();
-            $product = new product();
+        if(isset($_POST['srchProduct']) || isset($_POST['add'])) {
             $prod = $product->retrieve($_POST['productID']);
-            include_once('views/product/productdetail.php');
         }
+
+        include_once('views/product/productdetail.php');
     }
 }

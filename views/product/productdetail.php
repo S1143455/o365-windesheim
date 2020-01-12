@@ -9,14 +9,12 @@ include 'content/frontend/display_message.php';
 if (isset($_POST['add']))
 {
     $updateCart=$cart->AddItem($_POST['add'],1);
-    if ($updateCart==1){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";}
-    else {echo display_message('info','Helaas is dit product niet meer op voorraad.'). "<META HTTP-EQUIV=Refresh CONTENT=\"3;\">";}
+    //if ($updateCart==1){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";}
+    if ($updateCart!=1){echo display_message('info','Helaas is dit product niet meer op voorraad.');}
 }
 
 if (isset($_POST['remove'])){
     $updateCart=$cart->RemoveItem($_POST['remove'],1);
-    if ($updateCart==1){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";}
-    //echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;\">";
 }
 
 ?>
@@ -57,7 +55,7 @@ if (isset($_POST['remove'])){
                     //values navigation through back-button
                     echo '<input type="text" name="home" style="display:none;" value="' . $_POST['home'] . '">';
                     echo '<input type="text" name="categoryID" style="display:none;" value="' . $prod->getCategoryID() . '">';
-                    
+
                     echo '<input type = "text" name = "productID" style = "display:none;" value = "'. $prod->getStockItemID() . '">';
                     echo '<td class="col-md-2"><button type="submit" name="add" value="' . $prod->getStockItemID() . '">Toevoegen aan winkelwagen</button></td>';
                     echo '</form>';

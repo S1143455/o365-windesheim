@@ -16,6 +16,10 @@ $router->route('/about-us', function(){
     return include 'content/frontend/about-us.php';
 });
 
+$router->route('/contact', function(){
+    return include 'views/contact/contact.php';
+});
+
 /**
  * Passwordrecovery
  */
