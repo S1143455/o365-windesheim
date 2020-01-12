@@ -4,19 +4,86 @@ include_once 'loader.php';
 include_once 'content/frontend/header.php';
 
 use Model\Customer;
+?>
 
-if (isset($_POST['submit'])) {
-    include 'loader.php';
-    $customerController->createMultipleP();
-    //die();
+<?php {
+    $nameErr = "";
+    $passwordErr = "";
+    $emailErr = "";
+    $usrnameErr = "";
+    $tandcErr = "";
+    $name = "";
+    $password = "";
+    $usrname = "";
+    $tandc = "";
+    $email = "";
+    $succes = true;
+
+    if (isset($_POST['submit'])) {
+        include 'loader.php';
+
+        if ($_POST['pwd'] == $_POST['pwd2']) {
+            $email = $customerController->Test_Input($_POST["EmailAddress"]);
+            // check if e-mail address is well-formed
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $emailErr = "Invalid email format";
+            }
+        } else {
+            $passwordErr = "password not same";
+        }
+        if ($succes) {
+            $customerController->createMultipleP();
+        } else {
+            echo "Er is iets mis gegaan!";
+        }
+        //die();
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (empty($_POST["FullName"])) {
+            $nameErr = "Naam is verplicht";
+        } else {
+            $name = $customerController->Test_Input($_POST["FullName"]);
+            // check if name only contains letters and whitespace
+            if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+                $nameErr = "Alleen letters worden geaccpeteerd";
+            }
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (empty($_POST["LogonName"])) {
+                $usrnameErr = "Gebruikersnaam is verplicht";
+            } else {
+                $name = $customerController->Test_Input($_POST["LogonName"]);
+                // check if name only contains letters and whitespace
+                if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+                    $nameErr = "Alleen letters worden geaccpeteerd";
+                }
+            }
+
+            if (empty($_POST["EmailAddress"])) {
+                $emailErr = "Email is verplicht";
+            } else {
+                $email = $customerController->Test_Input($_POST["EmailAddress"]);
+                // check if e-mail address is well-formed
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $emailErr = "Onjuiste email notatie";
+                }
+            }
+
+            if (empty($_POST["TermsAndConditions"])) {
+                $genderErr = "U dient akkoord te gaan met onze algemene voorwaarden!";
+            } else {
+                $tandc = $customerController->Test_Input($_POST["TermsAndConditions"]);
+            }
+        }
+    }
 }
-
 ?>
 <p><h2>Account aanmaken</h2></p> </br>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form role="form" id="testmooimaakraymon" method="POST" action="">
+            <form role="form" id="AddAccount" method="POST" action="">
                 <div class="form-group">
                     <div class="row">
                         <h4>Aanhef</h4>
@@ -34,15 +101,18 @@ if (isset($_POST['submit'])) {
                         </div>
                     <div class="col-md-6">
                         <label for="InputFullname">Voor & Achternaam</label>
-                        <input type="text" Name="FullName" class="form-control" id="InputFullname" placeholder="Voor & Achternaam Invullen">
+                        <input type="text" Name="FullName" class="form-control" id="Fullname" placeholder="Voor & Achternaam Invullen">
+                        <span class="error">* <?php echo $nameErr;?></span>
                     </div>
                     <div class="col-md-6">
                         <label for="UserName">Gebruikersnaam</label>
-                        <input type="text" name="LogonName" class="form-control" id="UserName" placeholder="Gebruikersnaam Invullen">
+                        <input type="text" name="LogonName" class="form-control" id="LogonName" placeholder="Gebruikersnaam Invullen">
+                        <span class="error">* <?php echo $usrnameErr;?></span>
                     </div>
                     <div class="col-md-6">
                         <label for="UserEmail">Email</label>
                         <input type="text" name="EmailAddress" class="form-control" id="EmailAddress" placeholder="Email Invullen">
+                        <span class="error">* <?php echo $emailErr;?></span>
                     </div>
                     <div class="col-md-6">
                         <label for="PhoneNumber">Telefoonnummer</label>
@@ -56,23 +126,25 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="form-group">
                 <label for="InputPassword">Wachtwoord</label>
-                <input type="password" name="pwd" class="form-control" id="InputPassword" placeholder="Wachtwoord">
+                <input type="password" name="pwd" class="form-control" id="pwd" placeholder="Wachtwoord">
+                    <span class="error">* <?php echo $passwordErr;?>
         </div>
                 <div class="form-group">
                     <label for="InputRepeatPassword">Herhaal wachtwoord</label>
-                    <input type="password" name="RepeatHashedPassword" class="form-control" id="InputRepeatPassword" placeholder="Herhaal Wachtwoord">
+                    <input type="password" name="pwd2" class="form-control" id="pwd2" placeholder="Herhaal Wachtwoord">
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" name="NewsLetter" class="form-check-input" id="NewsLetter">
                     <label class="form-check-label" for="newsletter">Ja! Ik ontvang graag de Nieuwsbrief van Oma's beste</label>
                 </div>
                 <div class="form-group form-check">
-                    <input type="checkbox" name="TermsAndConditions" class="form-check-input" id="GenConditions">
+                    <input type="checkbox" name="TermsAndConditions" class="form-check-input" id="TermsAndConditions">
+                    <span class="error">* <?php echo $tandcErr;?>
                     <label class="form-check-label" for="TermsAndConditions">Ik ga akkoord met de algemene voorwaarden*</label>
                 </div>
 <!--                //<input type="submit" name="submit" value="Registreren1" class="btn btn-primary">-->
 
-                <input type="submit" name="submit" value="Aanpassen" class="btn btn-primary">
+                <input type="submit" name="submit" value="Registreren" class="btn btn-primary">
             </form>
         </div>
     </div>

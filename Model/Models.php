@@ -64,7 +64,7 @@ class Models
                 case 'stockitem':
                     $this->getStockItem();
                     break;
-                case 'order':
+                case 'orders':
                     $this->getOrder();
                     break;
                 case 'Orderlines':
@@ -96,9 +96,6 @@ class Models
                     break;
                 case  'specialdeals':
                     $this->getSpecialdeals();
-                    break;
-                case  'orders':
-                    $this->getOrder();
                     break;
                 default:
                     echo $this->table;
@@ -167,7 +164,6 @@ class Models
         );
     }
 
-
     private function getAddress()
     {
         $this->column = array(
@@ -222,6 +218,7 @@ class Models
             "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+//            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
 //            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
             "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
             "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
@@ -304,18 +301,19 @@ class Models
             "OrderID" => ['Order', 'HasOne', 'Required'],
             "StockItemID" => ['StockItem', 'HasOne', 'Required'],
             "Description" => ['varchar',  'Attribute', 'Not Required'],
-            "PackageTypeIDIndex" => ['Integer',  'Attribute', 'Not Required'],
-            "UnitPriceIndex" => ['Integer',  'Attribute', 'Required'],
+            "PackageTypeID" => ['Integer',  'Attribute', 'Not Required'],
+            "Quantity" => ['Integer',  'Attribute', 'Required'],
+            "UnitPrice" => ['Decimal',  'Attribute', 'Required'],
             "TaxRate" => ['Integer',  'Attribute', 'Required'],
-            "PickedQuantityIndex" => ['Integer',  'Attribute', 'Required'],
-            "PickingCompletedWhenIndex" => ['Date', 'Attribute', 'Not Required'],
-            "PickedQuantityIndex" => ['Integer',  'Attribute', 'Required'],
-            "LastEditedByIndex" => ['People',  'Attribute', 'Required'],
+            "PickedQuantity" => ['Integer',  'Attribute', 'Required'],
+            "PickingCompletedWhen" => ['Date', 'Attribute', 'Not Required'],
+            "LastEditedBy" => ['People',  'Attribute', 'Required'],
             "LastEditedWhen" => ['Date',  'Attribute', 'Required'],
 
         );
     }
 
+//OrderLineID OrderID StockItemID Description PackageTypeID QuantityIndex UnitPriceIndex TaxRate PickedQuantity PickingCompletedWhenIndex	 LastEditedByIndexLastEditedWhen
     /**
      * Gets the type of the $key
      * @param $key

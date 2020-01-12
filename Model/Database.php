@@ -662,6 +662,7 @@ class Database extends Models
         $className = get_class($this);
         $modelObject = new $className;
         $this->getColumns();
+      //  var_dump($array);
         if (!empty($array))
         {
             foreach ($array as $key => $value)

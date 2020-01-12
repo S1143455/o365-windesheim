@@ -7,9 +7,12 @@ spl_autoload_register(function ($class) {
 $router = new Router\Router();
 $mainController = new Controller\MainController();
 $authenticationController = new Controller\AuthenticationController();
-$authenticationController = new Controller\AuthenticationController();
 $discount = new Controller\DiscountController();
 $customer = new Controller\CustomerController();
+//$authenticationController = new Controller\AuthenticationController();
+//$discount = new Controller\DiscountController();
+//$customer = new Controller\CustomerController();
+$authenticationController = new Controller\AuthenticationController();
 $userController = new Controller\UserController();
 
 switch ($userController->role()){

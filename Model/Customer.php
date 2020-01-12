@@ -141,7 +141,6 @@ class Customer extends Database
         $this->newsletter = $newsletter;
     }
 
-  
     public function getAllCustomers(){
 
         $customers = new Customer();

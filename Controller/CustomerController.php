@@ -11,9 +11,10 @@ use Model\Adress;
 
 class CustomerController
 {
+    private $viewPath = 'content/frontend/';
+
     private $admin = 'content/backend/';
     private $route = 'content/frontend/';
-    private $viewPath = 'content/frontend/';
 
     function __construct()
     {
@@ -38,19 +39,13 @@ class CustomerController
         $this->storeAdress($this->adress);
     }
 
-
-
-
-
-
-
-
     /**
      * This method should capture the creation of a new object,
      * Verify its data and commit it to the database.
      * @param $newCustomer
      * @return mixed
      */
+
     public function createR()
     {
         $this->customer = new Customer();
@@ -154,6 +149,12 @@ class CustomerController
 
         include $this->admin . 'onderhoudklanten.php';
     }
+    function Test_Input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
     public function createMultipleP(){
 
@@ -189,7 +190,10 @@ class CustomerController
                     }
                     break;
                 case "TermsAndConditions":
+//                    var_dump($value);
                     if($value == "on"){
+                        $this->customer->setTermsAndConditions(1);
+                    }else{
                         $this->customer->setTermsAndConditions(1);
                     }
                     break;
@@ -228,22 +232,26 @@ class CustomerController
             //var_dump($key);
         }
         $this->storePeople($this->people);
+        $this->customer->setPersonID($this->people->getPersonID());
+        $this->store($this->customer);
+        include $this->route . 'account-toevoegen.php';
     }
 
     /**
      * Stores the product in the database.
      *
      * @param $customer customer
-     * @param $customer Customer
      * @return string
      */
 
     public function store($customer)
     {
-
+//        var_dump($customer);
         if (!$customer->initialize())
         {
-            //print_r($_GET);
+}
+        if (!$customer->initialize()) {
+            print_r($_GET);
             return false;
         };
 
@@ -273,6 +281,7 @@ class CustomerController
             return "Something went wrong.";
         }
     }
+
     /**
      * Stores the product in the database.
      *
@@ -281,6 +290,7 @@ class CustomerController
      */
     public function storePeople($people)
     {
+//        var_dump($people);
         if (!$people->initialize())
         {
             return false;
