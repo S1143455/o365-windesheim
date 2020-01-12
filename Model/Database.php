@@ -256,6 +256,7 @@ class Database extends Models
 
         $this->openConn();
         $stmt = $this->connection->prepare($sql);
+        var_dump($values);
         for ($i = 0; $i < sizeof($columnKeys); $i++) {
             $stmt->bindValue(":" . $columnKeys[$i], $values[$i]);
         }
@@ -327,7 +328,9 @@ class Database extends Models
         } else if (!$checkInput[0] && !$checkInput[1] && !$checkInput[2]) {
             return "single";
         } else {
-
+            var_dump($columnKeys);
+            var_dump( $compareTypes);
+            var_dump($values);
 
             die('All parameters should be of the same type.');
         }
