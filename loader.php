@@ -31,6 +31,8 @@ $orderLineController = new Controller\OrderlineController();
 
 $discountController = new Controller\DiscountController();
 $customerController = new Controller\CustomerController();
+$adressController = new Controller\AdressController();
+
 $productController = new Controller\ProductController();
 $shoppingcartStockitems= new Controller\ShoppingcartStockitemsController();
 $customerController = new Controller\CustomerController();

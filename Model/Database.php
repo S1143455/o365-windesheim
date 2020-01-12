@@ -378,6 +378,7 @@ class Database extends Models
     {
         $this->openConn();
         $stmt = $this->createUpdateStatement();
+       var_dump($this->table);
         try
         {
             $stmt->execute();

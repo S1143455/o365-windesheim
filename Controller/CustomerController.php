@@ -24,6 +24,26 @@ class CustomerController
 
 
     }
+
+    public function update(){
+        $this->customer = $this->retrieve($_POST["CustomerID"]);
+        $this->person = $this->retrievePerson($_POST["PersonID"]);
+        $this->adress = $this->retrieveWhereP($_POST["AddressId"]);
+        $this->person->setEmailAddress($_POST["EmailAddress"]);
+        $this->adress->setAddress($_POST["Adress"]);
+        //$this->customer->set($_POST["EmailAddress"]);
+        $this->store($this->customer);
+        $this->storePeople($this->person);
+        $this->storeAdress($this->adress);
+    }
+
+
+
+
+
+
+
+
     /**
      * This method should capture the creation of a new object,
      * Verify its data and commit it to the database.
@@ -86,13 +106,30 @@ class CustomerController
         $result = preg_grep('~' . $input . '~', $data);
         return $customers;
     }
-    function getAllCustomer($customers)
-    {
 
+    public  function retrieveWhereP($personID){
+        $address = new Adress();
+        $address = $address->where("*", "PersonID", "=", $personID);
+        if(empty($address))
+        {
+            // return $_SESSION['LOGIN_ERROR']=["type"=>'danger', "message"=>'Gebruikersnaam of wachtwoord onjuist.'];
+        }
+        else
+        {
+            return $address[0];
+        }
+
+
+    }
+    function getAllCustomer()
+    {
+        $customers = $this->customer->getAllCustomers();
         foreach ($customers as $customer){
             $person =  $this->retrievePerson($customer->getPersonID());
-            $orderdate = $this->order->where("MAX(OrderDate)","CustomerID","=",$customer->getCustomerID());
-
+            $adress = $this->retrieveWhereP($person->getPersonID());
+            if($adress != null){
+                var_dump($customer->getCustomerID());
+            }
             $result = '';
             $result .= '<tr>
                     <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
@@ -217,33 +254,25 @@ class CustomerController
         }
     }
 
-    public function update()
+    /**
+     * Stores the product in the database.
+     *
+     * @param $address Adress
+     * @return string
+     */
+    public function storeAdress($address)
     {
+        if (!$address->initialize())
+        {
+            return false;
+        };
+        $this->adress = $address;
 
-        $this->customer = new Customer();
-        $this->customer->initialize();
-        //ingelogde gebruiker
-        $this->people->setLastEditedBy(1);
-        if ($_POST["CustomerID"]) {
-            foreach ($_POST["CustomerID"] as $id) {
-                $this->customer->retrieve($id);
-                $this->customer->setCustomerID($this->customer->getCustomerID());
-                $this->store($this->customer);
-            }
+        if (!$this->adress->save())
+        {
+            return "Something went wrong.";
         }
-        if ($_POST["PersonID"]){
-            foreach ($_POST["PersonID"] as $id) {
-                $this->people->retrieve($id);
-                $this->people->setPersonID($this->people->getPersonID());
-                $this->storePeople($this->people);
-            }
-        }
-        $this->store($this->customer);
-        include $this->admin . 'onderhoudklanten.php';
-        return "";
-
     }
-
     /**
      * Stores the product in the database.
      *
