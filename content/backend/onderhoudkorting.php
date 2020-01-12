@@ -2,9 +2,26 @@
 include_once 'content/backend/header-admin.php';
 
 use Model\Discount;
+
+$discountErr = "";
+
+if (empty($_POST)) {
+    $discounts = $discountController->getDiscounts();
+
+}
+//var_dump($discounts);
+if (isset($_POST['name'])) {
+    echo "hoi";
+    $discounts = $discountController->searchDiscounts($_POST['name']);
+    if ($discounts == null || empty($discounts)) {
+        $discountErr = "Geen records gevonden";
+    }
+}
+
 $start = ' <div class="form-group">';
 $percentageErr = "";
 $dateErr = "";
+$dealcodErr = "";
 $end = ' </div>';
 
 if (isset($_POST['id'])) {
@@ -14,30 +31,34 @@ if (isset($_POST['id'])) {
         $discount->getSpecialDealID();
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditDiscountDialog').modal('show');   }); </script>";
     }
-    unset($_POST['test']);
+    unset($_POST['valuecheck']);
 }
 
-if(isset($_POST['test'])){
-    unset($_POST['test']);
+if (isset($_POST['valuecheck'])) {
+    unset($_POST['valuecheck']);
     $discountID = $_POST['SpecialDealID'];
     $success = true;
     if ($_POST['StartDate'] > $_POST['EndDate']) {
         $success = false;
-        $dateErr = "De startdatum is later dan de einddatum";
+        $dateErr = "*De startdatum is later dan de einddatum";
     }
     if ($_POST['DiscountPercentage'] < 1) {
         $success = false;
         $percentageErr = $start;
-        $percentageErr .= "De percentage mag niet kleiner zijn dan 1";
+        $percentageErr .= "*Het percentage mag niet kleiner zijn dan 1";
         $percentageErr .= $end;
     }
     if ($_POST['DiscountPercentage'] > 100) {
         $success = false;
-        $percentageErr = "De percentage mag niet groter zijn dan 100";
+        $percentageErr = "*Het percentage mag niet groter zijn dan 100";
     }
-    if($success){
+    if ($_POST['DealCode'] > 100) {
+        $success = false;
+        $percentageErr = "*Het percentage mag niet groter zijn dan 100";
+    }
+    if ($success) {
         // $discountController->update();
-    }else{
+    } else {
         if ($discountID != 0) {
             $discount = $discountController->retrieve($discountID);
             $discount->getSpecialDealID();
@@ -63,14 +84,24 @@ if(isset($_POST['test'])){
                 </h3>
                 <br>
                 <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
-                <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?"
-                       aria-label="Search" id="myInput">
+                <form method="post" action="" id="searchform">
+                    <?php
+                    if (isset($_POST['name'])) {
+                        echo "<input  type='text' name='name' value='" . $_POST['name'] . "'>";
+                    } else {
+                        echo "<input  type='text' name='name'>";
+                    }
+                    ?>
+
+                    <input type="submit" name="submit" value="Search">
+                </form>
                 <br>
                 <div class="row">
                     <div class="col-12 col-md-10 col-lg-9 tableDiscount">
                         <!-- Creates a table with headers and data based on function -->
                         <form role="form" id="table" method="POST" action="">
                             <div class="table-fixed">
+                                <span class="error"> <?php echo $discountErr; ?></span>
                                 <table class="table table-bordered" id="tableViewDiscount">
                                     <thead>
                                     <tr>
@@ -80,13 +111,13 @@ if(isset($_POST['test'])){
                                         <th class="col-md-1">Eenmalig</th>
                                         <th class="col-md-1">Actief</th>
                                         <th class="col-md-3">Omschrijving</th>
-                                        <th class="col-md-1">Product aantal</th>
+                                        <th class="col-md-1">Products</th>
                                         <th class="col-md-1">Beginperiode</th>
                                         <th class="col-md-1">Eindperiode</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="tbodyCustomer">
-                                    <?php $discountController->GetAllDiscount(); ?>
+                                    <tbody>
+                                    <?php $discountController->GetAllDiscount($discounts); ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -135,8 +166,16 @@ if(isset($_POST['test'])){
                             <div class="col-12">
                                 <div class="row">
                                     <label class="col-5 control-label" for="inputCodeOT">Code:</label>
-                                    <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeOT"
+                                    <input class="col-7 form-control inputCode" type="text" name="DealCode"
+                                           id="inputCodeOT"
                                            placeholder="Code">
+                                    <!-- scripts to generate a random code for each modal-->
+                                    <script>
+                                        function generateCodeOT() {
+                                            var x = document.getElementById("inputCodeOT")
+                                            x.value = Math.floor((Math.random() * 900000000) + 100000000);
+                                        }
+                                    </script>
                                 </div>
                                 <div class="row">
                                     <div class="col-5"></div>
@@ -185,7 +224,7 @@ if(isset($_POST['test'])){
 
     <!-- modal (popup) korting op product -->
     <div class="modal fade" id="DiscountProduct" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
                     <div class="modal-header">
@@ -233,7 +272,8 @@ if(isset($_POST['test'])){
                             <div class="col-12">
                                 <div class="row">
                                     <label class="col-5 control-label" for="inputCodePD">Code:</label>
-                                    <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodePD"
+                                    <input class="col-7 form-control inputCode" type="text" name="DealCode"
+                                           id="inputCodeDP"
                                            placeholder="Code">
                                 </div>
                                 <div class="row">
@@ -241,6 +281,13 @@ if(isset($_POST['test'])){
                                     <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
                                             onclick="generateCodeDP();">Genereer code
                                     </button>
+                                    <!-- scripts to generate a random code for each modal-->
+                                    <script>
+                                        function generateCodeDP() {
+                                            var x = document.getElementById("inputCodeDP")
+                                            x.value = Math.floor((Math.random() * 900000000) + 100000000);
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -286,7 +333,7 @@ if(isset($_POST['test'])){
 
     <!-- modal (popup) korting op categorie -->
     <div class="modal fade" id="DiscountCategory" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
                     <div class="modal-header">
@@ -341,6 +388,13 @@ if(isset($_POST['test'])){
                                 <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
                                         onclick="generateCodeDC();">Genereer code
                                 </button>
+                                <!-- scripts to generate a random code for each modal-->
+                                <script>
+                                    function generateCodeDC() {
+                                        var x = document.getElementById("inputCodeDC")
+                                        x.value = Math.floor((Math.random() * 900000000) + 100000000);
+                                    }
+                                </script>
                             </div>
                         </div>
                         <div class="form-group">
@@ -397,7 +451,8 @@ if(isset($_POST['test'])){
                             <div class="col-12">
                                 <div class="row">
                                     <label class="col-5 control-label" for="inputCodeMD">Code:</label>
-                                    <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeMD"
+                                    <input class="col-7 form-control inputCode" type="text" name="DealCode"
+                                           id="inputCodeMD"
                                            placeholder="Code">
                                 </div>
                                 <div class="row">
@@ -405,6 +460,13 @@ if(isset($_POST['test'])){
                                     <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
                                             onclick="generateCodeMD();">Genereer code
                                     </button>
+                                    <!-- scripts to generate a random code for each modal-->
+                                    <script>
+                                        function generateCodeMD() {
+                                            var x = document.getElementById("inputCodeMD")
+                                            x.value = Math.floor((Math.random() * 900000000) + 100000000);
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -438,7 +500,8 @@ if(isset($_POST['test'])){
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="inputEmail">Email:</label>
-                            <input class="col-7 form-control inputEmail" type="email" id="inputEmail" placeholder="Email">
+                            <input class="col-7 form-control inputEmail" type="email" id="inputEmail"
+                                   placeholder="Email">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -519,7 +582,6 @@ if(isset($_POST['test'])){
                                                     <th class="col-md-4">Categorie naam</th>
                                                     <th class="col-md-2">Parent Categorie</th>
                                                     <th class="col-md-2">Gekoppelde korting id</th>
-
                                                 </tr>
                                                 </thead>
                                                 <tbody id="tbodyEditCategory">
@@ -548,7 +610,8 @@ if(isset($_POST['test'])){
                     </div>
                     <div class=" form-group">
                             <label class="col-5" for="categoryID">Omschrijving:</label>
-                            <textarea class="col-7 form-control dealDescription" name="DealDescription" id="DealDescription"
+                            <textarea class="col-7 form-control dealDescription" name="DealDescription"
+                                      id="DealDescription"
                                       rows="3"><?php echo($discount->getDealDescription()) ?></textarea>
                         </div>
                         <div class="form-group">
@@ -559,22 +622,21 @@ if(isset($_POST['test'])){
                             <span class="col-1 symbolPercentage">%</span>
 
                         </div>
-                        <?php echo $percentageErr;?>
                         <div class="form-group">
                             <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
                                    id="StartDate"
                                    value="<?php echo($discount->getStartDate()) ?>">
-                            <span class="error"> <?php echo $dateErr;?></span>
-
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="EndDate">Einde periode:</label>
                             <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
                                    id="EndDate"
                                    value="<?php echo($discount->getEndDate()) ?>">
-                            <span class="error"> <?php echo $dateErr;?></span>
                         </div>
+                        <span class="error"><?php echo $dateErr; ?></span>
+                        <span class="error"><?php echo $percentageErr; ?></span>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
@@ -589,28 +651,6 @@ if(isset($_POST['test'])){
 include_once 'content/backend/footer-admin.php';
 
 ?>
-    <!-- scripts to generate a random code for each modal-->
-    <script>
-        function generateCodeOT() {
-            var x = document.getElementById("inputCodeOT")
-            x.value = Math.floor((Math.random() * 900000000) + 100000000);
-        }
-
-        function generateCodeDP() {
-            var x = document.getElementById("inputCodeDP")
-            x.value = Math.floor((Math.random() * 900000000) + 100000000);
-        }
-
-        function generateCodeDC() {
-            var x = document.getElementById("inputCodeDC")
-            x.value = Math.floor((Math.random() * 900000000) + 100000000);
-        }
-
-        function generateCodeMD() {
-            var x = document.getElementById("inputCodeMD")
-            x.value = Math.floor((Math.random() * 900000000) + 100000000);
-        }
-    </script>
 
     <script>
         $('#StartDate').date({minDate: 0});

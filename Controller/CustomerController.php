@@ -22,6 +22,7 @@ class CustomerController
         $this->adress = new Adress();
         $this->order = new Order();
 
+
     }
     /**
      * This method should capture the creation of a new object,
@@ -58,9 +59,35 @@ class CustomerController
 
         return $person;
     }
-    function getAllCustomer()
-    {
+
+    public function retrieveOrder($CustomerID){
+        $order = new Order();
+        $order = $this->order->where("*", "CustomerID", "=", $CustomerID);
+        if(empty($order))
+        {
+            //header("Location: /404", true);
+        }
+
+        return $order;
+    }
+
+    public function getallcustomers(){
         $customers = $this->customer->getAllCustomers();
+        return $customers;
+    }
+    public function SearchCustomers($value){
+        $customers = $this->customer->getAllCustomers();
+//        $people
+        var_dump($customers);
+
+        $input = preg_quote('bl', '~'); // don't forget to quote input string!
+        $data = array('orange', 'blue', 'green', 'red', 'pink', 'brown', 'black');
+
+        $result = preg_grep('~' . $input . '~', $data);
+        return $customers;
+    }
+    function getAllCustomer($customers)
+    {
 
         foreach ($customers as $customer){
             $person =  $this->retrievePerson($customer->getPersonID());
@@ -73,37 +100,13 @@ class CustomerController
                     <td class="col-md-3">' . $person->getEmailAddress() .'</td>
                     <td class="col-md-3">' . $person->getFullName() .'</td>
                     <td class="col-md-2">' . $this->customer->getLastOrderDateOnID($customer->getCustomerID()) .'</td>
-                    <td class="col-md-2">' . $customer->getNewsletter() .'</td>
+                    <td class="col-md-1">' . $customer->getNewsletter() .'</td>
                 </tr>';
             echo $result;
         }
 
     }
-    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
-//    public function getNewsletter()
-//    {
-//        if ($this->newsletter == "1"){
-//            $this->newsletter =
-//                '<input type="checkbox" name="newsletter" checked>';
-//
-//        } else {
-//            $this->newsletter =
-//                '<input type="checkbox" name="newsletter">';
-//
-//        }
-//        return $this->newsletter;
-//    }
 
-//    function getCustomerAndPeople()
-//    {
-//        $customers = $this->customer->getAllCustomers();
-//
-//        foreach ($customers as $customer){
-//
-//            $result = '';
-//            $result =
-//        }
-//    }
 
     public function createBE()
     {
@@ -214,6 +217,32 @@ class CustomerController
         }
     }
 
+    public function update()
+    {
+
+        $this->customer = new Customer();
+        $this->customer->initialize();
+        //ingelogde gebruiker
+        $this->people->setLastEditedBy(1);
+        if ($_POST["CustomerID"]) {
+            foreach ($_POST["CustomerID"] as $id) {
+                $this->customer->retrieve($id);
+                $this->customer->setCustomerID($this->customer->getCustomerID());
+                $this->store($this->customer);
+            }
+        }
+        if ($_POST["PersonID"]){
+            foreach ($_POST["PersonID"] as $id) {
+                $this->people->retrieve($id);
+                $this->people->setPersonID($this->people->getPersonID());
+                $this->storePeople($this->people);
+            }
+        }
+        $this->store($this->customer);
+        include $this->admin . 'onderhoudklanten.php';
+        return "";
+
+    }
 
     /**
      * Stores the product in the database.

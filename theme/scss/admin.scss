@@ -98,7 +98,6 @@ body {
 }
 
 .inputCode {
-  //margin-left: 58px;
   width: 30%;
 }
 
@@ -117,12 +116,10 @@ body {
 }
 
 .inputPercentage {
-  //margin-left: 21px;
   width: 55px;
 }
 
 .inputStartDate {
-  //margin: 5px 0px 10px 7px;
   width: 20%;
   text-align: center;
   padding: 0px;
@@ -131,17 +128,14 @@ body {
 .inputEndDate {
   text-align: center;
   width: 20%;
-  //margin: -7px 0px 0 7px;
   padding: 0px;
 }
 
 .inputEmail {
-  //margin-left: 57px;
   width: 45%;
 }
 
 .dealDescription {
-  //margin-left: 11px;
   width: 60%;
 }
 
@@ -167,8 +161,6 @@ h4 {
 }
 
 .table-fixed {
-  //margin-left: 10px;
-  //width: 95%;
   font-size: 12px!important;
   background-color: $background;
   display: block;
@@ -177,8 +169,8 @@ h4 {
   max-height: 450px;
 
   tbody {
-    height: 200px;
-    overflow-y: auto;
+    height: 450px;
+    //overflow-y: auto;
     width: 100%;
   }
 
@@ -189,6 +181,7 @@ h4 {
   tbody {
     td {
       float:left;
+      height: 60px;
     }
   }
 
@@ -301,4 +294,8 @@ td {
 .container, .container-lg, .container-md, .container-sm, .container-xl {
   max-width: 100%;
   width: 100%;
+}
+
+.error {
+  color: red;
 }
