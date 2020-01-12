@@ -5,10 +5,10 @@ include 'loader.php';
 
 use Model\Customer;
 
+
 if(isset($_POST['sendpassword'])) {
     include "content/frontend/sendemailaddress.php";
 }
-
 if(empty($_POST)){
     $customers = $customerController->getallcustomers();
 }
@@ -147,26 +147,69 @@ if (isset($_POST['id'])) {
                                 <input class="checkboxOneTime" type="checkbox" name="newsletter" id="newsletter"
                                        value="<?php echo($customer->getNewsletter()) ?>
                             </div>
+                            <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="col-md-4" for="orderid">Bestelnummer:</label>
+                                        <label class="col-md-4" for="orderdate">Besteldatum:</label>
+                                        <label class="col-md-4" for="orderamount">Bedrag:</label>
+                                    </div>
+                                </div>
                             <?php if(!empty($orders) && $orders[0] != null && $orders[0]->getOrderID() != null){
+                            echo "<form role='form' id='table' method='POST' action=''>";
                                 foreach($orders as $order){
-                                    echo '<div class="container">
-                                              <div class="row">
-                                                <div class="form-group col-md-12">
-                                                  <label class="col-md-4" for="orderid">Bestelnummer:</label>
-                                                  <label class="col-md-4" for="orderdate">Besteldatum:</label>
-                                                  <label class="col-md-4" for="orderamount">Bedrag:</label>
+                                echo ' <div class="accordion" id="accordionExample">
+                                            <div class="card">
+                                                <div class="card-header" id="headingOne">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                        <span class="col-md-4">
+                                                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                            '. $order->getOrderID() .'
+                                                        </button></span>
+                                                            <span class="col-md-4" id="orderdate">'. $order->getOrderDate() .'</span>
+                                                            <span class="col-md-4" id="orderamount">'. $order->getOrderDate() .'</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                              </div>
-                                            <div class="row">
-                                              <div class="form-group col-md-12">
-                                                  <span class="col-md-4" id="orderid"><a href="schoolproject_wwi/admin/bestellingoverzicht"> '. $order->getOrderID() .'</span></a>
-                                                  <span class="col-md-4" id="orderdate">'. $order->getOrderDate() .'</span>
-                                                  <span class="col-md-4" id="orderamount">'. $order->getOrderDate() .'</span>
-                                              </div>
                                             </div>
-                                          </div>
-                                    ';
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="table-fixed">
+                                                                <div class="table-fixed">
+                                                                    <table id="OrderTable" class="table table-bordered">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th class="col-md-4">Omschrijving</th>
+                                                                        <th class="col-md-2">Aantal</th>
+                                                                        <th class="col-md-2">Belastingspercentage</th>
+                                                                        <th class="col-md-2">Prijs excl. btw</th>
+                                                                        <th class="col-md-2">Prijs incl. btw</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>';
+                                                                   $orderlines = $orderController->retrieveOrderLine($order->getOrderID());
+                                                                   var_dump($orderlines);
+//                                                                    haal hier orderlines op  en products heb je niet nodig he
+//                                                                   alles staat op orderlines al, wel als je het totaal bedrag etc. wil berekenen?
+                                                                    foreach ($orderlines as $orderline) {
+
+                                                                    } 
+                                                                 echo'   </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+
                                     }
+                                echo"</form>";
                                 } else {
                                 echo '<div class="form-group col-12">
                                         <label class="col-5 control-label" for="orderid">Bestelnummer:</label>
@@ -228,7 +271,33 @@ if (isset($_POST['id'])) {
         </div>
     </div>
 
-
+    <!-- modal to edit selected table row in a modal -->
+    <div class="modal fade" id="OrderDetails" tabindex="-1" role="dialog" aria-labelledby="EditModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Klant details</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="form-group col-12">
+                            <label class="col-5" for="CustomerID">Klant gegevens van klantnummer:</label>
+                            <span class="col-4" id="CustomerID"
+                                  style="padding-left: 0px;"><?php echo($customer->getCustomerID()) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <input type="submit" name="submit" value="Klant aanpassen" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- scripts for searchbar in each modal-->
     <script>

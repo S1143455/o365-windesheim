@@ -133,4 +133,32 @@ class OrderController
         }
 
     }
+
+    function getCustomerOrders()
+    {
+        $orders = $this->order->getAllOrders();
+        foreach ($orders as $order) {
+            $totaal = 0;
+
+            $orderLines = $this->retrieveOrderLine($order->getOrderID());
+            $customer = $this->retrieveCustomer($order->getCustomerID());
+            $person = $this->retrievePeople($customer->getPersonID());
+            foreach ($orderLines as $orderLine) {
+                $products = $this->retrievestockitem($orderLine->getStockitemID());
+                foreach ($products as $prod){
+                    $totaal = $totaal + $prod->getUnitPrice();
+                }
+            }
+            $result = '';
+            $result .= '<tr style="height:40px;">
+                            <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary" name="id" value="' . $order->getOrderID() .'">Details</button></td>
+                            <td class="col-md-2">' . $order->getOrderID() . '</td>
+                            <td class="col-md-3">' . $person->getFullName() . '</td>
+                            <td class="col-md-3">' . $order->getOrderdate() . '</td>
+                            <td class="col-md-3">' . $totaal . '</td>
+                        </tr>';
+
+            echo $result;
+        }
+    }
 }

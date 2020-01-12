@@ -4,7 +4,6 @@ include_once 'content/backend/header-admin.php';
 use Model\Discount;
 
 $discountErr = "";
-
 if (empty($_POST)) {
     $discounts = $discountController->getDiscounts();
 
@@ -26,6 +25,7 @@ $end = ' </div>';
 
 if (isset($_POST['id'])) {
     $discountID = $_POST['id'];
+    $discounts = $discountController->getDiscounts();
     if ($discountID != 0) {
         $discount = $discountController->retrieve($discountID);
         $discount->getSpecialDealID();

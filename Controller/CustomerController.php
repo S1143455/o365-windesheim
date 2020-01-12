@@ -31,6 +31,7 @@ class CustomerController
         $this->adress = $this->retrieveWhereP($_POST["AddressId"]);
         $this->person->setEmailAddress($_POST["EmailAddress"]);
         $this->adress->setAddress($_POST["Adress"]);
+        //Aanvullen
         //$this->customer->set($_POST["EmailAddress"]);
         $this->store($this->customer);
         $this->storePeople($this->person);
@@ -143,7 +144,6 @@ class CustomerController
         }
 
     }
-
 
     public function createBE()
     {
