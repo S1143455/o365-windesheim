@@ -169,7 +169,13 @@ if ($prod_counter < 1){
                                 echo '<form method="post" action="' . $this->root . '/productdetail">';
                                 echo '<input type="text" name="home" style="display:none;" value="' . (($cat_srch) ? false : true) . '">';
                                 echo '<input type="text" name="productID" style="display:none;" value="' . $prod->getStockItemID() . '">';
-                                echo '<b>' . $prod->getStockItemName() . '</b><br>';
+
+                                $stockDescr = $prod->getStockItemName();
+                                if(strlen($prod->getStockItemName()) > 30){
+                                    $stockDescr = substr($prod->getStockItemName(),0,30) . '...';
+                                }
+
+                                echo '<b>' . $stockDescr . '</b><br>';
                                 echo '€' . $prod->getRecommendedRetailPrice();
                                     echo '<button name="srchProduct" type="submit" value="search product" class="productButton">';
                                     echo 'Bekijken';

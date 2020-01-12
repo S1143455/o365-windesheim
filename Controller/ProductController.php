@@ -185,7 +185,7 @@ Class ProductController
     }
 
     public function productDetail(){
-        if(isset($_POST['srchProduct'])){
+        if(isset($_POST['srchProduct']) || isset($_POST['add'])){
 
             $main = new MainController();
             $cart= new shoppingCart();

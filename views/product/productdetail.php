@@ -52,10 +52,15 @@ if (isset($_POST['remove'])){
                 echo '<div class="prdPrice"><h4>Prijs</h4>';
                     echo '<h2>€' . $prod->getRecommendedRetailPrice() . '</h2>';
 
-                    echo '<form role="form" id="table" method="POST" action="">';
+                    echo '<form role="form" id="table" method="POST" action="' . getenv('ROOT') . '/productdetail">';
+
+                    //values navigation through back-button
+                    echo '<input type="text" name="home" style="display:none;" value="' . $_POST['home'] . '">';
+                    echo '<input type="text" name="categoryID" style="display:none;" value="' . $prod->getCategoryID() . '">';
+                    
+                    echo '<input type = "text" name = "productID" style = "display:none;" value = "'. $prod->getStockItemID() . '">';
                     echo '<td class="col-md-2"><button type="submit" name="add" value="' . $prod->getStockItemID() . '">Toevoegen aan winkelwagen</button></td>';
                     echo '</form>';
-
                 echo '</div>';
             echo '</div>';
             ?>
