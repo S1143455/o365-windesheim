@@ -58,18 +58,18 @@ if (isset($_POST['id'])) {
                                             foreach($products as $prod){
                                                 $categories = $category->retrieve($prod->getCategoryID());
 
-                                                echo '<tr>';
-                                                    echo '<td class="col-md-1"> <button class="tableEditButton btn btn-outline-secondary" type="submit" name="id" value="' . $prod->getStockItemID() .'">Edit</button></td>';
-                                                    echo '<td class="col-md-1">' . $prod->getStockItemID() . '</td>';
-                                                    echo '<td class="col-md-1">' . $categories->getCategoryName() . '</td>';
-                                                    echo '<td class="col-md-2">' . $prod->getStockItemName() . '</td>';
-                                                    echo '<td class="col-md-1">' . $prod->getBrand() . '</td>';
-                                                    echo '<td class="col-md-1">' . $this->getSizeString($prod->getSize()) . '</td>';
-                                                    echo '<td class="col-md-1">' . $prod->getBarcode() . '</td>';
-                                                    echo '<td class="col-md-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
-                                                    echo '<td class="col-md-1">' . number_format($prod->getTaxRate(),2) . '%</td>';
-                                                    echo '<td class="col-md-1">€' . number_Format($this->calculatePrice($prod->getUnitPrice(),$prod->getTaxRate()),2) . '</td>';
-                                                    echo '<td class="col-md-1">' . $this->getConversionRatio($prod) . '</td>';
+                                                echo '<tr style="min-height: 50px;">';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1"> <button class="tableEditButton btn btn-outline-secondary" type="submit" name="id" value="' . $prod->getStockItemID() .'">Edit</button></td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1">' . $prod->getStockItemID() . '</td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1">' . $categories->getCategoryName() . '</td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-2">' . $prod->getStockItemName() . '</td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1">' . $prod->getBrand() . '</td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1">' . $this->getSizeString($prod->getSize()) . '</td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1">' . $prod->getBarcode() . '</td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1">' . $prod->getTaxRate() . '%</td>';
+                                                    echo '<td style="min-height: 50px;" class="col-md-1">€' . number_Format($this->calculatePrice($prod->getUnitPrice(),$prod->getTaxRate()),2) . '</td>';
+                                                    echo '<td style="min-height: 50px;"class="col-md-1">' . $this->getConversionRatio($prod) . '</td>';
 
                                                 echo '</td>';
                                             }
@@ -80,10 +80,11 @@ if (isset($_POST['id'])) {
                         </form>
                     </div>
                 </div>
-            <div class="col-12 col-md-2 col-lg-2 discountButtons">
-                <button type="button" class="firstdiscountButton btn btn-success" data-toggle="modal" data-target="#createProduct">
+                <div class="col-12 col-md-2 col-lg-2 discountButtons">
+                    <button type="button" class="firstdiscountButton btn btn-success" data-toggle="modal" data-target="#createProduct">
                         Product toevoegen
                     </button>
+                    <h2> total Conversie ratio: <?php echo($this->getTotalConversion($products)); ?></h2>
                 </div>
             </div>
         </div>
@@ -112,17 +113,12 @@ if (isset($_POST['id'])) {
                                         <br>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="StockItemID">Productnummer</label>
-                                        <input type="text" class="form-control" name="StockItemID" id="StockItemID" value = "Nieuw" readonly required>
-                                        <br>
-                                    </div>
-                                    <div class="col-md-12">
                                         <label for="StockItemName">Product Titel</label>
                                         <input style="width:100%;" type="text" class="form-control" name="StockItemName" id="StockItemName" required>
                                         <br>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="StockItemName">Product Omschrijving</label>
+                                        <label for="StockItemDescription">Product Omschrijving</label>
                                         <textarea style="width:100%;" class="form-control" name="StockItemDescription" id="StockItemDescription"></textarea>
                                         <br>
                                     </div>
@@ -134,13 +130,13 @@ if (isset($_POST['id'])) {
                                         <br>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="brand">Merk</label>
-                                        <input type="text" class="form-control width100" name="brand" id="brand" required>
+                                        <label for="Brand">Merk</label>
+                                        <input type="text" class="form-control width100" name="Brand" id="Brand" required>
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label for="size" class="">Maat</label>
-                                        <select style="width:100%;"  id="size" class="form-control" required>
+                                        <label for="Size" class="">Maat</label>
+                                        <select style="width:100%;"  id="Size" class="form-control" required>
                                             <option value="">Selecteer een maat...</option>
                                             <option value="1">Extra klein</option>
                                             <option value="2">Klein</option>
@@ -156,21 +152,21 @@ if (isset($_POST['id'])) {
                                     <br>
                                     <div class="col-md-12">
                                         <br>
-                                        <label for="barCode">Barcodenummer</label>
-                                        <input type="number" class="form-control width100" name="barCode" id="barCode" required>
+                                        <label for="Barcode">Barcodenummer</label>
+                                        <input type="number" class="form-control width100" name="Barcode" id="Barcode" required>
                                         <br>
                                     </div>
                                     <div class="col">
-                                        <label for="isChillerStock">Gekoeld product</label><br>
-                                        <input type="checkbox" class="" name="isChillerStock" id="isChillerStock" >
+                                        <label for="IsChillerStock">Gekoeld product</label><br>
+                                        <input type="checkbox" class="" name="IsChillerStock" id="IsChillerStock" >
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="unitPrice">Inkoopprijs (€)</label>
-                                        <input type="number" class="form-control width100" id="unitPrice" required name="unitPrice" min="0" value="0.00" step=".01">
+                                        <label for="UnitPrice">Inkoopprijs (€)</label>
+                                        <input type="number" class="form-control width100" id="UnitPrice" required name="UnitPrice" min="0" value="0.00" step=".01">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="taxRate">BTW (%)</label>
-                                        <select id="taxRate" class="form-control width100" required>
+                                        <label for="TaxRate">BTW (%)</label>
+                                        <select id="TaxRate" class="form-control width100" required>
                                             <option value="9">9%</option>
                                             <option value="21">21%</option>
                                             <option value="0">Geen</option>
@@ -195,8 +191,8 @@ if (isset($_POST['id'])) {
                                         <br>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="marketingComment">Overig commentaar</label>
-                                        <input style="width:100%;" type="text" class="form-control" name="marketingComment" id="marketingComment">
+                                        <label for="MarketingComments">Overig commentaar</label>
+                                        <input style="width:100%;" type="text" class="form-control" name="MarketingComments" id="MarketingComments">
                                     </div>
                                 </div>
                             </div>
@@ -243,7 +239,7 @@ if (isset($_POST['id'])) {
                                     </div>
                                     <div class="col-md-12">
                                         <label for="StockItemName">Product Omschrijving</label>
-                                        <textarea style="width:100%;" class="form-control" name="StockItemDescription" id="StockItemDescription" value="<?php echo($product->getStockItemDescription()) ?>"></textarea>
+                                        <input style="width:100%;" type="text" class="form-control" name="StockItemDescription" id="StockItemDescription" value="<?php echo($product->getStockItemDescription()) ?>"></input>
                                         <br>
                                     </div>
                                     <div class="col-md-12">
@@ -260,7 +256,7 @@ if (isset($_POST['id'])) {
 
                                     <div class="col-md-3">
                                         <label for="size" class="">Maat</label>
-                                        <select style="width:100%;"  id="size" class="form-control" required  value="<?php echo($product->getSize()) ?>">
+                                        <select style="width:100%;"  id="size" class="form-control" value="<?php echo($product->getSize()) ?>">
                                             <option value="">Selecteer een maat...</option>
                                             <option value="1">Extra klein</option>
                                             <option value="2">Klein</option>
@@ -277,7 +273,7 @@ if (isset($_POST['id'])) {
                                     <div class="col-md-12">
                                         <br>
                                         <label for="barCode">Barcodenummer</label>
-                                        <input type="number" class="form-control width100" name="barCode" id="barCode" required  value="<?php echo($product->getBarcode()) ?>">
+                                        <input type="number" class="form-control width100" name="barCode" id="barCode" value="<?php echo($product->getBarcode()) ?>">
                                         <br>
                                     </div>
                                     <div class="col">
@@ -323,7 +319,7 @@ if (isset($_POST['id'])) {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                            <input type="submit" name="submit" value="Korting aanpassen" class="btn btn-primary">
+                            <input type="submit" name="submit" value="Product aanpassen" class="btn btn-primary">
                         </div>
                     </form>
                 </div>
