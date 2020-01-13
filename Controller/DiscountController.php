@@ -145,19 +145,18 @@ class DiscountController
     }
     public function update()
     {
-
         $this->discount = new discount();
         $this->discount->initialize();
         //ingelogde gebruiker
         $this->discount->setLastEditedBy(1);
-        if ($_POST("StockItemID")) {
+        if (isset($_POST["StockItemID"])) {
             foreach ($_POST["StockItemID"] as $id) {
                 $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
                 $this->storeProduct($this->product);
             }
         }
-        if ($_POST("CategoryID")){
+        if (isset($_POST["CategoryID"])){
             foreach ($_POST["CategoryID"] as $id) {
                 $this->category->retrieve($id);
                 $this->category->setSpecialDealID($this->category->getSpecialDealID());
@@ -172,48 +171,10 @@ class DiscountController
 
     public function stockitems($discount){
         $stockitems = $this->product->where("*", "SpecialDealID", "=", $discount->getSpecialDealID());
-        //kijk hoe je dit checkts
-//        if($stockitems != null){
-//            return '<p>
-//                        <a class="btn btn-secondary collapseButton" data-toggle="collapse"
-//                           href="#tableCollapseProduct"
-//                           role="button"
-//                           aria-expanded="false" aria-controls="tableCollapse">Product zoeken</a>
-//                    </p>
-//                    <div class="tableCollapseProduct">
-//                        <div class="collapse multi-collapse" id="tableCollapseProduct">
-//                            <div class="card card-body">
-//                                <div class="row">
-//                                    <input class="form-control collapseTableSearch" type="text"
-//                                           placeholder="Waar ben je naar op zoek?"
-//                                           aria-label="Search" id="myInputProduct"
-//                                           onkeyup="searchbarProduct()">
-//                                </div>
-//                                <div class="col-12">
-//                                    <table class="table table-responsive-lg tableCollapseSP"
-//                                           id="tableCollapseProduct">
-//                                        <thead>
-//                                        <tr>
-//                                            <th class="col-md-2">Select</th>
-//                                            <th class="col-md-2">Productnr</th>
-//                                            <th class="col-md-3">Productnaam</th>
-//                                            <th class="col-md-1">Prijs</th>
-//                                            <th class="col-md-4">Opmerkingen</th>
-//                                        </tr>
-//                                        </thead>
-//                                        <tbody>
-//
-//                                        </tbody>
-//                                    </table>
-//                                </div>
-//                            </div>
-//                        </div>
-//                    </div>
-//';
-//        }else{
+
         return "";
     }
-//    }
+
     /**
      * Stores the product in the database.
      *

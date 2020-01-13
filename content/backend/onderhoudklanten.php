@@ -4,7 +4,8 @@ include 'content/backend/display_message.php';
 include 'loader.php';
 
 use Model\Customer;
-
+use Model\People;
+use Model\Adress;
 
 if(isset($_POST['sendpassword'])) {
     include "content/frontend/sendemailaddress.php";
@@ -15,15 +16,13 @@ if(empty($_POST)){
 if(!empty($_POST['name'])){
     $customers = $customerController->SearchCustomers($_POST['name']);
 }
-use Model\People;
-use Model\Adress;
+
 if (isset($_POST['id'])) {
     $customerID = $_POST['id'];
     $customers = $customerController->getallcustomers();
 
     if ($customerID != 0) {
         $customer = $customerController->retrieve($customerID);
-//        var_dump($customer->getCustomerID());
         $orders = $customerController->retrieveOrder($customer->getCustomerID());
         $person =  $userController->retrieveUser($customer->getPersonID());
         $adress = $adressController->retrieveWhereP($person->getPersonID());
@@ -41,7 +40,7 @@ if (isset($_POST['id'])) {
             ?>
 
             <div class="col-12 col-md-9 col-lg-10">
-                <!--dit gaat in header -->
+                <!--The header -->
                 <h3>
                     Onderhoud Klanten
                 </h3>
@@ -49,12 +48,11 @@ if (isset($_POST['id'])) {
                     <input  type="text" name="name">
                     <input  type="submit" name="submit" value="Search">
                 </form>
-                <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
                 <br>
 
+                <!-- Creates a table with headers and data based on function -->
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-10 tableViewCustomer">
-                        <!-- Creates a table with headers and data based on function -->
                         <form role="form" id="table" method="POST" action="">
                             <div class="table-fixed">
                                 <table class="table table-bordered" id="tableViewCustomer">
@@ -68,7 +66,7 @@ if (isset($_POST['id'])) {
                                         <th class="col-md-1">Nieuwsbrief</th>
                                     </tr>
                                     </thead>
-                                    <tbody id="tbodyCustomer">
+                                    <tbody>
                                     <?php $customerController->getAllCustomer($customers); ?>
                                     </tbody>
                                 </table>
@@ -86,12 +84,14 @@ if (isset($_POST['id'])) {
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <form role="form" id="EditCustomer" method="POST" action="UpdateCustomer">
+                    <!-- The header of this modal -->
                     <div class="modal-header">
                         <h4 class="modal-title">Klant details</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <!-- The body of this modal -->
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="form-group col-12">
@@ -146,7 +146,7 @@ if (isset($_POST['id'])) {
                             </div>
                             <div class="form-group col-12">
                                 <label class="col-5 control-label">Nieuwsbrief:</label>
-                                <input class="checkboxOneTime" type="checkbox" name="newsletter" id="newsletter"
+                                <input class="checkboxOneTime" type="checkbox" name="Newsletter" id="Newsletter"
                                        value="<?php echo($customer->getNewsletter()) ?>
                             </div>
                             <br>
@@ -158,6 +158,7 @@ if (isset($_POST['id'])) {
                                         <label class="col-md-4" for="orderamount">Bedrag:</label>
                                     </div>
                                 </div>
+                            </div>
                             <?php if(!empty($orders) && $orders[0] != null && $orders[0]->getOrderID() != null){
                             echo "<form role='form' id='table' method='POST' action=''>";
                                 foreach($orders as $order){
@@ -194,15 +195,13 @@ if (isset($_POST['id'])) {
                                                                     </thead>
                                                                 <tbody>';
                                                                $orderlines = $orderController->retrieveOrderLine($order->getOrderID());
-//                                                                    haal hier orderlines op  en products heb je niet nodig he
-//                                                                   alles staat op orderlines al, wel als je het totaal bedrag etc. wil berekenen?
                                                                 foreach ($orderlines as $orderline) {
                                                                     echo '<tr>
                                                                         <td class="col-md-4">' .$orderline->getDescription() .'</td>
                                                                         <td class="col-md-2">' .$orderline->getQuantity() .'</td>
                                                                         <td class="col-md-2">' .round($orderline->getTaxRate()) .'%</td>
-                                                                        <td class="col-md-2">' .$orderline->getUnitPrice() .'</td>
-                                                                        <td class="col-md-2">' .$orderController->calculateTotalPrice($orderline) .'</td>
+                                                                        <td class="col-md-2">'. "€" .$orderline->getUnitPrice() .',-</td>
+                                                                        <td class="col-md-2">'. "€" .$orderController->calculateTotalPrice($orderline) .',-</td>
                                                                         </tr>';
                                                                 }
                                                                 echo '<tr>
@@ -210,7 +209,7 @@ if (isset($_POST['id'])) {
                                                                     <td class="col-md-2"></td>
                                                                     <td class="col-md-2"></td>
                                                                     <td class="col-md-2">Totaal prijs:</td>
-                                                                    <td class="col-md-2">' .$orderController->totaltotalprice($orderlines) .'</td>
+                                                                    <td class="col-md-2">'. "€" .$orderController->totaltotalprice($orderlines) .',-</td>
                                                                 </tr>';
                                                              echo'
                                                                </tbody>

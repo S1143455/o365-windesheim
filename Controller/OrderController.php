@@ -145,7 +145,6 @@ class OrderController
             $orderLines = $this->retrieveOrderLine($order->getOrderID());
             $customer = $this->retrieveCustomer($order->getCustomerID());
             $person = $this->retrievePeople($customer->getPersonID());
-            var_dump($person);
             foreach ($orderLines as $orderLine) {
                 $products = $this->retrievestockitem($orderLine->getStockitemID());
                 foreach ($products as $prod){

@@ -4,11 +4,16 @@ include_once 'content/backend/header-admin.php';
 use Model\Discount;
 
 $discountErr = "";
+$start = ' <div class="form-group">';
+$percentageErr = "";
+$dateErr = "";
+$dealcodErr = "";
+$end = ' </div>';
+
 if (empty($_POST)) {
     $discounts = $discountController->getDiscounts();
 
 }
-//var_dump($discounts);
 if (isset($_POST['name'])) {
     echo "hoi";
     $discounts = $discountController->searchDiscounts($_POST['name']);
@@ -16,12 +21,6 @@ if (isset($_POST['name'])) {
         $discountErr = "Geen records gevonden";
     }
 }
-
-$start = ' <div class="form-group">';
-$percentageErr = "";
-$dateErr = "";
-$dealcodErr = "";
-$end = ' </div>';
 
 if (isset($_POST['id'])) {
     $discountID = $_POST['id'];
@@ -34,13 +33,17 @@ if (isset($_POST['id'])) {
     unset($_POST['valuecheck']);
 }
 
+//Check user input on errors
 if (isset($_POST['valuecheck'])) {
     unset($_POST['valuecheck']);
     $discountID = $_POST['SpecialDealID'];
     $success = true;
     if ($_POST['StartDate'] > $_POST['EndDate']) {
         $success = false;
+        $success = $start;
         $dateErr = "*De startdatum is later dan de einddatum";
+        $success = $end;
+
     }
     if ($_POST['DiscountPercentage'] < 1) {
         $success = false;
@@ -50,14 +53,27 @@ if (isset($_POST['valuecheck'])) {
     }
     if ($_POST['DiscountPercentage'] > 100) {
         $success = false;
+        $percentageErr = $start;
         $percentageErr = "*Het percentage mag niet groter zijn dan 100";
+        $percentageErr .= $end;
+
     }
-    if ($_POST['DealCode'] > 100) {
+    if ($_POST['DealCode'] > 10000000000) {
         $success = false;
-        $percentageErr = "*Het percentage mag niet groter zijn dan 100";
+        $dealcodErr = $start;
+        $dealcodErr = "*Het percentage mag niet groter zijn dan 999999999";
+        $dealcodErr = $end;
     }
+
+    if ($_POST['DealCode'] < 1) {
+        $success = false;
+        $dealcodErr = $start;
+        $dealcodErr = "*Het percentage mag niet kleiner zijn dan 1";
+        $dealcodErr = $end;
+    }
+        
     if ($success) {
-        // $discountController->update();
+         $discountController->update();
     } else {
         if ($discountID != 0) {
             $discount = $discountController->retrieve($discountID);
@@ -77,13 +93,12 @@ if (isset($_POST['valuecheck'])) {
             include_once 'content/backend/sidebar-admin.php';
             ?>
 
+            <!--Modal header -->
             <div class="col-12 col-md-9 col-lg-10">
-                <!--dit gaat in header -->
                 <h3>
                     Onderhoud Korting
                 </h3>
                 <br>
-                <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
                 <form method="post" action="" id="searchform">
                     <?php
                     if (isset($_POST['name'])) {
@@ -117,17 +132,15 @@ if (isset($_POST['valuecheck'])) {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $discountController->GetAllDiscount($discounts); ?>
+                                    <?php $discountController->GetAllDiscount($discounts);?>
                                     </tbody>
                                 </table>
                             </div>
                         </form>
                     </div>
 
-                    <!-- style="" -->
-
+                    <!-- discount option buttons  -->
                     <div class="col-12 col-md-2 col-lg-2 discountButtons">
-                        <!-- discount option buttons  -->
                         <button type="button" class="discountButton btn btn-success" data-toggle="modal"
                                 data-target="#oneTimeDiscount">
                             Eenmalige korting
@@ -155,21 +168,22 @@ if (isset($_POST['valuecheck'])) {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
+                    <!--Modal header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Eenmalige korting aanmaken</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <!-- Modal body -->
                     <div class="modal-body">
                         <div class="form-horizontal">
                             <div class="col-12">
                                 <div class="row">
                                     <label class="col-5 control-label" for="inputCodeOT">Code:</label>
                                     <input class="col-7 form-control inputCode" type="text" name="DealCode"
-                                           id="inputCodeOT"
-                                           placeholder="Code">
-                                    <!-- scripts to generate a random code for each modal-->
+                                           id="inputCodeOT" placeholder="Code" required>
+                                    <!-- scripts to generate a random code for this modal-->
                                     <script>
                                         function generateCodeOT() {
                                             var x = document.getElementById("inputCodeOT")
@@ -198,13 +212,13 @@ if (isset($_POST['valuecheck'])) {
                             <div class="form-group">
                                 <label class="col-5 control-label" for="inputPercentageOT">Percentage:</label>
                                 <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                                       id="inputPercentageOT">
+                                       id="inputPercentageOT" required>
                                 <span class="col-1 symbolPercentage">%</span>
                             </div>
                             <div class="form-group">
                                 <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                                 <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                                       id="StartDate">
+                                       id="StartDate" required>
                             </div>
                             <div class="form-group">
                                 <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -213,6 +227,7 @@ if (isset($_POST['valuecheck'])) {
                             </div>
                         </div>
                     </div>
+                    <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                         <button type="submit" class="btn btn-primary" name="submit">Korting aanmaken</button>
@@ -227,18 +242,21 @@ if (isset($_POST['valuecheck'])) {
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
+                    <!-- Modal header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Korting op product(en)</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <!-- Modal body -->
                     <div class="modal-body">
                         <p>
                             <a class="btn btn-secondary collapseButton" data-toggle="collapse"
                                href="#tableCollapseProduct" role="button"
                                aria-expanded="false" aria-controls="tableCollapse">Product zoeken</a>
                         </p>
+                        <!-- Creates a table with headers and data based on function -->
                         <div class="tableCollapseProduct">
                             <div class="collapse multi-collapse" id="tableCollapseProduct">
                                 <div class="card card-body">
@@ -258,7 +276,7 @@ if (isset($_POST['valuecheck'])) {
                                                     <th class="col-md-4">Opmerkingen</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody id="tbodyProduct">
+                                                <tbody>
                                                 <?php $discountController->GetAllProducts(); ?>
                                                 </tbody>
                                             </table>
@@ -273,15 +291,14 @@ if (isset($_POST['valuecheck'])) {
                                 <div class="row">
                                     <label class="col-5 control-label" for="inputCodePD">Code:</label>
                                     <input class="col-7 form-control inputCode" type="text" name="DealCode"
-                                           id="inputCodeDP"
-                                           placeholder="Code">
+                                           id="inputCodeDP" placeholder="Code" required>
                                 </div>
                                 <div class="row">
                                     <div class="col-5"></div>
                                     <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
                                             onclick="generateCodeDP();">Genereer code
                                     </button>
-                                    <!-- scripts to generate a random code for each modal-->
+                                    <!-- scripts to generate a random code for this modal-->
                                     <script>
                                         function generateCodeDP() {
                                             var x = document.getElementById("inputCodeDP")
@@ -306,14 +323,14 @@ if (isset($_POST['valuecheck'])) {
                             <label class="col-5 control-label labelInputPercentage"
                                    for="inputPercentageDP">Percentage:</label>
                             <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                                   id="inputPercentageDP">
+                                   id="inputPercentageDP" required>
                             <span class="col-1 symbolPercentage">%</span>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label labelInputStartDate" for="StartDate">
                                 Begin periode:</label>
                             <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                                   id="StartDate">
+                                   id="StartDate" required>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -321,6 +338,7 @@ if (isset($_POST['valuecheck'])) {
                                    id="EndDate">
                         </div>
                     </div>
+                    <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                         <button type="submit" class="btn btn-primary" name="submit" value="deze tael">Korting aanmaken
@@ -336,12 +354,14 @@ if (isset($_POST['valuecheck'])) {
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
+                    <!-- Modal header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Korting op categorie(ën)</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <!-- Modal body -->
                     <div class="modal-body">
                         <p>
                             <a class="btn btn-secondary collapseButton" data-toggle="collapse"
@@ -349,6 +369,7 @@ if (isset($_POST['valuecheck'])) {
                                role="button"
                                aria-expanded="false" aria-controls="tableCollapseCategory">Categorie zoeken</a>
                         </p>
+                        <!-- Creates a table with headers and data based on function -->
                         <div class="tableCollapseCategory">
                             <div class="collapse multi-collapse" id="tableCollapseCategory">
                                 <div class="card card-body">
@@ -368,7 +389,7 @@ if (isset($_POST['valuecheck'])) {
                                                     <th class="col-md-2">Gekoppelde korting id</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody id="tbodyCategory">
+                                                <tbody>
                                                 <?php $discountController->GetAllCategories(); ?>
                                                 </tbody>
                                             </table>
@@ -381,14 +402,14 @@ if (isset($_POST['valuecheck'])) {
                             <div class="row">
                                 <label class="col-5 control-label" for="inputCodeDC">Code:</label>
                                 <input class="col-7 form-control inputCode" type="text" name="DealCode" id="inputCodeDC"
-                                       placeholder="Code">
+                                       placeholder="Code" required>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
                                 <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
                                         onclick="generateCodeDC();">Genereer code
                                 </button>
-                                <!-- scripts to generate a random code for each modal-->
+                                <!-- scripts to generate a random code for this modal-->
                                 <script>
                                     function generateCodeDC() {
                                         var x = document.getElementById("inputCodeDC")
@@ -411,14 +432,13 @@ if (isset($_POST['valuecheck'])) {
                             <label class="col-5 control-label labelInputPercentage"
                                    for="inputPercentageDC">Percentage:</label>
                             <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                                   id="inputPercentageDC">
+                                   id="inputPercentageDC" required>
                             <span class="col-1 symbolPercentage">%</span>
                         </div>
                         <div class="form-group">
-                            <label class="col-5 control-label labelInputStartDate" for="StartDate"> Begin periode:
-                            </label>
+                            <label class="col-5 control-label labelInputStartDate" for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                                   id="StartDate">
+                                   id="StartDate" required>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -426,6 +446,7 @@ if (isset($_POST['valuecheck'])) {
                                    id="EndDate">
                         </div>
                     </div>
+                    <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                         <button type="submit" class="btn btn-primary" name="submit">Korting aanmaken</button>
@@ -440,27 +461,28 @@ if (isset($_POST['valuecheck'])) {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form role="form" id="universalModalForm" method="POST" action="CreateDiscount">
+                    <!-- Modal header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Korting mailen naar klant</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <!-- Modal body -->
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="col-12">
                                 <div class="row">
                                     <label class="col-5 control-label" for="inputCodeMD">Code:</label>
                                     <input class="col-7 form-control inputCode" type="text" name="DealCode"
-                                           id="inputCodeMD"
-                                           placeholder="Code">
+                                           id="inputCodeMD" placeholder="Code" required>
                                 </div>
                                 <div class="row">
                                     <div class="col-5"></div>
                                     <button class="col-7 btn btn-outline-secondary btnGenerateCode" type="button"
                                             onclick="generateCodeMD();">Genereer code
                                     </button>
-                                    <!-- scripts to generate a random code for each modal-->
+                                    <!-- scripts to generate a random code for this modal-->
                                     <script>
                                         function generateCodeMD() {
                                             var x = document.getElementById("inputCodeMD")
@@ -484,14 +506,14 @@ if (isset($_POST['valuecheck'])) {
                             <label class="col-5 control-label labelInputPercentage"
                                    for="inputPercentageMD">Percentage:</label>
                             <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                                   id="inputPercentageMD">
+                                   id="inputPercentageMD" required>
                             <span class="col-1 symbolPercentage">%</span>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label labelInputStartDate"
                                    for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control " type="date" name="StartDate"
-                                   id="StartDate">
+                                   id="StartDate" required>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -501,12 +523,13 @@ if (isset($_POST['valuecheck'])) {
                         <div class="form-group">
                             <label class="col-5 control-label" for="inputEmail">Email:</label>
                             <input class="col-7 form-control inputEmail" type="email" id="inputEmail"
-                                   placeholder="Email">
+                                   placeholder="Email" required>
                         </div>
                     </div>
+                    <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                        <button type="submit" class="btn btn-primary" name="submit">Korting aanmaken</button>
+                        <button type="submit" class="btn btn-primary" name="submit">Korting mailen</button>
                     </div>
                 </form>
             </div>
@@ -519,18 +542,21 @@ if (isset($_POST['valuecheck'])) {
         <div class="modal-dialog modal-lg" style="width:1000px;">
             <div class="modal-content">
                 <form role="form" id="EditDiscount" method="POST" action="UpdateDiscount">
+                    <!-- Modal header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Korting aanpassen</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <!-- Modal body -->
                     <div class="modal-body">
                         <p>
                             <a class="btn btn-secondary collapseButton" data-toggle="collapse"
                                href="#tableCollapseProduct" role="button"
                                aria-expanded="false" aria-controls="tableCollapse">Product zoeken</a>
                         </p>
+                        <!-- Creates a table with headers and data based on function -->
                         <div class="tableCollapseProduct">
                             <div class="collapse multi-collapse" id="tableCollapseProduct">
                                 <div class="card card-body">
@@ -600,7 +626,7 @@ if (isset($_POST['valuecheck'])) {
                         </div>
                         <div class="form-group">
                             <label class="col-5" for="DealCode">Code:</label>
-                            <input class="col-4 form-control" type="text" name="DealCode" id="DealCode"
+                            <input class="col-4 form-control" type="text" name="DealCode" id="DealCode" required
                                    value="<?php echo($discount->getDealCode()) ?>">
                         </div>
                         <div class="form-group">
@@ -617,7 +643,7 @@ if (isset($_POST['valuecheck'])) {
                         <div class="form-group">
                             <label class="col-5 control-label" for="inputPercentageOT">Percentage:</label>
                             <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
-                                   id="inputPercentageOT"
+                                   id="inputPercentageOT" required
                                    value="<?php echo($discount->getDiscountPercentage()) ?>">
                             <span class="col-1 symbolPercentage">%</span>
 
@@ -625,7 +651,7 @@ if (isset($_POST['valuecheck'])) {
                         <div class="form-group">
                             <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
-                                   id="StartDate"
+                                   id="StartDate" required
                                    value="<?php echo($discount->getStartDate()) ?>">
                         </div>
                         <div class="form-group">
@@ -636,8 +662,9 @@ if (isset($_POST['valuecheck'])) {
                         </div>
                         <span class="error"><?php echo $dateErr; ?></span>
                         <span class="error"><?php echo $percentageErr; ?></span>
-
+                        <span class="error"><?php echo $dealcodErr; ?></span>
                     </div>
+                    <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                         <input type="submit" name="submit" value="Korting aanpassen" class="btn btn-primary">
@@ -652,90 +679,12 @@ include_once 'content/backend/footer-admin.php';
 
 ?>
 
-    <script>
-        $('#StartDate').date({minDate: 0});
-    </script>
-
-    <!--<script>-->
-    <!--    $('#StartDate').date({-->
-    <!--        pickTime: false,-->
-    <!--        icons: {-->
-    <!--            time: "fa fa-clock-o",-->
-    <!--            date: "fa fa-calendar",-->
-    <!--            up: "fa fa-arrow-up",-->
-    <!--            down: "fa fa-arrow-down"-->
-    <!--        },-->
-    <!--        minDate: moment()-->
-    <!--    });-->
-    <!--</script>-->
-
-    <!-- script to search data in tableViewCustomer using the searchbar-->
-    <script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tbodyCustomer tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-
-    <!-- script to search data in tableViewProduct using the searchbar-->
-    <script>
-        $(document).ready(function () {
-            $("#myInputProduct").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tbodyProduct tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-
-    <!-- script to search data in tableViewCategory using the searchbar-->
-    <script>
-        $(document).ready(function () {
-            $("#myInputCategory").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tbodyCategory tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-
-    <!-- script to search data in edit tableViewProduct using the searchbar-->
-    <script>
-        $(document).ready(function () {
-            $("#myInputEditProduct").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tbodyEditProduct tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-
-    <!-- script to search data in edit tableViewCategory using the searchbar-->
-    <script>
-        $(document).ready(function () {
-            $("#myInputEditCategory").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tbodyEditCategory tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
-
-
-    <script>
-        $('.load-modal').on('click', function (e) {
-            e.preventDefault();
-            $('#createDiscount').modal('show');
-        });
-    </script>
+<script>
+    $('.load-modal').on('click', function (e) {
+        e.preventDefault();
+        $('#createDiscount').modal('show');
+    });
+</script>
 
 <?php
 include_once 'content/backend/footer-admin.php';
