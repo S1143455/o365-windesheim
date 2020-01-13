@@ -5,7 +5,7 @@ include_once 'content/frontend/header.php';
 
 $pathHomePage = 'views/homePage/';
 $pathHomeIsset = $pathHomePage.'isset/';
-include_once($pathHomePage.'varInitHoazmepage.php');
+include_once($pathHomePage.'varInitHomepage.php');
 include_once($pathHomeIsset.'previous.php');
 include_once($pathHomeIsset.'next.php');
 include_once($pathHomeIsset.'prdBack.php');
