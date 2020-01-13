@@ -2,7 +2,6 @@
 
 namespace Model;
 
-
 class Attachments extends Database
 {
     private $attachmentID;
@@ -11,7 +10,6 @@ class Attachments extends Database
     private $lastEditedBy;
     private $URL;
     private $Active;
-
 
     function __construct()
     {

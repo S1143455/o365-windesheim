@@ -148,6 +148,7 @@ class Models
             "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
             "StockItemDescription" => ['Varchar', 'Attribute', 'Nullable'],
             "TimesVisited" => ['Integer', 'Attribute', 'Nullable'],
+            "RecommendedRetailPrice" => ['decimal', 'Attribute', 'Nullable'],
         );
     }
 
@@ -193,7 +194,6 @@ class Models
             "CategoryName" => ['Varchar', 'Attribute', 'Required'],
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
-            "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
             "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
         );
     }

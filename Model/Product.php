@@ -21,6 +21,7 @@ class Product extends Database
     private $SpecialDealID;
     private $StockItemDescription;
     private $TimesVisited;
+    private $recommendedRetailPrice;
 
     function __construct()
     {
@@ -286,4 +287,19 @@ class Product extends Database
     }
 
 
+    /**
+     * @return mixed
+     */
+    public function getRecommendedRetailPrice()
+    {
+        return $this->recommendedRetailPrice;
+    }
+
+    /**
+     * @param mixed $recommendedRetailPrice
+     */
+    public function setRecommendedRetailPrice($recommendedRetailPrice)
+    {
+        $this->recommendedRetailPrice = $recommendedRetailPrice;
+    }
 }

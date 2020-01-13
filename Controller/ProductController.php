@@ -9,6 +9,9 @@ use Model\Category;
 use Model\Orderline;
 use Model\Product;
 use Model\Supplier;
+use Model\Attachments;
+use Model\ShoppingCart;
+use Controller\MainController;
 
 Class ProductController extends FileController
 {
@@ -18,6 +21,8 @@ Class ProductController extends FileController
 
     private $category;
     private $supplier;
+    private $attachments;
+    private $cart;
 
     /**
      * This should return the index page of the products.
@@ -39,7 +44,6 @@ Class ProductController extends FileController
 
         $categories = new Category();
         $categories = $categories->retrieve();
-
 
         return include $this->viewPath . 'index.php';
     }
@@ -253,5 +257,18 @@ Class ProductController extends FileController
         $baseprice = $price/100;
         $total = $baseprice*$basebtw;
         return $total;
+    }
+
+    public function productDetail(){
+        $main = new MainController();
+        $cart= new shoppingCart();
+        $attachment = new attachments();
+        $product = new product();
+
+        if(isset($_POST['srchProduct']) || isset($_POST['add']) || isset($_POST['imgBack']) || isset($_POST['imgForward'])) {
+            $prod = $product->retrieve($_POST['productID']);
+        }
+
+        include_once('views/product/productdetail.php');
     }
 }
