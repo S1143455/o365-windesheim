@@ -28,7 +28,6 @@ class Router
             $action = str_replace($this->root,'',$action);
         }
         $action = trim($action, '/');
-
         if (array_key_exists($action, $this->routes))
         {
             $callback = $this->routes[$action];

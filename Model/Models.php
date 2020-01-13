@@ -147,7 +147,7 @@ class Models
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
             "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
             "StockItemDescription" => ['Varchar', 'Attribute', 'Nullable'],
-            "AttachmentID" => ['attachments', 'HasMany', 'Nullable'],
+            "TimesVisited" => ['Integer', 'Attribute', 'Nullable'],
             "RecommendedRetailPrice" => ['decimal', 'Attribute', 'Nullable'],
         );
     }
@@ -167,7 +167,7 @@ class Models
         $this->column = array(
             "AttachmentStockItemID" => ['Integer', 'PrimaryKey', 'Required'],
             "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
-            "StockItemID" => ['StockItem', 'HasOne', 'Required'],
+            "StockitemID" => ['Varchar', 'Attribute', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
     }
@@ -194,7 +194,6 @@ class Models
             "CategoryName" => ['Varchar', 'Attribute', 'Required'],
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
-            "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
             "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
         );
     }
@@ -216,8 +215,11 @@ class Models
         $this->column = array(
             "AttachmentID" => ['Integer', 'PrimaryKey', 'Required'],
             "AlternateText" => ['Varchar', 'Attribute', 'Nullable'],
-            "FileLocation" => ['Varchar', 'Attribute', 'Required'],
+            "FileLocation" => ['Varchar', 'Attribute', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "URL" => ['Varchar', 'Attribute', 'Nullable'],
+            "Active" => ['Tinyint', 'Attribute', 'Required'],
+
         );
     }
 

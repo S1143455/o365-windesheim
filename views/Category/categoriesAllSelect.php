@@ -1,5 +1,5 @@
 <?php
-    echo '<select id = "CategoryID" class="form-control" required>';
+    echo '<select style="width:100%;" id = "CategoryID" class="form-control" required>';
     echo '<option value="">Selecteer een categorie...</option>';
 
     $categories = $category->retrieve();

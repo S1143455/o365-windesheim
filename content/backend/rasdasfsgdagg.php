@@ -28,7 +28,7 @@ use Model\Product;
                         <thead>
                             <tr>
                                 <th class="col-xs-1">Productnummer</th>
-                                <th class="col-xs-2">Categorie</th>
+                                <th class="col-xs-1">Categorie</th>
                                 <th class="col-xs-3">Omschrijving</th>
                                 <th class="col-xs-1">Prijs</th>
                                 <th class="col-xs-1">Voorraad</th>

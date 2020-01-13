@@ -57,7 +57,7 @@ if (isset($_POST['valuecheck'])) {
         $percentageErr = "*Het percentage mag niet groter zijn dan 100";
     }
     if ($success) {
-        // $discountController->update();
+        $discountController->update();
     } else {
         if ($discountID != 0) {
             $discount = $discountController->retrieve($discountID);

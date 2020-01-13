@@ -10,7 +10,6 @@ class Category extends Database
     private $categoryName;
     private $lastEditedBy;
     private $parentCategory;
-    private $AttachmentID;
     private $SpecialDealID;
 
     function __construct()
@@ -82,21 +81,7 @@ class Category extends Database
     {
         $this->parentCategory = $parentCategory;
     }
-    /**
-     * @return mixed
-     */
-    public function getAttachmentID()
-    {
-        return $this->attachmentID;
-    }
 
-    /**
-     * @param mixed $parentcategory
-     */
-    public function setAttachmentID($attachmentID)
-    {
-        $this->attachmentID = $attachmentID;
-    }
 
     /**
      * @return mixed
