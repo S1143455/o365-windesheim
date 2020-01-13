@@ -281,15 +281,17 @@
 }
 
 .imgHome{
+  margin-top:8em;
   height:400px;
   background-image:url("images/chocoladeGENERAL.jpg");
   background-size:cover;
   background-repeat:no-repeat;
+  box-shadow: 0 12px 14px 0 rgba(0, 0, 0, 0.2), 0 16px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .infoHome{
   background-color:black;
-}
+  box-shadow: 0 12px 14px 0 rgba(0, 0, 0, 0.2), 0 16px 20px 0 rgba(0, 0, 0, 0.19);
 
 .infoText{
   color:white;
