@@ -6,13 +6,13 @@ include 'content/frontend/display_message.php';
 if (isset($_POST['RetryPayment']))
 {
     $_SESSION['USER']['SHOPPING_CART']['PAYMENT']='retry';
-    echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/winkelwagen\">";
+    echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "winkelwagen\">";
 }
 
 if (isset($_POST['DifferentMethod']))
 {
     $_SESSION['USER']['SHOPPING_CART']['PAYMENT']='method';
-    echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/winkelwagen\">";
+    echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "winkelwagen\">";
 }
 
 ?>

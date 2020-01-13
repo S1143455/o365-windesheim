@@ -14,8 +14,12 @@ $categoryController = new Controller\CategoryController();
 $discountController = new Controller\DiscountController();
 $user = new Controller\UserController();
 $productController = new Controller\ProductController();
+$customer = new Controller\CustomerController();
 
-switch ($authenticationController->role()){
+$authenticationController = new Controller\AuthenticationController();
+$userController = new Controller\UserController();
+
+switch ($userController->role()){
     case 'admin' :
         break;
     case 'customer':
@@ -24,9 +28,30 @@ switch ($authenticationController->role()){
         break;
     default:
         break;
+
+
 }
+$admin = new Controller\AdminController();
+$categoryController = new Controller\CategoryController();
+$orderController = new Controller\OrderController();
+$orderLineController = new Controller\OrderlineController();
 
+$discountController = new Controller\DiscountController();
+$customerController = new Controller\CustomerController();
+$adressController = new Controller\AdressController();
+$fileController = new Controller\FileController();
 
+$productController = new Controller\ProductController();
+$shoppingcartStockitems= new Controller\ShoppingcartStockitemsController();
+$customerController = new Controller\CustomerController();
+
+if (isset($_SESSION['authenticated']) && !isset($_SESSION['authenticatedAdmin']))
+{
+//    echo '<div class="container-fluid">
+//            <div class="row">';
+//    include_once 'content/frontend/sidebar.php';
+//    echo '</div> </div>';
+}
 
 
 

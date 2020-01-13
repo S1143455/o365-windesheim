@@ -5,19 +5,21 @@ namespace Model;
 class Product extends Database
 {
 
-    private $stockItemID;
+    private $StockItemID;
     private $stockItemName;
     private $supplierID;
     private $brand;
     private $barcode;
     private $size;
-    private $loadTimeDays;
+    private $LeadTimeDays;
     private $isChillerStock;
     private $taxRate;
     private $unitPrice;
     private $marketingComments;
     private $categoryID;
     private $lastEditedBy;
+    private $SpecialDealID;
+    private $StockItemDescription;
 
     function __construct()
     {
@@ -31,15 +33,15 @@ class Product extends Database
      */
     public function getStockItemID()
     {
-        return $this->stockItemID;
+        return $this->StockItemID;
     }
 
     /**
-     * @param mixed $stockItemID
+     * @param mixed $StockItemID
      */
-    public function setStockItemID($stockItemID)
+    public function setStockItemID($StockItemID)
     {
-        $this->stockItemID = $stockItemID;
+        $this->StockItemID = $StockItemID;
     }
 
     /**
@@ -124,17 +126,17 @@ class Product extends Database
     /**
      * @return mixed
      */
-    public function getLoadTimeDays()
+    public function getLeadTimeDays()
     {
-        return $this->loadTimeDays;
+        return $this->LeadTimeDays;
     }
 
     /**
-     * @param mixed $loadTimeDays
+     * @param mixed $LeadTimeDays
      */
-    public function setLoadTimeDays($loadTimeDays)
+    public function setLeadTimeDays($LeadTimeDays)
     {
-        $this->loadTimeDays = $loadTimeDays;
+        $this->LeadTimeDays = $LeadTimeDays;
     }
 
     /**
@@ -233,5 +235,33 @@ class Product extends Database
         $this->lastEditedBy = $lastEditedBy;
     }
 
+    public function getSpecialDealID()
+    {
+        return $this->SpecialDealID;
+    }
 
+    /**
+     * @param mixed $SpecialDealID
+     */
+
+    public function setSpecialDealID($SpecialDealID)
+    {
+        $this->SpecialDealID = $SpecialDealID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStockItemDescription()
+    {
+        return $this->StockItemDescription;
+    }
+
+    /**
+     * @param mixed $StockItemDescription
+     */
+    public function setStockItemDescription($StockItemDescription)
+    {
+        $this->StockItemDescription = $StockItemDescription;
+    }
 }

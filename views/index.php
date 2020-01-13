@@ -28,6 +28,12 @@ if($cat_srch){
     <div>
         <div id="adv" class="col-md-12 banner">
         <?php if ($cat_srch and $cat_parent->getCategoryID() != ''){echo '<h3>' . $cat_parent->getCategoryName() . '</h3>';}; ?>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+        <div id="adv">
+            //img
         </div>
 
         <?php if (!$cat_srch){ ?>
@@ -76,6 +82,9 @@ if($cat_srch){
         <div id = "products">
 
         </div>
+    </div>
+    </div>
+</div>
     </div>
 <?php
 //include 'content/frontend/itemlist.php';

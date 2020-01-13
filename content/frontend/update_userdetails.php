@@ -14,7 +14,8 @@ and PersonId='" . $_POST['PersonID'] . "'");
 // Update the people table
 $updatePeople=$pushthedata->UpdateStmt('UPDATE people SET  
 FullName="' . $_POST['FullName']	. '" ,
-DateOfBirth= "' .date('Y-m-d',strtotime($_POST['DateOfBirth'])) .  '"
+DateOfBirth= "' .date('Y-m-d',strtotime($_POST['DateOfBirth'])) .  '",
+EmailAddress = "' . $_POST['EmailAddress'] .'"
 WHERE PersonId="'  . $_POST['PersonID'] . '"');
 
 // Update the customer
@@ -23,13 +24,8 @@ if (isset($_POST['newsletter']))
 else
     $newsletter=0;
 
-if ($_POST['Gender']=='male')
-    $gender='Man';
-else
-    $gender='Vrouw';
-
 $savethecustomer=$pushthedata->UpdateStmt("UPDATE customer SET 
-Gender=\"" . $gender	. "\" ,
+Gender=\"" . $_POST['Gender']	. "\" ,
 newsletter=\"" . $newsletter . "\" 
 WHERE CustomerID ='" . $_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'] . "'");
 

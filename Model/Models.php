@@ -21,6 +21,18 @@ class Models
             case 'stockitem':
                 $this->getStockItem();
                 break;
+            case 'attachmentcategorie':
+                $this->getAttachmentcategorie();
+                break;
+            case 'attachmentstockitem':
+                $this->getAttachmentStockitem();
+                break;
+            case 'orders':
+                $this->getOrder();
+                break;
+            case 'Orderlines':
+                $this->getOrderLines();
+                break;
             case 'category':
                 $this->getCategory();
                 break;
@@ -36,10 +48,20 @@ class Models
             case  'people':
                 $this->getPeople();
                 break;
+            case  'customer':
+                $this->getCustomer();
+                break;
+            case  'Shoppingcart':
+                $this->getShoppingcart();
+                break;
+            case  'address':
+                $this->getAddress();
+                break;
             case  'specialdeals':
                 $this->getSpecialdeals();
                 break;
             default:
+                echo $this->table;
                 die('Table not implemented');
         }
 
@@ -47,6 +69,18 @@ class Models
             switch ($this->table) {
                 case 'stockitem':
                     $this->getStockItem();
+                    break;
+                case 'attachmentcategorie':
+                    $this->getAttachmentcategorie();
+                    break;
+                case 'attachmentstockitem':
+                    $this->getAttachmentStockitem();
+                    break;
+                case 'orders':
+                    $this->getOrder();
+                    break;
+                case 'Orderlines':
+                    $this->getOrderLines();
                     break;
                 case 'category':
                     $this->getCategory();
@@ -66,13 +100,31 @@ class Models
                 case  'address':
                     $this->getAddress();
                     break;
+                case  'customer':
+                    $this->getCustomer();
+                    break;
+                case  'Shoppingcart':
+                    $this->getShoppingcart();
+                    break;
+                case  'specialdeals':
+                    $this->getSpecialdeals();
+                    break;
                 default:
+                    echo $this->table;
                     die('Table not implemented');
             }
 
         }
 
+//        if ($column != null) {
+//            $retrievedRelation = $this->column;
+//            $this->column = $modelColumn;
+//            return $retrievedRelation;
+//        }
+//        return $this->column;
+
     }
+
 
     /**
      * Define array of the product
@@ -85,13 +137,36 @@ class Models
             "SupplierID" => ['Supplier', 'HasOne', 'Required'],
             "Brand" => ['Varchar', 'Attribute', 'Required'],
             "Size" => ['Integer', 'Attribute', 'Nullable'],
-            "LoadTimeDays" => ['Integer', 'Attribute', 'Nullable'],
+            "LeadTimeDays" => ['Integer', 'Attribute', 'Nullable'],
             "IsChillerStock" => ['Boolean', 'Attribute', 'Nullable'],
             "BarCode" => ['Varchar', 'Attribute', 'Required'],
             "TaxRate" => ['Integer', 'Attribute', 'Required'],
             "UnitPrice" => ['Integer', 'Attribute', 'Required'],
             "MarketingComments" => ['LongText', 'Attribute', 'Nullable'],
             "CategoryID" => ['Category', 'HasOne', 'Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+            "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
+            "StockItemDescription" => ['Varchar', 'Attribute', 'Nullable'],
+
+        );
+    }
+
+    private function getAttachmentcategorie()
+    {
+        $this->column = array(
+            "AttachmentCategorieID" => ['Integer', 'PrimaryKey', 'Required'],
+            "attachmentID" => ['Attachment', 'HasOne', 'Required'],
+            "categoryID" => ['Categorie', 'HasOne', 'Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+
+        );
+    }
+    private function getAttachmentStockitem()
+    {
+        $this->column = array(
+            "AttachmentStockItemID" => ['Integer', 'PrimaryKey', 'Required'],
+            "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
+            "StockItemID" => ['StockItem', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
     }
@@ -119,6 +194,7 @@ class Models
             "ParentCategory" => ['Category', 'HasMany', 'Nullable'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
             "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
+            "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
         );
     }
 
@@ -144,6 +220,14 @@ class Models
         );
     }
 
+    private function getShoppingcart()
+    {
+        $this->column = array(
+            "ShoppingCartID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ExpirationDate" => ['Datetime', 'Attribute', 'Required'],
+            "CreationDate" => ['Datetime', 'Attribute', 'Required'],
+        );
+    }
     private function getContent()
     {
         $this->column = array(
@@ -157,20 +241,39 @@ class Models
     private function getPeople()
     {
         $this->column = array(
-            "PeopleID" => ['Integer', 'PrimaryKey', 'Required'],
-            "FullName" => ['Varchar', 'Attribute', 'Unique'],
-            "LogonName" => ['Supplier', 'HasOne', 'Required'],
-            "HashedPassword" => ['Varchar', 'Attribute', 'Required'],
-            "IsSystemUser" => ['Integer', 'Attribute', 'Required'],
-            "Role" => ['Integer', 'Attribute', 'Required'],
-            "PhoneNumber" => ['Boolean', 'Attribute', 'Required'],
+            "PersonID" => ['Integer', 'PrimaryKey', 'Required'],
+            "FullName" => ['Varchar', 'Attribute', 'Required'],
+            "LogonName" => ['Varchar', 'HasOne', 'Required'],
+            "HashedPassword" => ['Blob', 'Attribute', 'Required'],
+            "IsSystemUser" => ['Tinyint', 'Attribute', 'Required'],
+            "Role" => ['Varchar', 'Attribute', 'Required'],
+            "PhoneNumber" => ['Varchar', 'Attribute', 'Required'],
             "EmailAddress" => ['Varchar', 'Attribute', 'Unique'],
+            "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
             "Photo" => ['Blob', 'Attribute', 'Nullable'],
-            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+//            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+//            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
             "PassWordRecoveryString" => ['Varchar', 'Attribute', 'Nullable'],
             "RecoveryStringTTL" => ['Integer', 'Attribute', 'Nullable'],
         );
     }
+
+//    private function getPeople()
+//    {
+//        $this->column = array(
+//            "PeopleID" => ['Integer', 'PrimaryKey', 'Required'],
+//            "FullName" => ['Varchar', 'Attribute', 'Unique'],
+//            "LogonName" => ['Supplier', 'HasOne', 'Required'],
+//            "HashedPassword" => ['Varchar', 'Attribute', 'Required'],
+//            "IsSystemUser" => ['Integer', 'Attribute', 'Required'],
+//            "Role" => ['Integer', 'Attribute', 'Required'],
+//            "PhoneNumber" => ['Boolean', 'Attribute', 'Required'],
+//            "EmailAddress" => ['Varchar', 'Attribute', 'Unique'],
+//            "DateOfBirth" => ['Date', 'Attribute', 'Nullable',],
+//            "Photo" => ['Blob', 'Attribute', 'Nullable'],
+//            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+//        );
 
     private function getSupplier()
     {
@@ -184,6 +287,62 @@ class Models
             "WebsiteURL" => ['Varchar', 'Attribute', 'Required'],
             "LastEditedBy" => ['Varchar', 'Attribute', 'Required'],
             "AddressID" => ['Address', 'HasOne', 'Required'],
+
+        );
+    }
+
+    private function getShoppingcartStockitems()
+    {
+        $this->column = array(
+            "ShopStockID" => ['Integer', 'PrimaryKey', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemID" => ['Integer', 'Attribute', 'Required'],
+            "StockItemAmount" => ['Integer', 'Attribute', 'Required'],
+        );
+    }
+
+
+    private function getCustomer()
+    {
+        $this->column = array(
+            "CustomerID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "PersonID" => ['Integer', 'HasOne', 'Required'],
+            "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
+            "Gender" => ['Varchar', 'Attribute', 'Required'],
+            "newsletter" => ['Boolean', 'Attribute', 'Not Required'],
+            "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
+        );
+    }
+
+    private function getOrder()
+    {
+        $this->column = array(
+            "OrderID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "CustomerID" => ['customer', 'HasOne', 'Required'],
+            "OrderDate" => ['Date', 'Attribute', 'Not Required'],
+            "ExpectedDeliveryDate" => ['Date', 'Attribute', 'Not Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Nullable'],
+            "DeliveryMethodID" => ['Integer', 'Attribute', 'Nullable'],
+            "PaymentMethodID" => ['Integer', 'Attribute', 'Not Nullable'],
+            "SpecialDealID" => ['Integer', 'foreign key', 'Not Required'],
+        );
+    }
+
+    private function getOrderLines()
+    {
+        $this->column = array(
+            "OrderLineID" => ['Integer', 'PrimaryKey', 'Required' ],
+            "OrderID" => ['Order', 'HasOne', 'Required'],
+            "StockItemID" => ['StockItem', 'HasOne', 'Required'],
+            "Description" => ['varchar',  'Attribute', 'Not Required'],
+            "PackageTypeID" => ['Integer',  'Attribute', 'Not Required'],
+            "Quantity" => ['Integer',  'Attribute', 'Required'],
+            "UnitPrice" => ['Decimal',  'Attribute', 'Required'],
+            "TaxRate" => ['Integer',  'Attribute', 'Required'],
+            "PickedQuantity" => ['Integer',  'Attribute', 'Required'],
+            "PickingCompletedWhen" => ['Date', 'Attribute', 'Not Required'],
+            "LastEditedBy" => ['People',  'Attribute', 'Required'],
+            "LastEditedWhen" => ['Date',  'Attribute', 'Required'],
 
         );
     }

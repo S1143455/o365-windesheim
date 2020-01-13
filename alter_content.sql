@@ -2,21 +2,8 @@
  DROP TABLE Content_category;
  DROP TABLE Content;
 
-CREATE TABLE Content
-(
-    ContentID int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    Section varchar(50) NOT NULL,
-    HTML    LONGTEXT    NULL,
-    UpdDt  datetime    NOT NULL
-);
-
-CREATE TABLE Content_category
-(
-    ContentCategoryID int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ContentID int(11) NOT NULL,
-    CategoryID int(11) NOT NULL,
-    SeqNum int (4) NOT NULL
-);
+CREATE TABLE Content(    ContentID int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,    Section varchar(50) NOT NULL,    HTML    LONGTEXT    NULL,    UpdDt  datetime    NOT NULL);
+CREATE TABLE Content_category(    ContentCategoryID int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,    ContentID int(11) NOT NULL,    CategoryID int(11) NOT NULL,    SeqNum int (4) NOT NULL);
 
 ALTER TABLE Content_category ADD CONSTRAINT FK_Content FOREIGN KEY (ContentID) REFERENCES Content(ContentID);
 ALTER TABLE Content_category ADD CONSTRAINT FK_CategoryID FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID);

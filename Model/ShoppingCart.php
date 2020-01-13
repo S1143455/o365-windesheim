@@ -91,7 +91,7 @@ class ShoppingCart
         $returnCode=1;
         if (!isset($_SESSION['authenticated']))
         {
-            echo display_message('info','Om bestellingen te kunnen bewerken moet u ingelogd zijn.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/login\">";
+            echo display_message('info','Om bestellingen te kunnen bewerken moet u ingelogd zijn.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "login\">";
             die;
         }
 
@@ -145,18 +145,19 @@ class ShoppingCart
 
         if (!isset($_SESSION['authenticated']))
         {
-            echo display_message('info','Om bestellingen te kunnen bewerken moet u ingelogd zijn.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/login\">";
+            echo display_message('info','Om bestellingen te kunnen bewerken moet u ingelogd zijn.<br>U wordt door gestuurd naar de inlogpagina.') . "<META HTTP-EQUIV=Refresh CONTENT=\"3;URL=/" . getenv('ROOT') . "login\">";
             die;
         }
 
         //check if there's a cart present.
-        if (!isset($_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']))
+        if ($_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID']=='')
         {
             // No cart so there's nothing to remove.
             return 0;
         }
 
         $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
+        $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
         $handelData=new \Model\Database();
 
         // Lower the number of items in the cart.
@@ -172,6 +173,10 @@ class ShoppingCart
             if ($newAmount == 0)
             {
                 $removeCartItem = $handelData->UpdateStmt("Delete from shoppingcart_stockitems where StockItemID=" . $stockItem . " and ShoppingCartID=" . $cartId);
+
+                $numberofrows=$handelData->selectStmt("select count(*) as aantal from shoppingcart_stockitems where ShoppingCartID=" . $cartId);
+                // If there are no more rows left, the cart can be deleted.
+                if ($numberofrows[0]['aantal'] == 0){$this->RemoveCart($cartId,$customerId);}
             }
         }
         return 1;

@@ -8,7 +8,7 @@ include 'content/frontend/display_message.php';
 // needs to be unset.
 
 // Let's check if the user want's to return home.
-if (isset($_POST{'ReturnHome'})){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/\">";die;}
+if (isset($_POST['ReturnHome'])){echo "<META HTTP-EQUIV=Refresh CONTENT=\"0;URL=/" . getenv('ROOT') . "\">";die;}
 
 $cartId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['ShoppingCartID'];
 $customerId=$_SESSION['USER']['CUSTOMER_DETAILS'][0]['CustomerID'];
@@ -44,13 +44,16 @@ $getOrderId=$handelDataBase->selectStmt( "select OrderID from orders where Custo
 $oderId=$getOrderId[0]['OrderID'];
 
 // Put the ordered items in th database
-$insertPart1="INSERT INTO order_stockitem(OrderID, StockItemID, ItemAmount, TotalCartPrice)";
+$insertPart1="INSERT INTO orderlines(OrderID, StockItemID, Description, Quantity, UnitPrice,TaxRate,LastEditedBy)";
 foreach ($_SESSION['USER']['SHOPPING_CART']['ITEMS'] as $key)
 {
     $insertPart2=" VALUES(".$oderId. ","
         .$key['StockItemID'] . ","
+        ."\"" . $key['StockItemName'] . "\","
         .$key['StockItemAmount'] . ","
-        .$key['CartPrice'].")";
+        .$key['RecommendedRetailPrice']. ","
+        . "21" . ","
+        . $_SESSION['USER']['DATA'][0]['PersonID'] . ")";
     $insertOderItems=$handelDataBase->UpdateStmt($insertPart1.$insertPart2);
 }
 

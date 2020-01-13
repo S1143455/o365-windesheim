@@ -1,4 +1,5 @@
 <?php
+include_once 'content/backend/header-admin.php';
 // Who's calling?
 if (isset($_POST['ChangeNewsletter']))      // The users wants to change the news letter.
 {
@@ -48,73 +49,72 @@ else                                        // The user wants to create a new ne
 
 </script>
 
-<div class="container" style="width:100%">
+<div class="container-fluid" xmlns="http://www.w3.org/1999/html">
     <div class="row">
-        <div class="col-md-8">
-            <div class="row">
-                <form role="form" id="thisone" name="thisone" method="POST" action="">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <div class="panel-title">
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <h4><?php echo $formTitle; ?></h4>
-                                                </div>
-                                                <div class="col-xs-2">
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <button type="submit" class="btn btn-success btn-block" name="BackToMainPage" onclick="return NotRequired()">
-                                                        Terug naar hoofdpagina
-                                                    </button>
-                                                </div>
+        <?php include_once 'content/backend/sidebar-admin.php';?>
+        <div class="col-12 col-lg-10">
+            <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
+                <div class="row">
+                    <form role="form" id="thisone" name="thisone" method="POST" action="" style="width: 100%">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h4><?php echo $formTitle; ?></h4>
+                                            </div>
+                                            <div class="col-md-2">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="submit" class="btn btn-success btn-block" name="BackToMainPage" onclick="return NotRequired()">
+                                                    Terug naar hoofdpagina
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <label for="MainTitle"><h4>Titel van de nieuwsbrief</h4></label>
-                                                <input type="text" class="form-control" name="MainTitle" id="MainTitle" placeholder="Titel van de nieuwsbrief" <?php echo $newsletterTitle;?> required>
-                                            </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="MainTitle"><h4>Titel van de nieuwsbrief</h4></label>
+                                            <input type="text" class="form-control" name="MainTitle" id="MainTitle" style="width: 100%" placeholder="Titel van de nieuwsbrief" <?php echo $newsletterTitle;?> required>
                                         </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <div class="col-xs-12">
-                                                    <textarea id="txtEditor" name="txtEditor" rows="50"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-4">
-                                                <button type="submit" onclick="myFunction()" name="sendNewsletter" class="btn btn-success btn-block" value="<?php echo $buttonValue; ?>">
-                                                    Versturen
-                                                </button>
-                                            </div>
-                                            <div class="col-xs-4">
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <button type="submit" onclick="myFunction()" name="saveNewsletter" class="btn btn-success btn-block" value="<?php echo $buttonValue; ?>">
-                                                    Opslaan
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <input type="hidden" name="LetterContent" id="LetterContent">
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <div class="col-md-12">
+                                                <textarea id="txtEditor" name="txtEditor" rows="50" style="width: 100%;"></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="panel-footer">
-                                        <div class="row text-center">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button type="submit" onclick="myFunction()" name="sendNewsletter" class="btn btn-success btn-block" value="<?php echo $buttonValue; ?>">
+                                                Versturen
+                                            </button>
                                         </div>
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="submit" onclick="myFunction()" name="saveNewsletter" class="btn btn-success btn-block" value="<?php echo $buttonValue; ?>">
+                                                Opslaan
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <input type="hidden" name="LetterContent" id="LetterContent">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="row text-center">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
