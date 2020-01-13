@@ -34,15 +34,15 @@ include_once($pathHomePage.'varSetHomepage.php');
 
         <?php include_once ($pathHomePage.'productBoxesHeader.php'); ?>
 
-            <div class="row">
-                <?php include_once($pathHomePage.'productBoxes.php'); ?>
-            </div>
-
-            <!-- navigator buttons -->
-            <div class="navigator">
-                    <?php include_once($pathHomePage.'navigator.php'); ?>
-            </div>
+        <div class="row">
+            <?php include_once($pathHomePage.'productBoxes.php'); ?>
         </div>
+
+        <!-- navigator buttons -->
+        <div class="navigator">
+            <?php include_once($pathHomePage.'navigator.php'); ?>
+        </div>
+    </div>
     </div>
     </div>
 </div>

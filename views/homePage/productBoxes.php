@@ -23,32 +23,43 @@ foreach($products as $prod){
 
     $one = true;
     echo '<div class="col-md-4 padding-bottom1em">';
-    echo '<div class="productbox">';
+        echo '<div class="productbox">';
 
-    echo '<div class="imagebox">';
-    $this->showAttachment($prod->getAttachmentID(), false, 'img-responsive img-fit');
-    echo '</div>';
+            echo '<div class="imagebox">';
 
-    echo '<div class="productDetail">';
-    echo '<form method="post" action="' . $this->root . '/productdetail">';
-    echo '<input type="text" name="home" style="display:none;" value="' . (($cat_srch) ? false : true) . '">';
-    echo '<input type="text" name="productID" style="display:none;" value="' . $prod->getStockItemID() . '">';
+            $j = 1;
+            $productAttachments = $fileController->retrieveWhereStockitemBackwards($prod->getStockItemID());
+            foreach($productAttachments as $prodAtt){
 
-    $stockDescr = $prod->getStockItemName();
-    if(strlen($prod->getStockItemName()) > 30){
-        $stockDescr = substr($prod->getStockItemName(),0,30) . '...';
-    }
+                //only show first attachment
+                If($j==1){
+                    $this->showAttachment($prodAtt->getAttachmentID(), false,'img-responsive img-fit');
+                }
+                $j++;
+            }
 
-    echo '<b>' . $stockDescr . '</b><br>';
-    echo '€' . $prod->getRecommendedRetailPrice() . '<br><br>';
-    echo '<button name="srchProduct" type="submit" value="search product" class="productButton">';
-    echo 'Bekijken >';
-    echo '</button>';
-    echo '<br>';
-    echo '</form>';
-    echo '</div>';
+            echo '</div>';
 
-    echo '</div>';
+            echo '<div class="productDetail">';
+                echo '<form method="post" action="' . $this->root . '/productdetail">';
+                echo '<input type="text" name="home" style="display:none;" value="' . (($cat_srch) ? false : true) . '">';
+                echo '<input type="text" name="productID" style="display:none;" value="' . $prod->getStockItemID() . '">';
+
+                $stockDescr = $prod->getStockItemName();
+                if(strlen($prod->getStockItemName()) > 30){
+                    $stockDescr = substr($prod->getStockItemName(),0,30) . '...';
+                }
+
+                echo '<b>' . $stockDescr . '</b><br>';
+                echo '€' . $prod->getRecommendedRetailPrice() . '<br><br>';
+                echo '<button name="srchProduct" type="submit" value="search product" class="productButton">';
+                echo 'Bekijken >';
+                echo '</button>';
+                echo '<br>';
+                echo '</form>';
+            echo '</div>';
+
+        echo '</div>';
     echo '</div>';
     $i++;
 }

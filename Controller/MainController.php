@@ -6,6 +6,7 @@ use Model\Database;
 use Model\Category;
 use Model\Attachments;
 use Model\Product;
+use Controller\fileController;
 
 class MainController
 
@@ -52,6 +53,7 @@ class MainController
         $this->category = new category();
         $this->product = new product();
         $this->attachment = new Attachments();
+        $this->fileController  = new fileController();
     }
 
     /**
@@ -89,6 +91,8 @@ class MainController
         $attachment = new Attachments();
 
         $main = $this;
+
+        $fileController = new fileController();
         include_once('views/index.php');
     }
 
@@ -298,13 +302,14 @@ class MainController
         echo $this->getContent($section);
     }
 
-    function showAttachment($attachmentID, $productDetail, $styleClass){
+    function showAttachment($attachmentID, $showVIDEO, $styleClass){
         if($attachmentID == '' || $attachmentID == 0){
             echo '<img class="' . $styleClass . '" src="/' . getenv('ROOT') . '/uploads/dummyImage.png">';
         }else{
             $att = $this->attachment->retrieve($attachmentID);
+
             if(substr($att->getFileLocation(),0,4) == 'http'){
-                if(!$productDetail) {
+                if(!$showVIDEO) {
                     echo '<img class="' . $styleClass . '" src="/' . getenv('ROOT') . '/uploads/dummyImage.png">';
                 }else{
                     echo '<iframe height="100%" width="100%" src="' . $att->getFileLocation() . '"></iframe>';

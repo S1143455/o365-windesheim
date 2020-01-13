@@ -5,8 +5,10 @@ include_once 'content/frontend/header.php';
 include 'content/frontend/display_message.php';
 
 $pathProdutDetails = 'views/product/isset/';
-$imgCounter = 0;
-$imgMAX = 2;
+$imgCounter = 1;
+
+$productAttachments = $fileController->retrieveWhereStockitemBackwards($prod->getStockItemID());
+$imgMAX = count($productAttachments);
 
 include_once($pathProdutDetails . 'add.php');
 include_once($pathProdutDetails . 'remove.php');
