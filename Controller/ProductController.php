@@ -2,11 +2,17 @@
 
 namespace Controller;
 
+use Model\AttachmentCategorie;
+use Model\Attachments;
+use Model\AttachmentStockItem;
 use Model\Category;
+use Model\Orderline;
 use Model\Product;
 use Model\Supplier;
+use Model\ShoppingCart;
+use Controller\MainController;
 
-Class ProductController
+Class ProductController extends FileController
 {
     private $viewPath = 'views/product/';
 
@@ -14,6 +20,8 @@ Class ProductController
 
     private $category;
     private $supplier;
+    private $attachments;
+    private $cart;
 
     /**
      * This should return the index page of the products.
@@ -36,10 +44,47 @@ Class ProductController
         $categories = new Category();
         $categories = $categories->retrieve();
 
-
         return include $this->viewPath . 'index.php';
     }
 
+    /**
+     * This method should capture the creation of a new object,
+     * Verify its data and commit it to the database.
+     * @param $newProduct
+     * @return mixed
+     */
+    public function createAdminProduct()
+    {
+        $product = new Product();
+        $product->initialize();
+        $product->save();
+        if (isset($_FILES) && $_FILES['attachmentIMG'] != null && $_FILES["attachmentIMG"]["tmp_name"][0] != null) {
+            $attachments = $this->uploadMultiple(count($_FILES["attachmentIMG"]["name"]), $_SESSION['personID']);
+            foreach($attachments as $attachment){
+                $AttachmentStockItem = new AttachmentStockItem();
+                $AttachmentStockItem->setAttachmentID($attachment->getAttachmentID());
+                $AttachmentStockItem->setStockitemID($product->getStockItemID());
+                $AttachmentStockItem->setLastEditedBy($_SESSION['personID']);
+                $this->storeStock($AttachmentStockItem);
+            }
+        }
+
+        if(!empty($_POST['URL'])){
+
+            $attachment = new Attachments();
+            $attachment->setURL($_POST['URL']);
+            $attachment->setLastEditedBy($_SESSION['personID']);
+            $attachment->setActive(1);
+            $attachment = $this->storeAttachment($attachment);
+            $AttachmentStockItem = new AttachmentStockItem();
+            $AttachmentStockItem->setAttachmentID($attachment->getAttachmentID());
+            $AttachmentStockItem->setStockitemID($product->getStockItemID());
+            $AttachmentStockItem->setLastEditedBy($_SESSION['personID']);
+            $this->storeStock($AttachmentStockItem);
+        }
+        $this->admin();
+
+    }
     /**
      * This method should capture the creation of a new object,
      * Verify its data and commit it to the database.
@@ -153,6 +198,15 @@ Class ProductController
         }
         return false;
     }
+    public function getURL($productID){
+        $attachmentStockItems = new AttachmentStockItem();
+        $attachment = new Attachments();
+
+        $attachmentStockItems =  $this->retrieveWhereStockitemBackwards($productID);
+        $attachment =  $this->retrieveWhereAttachmentID($attachmentStockItems[0]->getAttachmentID());
+        return $attachment->getURL();
+    }
+
     public function getSizeString($sz){
         switch ($sz) {
             case 1:
@@ -175,8 +229,45 @@ Class ProductController
         }
         return $sz;
     }
+    public function getConversionRatio($product){
+        $Orderlines = new Orderline();
+        $amount = 0;
 
+        $orderlines = $Orderlines->where("*","StockItemID","=", $product->getStockItemID());
+        $int_var = (int)$product->getTimesVisited();
+
+        $amount = count($orderlines) + 10;
+        $conversion = $int_var / $amount;
+        return $conversion;
+    }
+    public function getTotalConversion($products){
+        $amount = 0;
+        $timesVisited = 0;
+        foreach($products as $product){
+            $orderlines = $this->Orderlines->where("*","StockItemID","=", $product->getStockItemID());
+            $amount = $amount + count($orderlines);
+            $timesVisited = $timesVisited + $product->getTimesVisited();
+        }
+
+        return $timesVisited / $amount;
+    }
     public function calculatePrice($price,$btw){
-        return $price - ($price/100*$btw);
+        $basebtw = 100 + $btw;
+        $baseprice = $price/100;
+        $total = $baseprice*$basebtw;
+        return $total;
+    }
+
+    public function productDetail(){
+        $main = new MainController();
+        $cart= new shoppingCart();
+        $attachment = new attachments();
+        $product = new product();
+
+        if(isset($_POST['srchProduct']) || isset($_POST['add']) || isset($_POST['imgBack']) || isset($_POST['imgForward'])) {
+            $prod = $product->retrieve($_POST['productID']);
+        }
+
+        include_once('views/product/productdetail.php');
     }
 }

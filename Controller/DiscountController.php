@@ -113,6 +113,51 @@ class DiscountController
             echo $result;
         }
     }
+    function GetAllCategoriesForAttachments()
+    {
+        $categorys = $this->category->retrieve();
+
+        foreach ($categorys as $category) {
+            $result = '';
+            $result .= '<tr>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedCategoryIDs[]" id="selectTableRow" value="'. $category->getCategoryID().'"></td>
+                   <td class="col-md-2">' . $category->getCategoryID() . '</td>
+                   <td class="col-md-8">' . $category->getCategoryName() . '</td>
+                </tr>';
+            echo $result;
+        }
+    }
+    public function GetAllProductsActive()
+    {
+        $products = $this->product->retrieve();
+
+        foreach ($products as $product) {
+            $result = '';
+            $result .= '<tr>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedProductIDs[]" id="selectTableRow" value="'. $product->getStockItemID().'"></td>
+                   <td class="col-md-2">' . $product->getStockItemID() . '</td>
+                   <td class="col-md-3">' . $product->getStockItemName() . '</td>
+                   <td class="col-md-1">' . "€ " . $product->getUnitPrice() . ",- " . '</td>
+                   <td class="col-md-4">' . $product->getMarketingComments() . '</td>
+                </tr>';
+            echo $result;
+        }
+    }
+
+    function GetAllCategoriesForAttachmentsActive($MediaID)
+    {
+        $categorys = $this->category->retrieve();
+
+        foreach ($categorys as $category) {
+            $result = '';
+            $result .= '<tr>
+                   <td class="col-md-2"><input class="selectTableRow" type="checkbox" name="selectedCategoryIDs[]" id="selectTableRow" value="'. $category->getCategoryID().'"></td>
+                   <td class="col-md-2">' . $category->getCategoryID() . '</td>
+                   <td class="col-md-8">' . $category->getCategoryName() . '</td>
+                </tr>';
+            echo $result;
+        }
+    }
     public function create()
     {
        // print_r($_POST);

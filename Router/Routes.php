@@ -16,6 +16,10 @@ $router->route('/about-us', function(){
     return include 'content/frontend/about-us.php';
 });
 
+$router->route('/contact', function(){
+    return include 'views/contact/contact.php';
+});
+
 /**
  * Passwordrecovery
  */
@@ -82,9 +86,17 @@ $router->route('/betalenmislukt', function(){
 /**
  * Begin product routes
  */
+$router->route('/admin/CreateProduct', function() use($productController){
+    return $productController->createAdminProduct();});
+
+$router->route('/productdetail', function() use($productController){
+    return $productController->productDetail();
+});
+
 $router->route('/product', function() use($productController){
     return $productController->index();
 });
+
 $router->route('/product/create', function() use($productController){
     return $productController->create();
 });
@@ -162,6 +174,7 @@ $router->route('/admin/onderhoud-producten', function() use($productController){
     }
 });
 
+
 $router->route('/admin/onderhoud-klanten', function(){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
@@ -181,27 +194,24 @@ $router->route('/admin/CreateDiscount', function() use($discountController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
-        $test = true;
         $_POST['valuecheck'] = true;
-        if($test){
-            return include 'content/backend/onderhoudkorting.php';
-        }else {
-            return $discountController->create();
-        }
+        return include 'content/backend/onderhoudkorting.php';
     }
 });
 
+$router->route('/admin/NewFile', function() use($fileController){
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return $fileController->create();
+    }
+});
 $router->route('/admin/UpdateDiscount', function() use($discountController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
-        $test = true;
         $_POST['valuecheck'] = true;
-        if($test){
             return include 'content/backend/onderhoudkorting.php';
-        }else{
-            return $discountController->update();
-        }
     }
 });
 
@@ -220,7 +230,13 @@ $router->route('/admin/onderhoud-korting', function(){
         return include 'content/backend/onderhoudkorting.php';
     }
 });
-
+$router->route('/admin/onderhoud-media', function(){
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/onderhoudMedia.php';
+    }
+});
 $router->route('/admin/onderhoud-nieuwsbrief', function(){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';

@@ -27,6 +27,7 @@ class AdminController
                 'onderhoud-hoofdpagina' => 'Onderhoud Hoofdpagina',
                 'onderhoud-categorieen' => 'Onderhoud Categorieën',
                 'onderhoud-producten' => 'Onderhoud Producten',
+                'onderhoud-media' => 'Onderhoud Media',
                 'onderhoud-klanten' => 'Onderhoud Klanten',
                 'onderhoud-korting' => 'Onderhoud Korting',
                 'onderhoud-nieuwsbrief' => 'Onderhoud Nieuwsbrief',
@@ -88,7 +89,7 @@ class AdminController
             if($i == $max){
                 $class .= ' last ';
             }
-            $nav_menu .= '<a href='. $this->site_urlAdmin() . $url . ' title=' . $name . ' class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
+            $nav_menu .= '<a href=/'. $this->site_urlAdmin() . $url . ' title=' . $name . ' class="button padding10 ' . $class . '">' . $name . '</a>' . $sep;
         }
 
         return trim($nav_menu, $sep);

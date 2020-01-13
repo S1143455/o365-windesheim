@@ -4,14 +4,18 @@
 spl_autoload_register(function ($class) {
     include $class . '.php';
 });
+
 $router = new Router\Router();
 $mainController = new Controller\MainController();
 $authenticationController = new Controller\AuthenticationController();
 $discount = new Controller\DiscountController();
+$admin = new Controller\AdminController();
+$categoryController = new Controller\CategoryController();
+$discountController = new Controller\DiscountController();
+$user = new Controller\UserController();
+$productController = new Controller\ProductController();
 $customer = new Controller\CustomerController();
-//$authenticationController = new Controller\AuthenticationController();
-//$discount = new Controller\DiscountController();
-//$customer = new Controller\CustomerController();
+
 $authenticationController = new Controller\AuthenticationController();
 $userController = new Controller\UserController();
 
@@ -35,6 +39,7 @@ $orderLineController = new Controller\OrderlineController();
 $discountController = new Controller\DiscountController();
 $customerController = new Controller\CustomerController();
 $adressController = new Controller\AdressController();
+$fileController = new Controller\FileController();
 
 $productController = new Controller\ProductController();
 $shoppingcartStockitems= new Controller\ShoppingcartStockitemsController();

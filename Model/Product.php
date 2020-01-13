@@ -6,19 +6,23 @@ class Product extends Database
 {
 
     private $StockItemID;
-    private $stockItemName;
-    private $supplierID;
-    private $brand;
-    private $barcode;
-    private $size;
+    private $StockItemName;
+    private $SupplierID;
+    private $Brand;
+    private $Barcode;
+    private $Size;
     private $LeadTimeDays;
-    private $isChillerStock;
-    private $taxRate;
-    private $unitPrice;
-    private $marketingComments;
-    private $categoryID;
-    private $lastEditedBy;
+    private $IsChillerStock;
+    private $TaxRate;
+    private $UnitPrice;
+    private $MarketingComments;
+    private $CategoryID;
+    private $LastEditedBy;
     private $SpecialDealID;
+    private $StockItemDescription;
+    private $TimesVisited;
+    private $recommendedRetailPrice;
+
     function __construct()
     {
         $this->table = "stockitem";
@@ -47,15 +51,15 @@ class Product extends Database
      */
     public function getStockItemName()
     {
-        return $this->stockItemName;
+        return $this->StockItemName;
     }
 
     /**
-     * @param mixed $stockItemName
+     * @param mixed $StockItemName
      */
-    public function setStockItemName($stockItemName)
+    public function setStockItemName($StockItemName)
     {
-        $this->stockItemName = $stockItemName;
+        $this->StockItemName = $StockItemName;
     }
 
     /**
@@ -63,15 +67,15 @@ class Product extends Database
      */
     public function getSupplierID()
     {
-        return $this->supplierID;
+        return $this->SupplierID;
     }
 
     /**
-     * @param mixed $supplierID
+     * @param mixed $SupplierID
      */
-    public function setSupplierID($supplierID)
+    public function setSupplierID($SupplierID)
     {
-        $this->supplierID = $supplierID;
+        $this->SupplierID = $SupplierID;
     }
 
     /**
@@ -79,15 +83,15 @@ class Product extends Database
      */
     public function getBrand()
     {
-        return $this->brand;
+        return $this->Brand;
     }
 
     /**
-     * @param mixed $brand
+     * @param mixed $Brand
      */
-    public function setBrand($brand)
+    public function setBrand($Brand)
     {
-        $this->brand = $brand;
+        $this->Brand = $Brand;
     }
 
     /**
@@ -95,30 +99,31 @@ class Product extends Database
      */
     public function getBarcode()
     {
-        return $this->barcode;
+        return $this->Barcode;
     }
 
     /**
-     * @param mixed $barcode
+     * @param mixed $Barcode
      */
-    public function setBarcode($barcode)
+    public function setBarcode($Barcode)
     {
-        $this->barcode = $barcode;
+        $this->Barcode = $Barcode;
     }
+
     /**
      * @return mixed
      */
     public function getSize()
     {
-        return $this->size;
+        return $this->Size;
     }
 
     /**
-     * @param mixed $size
+     * @param mixed $Size
      */
-    public function setSize($size)
+    public function setSize($Size)
     {
-        $this->size = $size;
+        $this->Size = $Size;
     }
 
     /**
@@ -142,15 +147,15 @@ class Product extends Database
      */
     public function getIsChillerStock()
     {
-        return $this->isChillerStock;
+        return $this->IsChillerStock;
     }
 
     /**
-     * @param mixed $isChillerStock
+     * @param mixed $IsChillerStock
      */
-    public function setIsChillerStock($isChillerStock)
+    public function setIsChillerStock($IsChillerStock)
     {
-        $this->isChillerStock = $isChillerStock;
+        $this->IsChillerStock = $IsChillerStock;
     }
 
     /**
@@ -158,15 +163,15 @@ class Product extends Database
      */
     public function getTaxRate()
     {
-        return $this->taxRate;
+        return $this->TaxRate;
     }
 
     /**
-     * @param mixed $taxRate
+     * @param mixed $TaxRate
      */
-    public function setTaxRate($taxRate)
+    public function setTaxRate($TaxRate)
     {
-        $this->taxRate = $taxRate;
+        $this->TaxRate = $TaxRate;
     }
 
     /**
@@ -174,15 +179,15 @@ class Product extends Database
      */
     public function getUnitPrice()
     {
-        return $this->unitPrice;
+        return $this->UnitPrice;
     }
 
     /**
-     * @param mixed $unitPrice
+     * @param mixed $UnitPrice
      */
-    public function setUnitPrice($unitPrice)
+    public function setUnitPrice($UnitPrice)
     {
-        $this->unitPrice = $unitPrice;
+        $this->UnitPrice = $UnitPrice;
     }
 
     /**
@@ -190,15 +195,15 @@ class Product extends Database
      */
     public function getMarketingComments()
     {
-        return $this->marketingComments;
+        return $this->MarketingComments;
     }
 
     /**
-     * @param mixed $marketingComments
+     * @param mixed $MarketingComments
      */
-    public function setMarketingComments($marketingComments)
+    public function setMarketingComments($MarketingComments)
     {
-        $this->marketingComments = $marketingComments;
+        $this->MarketingComments = $MarketingComments;
     }
 
     /**
@@ -206,15 +211,15 @@ class Product extends Database
      */
     public function getCategoryID()
     {
-        return $this->categoryID;
+        return $this->CategoryID;
     }
 
     /**
-     * @param mixed $categoryID
+     * @param mixed $CategoryID
      */
-    public function setCategoryID($categoryID)
+    public function setCategoryID($CategoryID)
     {
-        $this->categoryID = $categoryID;
+        $this->CategoryID = $CategoryID;
     }
 
     /**
@@ -222,17 +227,20 @@ class Product extends Database
      */
     public function getLastEditedBy()
     {
-        return $this->lastEditedBy;
+        return $this->LastEditedBy;
     }
 
     /**
-     * @param mixed $lastEditedBy
+     * @param mixed $LastEditedBy
      */
-    public function setLastEditedBy($lastEditedBy)
+    public function setLastEditedBy($LastEditedBy)
     {
-        $this->lastEditedBy = $lastEditedBy;
+        $this->LastEditedBy = $LastEditedBy;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSpecialDealID()
     {
         return $this->SpecialDealID;
@@ -241,7 +249,6 @@ class Product extends Database
     /**
      * @param mixed $SpecialDealID
      */
-
     public function setSpecialDealID($SpecialDealID)
     {
         $this->SpecialDealID = $SpecialDealID;
@@ -250,4 +257,49 @@ class Product extends Database
     /**
      * @return mixed
      */
+    public function getStockItemDescription()
+    {
+        return $this->StockItemDescription;
+    }
+
+    /**
+     * @param mixed $StockItemDescription
+     */
+    public function setStockItemDescription($StockItemDescription)
+    {
+        $this->StockItemDescription = $StockItemDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTimesVisited()
+    {
+        return $this->TimesVisited;
+    }
+
+    /**
+     * @param mixed $TimesVisited
+     */
+    public function setTimesVisited($TimesVisited)
+    {
+        $this->TimesVisited = $TimesVisited;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getRecommendedRetailPrice()
+    {
+        return $this->recommendedRetailPrice;
+    }
+
+    /**
+     * @param mixed $recommendedRetailPrice
+     */
+    public function setRecommendedRetailPrice($recommendedRetailPrice)
+    {
+        $this->recommendedRetailPrice = $recommendedRetailPrice;
+    }
 }

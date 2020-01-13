@@ -2,13 +2,15 @@
 
 namespace Model;
 
-
 class Attachments extends Database
 {
     private $attachmentID;
     private $alternateText;
     private $fileLocation;
     private $lastEditedBy;
+    private $URL;
+    private $Active;
+
     function __construct()
     {
         $this->table = "attachments";
@@ -77,6 +79,37 @@ class Attachments extends Database
     public function setLastEditedBy($lastEditedBy)
     {
         $this->lastEditedBy = $lastEditedBy;
+    }
+    /**
+     * @return mixed
+     */
+    public function getURL()
+    {
+        return $this->URL;
+    }
+
+    /**
+     * @param mixed $URL
+     */
+    public function setURL($URL)
+    {
+        $this->URL = $URL;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->Active;
+    }
+
+    /**
+     * @param mixed $Active
+     */
+    public function setActive($Active)
+    {
+        $this->Active = $Active;
     }
 
 

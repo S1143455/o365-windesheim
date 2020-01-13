@@ -2,47 +2,50 @@
 
 include_once 'loader.php';
 include_once 'content/frontend/header.php';
+
+$pathHomePage = 'views/homePage/';
+$pathHomeIsset = $pathHomePage.'isset/';
+include_once($pathHomePage.'varInitHomepage.php');
+include_once($pathHomeIsset.'previous.php');
+include_once($pathHomeIsset.'next.php');
+include_once($pathHomeIsset.'prdBack.php');
+include_once($pathHomeIsset.'back.php');
+include_once($pathHomeIsset.'srchProduct.php');
+include_once($pathHomeIsset.'srchCategory.php');
+include_once($pathHomeIsset.'prdBack.php');
+include_once($pathHomeIsset.'back.php');
+include_once($pathHomePage.'varSetHomepage.php');
 ?>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-        <div id="adv">
-            //img
+    <div class="">
+        <div class="imgHome">
+            <!-- plaatje -->
         </div>
-        <div id="info">
-            <?php $this->showContent("TITLE"); ?>
-        <br>
-        <?php $this->showContent("SUBTITLE"); ?>
 
-        <?php $this->showContent( "STORY");?>
-    </div>
+        <?php include_once($pathHomePage.'homeStory.php'); ?>
 
-        <div id="categories" class="padding-top3em">
-            <h3>Categorieën</h3>
+        <div id="categories" class="container categories">
+            <?php include_once($pathHomePage.'categoryBoxesHeader.php'); ?>
+
+            <div id="categoryBoxes" class="row padding-top1em">
+                <?php include_once ($pathHomePage.'categoryBoxes.php'); ?>
+            </div>
+
+        </div>
+
+        <?php include_once ($pathHomePage.'productBoxesHeader.php'); ?>
+
             <div class="row">
-                <?php
-                    foreach($categories as $cat){
-                            if($cat->getParentCategory() != null) {
-                                $parentCat = $cat->getRelation('Category');
-                                $sCat = ' (' . $parentCat->getCategoryName() . ')';
-                             echo $sCat;
-                            };
+                <?php include_once($pathHomePage.'productBoxes.php'); ?>
+            </div>
 
-                        if($cat->getParentCategory() == null){
-                            echo '<div class="col-md-2 categorybox">';
-                            echo $cat->GetCategoryName();
-                            echo '</div>';
-                        }
-                    }
-                ?>
+            <!-- navigator buttons -->
+            <div class="navigator">
+                    <?php include_once($pathHomePage.'navigator.php'); ?>
             </div>
         </div>
     </div>
     </div>
 </div>
     </div>
-<?php
-include 'content/frontend/itemlist.php';
-include_once 'content/frontend/footer.php';
 
-?>
+<?php include_once 'content/frontend/footer.php'; ?>

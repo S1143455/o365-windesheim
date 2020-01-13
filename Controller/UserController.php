@@ -150,6 +150,7 @@ class UserController
             {
                 $_SESSION['authenticatedAdmin']='true';
                 $_SESSION['USERAdmin']= $this->user;
+                $_SESSION['personID'] = $this->user->getPersonID();
                 $customerDetails = $this->getCustomerByID($_SESSION['USERAdmin']->getPersonID());
                 $_SESSION['CUSTOMER_DETAILSAdmin']=$customerDetails;
                 $addressDetails = $this->getAdressByID($_SESSION['USERAdmin']->getPersonID());
