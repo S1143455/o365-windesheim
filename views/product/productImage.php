@@ -1,5 +1,5 @@
 <?php
-    echo '<form method = "post" action = "'.getenv("ROOT") . '/productdetail">' ;
+    echo '<form method = "post" action = "/'.getenv("ROOT") . '/productdetail">' ;
 
     //pass values navigation through back-button
     echo '<input type="text" name="home" style="display:none;" value="' . $_POST['home'] . '">';

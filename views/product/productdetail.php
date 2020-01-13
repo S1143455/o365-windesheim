@@ -19,7 +19,7 @@ include_once($pathProdutDetails . 'imgForward.php');
             <?php
 
                 //backbutton
-                echo '<form method="post" action="'. getenv("ROOT") . '" class="padding-top1em">';
+                echo '<form method="post" action="/'. getenv("ROOT") . '" class="padding-top1em">';
 
                     //pass values navigation through back-button
                     echo '<input type="text" name="home" style="display:none;" value="' . $_POST['home'] . '">';

@@ -13,7 +13,7 @@ foreach($categories as $cat){
     echo '<div class="col-md-2">';
         echo '<div class="categorybox">';
             echo '<div class="categoryIMGbox">';
-                echo '<form method="post" action="' . $this->root . '" class="">';
+                echo '<form method="post" action="" class="">';
                 echo '<input type="text" name="categoryID" style="display:none;" value="' . $cat->getCategoryID() . '">';
                 echo '<button name="srchCategory" type="submit" value="search category">';
 

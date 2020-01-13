@@ -41,7 +41,7 @@ foreach($products as $prod){
             echo '</div>';
 
             echo '<div class="productDetail">';
-                echo '<form method="post" action="' . $this->root . '/productdetail">';
+                echo '<form method="post" action="/' . $this->root . '/productdetail">';
                 echo '<input type="text" name="home" style="display:none;" value="' . (($cat_srch) ? false : true) . '">';
                 echo '<input type="text" name="productID" style="display:none;" value="' . $prod->getStockItemID() . '">';
 
