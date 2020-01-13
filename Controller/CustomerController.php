@@ -11,9 +11,10 @@ use Model\Adress;
 
 class CustomerController
 {
+    private $viewPath = 'content/frontend/';
+
     private $admin = 'content/backend/';
     private $route = 'content/frontend/';
-    private $viewPath = 'content/frontend/';
 
     function __construct()
     {
@@ -21,6 +22,7 @@ class CustomerController
         $this->people = new People();
         $this->adress = new Adress();
         $this->order = new Order();
+
 
     }
 
@@ -30,18 +32,12 @@ class CustomerController
         $this->adress = $this->retrieveWhereP($_POST["AddressId"]);
         $this->person->setEmailAddress($_POST["EmailAddress"]);
         $this->adress->setAddress($_POST["Adress"]);
+        //Aanvullen
         //$this->customer->set($_POST["EmailAddress"]);
         $this->store($this->customer);
         $this->storePeople($this->person);
         $this->storeAdress($this->adress);
     }
-
-
-
-
-
-
-
 
     /**
      * This method should capture the creation of a new object,
@@ -49,6 +45,7 @@ class CustomerController
      * @param $newCustomer
      * @return mixed
      */
+
     public function createR()
     {
         $this->customer = new Customer();
@@ -78,6 +75,33 @@ class CustomerController
 
         return $person;
     }
+
+    public function retrieveOrder($CustomerID){
+        $order = new Order();
+        $order = $this->order->where("*", "CustomerID", "=", $CustomerID);
+        if(empty($order))
+        {
+            //header("Location: /404", true);
+        }
+
+        return $order;
+    }
+
+    public function getallcustomers(){
+        $customers = $this->customer->getAllCustomers();
+        return $customers;
+    }
+    public function SearchCustomers($value){
+        $customers = $this->customer->getAllCustomers();
+//        $people
+
+        $input = preg_quote('bl', '~'); // don't forget to quote input string!
+        $data = array('orange', 'blue', 'green', 'red', 'pink', 'brown', 'black');
+
+        $result = preg_grep('~' . $input . '~', $data);
+        return $customers;
+    }
+
     public  function retrieveWhereP($personID){
         $address = new Adress();
         $address = $address->where("*", "PersonID", "=", $personID);
@@ -99,7 +123,7 @@ class CustomerController
             $person =  $this->retrievePerson($customer->getPersonID());
             $adress = $this->retrieveWhereP($person->getPersonID());
             if($adress != null){
-                var_dump($customer->getCustomerID());
+//                var_dump($customer->getCustomerID());
             }
             $result = '';
             $result .= '<tr>
@@ -114,31 +138,6 @@ class CustomerController
         }
 
     }
-    //If value is 1, change the value to a checked checkbox. Else create an unchecked checkbox.
-//    public function getNewsletter()
-//    {
-//        if ($this->newsletter == "1"){
-//            $this->newsletter =
-//                '<input type="checkbox" name="newsletter" checked>';
-//
-//        } else {
-//            $this->newsletter =
-//                '<input type="checkbox" name="newsletter">';
-//
-//        }
-//        return $this->newsletter;
-//    }
-
-//    function getCustomerAndPeople()
-//    {
-//        $customers = $this->customer->getAllCustomers();
-//
-//        foreach ($customers as $customer){
-//
-//            $result = '';
-//            $result =
-//        }
-//    }
 
     public function createBE()
     {
@@ -148,6 +147,12 @@ class CustomerController
         $this->store($this->customer);
 
         include $this->admin . 'onderhoudklanten.php';
+    }
+    function Test_Input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 
     public function createMultipleP(){
@@ -184,7 +189,10 @@ class CustomerController
                     }
                     break;
                 case "TermsAndConditions":
+//                    var_dump($value);
                     if($value == "on"){
+                        $this->customer->setTermsAndConditions(1);
+                    }else{
                         $this->customer->setTermsAndConditions(1);
                     }
                     break;
@@ -223,22 +231,23 @@ class CustomerController
             //var_dump($key);
         }
         $this->storePeople($this->people);
+        $this->customer->setPersonID($this->people->getPersonID());
+        $this->store($this->customer);
+        include $this->route . 'account-toevoegen.php';
     }
 
     /**
      * Stores the product in the database.
      *
      * @param $customer customer
-     * @param $customer Customer
      * @return string
      */
 
     public function store($customer)
     {
 
-        if (!$customer->initialize())
-        {
-            //print_r($_GET);
+        if (!$customer->initialize()) {
+//            print_r($_GET);
             return false;
         };
 
@@ -268,6 +277,7 @@ class CustomerController
             return "Something went wrong.";
         }
     }
+
     /**
      * Stores the product in the database.
      *
@@ -276,6 +286,7 @@ class CustomerController
      */
     public function storePeople($people)
     {
+//        var_dump($people);
         if (!$people->initialize())
         {
             return false;

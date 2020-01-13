@@ -103,6 +103,7 @@ class Orderline extends Database
         $this->PackageTypeID = $PackageTypeID;
     }
 
+
     /**
      * @return mixed
      */
@@ -118,7 +119,6 @@ class Orderline extends Database
     {
         $this->Quantity = $Quantity;
     }
-
     /**
      * @return mixed
      */

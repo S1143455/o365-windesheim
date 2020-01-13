@@ -57,19 +57,50 @@ class OrderController
     public function displayproduct($prod, $orderLine){
         $result = '';
         $result .= '<tr style="height:40px;">
-                            <td class="col-md-4">' . $orderLine->getDescription() .'</td>
+                            <td class="col-md-1">' . $orderLine->getDescription() .'</td>
                             <td class="col-md-2">' . $orderLine->getQuantity() .'</td>
-                            <td class="col-md-2">' . $orderLine->getTaxRate() .'</td>
-                            <td class="col-md-2">' . $orderLine->getUnitPrice()  .'</td>
-                            <td class="col-md-2">' . $this->calculate($orderLine) .'</td>                          
+                            <td class="col-md-3">' . $orderLine->getTaxRate() .'</td>
+                            <td class="col-md-3">' . $orderLine->getUnitPrice()  .'</td>
+                            <td class="col-md-3">' . $this->Calculate($orderLine) .'</td>                          
                         </tr>';
 
         echo $result;
     }
-    public function calculate($orderLine)
+    public function Calculate($orderLine)
     {
-        return $orderLine->getUnitPrice() * $orderLine->getTaxRate() ;
+        $test = $this->retrieveOrderLine($orderLine->getOrderLineID());
+//        var_dump($test);
+//        var_dump($orderLine->getStockItemID());
+//        var_dump($orderLine->getUnitPrice());
+//        var_dump($orderLine->getQuantity());
+//        var_dump($orderLine->getTaxRate());
+        return $orderLine->getUnitPrice() * $orderLine->getQuantity() * $orderLine->getTaxRate() ;
     }
+    public function totaltotalprice($orderlines){
+        $prijs = 0;
+        foreach($orderlines as $orderline){
+            $prijs = $prijs + $this->calculateTotalPrice($orderline);
+        }
+        return $prijs;
+    }
+    public function calculateTotalPrice($orderLine)
+    {
+        $unitPrice = $orderLine->getUnitPrice();
+        $amount = $orderLine->getQuantity();
+        $taxRate = round($orderLine->getTaxRate());
+
+
+        $base = 100;
+        $tax = $base + $taxRate;
+
+        $price = ($unitPrice / 100) * $tax;
+        $total = $amount * $price;
+
+        return $total;
+
+    }
+
+
     public function retrievePeople($id)
     {
         $person = new People();
@@ -114,6 +145,7 @@ class OrderController
             $orderLines = $this->retrieveOrderLine($order->getOrderID());
             $customer = $this->retrieveCustomer($order->getCustomerID());
             $person = $this->retrievePeople($customer->getPersonID());
+            var_dump($person);
             foreach ($orderLines as $orderLine) {
                 $products = $this->retrievestockitem($orderLine->getStockitemID());
                 foreach ($products as $prod){

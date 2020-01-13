@@ -181,7 +181,13 @@ $router->route('/admin/CreateDiscount', function() use($discountController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
-        return $discountController->create();
+        $test = true;
+        $_POST['valuecheck'] = true;
+        if($test){
+            return include 'content/backend/onderhoudkorting.php';
+        }else {
+            return $discountController->create();
+        }
     }
 });
 
@@ -197,7 +203,7 @@ $router->route('/admin/UpdateDiscount', function() use($discountController){
         return include 'views/login-Admin/login.php';
     }else{
         $test = true;
-        $_POST['test'] = true;
+        $_POST['valuecheck'] = true;
         if($test){
             return include 'content/backend/onderhoudkorting.php';
         }else{

@@ -51,22 +51,13 @@ if (isset($_POST['sendpassword'])) {
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    </fieldset>
                 </div>
-<!--                <div class="panel-footer">-->
-<!--                    <div class="row text-center">-->
-<!--                        <div class="col-xs-4">-->
-<!--                            <button type="submit" name="login" class="btn btn-success btn-block" data-toggle="modal">-->
-<!--                                <span class="glyphicon glyphicon-log-in"></span> Inloggen-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div><?php if(isset($_SESSION['LOGIN_ERROR'])){echo display_message($_SESSION['LOGIN_ERROR']['type'],$_SESSION['LOGIN_ERROR']['message']);unset($_SESSION['LOGIN_ERROR']);}?></div>
+
             </div>
+
+        </form>
     </div>
-    </form>
-</div>
 </div>
 <div><?php if (isset($_SESSION['LOGIN_ERROR'])) {
         echo display_message($_SESSION['LOGIN_ERROR']['type'], $_SESSION['LOGIN_ERROR']['message']);

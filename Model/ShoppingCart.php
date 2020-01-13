@@ -172,8 +172,11 @@ class ShoppingCart
             // If the amount reaches 0, the row needs to be deleted for the cart.
             if ($newAmount == 0)
             {
-               // $removeCartItem = $handelData->UpdateStmt("Delete from shoppingcart_stockitems where StockItemID=" . $stockItem . " and ShoppingCartID=" . $cartId);
-                $this->RemoveCart($cartId,$customerId);
+                $removeCartItem = $handelData->UpdateStmt("Delete from shoppingcart_stockitems where StockItemID=" . $stockItem . " and ShoppingCartID=" . $cartId);
+
+                $numberofrows=$handelData->selectStmt("select count(*) as aantal from shoppingcart_stockitems where ShoppingCartID=" . $cartId);
+                // If there are no more rows left, the cart can be deleted.
+                if ($numberofrows[0]['aantal'] == 0){$this->RemoveCart($cartId,$customerId);}
             }
         }
         return 1;

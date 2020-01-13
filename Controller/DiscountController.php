@@ -31,13 +31,38 @@ class DiscountController
 
         return $discount;
     }
-    public function GetAllDiscount()
-    {
-        $discounts = $this->discount->getAllSpecialDeals();
 
-        foreach($discounts as $discount){
-            $result = '';
-            $result .= '<tr>
+    public function getDiscounts(){
+        $discounts = $this->discount->getAllSpecialDeals();
+        return $discounts;
+    }
+    function searchDiscounts($value){
+        $discounts = $this->discount->where("*",["DiscountPercentage","DealDescription"], "Like",[$value, $value]);
+        if($discounts != null && !empty($discounts) && $discounts[0]->getSpecialDealID() != null){
+            return $discounts;
+        } else{
+            return null;
+        }
+
+    }
+//    public function SearchCustomers($value){
+//        $customers = $this->customer->getAllCustomers();
+////        $people
+//        var_dump($customers);
+//
+//        $input = preg_quote('bl', '~'); // don't forget to quote input string!
+//        $data = array('orange', 'blue', 'green', 'red', 'pink', 'brown', 'black');
+//
+//        $result = preg_grep('~' . $input . '~', $data);
+//        return $customers;
+//    }
+
+    public function GetAllDiscount($discounts)
+    {
+        if($discounts != null){
+            foreach($discounts as $discount){
+                $result = '';
+                $result .= '<tr>
                     <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $discount->getSpecialDealID() .'">Edit</button></td>
                     <td class="col-md-2">' . $discount->getDealCode() . '</td>
                     <td class="col-md-1">' . $discount->getDiscountPercentage() . "%" .'</td>
@@ -48,8 +73,10 @@ class DiscountController
                     <td class="col-md-1">' . $discount->getStartDate() .'</td>
                     <td class="col-md-1">' . $discount->getEndDate() .'</td>
                 </tr>';
-            echo $result;
+                echo $result;
+            }
         }
+
 
     }
 

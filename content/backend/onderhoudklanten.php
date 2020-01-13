@@ -1,13 +1,30 @@
 <?php
 include_once 'content/backend/header-admin.php';
+include 'content/backend/display_message.php';
+include 'loader.php';
 
 use Model\Customer;
+
+
+if(isset($_POST['sendpassword'])) {
+    include "content/frontend/sendemailaddress.php";
+}
+if(empty($_POST)){
+    $customers = $customerController->getallcustomers();
+}
+if(!empty($_POST['name'])){
+    $customers = $customerController->SearchCustomers($_POST['name']);
+}
 use Model\People;
 use Model\Adress;
 if (isset($_POST['id'])) {
     $customerID = $_POST['id'];
+    $customers = $customerController->getallcustomers();
+
     if ($customerID != 0) {
         $customer = $customerController->retrieve($customerID);
+//        var_dump($customer->getCustomerID());
+        $orders = $customerController->retrieveOrder($customer->getCustomerID());
         $person =  $userController->retrieveUser($customer->getPersonID());
         $adress = $adressController->retrieveWhereP($person->getPersonID());
 
@@ -28,13 +45,16 @@ if (isset($_POST['id'])) {
                 <h3>
                     Onderhoud Klanten
                 </h3>
+                <form  method="post" action=""  id="searchform">
+                    <input  type="text" name="name">
+                    <input  type="submit" name="submit" value="Search">
+                </form>
                 <!-- geen idee hoe dit werkt heb gegoogled naar bootstrap search -->
-                <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" aria-label="Search"
-                       id="myInputCustomer">
                 <br>
 
                 <div class="row">
-                    <div class="col-12 col-md-7 col-lg-10 tableViewCustomer">
+                    <div class="col-12 col-md-12 col-lg-10 tableViewCustomer">
+                        <!-- Creates a table with headers and data based on function -->
                         <form role="form" id="table" method="POST" action="">
                             <div class="table-fixed">
                                 <table class="table table-bordered" id="tableViewCustomer">
@@ -49,7 +69,7 @@ if (isset($_POST['id'])) {
                                     </tr>
                                     </thead>
                                     <tbody id="tbodyCustomer">
-                                    <?php $customerController->getAllCustomer(); ?>
+                                    <?php $customerController->getAllCustomer($customers); ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -124,21 +144,96 @@ if (isset($_POST['id'])) {
                                 <input class="col-7 form-control" name="EmailAddress" id="EmailAddress"
                                        value="<?php echo($person->getEmailAddress()) ?>">
                             </div>
-                            <div class="form-group col-4">
-                                <div>
-                                    <label class="control-label" for="orderid">Bestelnummer:</label>
-                                </div>
-                                <div>
-                                    <input class="form-control" type="text" name="orderid" id="orderid">
-                                </div>
-                            </div>
                             <div class="form-group col-12">
                                 <label class="col-5 control-label">Nieuwsbrief:</label>
                                 <input class="checkboxOneTime" type="checkbox" name="newsletter" id="newsletter"
                                        value="<?php echo($customer->getNewsletter()) ?>
                             </div>
-                            <div class="col-12">
-                                <button class="col-3 btn btn-outline-secondary" type="button">Wachtwoord resetten
+                            <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="col-md-4" for="orderid">Bestelnummer:</label>
+                                        <label class="col-md-4" for="orderdate">Besteldatum:</label>
+                                        <label class="col-md-4" for="orderamount">Bedrag:</label>
+                                    </div>
+                                </div>
+                            <?php if(!empty($orders) && $orders[0] != null && $orders[0]->getOrderID() != null){
+                            echo "<form role='form' id='table' method='POST' action=''>";
+                                foreach($orders as $order){
+                                echo ' <div class="accordion" id="orderDetail">
+                                            <div class="card">
+                                                <div class="card-header" id="heading'. $order->getOrderID() .'">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                        <span class="col-md-4">
+                                                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse'. $order->getOrderID() .'" aria-expanded="true" aria-controls="collapse'. $order->getOrderID() .'">
+                                                                '. $order->getOrderID() .'
+                                                            </button>
+                                                        </span>
+                                                            <span class="col-md-4" id="orderdate">'. $order->getOrderDate() .'</span>
+                                                            <span class="col-md-4" id="orderamount">'. $order->getOrderDate() .'</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="collapse'. $order->getOrderID() .'" class="collapse" aria-labelledby="heading'. $order->getOrderID() .'" data-parent="#orderDetail">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="table-fixed">
+                                                                <table id="OrderTable" class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="col-md-4">Omschrijving</th>
+                                                                            <th class="col-md-2">Aantal</th>
+                                                                            <th class="col-md-2">Belastingspercentage</th>
+                                                                            <th class="col-md-2">Prijs excl. btw</th>
+                                                                            <th class="col-md-2">Prijs incl. btw</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                <tbody>';
+                                                               $orderlines = $orderController->retrieveOrderLine($order->getOrderID());
+//                                                                    haal hier orderlines op  en products heb je niet nodig he
+//                                                                   alles staat op orderlines al, wel als je het totaal bedrag etc. wil berekenen?
+                                                                foreach ($orderlines as $orderline) {
+                                                                    echo '<tr>
+                                                                        <td class="col-md-4">' .$orderline->getDescription() .'</td>
+                                                                        <td class="col-md-2">' .$orderline->getQuantity() .'</td>
+                                                                        <td class="col-md-2">' .round($orderline->getTaxRate()) .'%</td>
+                                                                        <td class="col-md-2">' .$orderline->getUnitPrice() .'</td>
+                                                                        <td class="col-md-2">' .$orderController->calculateTotalPrice($orderline) .'</td>
+                                                                        </tr>';
+                                                                }
+                                                                echo '<tr>
+                                                                    <td class="col-md-4"></td>
+                                                                    <td class="col-md-2"></td>
+                                                                    <td class="col-md-2"></td>
+                                                                    <td class="col-md-2">Totaal prijs:</td>
+                                                                    <td class="col-md-2">' .$orderController->totaltotalprice($orderlines) .'</td>
+                                                                </tr>';
+                                                             echo'
+                                                               </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+
+                                    }
+                                echo"</form>";
+                                } else {
+                                echo '<div class="form-group col-12">
+                                        <label class="col-5 control-label" for="orderid">Bestelnummer:</label>
+                                        <span class="col-7" style="padding-left: 0px">Deze klant heeft geen bestelling gedaan</span>
+                                      </div>';
+                            }
+                            ?>
+                            <div class="form-group col-12">
+                                <button class="col-3 btn btn-outline-secondary" type="button" data-toggle="modal"
+                                        data-target="#sendpassword">Wachtwoord resetten
                                 </button>
                             </div>
                             <br>
@@ -153,18 +248,70 @@ if (isset($_POST['id'])) {
         </div>
     </div>
 
+    <!-- form for resending password -->
+    <div class="modal fade" id="sendpassword" tabindex="-1" role="dialog" aria-labelledby="universalModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width:1000px;">
+            <div class="modal-content">
+                <form role="form" id="sendpasswordform" method="POST" action="" onsubmit="return ValidatePassword()">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><span class="modal-title">Wachtwoord opvragen</span></h4>
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only"> Close</span></button>
+                    </div>
+                    <div class="alert alert-danger fade in" id="universalModal-alert" style="display: none;">
+                        <span class="alert-body"></span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-5" for="LogonName">Gebruikersnaam:</label>
+                            <input type="text" class="col-7 form-control" name="LogonName"
+                                   value="<?php echo($customer->getFullNameOnID($customerID)) ?>" required>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-5" for="EmailAddress">Emailadres:</label>
+                            <input type="email" class="col-7 form-control" name="EmailAddress" id="EmailAddress"
+                                   value="<?php echo($customer->getEmailAddressOnID($customerID)) ?>" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+                        <input type="submit" name="sendpassword" value="Versturen" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <!-- script to search data in edit tableViewCategory using the searchbar-->
-    <script>
-        $(document).ready(function () {
-            $("#myInputCustomer").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tbodyCustomer tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
+    <!-- modal to edit selected table row in a modal -->
+    <div class="modal fade" id="OrderDetails" tabindex="-1" role="dialog" aria-labelledby="EditModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Klant details</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="form-group col-12">
+                            <label class="col-5" for="CustomerID">Klant gegevens van klantnummer:</label>
+                            <span class="col-4" id="CustomerID"
+                                  style="padding-left: 0px;"><?php echo($customer->getCustomerID()) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <input type="submit" name="submit" value="Klant aanpassen" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- scripts for searchbar in each modal-->
     <script>
