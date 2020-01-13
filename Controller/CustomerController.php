@@ -31,9 +31,7 @@ class CustomerController
         $this->adress = $this->retrieveWhereP($_POST["AddressId"]);
 
         foreach ($_POST as $key => $value) {
-
-            //$this->customer->set($_POST["EmailAddress"]);
-
+            
             switch ($key) {
                 case "FullName":
                     $this->people->setFullName($value);
@@ -60,7 +58,6 @@ class CustomerController
                 default:
                 }
             }
-            var_dump($_POST);
             $this->customer->setTermsAndConditions(1);
             $this->store($this->customer);
             $this->storePeople($this->people);
