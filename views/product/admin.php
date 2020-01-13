@@ -34,47 +34,7 @@ if (isset($_POST['id'])) {
             </div>
             <div class="row">
                 <div class="col-12 col-md-10 col-lg-10">
-                    <form role="form" id="table" method="POST" action="">
-                        <div class="table-fixed">
-                            <table id="productTable" class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th class="col-md-1">Edit</th>
-                                    <th class="col-md-1">Productnr</th>
-                                    <th class="col-md-1">Categorie</th>
-                                    <th class="col-md-2">Omschrijving</th>
-                                    <th class="col-md-1">Merk</th>
-                                    <th class="col-md-1">Formaat</th>
-                                    <th class="col-md-1">Barcode</th>
-                                    <th class="col-md-1">Unit price (€)</th>
-                                    <th class="col-md-1">BTW (%)</th>
-                                    <th class="col-md-1">Totaal (€)</th>
-                                    <th class="col-md-1">conversie ratio</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                foreach($products as $prod){
-                                    $categories = $category->retrieve($prod->getCategoryID());
-                                        echo '<tr>';
-                                        echo '<td class="col-md-1"> <button class="tableEditButton btn btn-outline-secondary" type="submit" name="id" value="' . $prod->getStockItemID() .'">Edit</button></td>';
-                                        echo '<td class="col-md-1">' . $prod->getStockItemID() . '</td>';
-                                        echo '<td class="col-md-1">' . $categories->getCategoryName() . '</td>';
-                                        echo '<td class="col-md-2">' . $prod->getStockItemName() . '</td>';
-                                        echo '<td class="col-md-1">' . $prod->getBrand() . '</td>';
-                                        echo '<td class="col-md-1">' . $this->getSizeString($prod->getSize()) . '</td>';
-                                        echo '<td class="col-md-1">' . $prod->getBarcode() . '</td>';
-                                        echo '<td class="col-md-1">€' . number_format($prod->getUnitPrice(),2) . '</td>';
-                                        echo '<td class="col-md-1">' . number_format($prod->getTaxRate(),2) . '%</td>';
-                                        echo '<td class="col-md-1">€' . number_Format($this->calculatePrice($prod->getUnitPrice(),$prod->getTaxRate()),2) . '</td>';
-                                        echo '<td class="col-md-1">' . $this->getConversionRatio($prod) . '</td>';
-                                        echo '</td>';
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </form>
+
                     <div class="col-12 col-md-10 col-lg-10">
                         <form role="form" id="table" method="POST" action="">
                             <div class="table-fixed">
@@ -128,13 +88,7 @@ if (isset($_POST['id'])) {
                     </button>
                     <h2> total Conversie ratio: <?php echo($this->getTotalConversion($products)); ?></h2>
                 </div>
-            <div class="col-12 col-md-2 col-lg-2 discountButtons">
-                <button type="button" class="firstdiscountButton btn btn-success" data-toggle="modal" data-target="#createProduct">
-                    Product toevoegen
-                </button>
-                <br><br>
-                <h3> total Conversie ratio: <?php echo($this->getTotalConversion($products)); ?></h3>
-            </div>
+
         </div>
     </div>
 </div>
