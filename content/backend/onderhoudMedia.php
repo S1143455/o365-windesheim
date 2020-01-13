@@ -94,20 +94,22 @@ if (isset($_POST['id'])) {
                                     <div class="card card-body" style="padding:0px;">
                                         <div class="row">
                                             <div class="col-12">
-                                                <table class="table table-fixed"  id="tableCollapseProduct" >
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="col-md-2">Select</th>
-                                                        <th class="col-md-2">Productnr</th>
-                                                        <th class="col-md-3">Productnaam</th>
-                                                        <th class="col-md-1">Prijs</th>
-                                                        <th class="col-md-4">Opmerkingen</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="tbodyProduct">
-                                                        <?php $discountController->GetAllProducts(); ?>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-fixed">
+                                                    <table class="table table-bordered" id="tableCollapseProduct" >
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Select</th>
+                                                            <th class="col-md-2">Productnr</th>
+                                                            <th class="col-md-3">Productnaam</th>
+                                                            <th class="col-md-1">Prijs</th>
+                                                            <th class="col-md-4">Opmerkingen</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="tbodyProduct">
+                                                            <?php $discountController->GetAllProducts(); ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -123,19 +125,20 @@ if (isset($_POST['id'])) {
                                     <div class="card card-body" style="padding:0px;">
                                         <div class="row">
                                             <div class="col-12">
-                                                <table class="table table-fixed"  id="tableCollapseCategorie" >
-
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="col-md-2">Select</th>
-                                                        <th class="col-md-2">CategorieNr</th>
-                                                        <th class="col-md-8">Omschrijving</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="tbodyCategorie">
-                                                        <?php $discountController->GetAllCategoriesForAttachments(); ?>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-fixed">
+                                                    <table class="table table-bordered"  id="tableCollapseCategorie" >
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Select</th>
+                                                            <th class="col-md-2">CategorieNr</th>
+                                                            <th class="col-md-8">Omschrijving</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="tbodyCategorie">
+                                                            <?php $discountController->GetAllCategoriesForAttachments(); ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -189,20 +192,22 @@ if (isset($_POST['id'])) {
                                     <div class="card card-body" style="padding:0px;">
                                         <div class="row">
                                             <div class="col-12">
-                                                <table class="table table-fixed"  id="tableCollapseProduct" >
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="col-md-2">Select</th>
-                                                        <th class="col-md-2">Productnr</th>
-                                                        <th class="col-md-3">Productnaam</th>
-                                                        <th class="col-md-1">Prijs</th>
-                                                        <th class="col-md-4">Opmerkingen</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="tbodyProduct">
-                                                    <?php $discountController->GetAllProducts(); ?>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-fixed">
+                                                    <table class="table table-bordered" id="tableCollapseProduct">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Select</th>
+                                                            <th class="col-md-2">Productnr</th>
+                                                            <th class="col-md-3">Productnaam</th>
+                                                            <th class="col-md-1">Prijs</th>
+                                                            <th class="col-md-4">Opmerkingen</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="tbodyProduct">
+                                                        <?php $discountController->GetAllProducts(); ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -218,26 +223,27 @@ if (isset($_POST['id'])) {
                                     <div class="card card-body" style="padding:0px;">
                                         <div class="row">
                                             <div class="col-12">
-                                                <table class="table table-fixed"  id="tableCollapseCategorie" >
-
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="col-md-2">Select</th>
-                                                        <th class="col-md-2">CategorieNr</th>
-                                                        <th class="col-md-8">Omschrijving</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="tbodyCategorie">
-                                                    <?php $discountController->GetAllCategoriesForAttachments(); ?>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-fixed">
+                                                    <table class="table table-bordered" id="tableCollapseCategorie" >
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Select</th>
+                                                            <th class="col-md-2">CategorieNr</th>
+                                                            <th class="col-md-8">Omschrijving</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="tbodyCategorie">
+                                                        <?php $discountController->GetAllCategoriesForAttachments(); ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-5 control-label" for="checkbox">Eenmalig:</label>
+                                <label class="col-3 control-label" for="checkbox">Eenmalig:</label>
                                 <input class="checkboxActive" checked type="checkbox" name="ACTIVE" id="ACTIVE"
                                        value="1">
                             </div>
@@ -283,20 +289,22 @@ if (isset($_POST['id'])) {
                                     <div class="card card-body" style="padding:0px;">
                                         <div class="row">
                                             <div class="col-12">
-                                                <table class="table table-fixed"  id="tableCollapseProduct" >
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="col-md-2">Select</th>
-                                                        <th class="col-md-2">Productnr</th>
-                                                        <th class="col-md-3">Productnaam</th>
-                                                        <th class="col-md-1">Prijs</th>
-                                                        <th class="col-md-4">Opmerkingen</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="tbodyProduct">
-                                                    <?php $discountController->GetAllProducts(); ?>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-fixed">
+                                                    <table class="table table-bordered"  id="tableCollapseProduct" >
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Select</th>
+                                                            <th class="col-md-2">Productnr</th>
+                                                            <th class="col-md-3">Productnaam</th>
+                                                            <th class="col-md-1">Prijs</th>
+                                                            <th class="col-md-4">Opmerkingen</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="tbodyProduct">
+                                                        <?php $discountController->GetAllProducts(); ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -312,19 +320,20 @@ if (isset($_POST['id'])) {
                                     <div class="card card-body" style="padding:0px;">
                                         <div class="row">
                                             <div class="col-12">
-                                                <table class="table table-fixed"  id="tableCollapseCategorie" >
-
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="col-md-2">Select</th>
-                                                        <th class="col-md-2">CategorieNr</th>
-                                                        <th class="col-md-8">Omschrijving</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="tbodyCategorie">
-                                                    <?php $discountController->GetAllCategoriesForAttachments(); ?>
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-fixed">
+                                                    <table class="table table-bordered"  id="tableCollapseCategorie" >
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="col-md-2">Select</th>
+                                                            <th class="col-md-2">CategorieNr</th>
+                                                            <th class="col-md-8">Omschrijving</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="tbodyCategorie">
+                                                        <?php $discountController->GetAllCategoriesForAttachments(); ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -150,17 +150,18 @@ if (isset($_POST['id'])) {
                                        value="<?php echo($customeruniek->getNewsletter()) ?>
                             </div>
                             <br>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label class="col-md-4" for="orderid">Bestelnummer:</label>
-                                        <label class="col-md-4" for="orderdate">Besteldatum:</label>
-                                        <label class="col-md-4" for="orderamount">Bedrag:</label>
-                                    </div>
-                                </div>
-                            </div>
+
                             <?php if(!empty($orders) && $orders[0] != null && $orders[0]->getOrderID() != null){
-                            echo "<form role='form' id='table' method='POST' action=''>";
+                            echo "<form role='form' id='table' method='POST' action=''>
+                                    <div class=\"container\">
+                                        <div class=\"row\">
+                                            <div class=\"form-group col-md-12\">
+                                                <label class=\"col-md-4\" for=\"orderid\">Bestelnummer:</label>
+                                                <label class=\"col-md-4\" for=\"orderdate\">Besteldatum:</label>
+                                                <label class=\"col-md-4\" for=\"orderamount\">Bedrag:</label>
+                                            </div>
+                                        </div>
+                                    </div>";
                                 foreach($orders as $order){
                                 echo ' <div class="accordion" id="orderDetail">
                                             <div class="card">
@@ -200,8 +201,8 @@ if (isset($_POST['id'])) {
                                                                         <td class="col-md-4">' .$orderline->getDescription() .'</td>
                                                                         <td class="col-md-2">' .$orderline->getQuantity() .'</td>
                                                                         <td class="col-md-2">' .round($orderline->getTaxRate()) .'%</td>
-                                                                        <td class="col-md-2">'. "€" .$orderline->getUnitPrice() .',-</td>
-                                                                        <td class="col-md-2">'. "€" .$orderController->calculateTotalPrice($orderline) .',-</td>
+                                                                        <td class="col-md-2">'. "€" .number_format($orderline->getUnitPrice()), 2 .',-</td>
+                                                                        <td class="col-md-2">'. "€" .number_format($orderController->calculateTotalPrice($orderline)), 2 .',-</td>
                                                                         </tr>';
                                                                 }
                                                                 echo '<tr>
@@ -209,7 +210,7 @@ if (isset($_POST['id'])) {
                                                                     <td class="col-md-2"></td>
                                                                     <td class="col-md-2"></td>
                                                                     <td class="col-md-2">Totaal prijs:</td>
-                                                                    <td class="col-md-2">'. "€" .$orderController->totaltotalprice($orderlines) .',-</td>
+                                                                    <td class="col-md-2">'. "€" .number_format($orderController->totaltotalprice($orderlines)), 2 .',-</td>
                                                                 </tr>';
                                                              echo'
                                                                </tbody>
@@ -225,8 +226,8 @@ if (isset($_POST['id'])) {
                                 echo"</form>";
                                 } else {
                                 echo '<div class="form-group col-12">
-                                        <label class="col-5 control-label" for="orderid">Bestelnummer:</label>
-                                        <span class="col-7" style="padding-left: 0px">Deze klant heeft geen bestelling gedaan</span>
+                                        <div class="col-5"></div>
+                                        <span class="col-7 error" style="padding-left: 0px">Deze klant heeft geen bestelling gedaan</span>
                                       </div>';
                             }
                             ?>
@@ -265,14 +266,14 @@ if (isset($_POST['id'])) {
                         <div class="form-group">
                             <label class="col-5" for="LogonName">Gebruikersnaam:</label>
                             <input type="text" class="col-7 form-control" name="LogonName"
-                                   value="<?php echo($customeruniek->getFullNameOnID($customerID)) ?>" required>
+                                   value="<?php echo($person->getFullName())?>">
                         </div>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="col-5" for="EmailAddress">Emailadres:</label>
                             <input type="email" class="col-7 form-control" name="EmailAddress" id="EmailAddress"
-                                   value="<?php echo($customeruniek->getEmailAddressOnID($customerID)) ?>" required>
+                                   value="<?php echo($person->getEmailAddress()) ?>">
                         </div>
                     </div>
                     <div class="modal-footer">

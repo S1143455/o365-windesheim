@@ -60,6 +60,7 @@ class CustomerController
                 default:
                 }
             }
+            var_dump($_POST);
             $this->customer->setTermsAndConditions(1);
             $this->store($this->customer);
             $this->storePeople($this->people);
@@ -84,6 +85,7 @@ class CustomerController
         $this->adress = new Adress();
 
     }
+
     public function retrieve($id){
         $customer = new customer();
         $customer = $customer->retrieve($id);
@@ -93,6 +95,7 @@ class CustomerController
         }
         return $customer;
     }
+
     public function retrievePerson($id){
         $person = new People();
         $person = $person->retrieve($id);
@@ -119,6 +122,7 @@ class CustomerController
         $customers = $this->customer->getAllCustomers();
         return $customers;
     }
+
     public function SearchCustomers($value){
         $customers = $this->customer->getAllCustomers();
 
@@ -140,9 +144,8 @@ class CustomerController
         {
             return $address[0];
         }
-
-
     }
+
     function getAllCustomer()
     {
         $customers = $this->customer->getAllCustomers();

@@ -110,11 +110,11 @@ class Customer extends Database
     {
         if ($this->newsletter == "1"){
             $this->newsletter =
-                '<input type="checkbox" name="Newsletter" checked>';
+                '<input type="checkbox" name="Newsletter" value="" checked>';
 
         } else {
             $this->newsletter =
-                '<input type="checkbox" name="Newsletter">';
+                '<input type="checkbox" name="Newsletter" value="">';
 
         }
         return $this->newsletter;

@@ -21,8 +21,7 @@ if (isset($_POST['name'])) {
 if (isset($_POST['id'])) {
     $discountID = $_POST['id'];
     if ($discountID != 0) {
-        $discount = $discountController->retrieve($discountID);
-        $discount->getSpecialDealID();
+        $discountuniek = $discountController->retrieve($discountID);
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditDiscountDialog').modal('show');   }); </script>";
     }
     unset($_POST['valuecheck']);
@@ -72,19 +71,16 @@ if (isset($_POST['valuecheck'])) {
         if($_POST['submitonetime']){
             echo "<script type='text/javascript'> $(document).ready(function(){ $('#oneTimeDiscount').modal('show');   }); </script>";
         }
-        if($_POST['submitonetime']){
-            echo "<script type='text/javascript'> $(document).ready(function(){ $('#oneTimeDiscount').modal('show');   }); </script>";
+        if($_POST['DiscountProduct']){
+            echo "<script type='text/javascript'> $(document).ready(function(){ $('#DiscountProduct').modal('show');   }); </script>";
         }
-        if($_POST['submitonetime']){
-            echo "<script type='text/javascript'> $(document).ready(function(){ $('#oneTimeDiscount').modal('show');   }); </script>";
+        if($_POST['DiscountCategory']){
+            echo "<script type='text/javascript'> $(document).ready(function(){ $('#DiscountCategory').modal('show');   }); </script>";
         }
-        if($_POST['submitonetime']){
-            echo "<script type='text/javascript'> $(document).ready(function(){ $('#oneTimeDiscount').modal('show');   }); </script>";
+        if($_POST['MailDiscount']){
+            echo "<script type='text/javascript'> $(document).ready(function(){ $('#MailDiscount').modal('show');   }); </script>";
         }
     }
-
-
-
 }
 $discounts = $discountController->getDiscounts();
 
@@ -268,27 +264,28 @@ $discounts = $discountController->getDiscounts();
                                            aria-label="Search" id="myInputProduct">
                                     <div class="row">
                                         <div class="col-12">
-                                            <table class="table table-fixed tableCollapseSP"
-                                                   id="tableCollapseProduct">
-                                                <thead>
-                                                <tr>
-                                                    <th class="col-md-2">Select</th>
-                                                    <th class="col-md-2">Productnr</th>
-                                                    <th class="col-md-3">Productnaam</th>
-                                                    <th class="col-md-1">Prijs</th>
-                                                    <th class="col-md-4">Opmerkingen</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <?php $discountController->GetAllProducts(); ?>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-fixed">
+                                                <table class="table table-bordered tableCollapseSP"
+                                                       id="tableCollapseProduct">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="col-md-2">Select</th>
+                                                        <th class="col-md-2">Productnr</th>
+                                                        <th class="col-md-3">Productnaam</th>
+                                                        <th class="col-md-1">Prijs</th>
+                                                        <th class="col-md-4">Opmerkingen</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php $discountController->GetAllProducts(); ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="col-12">
                                 <div class="row">
@@ -344,7 +341,7 @@ $discounts = $discountController->getDiscounts();
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                        <button type="submit" class="btn btn-primary" name="submit" value="deze tael">Korting aanmaken
+                        <button type="submit" class="btn btn-primary" name="DiscountProduct" value="deze tael">Korting aanmaken
                         </button>
                     </div>
                 </form>
@@ -381,21 +378,23 @@ $discounts = $discountController->getDiscounts();
                                            aria-label="Search" id="myInputCategory">
                                     <div class="row">
                                         <div class="col-12">
-                                            <table class="table table-fixed tableCollapseSP "
-                                                   id="tableCollapseProduct">
-                                                <thead>
-                                                <tr>
-                                                    <th class="col-md-2">Select</th>
-                                                    <th class="col-md-2">Categorie nr</th>
-                                                    <th class="col-md-4">Categorie naam</th>
-                                                    <th class="col-md-2">Parent Categorie</th>
-                                                    <th class="col-md-2">Gekoppelde korting id</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <?php $discountController->GetAllCategories(); ?>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-fixed">
+                                                <table class="table table-bordered tableCollapseSC "
+                                                   id="tableCollapseCategory">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="col-md-2">Select</th>
+                                                        <th class="col-md-2">Categorie nr</th>
+                                                        <th class="col-md-4">Categorie naam</th>
+                                                        <th class="col-md-2">Parent Categorie</th>
+                                                        <th class="col-md-2">Gekoppelde korting id</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php $discountController->GetAllCategories(); ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -452,7 +451,7 @@ $discounts = $discountController->getDiscounts();
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                        <button type="submit" class="btn btn-primary" name="submit">Korting aanmaken</button>
+                        <button type="submit" class="btn btn-primary" name="DiscountCategory">Korting aanmaken</button>
                     </div>
                 </form>
             </div>
@@ -516,7 +515,7 @@ $discounts = $discountController->getDiscounts();
                             <label class="col-5 control-label labelInputStartDate"
                                    for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control " type="date" name="StartDate"
-                                   id="StartDate" required>
+                                   id="StartDate" style="text-align: center" required>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="EndDate">Einde periode:</label>
@@ -568,21 +567,23 @@ $discounts = $discountController->getDiscounts();
                                            aria-label="Search" id="myInputEditProduct">
                                     <div class="row">
                                         <div class="col-12">
-                                            <table class="table table-fixed tableCollapseSP "
-                                                   id="tableCollapseProduct">
-                                                <thead>
-                                                <tr>
-                                                    <th class="col-md-2">Select</th>
-                                                    <th class="col-md-2">Product nr</th>
-                                                    <th class="col-md-3">Productnaam</th>
-                                                    <th class="col-md-1">Prijs</th>
-                                                    <th class="col-md-4">Opmerkingen</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="tbodyEditProduct">
-                                                <?php $discountController->GetAllProducts(); ?>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-fixed">
+                                                <table class="table table-bordered tableCollapseSP "
+                                                        id="tableCollapseProduct">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="col-md-2">Select</th>
+                                                        <th class="col-md-2">Product nr</th>
+                                                        <th class="col-md-3">Productnaam</th>
+                                                        <th class="col-md-1">Prijs</th>
+                                                        <th class="col-md-4">Opmerkingen</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="tbodyEditProduct">
+                                                        <?php $discountController->GetAllProducts(); ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -602,21 +603,23 @@ $discounts = $discountController->getDiscounts();
                                            aria-label="Search" id="myInputEditCategory">
                                     <div class="row">
                                         <div class="col-12">
-                                            <table class="table table-fixed tableCollapseSP "
-                                                   id="tableCollapseProduct">
-                                                <thead>
-                                                <tr>
-                                                    <th class="col-md-1">Select</th>
-                                                    <th class="col-md-2">Categorie nr</th>
-                                                    <th class="col-md-4">Categorie naam</th>
-                                                    <th class="col-md-2">Parent Categorie</th>
-                                                    <th class="col-md-2">Gekoppelde korting id</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="tbodyEditCategory">
-                                                <?php $discountController->GetAllCategories(); ?>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-fixed">
+                                                <table class="table table-bordered tableCollapseSP"
+                                                        id="tableCollapseProduct">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="col-md-1">Select</th>
+                                                        <th class="col-md-2">Categorie nr</th>
+                                                        <th class="col-md-4">Categorie naam</th>
+                                                        <th class="col-md-2">Parent Categorie</th>
+                                                        <th class="col-md-2">Gekoppelde korting id</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php $discountController->GetAllCategories(); ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -625,29 +628,29 @@ $discounts = $discountController->getDiscounts();
                         <div class="form-group" style="display: none;">
                             <label class="col-5" for="SpecialDealID">SpecialDealID:</label>
                             <input class="col-4 form-control" type="text" name="SpecialDealID" id="SpecialDealID"
-                                   value="<?php echo($discount->getSpecialDealID()) ?>">
+                                   value="<?php echo($discountuniek->getSpecialDealID()) ?>">
                         </div>
                         <div class="form-group">
                             <label class="col-5" for="DealCode">Code:</label>
                             <input class="col-4 form-control" type="text" name="DealCode" id="DealCode" required
-                                   value="<?php echo($discount->getDealCode()) ?>">
+                                   value="<?php echo($discountuniek->getDealCode()) ?>">
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="checkboxOT">Eenmalig:</label>
                             <input class="checkboxOneTime" type="checkbox" name="OneTime" id="checkboxOT"
-                                   value="<?php echo($discount->getOneTime()) ?>
+                                   value="<?php echo($discountuniek->getOneTime()) ?>
                     </div>
                     <div class=" form-group">
                             <label class="col-5" for="categoryID">Omschrijving:</label>
                             <textarea class="col-7 form-control dealDescription" name="DealDescription"
                                       id="DealDescription"
-                                      rows="3"><?php echo($discount->getDealDescription()) ?></textarea>
+                                      rows="3"><?php echo($discountuniek->getDealDescription()) ?></textarea>
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="inputPercentageOT">Percentage:</label>
                             <input class="col-2 form-control inputPercentage" type="text" name="DiscountPercentage"
                                    id="inputPercentageOT" required
-                                   value="<?php echo($discount->getDiscountPercentage()) ?>">
+                                   value="<?php echo($discountuniek->getDiscountPercentage()) ?>">
                             <span class="col-1 symbolPercentage">%</span>
 
                         </div>
@@ -655,13 +658,13 @@ $discounts = $discountController->getDiscounts();
                             <label class="col-5 control-label" for="StartDate">Begin periode:</label>
                             <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
                                    id="StartDate" required
-                                   value="<?php echo($discount->getStartDate()) ?>">
+                                   value="<?php echo($discountuniek->getStartDate()) ?>">
                         </div>
                         <div class="form-group">
                             <label class="col-5 control-label" for="EndDate">Einde periode:</label>
                             <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
                                    id="EndDate"
-                                   value="<?php echo($discount->getEndDate()) ?>">
+                                   value="<?php echo($discountuniek->getEndDate()) ?>">
                         </div>
                         <span class="error"><?php echo $dateErr; ?></span>
                         <span class="error"><?php echo $percentageErr; ?></span>
@@ -670,7 +673,7 @@ $discounts = $discountController->getDiscounts();
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                        <input type="submit" name="submit" value="Korting aanpassen" class="btn btn-primary">
+                        <input type="submit" name="MailDiscount" value="Korting aanpassen" class="btn btn-primary">
                     </div>
                 </form>
             </div>
