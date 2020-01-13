@@ -31,26 +31,26 @@ class FileController
             $stockitems = $this->retrieveWhereStockitem($attachment->getAttachmentID());
             $result = '';
             $result .= '<tr>
-                    <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $attachment->getAttachmentID() .'">Edit</button></td>
-                    <td class="col-md-1">' . $attachment->getAlternateText() . '</td> ';
+                    <td style="min-height: 50px;" class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $attachment->getAttachmentID() .'">Edit</button></td>
+                    <td style="min-height: 50px;" class="col-md-1">' . $attachment->getAlternateText() . '</td> ';
             if($attachment->getActive() == 1 ){
-                $result .=  "<td class='col-md-1'>on</td>";
+                $result .=  "<td style='min-height: 50px;' class='col-md-1'>on</td>";
             }else{
-                $result .=  "<td class='col-md-1'>off</td>";
+                $result .=  "<td style='min-height: 50px;' class='col-md-1'>off</td>";
             }
             $result.= '
-                    <td class="col-md-3">' . $attachment->getFileLocation() .'</td>
-                    <td class="col-md-2">' . $attachment->getURL() .'</td>';
+                    <td style="min-height: 50px;" class="col-md-3">' . $attachment->getFileLocation() .'</td>
+                    <td style="min-height: 50px;" class="col-md-2">' . $attachment->getURL() .'</td>';
 
             if($categories[0]->getAttachmentID() != null){
-                $result .=  "<td class='col-md-2'>" . count($categories) ."</td>";
+                $result .=  "<td style='min-height: 50px;' class='col-md-2'>" . count($categories) ."</td>";
             }else{
-                $result .=  "<td class='col-md-2'>0</td>";
+                $result .=  "<td style='min-height: 50px;' class='col-md-2'>0</td>";
             }
             if($stockitems[0]->getAttachmentID() != null){
-                $result .=  "<td class='col-md-2'>" . count($stockitems) ."</td>";
+                $result .=  "<td style='min-height: 50px;' class='col-md-2'>" . count($stockitems) ."</td>";
             }else{
-                $result .=  "<td class='col-md-2'>0</td>";
+                $result .=  "<td style='min-height: 50px;' class='col-md-2'>0</td>";
             }
             $result .= "</tr>";
 

@@ -28,7 +28,6 @@ class DiscountController
         {
             //header("Location: /404", true);
         }
-
         return $discount;
     }
 
