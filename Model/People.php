@@ -30,9 +30,12 @@ class People extends Database
         $people = $people->retrieve();
         return $people;
     }
+
     /**
      * @return mixed
      */
+
+
     public function getPersonID()
     {
         return $this->PersonID;
@@ -41,6 +44,8 @@ class People extends Database
     /**
      * @param mixed $PersonID
      */
+
+
     public function setPersonID($PersonID)
     {
         $this->PersonID = $PersonID;
@@ -49,6 +54,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getFullName()
     {
         return $this->FullName;
@@ -57,6 +64,8 @@ class People extends Database
     /**
      * @param mixed $FullName
      */
+
+
     public function setFullName($FullName)
     {
         $this->FullName = $FullName;
@@ -65,6 +74,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getLogonName()
     {
         return $this->LogonName;
@@ -73,6 +84,8 @@ class People extends Database
     /**
      * @param mixed $LogonName
      */
+
+
     public function setLogonName($LogonName)
     {
         $this->LogonName = $LogonName;
@@ -81,6 +94,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getHashedPassword()
     {
         return $this->HashedPassword;
@@ -89,6 +104,8 @@ class People extends Database
     /**
      * @param mixed $HashedPassword
      */
+
+
     public function setHashedPassword($HashedPassword)
     {
         $this->HashedPassword = $HashedPassword;
@@ -97,6 +114,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getIsSystemUser()
     {
         return $this->IsSystemUser;
@@ -105,6 +124,8 @@ class People extends Database
     /**
      * @param mixed $IsSystemUser
      */
+
+
     public function setIsSystemUser($IsSystemUser)
     {
         $this->IsSystemUser = $IsSystemUser;
@@ -113,6 +134,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getRole()
     {
         return $this->Role;
@@ -121,6 +144,8 @@ class People extends Database
     /**
      * @param mixed $Role
      */
+
+
     public function setRole($Role)
     {
         $this->Role = $Role;
@@ -129,6 +154,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getPhoneNumber()
     {
         return $this->PhoneNumber;
@@ -137,6 +164,8 @@ class People extends Database
     /**
      * @param mixed $PhoneNumber
      */
+
+
     public function setPhoneNumber($PhoneNumber)
     {
         $this->PhoneNumber = $PhoneNumber;
@@ -145,6 +174,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getEmailAddress()
     {
         return $this->EmailAddress;
@@ -153,6 +184,8 @@ class People extends Database
     /**
      * @param mixed $EmailAddress
      */
+
+
     public function setEmailAddress($EmailAddress)
     {
         $this->EmailAddress = $EmailAddress;
@@ -161,6 +194,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getDateOfBirth()
     {
         return $this->DateOfBirth;
@@ -169,6 +204,8 @@ class People extends Database
     /**
      * @param mixed $DateOfBirth
      */
+
+
     public function setDateOfBirth($DateOfBirth)
     {
         $this->DateOfBirth = $DateOfBirth;
@@ -177,6 +214,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getPhoto()
     {
         return $this->Photo;
@@ -185,6 +224,8 @@ class People extends Database
     /**
      * @param mixed $Photo
      */
+
+
     public function setPhoto($Photo)
     {
         $this->Photo = $Photo;
@@ -193,6 +234,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getLastEditedBy()
     {
         return $this->LastEditedBy;
@@ -201,6 +244,8 @@ class People extends Database
     /**
      * @param mixed $LastEditedBy
      */
+
+
     public function setLastEditedBy($LastEditedBy)
     {
         $this->LastEditedBy = $LastEditedBy;
@@ -209,6 +254,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getPassWordRecoveryString()
     {
         return $this->PassWordRecoveryString;
@@ -217,6 +264,8 @@ class People extends Database
     /**
      * @param mixed $PassWordRecoveryString
      */
+
+
     public function setPassWordRecoveryString($PassWordRecoveryString)
     {
         $this->PassWordRecoveryString = $PassWordRecoveryString;
@@ -225,6 +274,8 @@ class People extends Database
     /**
      * @return mixed
      */
+
+
     public function getRecoveryStringTTL()
     {
         return $this->RecoveryStringTTL;
@@ -233,6 +284,8 @@ class People extends Database
     /**
      * @param mixed $RecoveryStringTTL
      */
+
+
     public function setRecoveryStringTTL($RecoveryStringTTL)
     {
         $this->RecoveryStringTTL = $RecoveryStringTTL;

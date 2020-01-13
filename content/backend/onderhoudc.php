@@ -82,8 +82,10 @@ if (isset($_POST['id'])) {
                         <input type="text" class="col-md-5 form-control" name="CategoryName" id="CategoryName">
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3" for="AttachmentID">Afbeelding</label>
-                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <br>
+                        <label for="attachment">Afbeeldingen</label>
+                        <input style="width: 100%;" type="file" class="form-control" name="attachmentIMG[]" multiple id="attachmentIMG[]" >
+                        <br>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3" for="categoryID">Ouder Categorie</label>
@@ -160,9 +162,11 @@ if (isset($_POST['id'])) {
                         <label for="categoryID">Categorie</label>
                         <input type="text" class="form-control" name="ParentCategory" id="ParentCategory" value="<?php echo($categoryController->getParentCategoryfromCategory($category)) ?>"  >
                     </div>
-                    <div class="form-group">
-                        <label for="AttachmentID">Afbeelding</label>
-                        <input type="file" name="AttachmentID" id="AttachmentID" value="<?php echo($categoryController->getAttachmentfromCategory($category)) ?>">
+                    <div class="col-md-12">
+                        <br>
+                        <label for="attachment">Afbeeldingen</label>
+                        <input style="width: 100%;" type="file" class="form-control" name="attachmentIMG[]" multiple id="attachmentIMG[]" >
+                        <br>
                     </div>
 
                     <p>

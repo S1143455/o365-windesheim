@@ -9,7 +9,7 @@ include_once 'content/backend/header-admin.php';
         ?>
 
         <div class="col-12 col-md-9 col-lg-10">
-            test
+            welkom tot onze admin pagina
         <div>
 
     </div>

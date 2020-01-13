@@ -68,7 +68,7 @@ include_once 'content/backend/sidebar-admin.php';
     <div class="modal fade" id="orderDetailsDialog" tabindex="-1" role="dialog" aria-labelledby="DetailModal"
          aria-hidden="true">
         <div class="modal-dialog" style="width:1000px;">
-            <div class="modal-content">
+            <div class="modal-content" style="min-width: 1000px;">
                 <div class="modal-header">
                     <h4>Bestellingsoverzicht</h4>
                     <button type="button" class="close" data-dismiss="modal"><span

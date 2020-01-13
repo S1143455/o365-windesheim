@@ -12,7 +12,6 @@ use Model\Adress;
 class CustomerController
 {
     private $viewPath = 'content/frontend/';
-
     private $admin = 'content/backend/';
     private $route = 'content/frontend/';
 
@@ -23,20 +22,50 @@ class CustomerController
         $this->adress = new Adress();
         $this->order = new Order();
 
-
     }
 
-    public function update(){
+    public function update()
+    {
         $this->customer = $this->retrieve($_POST["CustomerID"]);
-        $this->person = $this->retrievePerson($_POST["PersonID"]);
+        $this->people = $this->retrievePerson($_POST["PersonID"]);
         $this->adress = $this->retrieveWhereP($_POST["AddressId"]);
-        $this->person->setEmailAddress($_POST["EmailAddress"]);
-        $this->adress->setAddress($_POST["Adress"]);
-        //Aanvullen
-        //$this->customer->set($_POST["EmailAddress"]);
-        $this->store($this->customer);
-        $this->storePeople($this->person);
-        $this->storeAdress($this->adress);
+
+        foreach ($_POST as $key => $value) {
+
+            //$this->customer->set($_POST["EmailAddress"]);
+
+            switch ($key) {
+                case "FullName":
+                    $this->people->setFullName($value);
+                    break;
+                case "DateOfBirth":
+                    $this->people->setDateOfBirth($_POST["DateOfBirth"]);
+                    break;
+                case "Adress":
+                    $this->adress->setAddress($_POST["Adress"]);
+                    break;
+                case "Zipcode":
+                    $this->adress->setZipcode($_POST["Zipcode"]);
+                    break;
+                case "City":
+                    $this->adress->setCity($_POST["City"]);
+                    break;
+                case "EmailAddress":
+                    $this->people->setEmailAddress($_POST["EmailAddress"]);
+                    break;
+                case "Newsletter":
+                    $this->customer->setNewsLetter($_POST["Newsletter"]);
+                    break;
+
+                default:
+                }
+            }
+            $this->customer->setTermsAndConditions(1);
+            $this->store($this->customer);
+            $this->storePeople($this->people);
+            $this->storeAdress($this->adress);
+
+            include $this->admin . 'home-admin.php';
     }
 
     /**
@@ -62,7 +91,6 @@ class CustomerController
         {
             //header("Location: /404", true);
         }
-
         return $customer;
     }
     public function retrievePerson($id){
@@ -93,7 +121,6 @@ class CustomerController
     }
     public function SearchCustomers($value){
         $customers = $this->customer->getAllCustomers();
-//        $people
 
         $input = preg_quote('bl', '~'); // don't forget to quote input string!
         $data = array('orange', 'blue', 'green', 'red', 'pink', 'brown', 'black');
@@ -123,16 +150,15 @@ class CustomerController
             $person =  $this->retrievePerson($customer->getPersonID());
             $adress = $this->retrieveWhereP($person->getPersonID());
             if($adress != null){
-//                var_dump($customer->getCustomerID());
             }
             $result = '';
             $result .= '<tr>
-                    <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
-                    <td class="col-md-2">' . $customer->getCustomerID() . '</td>                 
-                    <td class="col-md-3">' . $person->getEmailAddress() .'</td>
-                    <td class="col-md-3">' . $person->getFullName() .'</td>
-                    <td class="col-md-2">' . $this->customer->getLastOrderDateOnID($customer->getCustomerID()) .'</td>
-                    <td class="col-md-1">' . $customer->getNewsletter() .'</td>
+                    <td style="min-height: 50px;" class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
+                    <td style="min-height: 50px;" class="col-md-2">' . $customer->getCustomerID() . '</td>                 
+                    <td style="min-height: 50px;" class="col-md-3">' . $person->getEmailAddress() .'</td>
+                    <td style="min-height: 50px;" class="col-md-3">' . $person->getFullName() .'</td>
+                    <td style="min-height: 50px;" class="col-md-2">' . $this->customer->getLastOrderDateOnID($customer->getCustomerID()) .'</td>
+                    <td style="min-height: 50px;" class="col-md-1">' . $customer->getNewsletter() .'</td>
                 </tr>';
             echo $result;
         }
@@ -165,7 +191,6 @@ class CustomerController
         $this->people->setLastEditedBy(1);
         foreach ($_POST as $key => $value)
         {
-           // var_dump($key);
 
             switch ($key)
             {
@@ -247,7 +272,6 @@ class CustomerController
     {
 
         if (!$customer->initialize()) {
-//            print_r($_GET);
             return false;
         };
 
@@ -286,7 +310,6 @@ class CustomerController
      */
     public function storePeople($people)
     {
-//        var_dump($people);
         if (!$people->initialize())
         {
             return false;

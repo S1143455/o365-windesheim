@@ -177,8 +177,8 @@ class Models
         $this->column = array(
             "SpecialDealID" => ['Integer', 'PrimaryKey', 'Required'],
             "DealDescription" => ['Varchar', 'Attribute', 'Nullable'],
-            "StartDate" => ['Date', 'Attribute', 'Required'],
-            "EndDate" => ['Date', 'Attribute', 'Nullable'],
+            "StartDate" => ['Varchar', 'Attribute', 'Required'],
+            "EndDate" => ['Varchar', 'Attribute', 'Nullable'],
             "DiscountPercentage" => ['Integer', 'Attribute', 'Required'],
             "DealCode" => ['Integer', 'Attribute', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
@@ -313,7 +313,7 @@ class Models
             "ShoppingCartID" => ['Integer', 'Attribute', 'Required'],
             "Gender" => ['Varchar', 'Attribute', 'Required'],
             "newsletter" => ['Boolean', 'Attribute', 'Not Required'],
-            "TermsAndConditions" => ['Boolean', 'Attribute', 'Required'],
+            "TermsAndConditions" => ['Boolean', 'Attribute', 'Not Required'],
         );
     }
 
