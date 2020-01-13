@@ -88,6 +88,8 @@ $router->route('/betalenmislukt', function(){
  */
 $router->route('/admin/CreateProduct', function() use($productController){
     return $productController->createAdminProduct();});
+$router->route('/admin/UpdateProduct', function() use($productController){
+    return $productController->updateAdminProduct();});
 
 $router->route('/productdetail', function() use($productController){
     return $productController->productDetail();

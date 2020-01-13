@@ -83,7 +83,43 @@ Class ProductController extends FileController
             $AttachmentStockItem->setLastEditedBy($_SESSION['personID']);
             $this->storeStock($AttachmentStockItem);
         }
-        $this->admin();
+        header("Location: /".  getenv('ROOTAdmin') ."/onderhoud-producten");
+
+
+    }
+    public function updateAdminProduct()
+    {
+
+        $product = new Product();
+        $product = $this->retrieveProduct($_POST['StockItemID']);
+        $product->initialize();
+        $product->save();
+        if (isset($_FILES) && $_FILES['attachmentIMG'] != null && $_FILES["attachmentIMG"]["tmp_name"][0] != null) {
+            $attachments = $this->uploadMultiple(count($_FILES["attachmentIMG"]["name"]), $_SESSION['personID']);
+            foreach($attachments as $attachment){
+                $AttachmentStockItem = new AttachmentStockItem();
+                $AttachmentStockItem->setAttachmentID($attachment->getAttachmentID());
+                $AttachmentStockItem->setStockitemID($product->getStockItemID());
+                $AttachmentStockItem->setLastEditedBy($_SESSION['personID']);
+                $this->storeStock($AttachmentStockItem);
+            }
+        }
+        var_dump($_POST);
+        if(!empty($_POST['attachmentURL'])){
+
+            $attachment = new Attachments();
+            $attachment->setURL($_POST['attachmentURL']);
+            $attachment->setLastEditedBy($_SESSION['personID']);
+            $attachment->setActive(1);
+            $attachment = $this->storeAttachment($attachment);
+            $AttachmentStockItem = new AttachmentStockItem();
+            $AttachmentStockItem->setAttachmentID($attachment->getAttachmentID());
+            $AttachmentStockItem->setStockitemID($product->getStockItemID());
+            $AttachmentStockItem->setLastEditedBy($_SESSION['personID']);
+            $this->storeStock($AttachmentStockItem);
+        }
+        header("Location: /".  getenv('ROOTAdmin') ."/onderhoud-producten");
+
 
     }
     /**
