@@ -147,7 +147,8 @@ class Models
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
             "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
             "StockItemDescription" => ['Varchar', 'Attribute', 'Nullable'],
-
+            "AttachmentID" => ['attachments', 'HasMany', 'Nullable'],
+            "RecommendedRetailPrice" => ['decimal', 'Attribute', 'Nullable'],
         );
     }
 

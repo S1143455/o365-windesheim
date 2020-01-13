@@ -20,6 +20,8 @@ class Product extends Database
     private $lastEditedBy;
     private $SpecialDealID;
     private $StockItemDescription;
+    private $attachmentID;
+    private $recommendedRetailPrice;
 
     function __construct()
     {
@@ -263,5 +265,37 @@ class Product extends Database
     public function setStockItemDescription($StockItemDescription)
     {
         $this->StockItemDescription = $StockItemDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttachmentID()
+    {
+        return $this->attachmentID;
+    }
+
+    /**
+     * @param mixed $attachmentID
+     */
+    public function setAttachmentID($attachmentID)
+    {
+        $this->attachmentID = $attachmentID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecommendedRetailPrice()
+    {
+        return $this->recommendedRetailPrice;
+    }
+
+    /**
+     * @param mixed $recommendedRetailPrice
+     */
+    public function setRecommendedRetailPrice($recommendedRetailPrice)
+    {
+        $this->recommendedRetailPrice = $recommendedRetailPrice;
     }
 }
