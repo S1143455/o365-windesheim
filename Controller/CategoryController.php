@@ -3,6 +3,7 @@
 
 namespace Controller;
 
+use Model\AttachmentCategorie;
 use Model\Category;
 use Model\Database;
 use Model\Attachments;
@@ -47,13 +48,13 @@ class CategoryController extends FileController
     }
 
 
-    public function getAttachmentfromCategory($category){
-        if($category->getAttachmentID() != null){
-            return $this->retrieveCategory($category->getAttachmentID());
-        }else {
-            return null;
-        }
-    }
+//    public function getAttachmentfromCategory($category){
+//        if($category->getAttachmentID() != null){
+//            return $this->retrieveCategory($category->getAttachmentID());
+//        }else {
+//            return null;
+//        }
+//    }
     public function create()
     {
         $this->category = new category();
@@ -61,7 +62,7 @@ class CategoryController extends FileController
         $this->category->setLastEditedBy(2);
         $this->store($this->category);
 
-        include $this->admin . 'onderhoudc.php';
+        header("Location: /".  getenv('ROOTAdmin') ."/onderhoud-categorieen");
     }
     public function GetAllDiscountsForcategorie()
     {
@@ -112,17 +113,28 @@ class CategoryController extends FileController
             return false;
         };
         $this->category = $category;
-        if(isset($_FILES) && $_FILES['fileToUpload'] != null && $_FILES["fileToUpload"]["tmp_name"] != null){
-            $attachmentID = $this->upload($this->category->getLastEditedBy());
-            $category->setAttachmentID($attachmentID);
-        }else{
-            $category->setAttachmentID(null);
-        }
-
         if (!$this->category->save())
         {
             return "Something went wrong.";
         }
+        if (isset($_FILES) && $_FILES['attachmentIMG'] != null && $_FILES["attachmentIMG"]["tmp_name"][0] != null) {
+            $attachments = $this->uploadMultiple(count($_FILES["attachmentIMG"]["name"]), $_SESSION['personID']);
+            foreach($attachments as $attachment){
+                $AttachmentCategorie = new AttachmentCategorie();
+                $AttachmentCategorie->setAttachmentID($attachment->getAttachmentID());
+                $AttachmentCategorie->setCategoryID($this->category->getCategoryID());
+                $AttachmentCategorie->setLastEditedBy($_SESSION['personID']);
+                $this->storeCategory($AttachmentCategorie);
+            }
+        }
+//        if(isset($_FILES) && $_FILES['fileToUpload'] != null && $_FILES["fileToUpload"]["tmp_name"] != null){
+//            $attachmentID = $this->upload($this->category->getLastEditedBy());
+//            $category->setAttachmentID($attachmentID);
+//        }else{
+//            $category->setAttachmentID(null);
+//        }
+
+
     }
 
     /**
@@ -155,10 +167,10 @@ class CategoryController extends FileController
         foreach($categories as $category){
             $result = '';
             $result .= '<tr style="height:40px;">
-                            <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $category->getCategoryID() .'">Edit</button></td>
-                            <td class="col-md-2">' . $category->getCategoryID() .'</td>
-                            <td class="col-md-5">' . $category->getCategoryName() .'</td>
-                            <td class="col-md-2">' . $category->getParentCategory() .'</td>
+                            <td style="min-height: 50px;" class="col-md-2"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $category->getCategoryID() .'">Edit</button></td>
+                            <td style="min-height: 50px;" class="col-md-2">' . $category->getCategoryID() .'</td>
+                            <td style="min-height: 50px;" class="col-md-5">' . $category->getCategoryName() .'</td>
+                            <td style="min-height: 50px;" class="col-md-3">' . $category->getParentCategory() .'</td>
                         </tr>';
 
             echo $result;

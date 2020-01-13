@@ -153,12 +153,12 @@ class CustomerController
             }
             $result = '';
             $result .= '<tr>
-                    <td class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
-                    <td class="col-md-2">' . $customer->getCustomerID() . '</td>                 
-                    <td class="col-md-3">' . $person->getEmailAddress() .'</td>
-                    <td class="col-md-3">' . $person->getFullName() .'</td>
-                    <td class="col-md-2">' . $this->customer->getLastOrderDateOnID($customer->getCustomerID()) .'</td>
-                    <td class="col-md-1">' . $customer->getNewsletter() .'</td>
+                    <td style="min-height: 50px;" class="col-md-1"><button type="submit" class="btn btn-outline-secondary tableEditButton" name="id" value="' . $customer->getCustomerID() .'">Edit</button></td>
+                    <td style="min-height: 50px;" class="col-md-2">' . $customer->getCustomerID() . '</td>                 
+                    <td style="min-height: 50px;" class="col-md-3">' . $person->getEmailAddress() .'</td>
+                    <td style="min-height: 50px;" class="col-md-3">' . $person->getFullName() .'</td>
+                    <td style="min-height: 50px;" class="col-md-2">' . $this->customer->getLastOrderDateOnID($customer->getCustomerID()) .'</td>
+                    <td style="min-height: 50px;" class="col-md-1">' . $customer->getNewsletter() .'</td>
                 </tr>';
             echo $result;
         }
