@@ -71,7 +71,7 @@ if (isset($_POST['valuecheck'])) {
         $dealcodErr = "*Het percentage mag niet kleiner zijn dan 1";
         $dealcodErr = $end;
     }
-        
+
     if ($success) {
          $discountController->update();
     } else {
