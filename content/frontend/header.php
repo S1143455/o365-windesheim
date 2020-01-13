@@ -10,6 +10,7 @@ include 'loader.php';
     <link href="<?php echo $mainController->template_path() ?>style.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $mainController->template_path() ?>custom.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo $mainController->template_path() ?>home.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -59,77 +60,32 @@ include 'loader.php';
         }
     }
 </script>
-<nav class="navbar navbar-static navbar-collapse navbar-expand-lg navbar-light bg-light">
-    <div class="row">
-        <div class="col-md-2">
-            <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo">
+<nav class="navbar navbar-static navbar-collapse navbar-expand-lg navbar-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 tekst">
-            <h1>Oma's beste</h1>
-            <h2>Producten zoals oma ze vroeger maakte! </h2>
-        </div>
-        <div class="col-md-10 hide1 scroll-nav">
-            <?php $mainController->navigationalmenu(); ?>
-        </div>
-        <div class="col-md-2 hide1 scroll-nav">
-            <?php $mainController->ShoppingCartMenu(); ?>
-        </div>
-        <div class="col-md-10 normalnav">
-            <?php $mainController->navigationalmenu(); ?>
-        </div>
-        <div class="col-md-2 normalnav">
-            <?php $mainController->ShoppingCartMenu(); ?>
+        <div class="row">
+            <div class="col-md-12 tekst">
+                <h1>Oma's beste</h1>
+                <h2>Producten zoals oma ze vroeger maakte! </h2>
+            </div>
+            <div class="col-md-10 hide1 scroll-nav">
+                <?php $mainController->navigationalmenu(); ?>
+            </div>
+            <div class="col-md-2 hide1 scroll-nav">
+                <?php $mainController->ShoppingCartMenu(); ?>
+            </div>
+            <div class="col-md-10 normalnav">
+                <?php $mainController->navigationalmenu(); ?>
+            </div>
+            <div class="col-md-2 normalnav">
+                <?php $mainController->ShoppingCartMenu(); ?>
+            </div>
         </div>
     </div>
 </nav>
 
-<!--<div class="container" style=" width:100% !important; ">-->
-<!--    <div class="row">-->
-<!--        <div class="col align-self-center">-->
-<!---->
-<!--            <nav class="navbar navbar-default navbar-static-top  my-nav">-->
-<!--                <div class="container navcontainer">-->
-<!--                    <div class="navbar-header">-->
-<!--                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bas-navbar" aria-expanded="false">-->
-<!--                            <span class="sr-only">Toggle navigation</span>-->
-<!--                            <span class="icon-bar"></span>-->
-<!--                            <span class="icon-bar"></span>-->
-<!--                            <span class="icon-bar"></span>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-4">-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-3">-->
-<!--                                    <img class="navbar-brand logo" src="./logo_omasbeste.png" alt="photo" ></img>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-9 tekst">-->
-<!--                                    <h1>Oma's beste</h1>-->
-<!--                                    <h2>Producten zoals oma ze vroeger maakte! </h2>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-8">-->
-<!--                            <div class="hide1 scroll-nav">-->
-<!--                                --><?php //$mainController->navigationalmenu();?>
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-4">-->
-<!--                            <div class="hide1 scroll-nav">-->
-<!--                                --><?php //$mainController->ShoppingCartMenu(); ?>
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row" style="height:1px;background-color:black;"> </div>-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-8 normalnav">-->
-<!--                            --><?php //$mainController->navigationalmenu(); ?>
-<!--                        </div>-->
-<!--                        <div class="col-md-4 normalnav">-->
-<!--                            --><?php //$mainController->ShoppingCartMenu(); ?>
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </nav>-->
+<div class="">

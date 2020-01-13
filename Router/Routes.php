@@ -16,6 +16,10 @@ $router->route('/about-us', function(){
     return include 'content/frontend/about-us.php';
 });
 
+$router->route('/contact', function(){
+    return include 'views/contact/contact.php';
+});
+
 /**
  * Passwordrecovery
  */
@@ -82,6 +86,10 @@ $router->route('/betalenmislukt', function(){
 /**
  * Begin product routes
  */
+$router->route('/productdetail', function() use($productController){
+    return $productController->productDetail();
+});
+
 $router->route('/product', function() use($productController){
     return $productController->index();
 });
@@ -161,6 +169,7 @@ $router->route('/admin/onderhoud-producten', function() use($productController){
         return $productController->admin();
     }
 });
+
 
 $router->route('/admin/onderhoud-klanten', function(){
     if(!isset($_SESSION['authenticatedAdmin'])){

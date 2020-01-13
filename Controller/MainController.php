@@ -5,6 +5,7 @@ namespace Controller;
 use Model\Database;
 use Model\Category;
 use Model\Attachments;
+use Model\Product;
 
 class MainController
 
@@ -49,6 +50,8 @@ class MainController
         $this->root=getenv("ROOT");
         $this->database=new Database();
         $this->category = new category();
+        $this->product = new product();
+        $this->attachment = new Attachments();
     }
 
     /**
@@ -80,7 +83,8 @@ class MainController
      */
     function index(){
         $category = new category();
-        $categories = $category->retrieve();
+
+        $product = new product();
 
         $attachment = new Attachments();
 
@@ -292,6 +296,23 @@ class MainController
      */
     function showContent($section){
         echo $this->getContent($section);
+    }
+
+    function showAttachment($attachmentID, $productDetail, $styleClass){
+        if($attachmentID == '' || $attachmentID == 0){
+            echo '<img class="' . $styleClass . '" src="/' . getenv('ROOT') . '/uploads/dummyImage.png">';
+        }else{
+            $att = $this->attachment->retrieve($attachmentID);
+            if(substr($att->getFileLocation(),0,4) == 'http'){
+                if(!$productDetail) {
+                    echo '<img class="' . $styleClass . '" src="/' . getenv('ROOT') . '/uploads/dummyImage.png">';
+                }else{
+                    echo '<iframe height="100%" width="100%" src="' . $att->getFileLocation() . '"></iframe>';
+                }
+            }else {
+                echo '<img class="' . $styleClass . '" src="/' . getenv('ROOT') . '/' . $att->getFileLocation() . '">';
+            }
+        }
     }
 }
 ?>
