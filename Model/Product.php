@@ -19,6 +19,8 @@ class Product extends Database
     private $categoryID;
     private $lastEditedBy;
     private $SpecialDealID;
+    private $StockItemDescription;
+
     function __construct()
     {
         $this->table = "stockitem";
@@ -250,4 +252,16 @@ class Product extends Database
     /**
      * @return mixed
      */
+    public function getStockItemDescription()
+    {
+        return $this->StockItemDescription;
+    }
+
+    /**
+     * @param mixed $StockItemDescription
+     */
+    public function setStockItemDescription($StockItemDescription)
+    {
+        $this->StockItemDescription = $StockItemDescription;
+    }
 }

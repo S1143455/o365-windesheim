@@ -21,6 +21,12 @@ class Models
             case 'stockitem':
                 $this->getStockItem();
                 break;
+            case 'attachmentcategorie':
+                $this->getAttachmentcategorie();
+                break;
+            case 'attachmentstockitem':
+                $this->getAttachmentStockitem();
+                break;
             case 'orders':
                 $this->getOrder();
                 break;
@@ -63,6 +69,12 @@ class Models
             switch ($this->table) {
                 case 'stockitem':
                     $this->getStockItem();
+                    break;
+                case 'attachmentcategorie':
+                    $this->getAttachmentcategorie();
+                    break;
+                case 'attachmentstockitem':
+                    $this->getAttachmentStockitem();
                     break;
                 case 'order':
                     $this->getOrder();
@@ -137,6 +149,28 @@ class Models
             "CategoryID" => ['Category', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
             "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
+            "StockItemDescription" => ['Varchar', 'Attribute', 'Nullable'],
+
+        );
+    }
+
+    private function getAttachmentcategorie()
+    {
+        $this->column = array(
+            "AttachmentCategorieID" => ['Integer', 'PrimaryKey', 'Required'],
+            "attachmentID" => ['Attachment', 'HasOne', 'Required'],
+            "categoryID" => ['Categorie', 'HasOne', 'Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
+
+        );
+    }
+    private function getAttachmentStockitem()
+    {
+        $this->column = array(
+            "AttachmentStockItemID" => ['Integer', 'PrimaryKey', 'Required'],
+            "AttachmentID" => ['Attachment', 'HasOne', 'Required'],
+            "StockItemID" => ['StockItem', 'HasOne', 'Required'],
+            "LastEditedBy" => ['People', 'HasOne', 'Required'],
         );
     }
 

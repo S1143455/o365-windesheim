@@ -27,6 +27,7 @@ class AdminController
                 'onderhoud-hoofdpagina' => 'Onderhoud Hoofdpagina',
                 'onderhoud-categorieen' => 'Onderhoud Categorieën',
                 'onderhoud-producten' => 'Onderhoud Producten',
+                'onderhoud-media' => 'Onderhoud Media',
                 'onderhoud-klanten' => 'Onderhoud Klanten',
                 'onderhoud-korting' => 'Onderhoud Korting',
                 'onderhoud-nieuwsbrief' => 'Onderhoud Nieuwsbrief',

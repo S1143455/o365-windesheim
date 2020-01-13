@@ -185,6 +185,13 @@ $router->route('/admin/CreateDiscount', function() use($discountController){
     }
 });
 
+$router->route('/admin/NewFile', function() use($fileController){
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return $fileController->create();
+    }
+});
 $router->route('/admin/UpdateDiscount', function() use($discountController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
@@ -214,7 +221,13 @@ $router->route('/admin/onderhoud-korting', function(){
         return include 'content/backend/onderhoudkorting.php';
     }
 });
-
+$router->route('/admin/onderhoud-media', function(){
+    if(!isset($_SESSION['authenticatedAdmin'])){
+        return include 'views/login-Admin/login.php';
+    }else{
+        return include 'content/backend/onderhoudMedia.php';
+    }
+});
 $router->route('/admin/onderhoud-nieuwsbrief', function(){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';

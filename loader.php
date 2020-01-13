@@ -32,6 +32,7 @@ $orderLineController = new Controller\OrderlineController();
 $discountController = new Controller\DiscountController();
 $customerController = new Controller\CustomerController();
 $adressController = new Controller\AdressController();
+$fileController = new Controller\FileController();
 
 $productController = new Controller\ProductController();
 $shoppingcartStockitems= new Controller\ShoppingcartStockitemsController();
