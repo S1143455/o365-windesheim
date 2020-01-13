@@ -267,14 +267,7 @@ class MainController
             <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         ' . $this->nav_menu() .' 
-                        ' . $this->usermenu() .'
-                        <li class="dropdown nav-item mt-2">
-                            <a href="#" class="dropdown-toggle navbarFE" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PRODUCTS <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                ' . $this->nav_menu() .'   
-                                ' . $this->usermenu() .'                        
-                            </ul>
-                        </li>                      
+                        ' . $this->usermenu() .'                    
                     </ul>
                  </div> ';
        echo $result;
