@@ -9,7 +9,6 @@ use Model\Category;
 use Model\Orderline;
 use Model\Product;
 use Model\Supplier;
-use Model\Attachments;
 use Model\ShoppingCart;
 use Controller\MainController;
 
