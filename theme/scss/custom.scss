@@ -1,11 +1,6 @@
-$primary : black;
-$secondary : #fff3b6;
-
-
-
-body{
-  color: $primary;
-  h1{
-    color: $secondary;
-  }
+body {
+  color: black; }
+body h1 {
+  color: #ffad54;
+  font-weight:bold;
 }
