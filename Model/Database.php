@@ -213,7 +213,6 @@ class Database extends Models
 
         $sql = "UPDATE " . $this->table . " set " . $placeholder . " where " . $primarykey . " = " . $this->getAttribute($primarykey) . " ;";
         $stmt = $this->connection->prepare($sql);
-        var_dump($sql);
         foreach ($values as $parameter => $value) {
             $stmt->bindValue($parameter, $value);
         }
