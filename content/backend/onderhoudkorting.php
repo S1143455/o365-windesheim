@@ -1,5 +1,6 @@
 <?php
 include_once 'content/backend/header-admin.php';
+include 'loader.php';
 
 use Model\Discount;
 
@@ -10,13 +11,8 @@ $dateErr = "";
 $dealcodErr = "";
 $end = ' </div>';
 
-if (empty($_POST)) {
-    $discounts = $discountController->getDiscounts();
-
-}
 if (isset($_POST['name'])) {
     echo "hoi";
-    $discounts = $discountController->searchDiscounts($_POST['name']);
     if ($discounts == null || empty($discounts)) {
         $discountErr = "Geen records gevonden";
     }
@@ -24,7 +20,6 @@ if (isset($_POST['name'])) {
 
 if (isset($_POST['id'])) {
     $discountID = $_POST['id'];
-    $discounts = $discountController->getDiscounts();
     if ($discountID != 0) {
         $discount = $discountController->retrieve($discountID);
         $discount->getSpecialDealID();
@@ -36,7 +31,6 @@ if (isset($_POST['id'])) {
 //Check user input on errors
 if (isset($_POST['valuecheck'])) {
     unset($_POST['valuecheck']);
-    $discountID = $_POST['SpecialDealID'];
     $success = true;
     if ($_POST['StartDate'] > $_POST['EndDate']) {
         $success = false;
@@ -71,20 +65,29 @@ if (isset($_POST['valuecheck'])) {
         $dealcodErr = "*Het percentage mag niet kleiner zijn dan 1";
         $dealcodErr = $end;
     }
+    if($success == true){
 
-    if ($success) {
-         $discountController->update();
-    } else {
-        if ($discountID != 0) {
-            $discount = $discountController->retrieve($discountID);
-            $discount->getSpecialDealID();
-            echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditDiscountDialog').modal('show');   }); </script>";
-
+        $discountController->update();
+    }else{
+        if($_POST['submitonetime']){
+            echo "<script type='text/javascript'> $(document).ready(function(){ $('#oneTimeDiscount').modal('show');   }); </script>";
+        }
+        if($_POST['submitonetime']){
+            echo "<script type='text/javascript'> $(document).ready(function(){ $('#oneTimeDiscount').modal('show');   }); </script>";
+        }
+        if($_POST['submitonetime']){
+            echo "<script type='text/javascript'> $(document).ready(function(){ $('#oneTimeDiscount').modal('show');   }); </script>";
+        }
+        if($_POST['submitonetime']){
+            echo "<script type='text/javascript'> $(document).ready(function(){ $('#oneTimeDiscount').modal('show');   }); </script>";
         }
     }
 
 
+
 }
+$discounts = $discountController->getDiscounts();
+
 ?>
     <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
         <div class="row">
@@ -217,12 +220,12 @@ if (isset($_POST['valuecheck'])) {
                             </div>
                             <div class="form-group">
                                 <label class="col-5 control-label" for="StartDate">Begin periode:</label>
-                                <input class="col-4 form-control inputStartDate" type="date" name="StartDate"
+                                <input class="col-4 form-control inputStartDate" type="Date" name="StartDate"
                                        id="StartDate" required>
                             </div>
                             <div class="form-group">
                                 <label class="col-5 control-label" for="EndDate">Einde periode:</label>
-                                <input class="col-4 form-control inputEndDate" type="date" name="EndDate"
+                                <input class="col-4 form-control inputEndDate" type="Date" name="EndDate"
                                        id="EndDate">
                             </div>
                         </div>
@@ -230,7 +233,7 @@ if (isset($_POST['valuecheck'])) {
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                        <button type="submit" class="btn btn-primary" name="submit">Korting aanmaken</button>
+                        <button type="submit" class="btn btn-primary" name="submitonetime" value="create" >Korting aanmaken</button>
                     </div>
                 </form>
             </div>

@@ -60,11 +60,12 @@ class CustomerController
                 default:
                 }
             }
-            var_dump($key);
+            $this->customer->setTermsAndConditions(1);
             $this->store($this->customer);
             $this->storePeople($this->people);
             $this->storeAdress($this->adress);
-            include $this->route . 'onderhoudklanten.php';
+
+            include $this->admin . 'home-admin.php';
     }
 
     /**
@@ -90,7 +91,6 @@ class CustomerController
         {
             //header("Location: /404", true);
         }
-
         return $customer;
     }
     public function retrievePerson($id){

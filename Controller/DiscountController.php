@@ -208,10 +208,12 @@ class DiscountController
                 $this->storeCategory($this->category);
             }
         }
+        if (isset($_POST["StartDate"])){
+            $this->discount->setStartDate($_POST["StartDate"]);
+        }
+
         $this->storeDiscount($this->discount);
         include $this->admin . 'onderhoudkorting.php';
-        return "";
-
     }
 
     public function stockitems($discount){

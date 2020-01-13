@@ -80,10 +80,11 @@ if (isset($_POST['id'])) {
                         </form>
                     </div>
                 </div>
-            <div class="col-12 col-md-2 col-lg-2 discountButtons">
-                <button type="button" class="firstdiscountButton btn btn-success" data-toggle="modal" data-target="#createProduct">
+                <div class="col-12 col-md-2 col-lg-2 discountButtons">
+                    <button type="button" class="firstdiscountButton btn btn-success" data-toggle="modal" data-target="#createProduct">
                         Product toevoegen
                     </button>
+                    <h2> total Conversie ratio: <?php echo($this->getTotalConversion($products)); ?></h2>
                 </div>
             </div>
         </div>

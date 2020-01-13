@@ -10,21 +10,21 @@ use Model\Adress;
 if(isset($_POST['sendpassword'])) {
     include "content/frontend/sendemailaddress.php";
 }
-if(empty($_POST)){
     $customers = $customerController->getallcustomers();
-}
+
 if(!empty($_POST['name'])){
     $customers = $customerController->SearchCustomers($_POST['name']);
 }
 
 if (isset($_POST['id'])) {
     $customerID = $_POST['id'];
-    $customers = $customerController->getallcustomers();
 
     if ($customerID != 0) {
-        $customer = $customerController->retrieve($customerID);
-        $orders = $customerController->retrieveOrder($customer->getCustomerID());
-        $person =  $userController->retrieveUser($customer->getPersonID());
+
+        var_dump($customerID);
+        $customeruniek = $customerController->retrieve($customerID);
+        $orders = $customerController->retrieveOrder($customeruniek->getCustomerID());
+        $person =  $userController->retrieveUser($customeruniek->getPersonID());
         $adress = $adressController->retrieveWhereP($person->getPersonID());
 
         echo "<script type='text/javascript'> $(document).ready(function(){ $('#EditCustomerDialog').modal('show');   }); </script>";
@@ -97,12 +97,12 @@ if (isset($_POST['id'])) {
                             <div class="form-group col-12">
                                 <label class="col-5" for="CustomerID">Klant gegevens van klantnummer:</label>
                                 <span class="col-4" id="CustomerID"
-                                      style="padding-left: 0px;"><?php echo($customer->getCustomerID()) ?>
+                                      style="padding-left: 0px;"><?php echo($customeruniek->getCustomerID()) ?>
                             </div>
                             <div class="form-group" style="display: none;">
                                 <label class="col-5" for="CustomerID">CustomerID:</label>
                                 <input class="col-4 form-control" type="text" name="CustomerID" id="CustomerID"
-                                       value="<?php echo($customer->getCustomerID()) ?>">
+                                       value="<?php echo($customeruniek->getCustomerID()) ?>">
                             </div>
                             <div class="form-group" style="display: none;">
                                 <label class="col-5" for="PersonID">PersonID:</label>
@@ -147,7 +147,7 @@ if (isset($_POST['id'])) {
                             <div class="form-group col-12">
                                 <label class="col-5 control-label">Nieuwsbrief:</label>
                                 <input class="checkboxOneTime" type="checkbox" name="Newsletter" id="Newsletter"
-                                       value="<?php echo($customer->getNewsletter()) ?>
+                                       value="<?php echo($customeruniek->getNewsletter()) ?>
                             </div>
                             <br>
                             <div class="container">
@@ -265,14 +265,14 @@ if (isset($_POST['id'])) {
                         <div class="form-group">
                             <label class="col-5" for="LogonName">Gebruikersnaam:</label>
                             <input type="text" class="col-7 form-control" name="LogonName"
-                                   value="<?php echo($customer->getFullNameOnID($customerID)) ?>" required>
+                                   value="<?php echo($customeruniek->getFullNameOnID($customerID)) ?>" required>
                         </div>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="col-5" for="EmailAddress">Emailadres:</label>
                             <input type="email" class="col-7 form-control" name="EmailAddress" id="EmailAddress"
-                                   value="<?php echo($customer->getEmailAddressOnID($customerID)) ?>" required>
+                                   value="<?php echo($customeruniek->getEmailAddressOnID($customerID)) ?>" required>
                         </div>
                     </div>
                     <div class="modal-footer">
