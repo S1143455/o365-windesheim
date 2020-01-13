@@ -21,7 +21,7 @@ echo '<div class="productDetails padding-top1em">';
             echo '<input type="text" name="categoryID" style="display:none;" value="' . $prod->getCategoryID() . '">';
 
             echo '<input type = "text" name = "productID" style = "display:none;" value = "'. $prod->getStockItemID() . '">';
-            echo '<td class="col-md-2"><button type="submit" name="add" value="' . $prod->getStockItemID() . '">Toevoegen aan winkelwagen</button></td>';
+            echo '<td class="col-md-2"><button type="submit" name="add" value="' . $prod->getStockItemID() . '" class="colorButton">Toevoegen aan winkelwagen</button></td>';
 
         echo '</form>';
     echo '</div>';
