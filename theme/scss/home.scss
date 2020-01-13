@@ -281,7 +281,6 @@
 }
 
 .imgHome{
-  margin-top:8em;
   height:400px;
   background-image:url("images/chocoladeGENERAL.jpg");
   background-size:cover;
@@ -292,6 +291,7 @@
 .infoHome{
   background-color:black;
   box-shadow: 0 12px 14px 0 rgba(0, 0, 0, 0.2), 0 16px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 .infoText{
   color:white;
@@ -322,10 +322,6 @@
   margin:auto;
 }
 
-.navbar{
-  border-bottom:1px solid black;
-}
-
 .badge-custom{
   background-color:#ffad54;
   border:1px solid grey;
@@ -336,6 +332,7 @@ a:hover{
 }
 
 .navbar{
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 20px 0 rgba(0, 0, 0, 0.19);
   background:rgba(255,255,255)!important;
 }
 
@@ -354,6 +351,10 @@ footer{
   text-align:center !important;
   height:150px !important;
   width:100% !important;
+}
+
+.filler{
+  height:9em;
 }
 
 .padding-top3em{
