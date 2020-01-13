@@ -15,6 +15,7 @@ include_once($pathProdutDetails . 'remove.php');
 include_once($pathProdutDetails . 'imgBack.php');
 include_once($pathProdutDetails . 'imgForward.php');
 ?>
+<div class="middle">
     <div class="container">
             <?php
 
@@ -38,6 +39,7 @@ include_once($pathProdutDetails . 'imgForward.php');
             <?php include_once('productDetailDetails.php');?>
         </div>
     </div>
+</div>
 <?php
 include_once 'content/frontend/footer.php';
 

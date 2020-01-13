@@ -24,8 +24,6 @@ class MainController
             'pretty_uri' => true,
             'nav_menu' => [
                 '' => 'Home',
-                'about-us' => 'About Us',
-                'product' => 'Products',
                 'contact' => 'Contact',
                 'login' => 'Login',
             ],

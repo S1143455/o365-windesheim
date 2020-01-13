@@ -3,7 +3,7 @@ include_once 'loader.php';
 include_once 'content/frontend/header.php';
 ?>
 
-<div id="container" class="padding-top1em">
+<div id="container" class="padding-top1em container">
     <div id="contactHeader">
         <h2>Contact</h2>
 
