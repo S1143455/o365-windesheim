@@ -13,3 +13,13 @@ CREATE TABLE `attachmentstockitem` (
   `StockItemID` INT NOT NULL,
   `lastEditedBy` INT NOT NULL,
   PRIMARY KEY (`AttachmentStockItemID`));
+
+ALTER TABLE `attachments`
+ADD COLUMN `URL` VARCHAR(45) NULL AFTER `LastEditedBy`,
+ADD COLUMN `Active` TINYINT NULL AFTER `URL`,
+CHANGE COLUMN `FileLocation` `FileLocation` VARCHAR(250) NULL ;
+
+ALTER TABLE `stockitem` 
+ADD COLUMN `TimesVisited` VARCHAR(100) NULL AFTER `StockItemDescription`;
+ALTER TABLE `stockitem` 
+CHANGE COLUMN `TimesVisited` `TimesVisited` INT NULL DEFAULT NULL ;

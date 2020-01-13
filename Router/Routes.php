@@ -82,9 +82,14 @@ $router->route('/betalenmislukt', function(){
 /**
  * Begin product routes
  */
+$router->route('/admin/CreateProduct', function() use($productController){
+    return $productController->createAdminProduct();
+});
+
 $router->route('/product', function() use($productController){
     return $productController->index();
 });
+
 $router->route('/product/create', function() use($productController){
     return $productController->create();
 });
@@ -181,13 +186,8 @@ $router->route('/admin/CreateDiscount', function() use($discountController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
-        $test = true;
         $_POST['valuecheck'] = true;
-        if($test){
-            return include 'content/backend/onderhoudkorting.php';
-        }else {
-            return $discountController->create();
-        }
+        return include 'content/backend/onderhoudkorting.php';
     }
 });
 
@@ -202,13 +202,8 @@ $router->route('/admin/UpdateDiscount', function() use($discountController){
     if(!isset($_SESSION['authenticatedAdmin'])){
         return include 'views/login-Admin/login.php';
     }else{
-        $test = true;
         $_POST['valuecheck'] = true;
-        if($test){
             return include 'content/backend/onderhoudkorting.php';
-        }else{
-            return $discountController->update();
-        }
     }
 });
 

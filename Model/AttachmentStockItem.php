@@ -8,7 +8,7 @@ class AttachmentStockItem extends Database
 {
     private $AttachmentStockItemID;
     private $AttachmentID;
-    private $StockItemID;
+    private $StockitemID;
     private $lastEditedBy;
     function __construct()
     {
@@ -51,17 +51,17 @@ class AttachmentStockItem extends Database
     /**
      * @return mixed
      */
-    public function getStockItemID()
+    public function getStockitemID()
     {
-        return $this->StockItemID;
+        return $this->StockitemID;
     }
 
     /**
-     * @param mixed $StockItemID
+     * @param mixed $StockitemID
      */
-    public function setStockItemID($StockItemID)
+    public function setStockItemID($StockitemID)
     {
-        $this->StockItemID = $StockItemID;
+        $this->StockitemID = $StockitemID;
     }
 
     /**

@@ -40,15 +40,17 @@ if (isset($_POST['id'])) {
                                 <table class="table table-bordered" id="tableViewCustomer">
                                     <thead>
                                     <tr>
-                                        <th class="col-md-2">Manage</th>
-                                        <th class="col-md-3">Alternatieve omschrijving</th>
+                                        <th class="col-md-1">Manage</th>
+                                        <th class="col-md-1">omschrijving</th>
+                                        <th class="col-md-1">Actief</th>
                                         <th class="col-md-3">Locatie</th>
+                                        <th class="col-md-2">URL</th>
                                         <th class="col-md-2">Gekoppelde Categorieën</th>
                                         <th class="col-md-2">Gekoppelde producten</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tbodyCustomer">
-<!--                                    --><?php $fileController->getAllAttachments($attachments); ?>
+                                        <?php $fileController->getAllAttachments($attachments); ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -57,15 +59,19 @@ if (isset($_POST['id'])) {
                     <div class="col-12 col-md-2 col-lg-2 discountButtons">
                         <!-- discount option buttons  -->
                         <button type="button" class="discountButton btn btn-success" data-toggle="modal"
-                                data-target="#NewFile">
-                            Media Upload
+                                data-target="#NewFileIMAGE">
+                            Image Upload
+                        </button>
+                        <button type="button" class="discountButton btn btn-success" data-toggle="modal"
+                                data-target="#NewFileURL">
+                            Url Upload
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="NewFile" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="NewFileIMAGE" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document" style="min-width: 1000px;">
             <div class="modal-content">
                 <form role="form" id="universalModalForm" method="POST" action="NewFile" enctype="multipart/form-data">
@@ -141,8 +147,104 @@ if (isset($_POST['id'])) {
                                        id="alternateText">
                             </div>
                             <div class="form-group">
+                                <label class="col-5 control-label" for="checkbox">Actief:</label>
+                                <input class="checkboxActive" checked type="checkbox" name="ACTIVE" id="ACTIVE"
+                                       value="1">
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-3" for="AttachmentID">Afbeelding</label>
                                 <input type="file" name="fileToUpload" id="fileToUpload">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                        <button type="submit" class="btn btn-primary" name="submit">Attachment aanmaken</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="NewFileURL" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="min-width: 1000px;">
+            <div class="modal-content">
+                <form role="form" id="universalModalForm" method="POST" action="NewFile" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Media Uploaden</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal">
+
+                            <p>
+                                <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                                   href="#tableCollapseProduct" role="button"
+                                   aria-expanded="false" aria-controls="tableCollapse">Product zoeken</a>
+                            </p>
+                            <div class="tableCollapseProduct">
+                                <div class="collapse multi-collapse" id="tableCollapseProduct">
+                                    <div class="card card-body" style="padding:0px;">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table class="table table-fixed"  id="tableCollapseProduct" >
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="col-md-2">Select</th>
+                                                        <th class="col-md-2">Productnr</th>
+                                                        <th class="col-md-3">Productnaam</th>
+                                                        <th class="col-md-1">Prijs</th>
+                                                        <th class="col-md-4">Opmerkingen</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="tbodyProduct">
+                                                    <?php $discountController->GetAllProducts(); ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>
+                                <a class="btn btn-secondary collapseButton" data-toggle="collapse"
+                                   href="#tableCollapseCategorie" role="button"
+                                   aria-expanded="false" aria-controls="tableCollapse">Categorie zoeken</a>
+                            </p>
+                            <div class="tableCollapseCategorie">
+                                <div class="collapse multi-collapse" id="tableCollapseCategorie">
+                                    <div class="card card-body" style="padding:0px;">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table class="table table-fixed"  id="tableCollapseCategorie" >
+
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="col-md-2">Select</th>
+                                                        <th class="col-md-2">CategorieNr</th>
+                                                        <th class="col-md-8">Omschrijving</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="tbodyCategorie">
+                                                    <?php $discountController->GetAllCategoriesForAttachments(); ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-5 control-label" for="checkbox">Eenmalig:</label>
+                                <input class="checkboxActive" checked type="checkbox" name="ACTIVE" id="ACTIVE"
+                                       value="1">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3" for="URL">Video URL</label>
+                                <input class="col-4 form-control" type="text" name="URL" id="URL"
+                                       value="">
                             </div>
                         </div>
 
@@ -233,10 +335,37 @@ if (isset($_POST['id'])) {
                                 <input class="col-4 form-control" type="text" name="alternateText" id="alternateText"
                                        value="<?php echo($attachment->getAlternateText()) ?>">
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-3" for="AttachmentID">Afbeelding</label>
-                                <input type="file" name="fileToUpload" id="fileToUpload">
-                            </div>
+                            <?php if($attachment->getActive() != 1){
+                                echo " <div class='form-group'>
+                                <label class='col-5 control-label' for='checkbox'>Actief:</label>
+                                <input class='checkboxActive' type='checkbox' name='ACTIVE' id='ACTIVE'
+                                       value='1'>
+                                </div>";
+                            }else{
+                               echo " <div class='form-group'>
+                                <label class='col-5 control-label' for='checkbox'>Actief:</label>
+                                <input class='checkboxActive' checked type='checkbox' name='ACTIVE' id='ACTIVE'
+                                       value='1'>
+                            </div>";
+                            }?>
+
+                            <?php if($attachment->getURL() != ""){
+                                echo "<div class='form-group'>
+                                <label class='col-md-3' for='AttachmentID'>Afbeelding</label>
+                                 <input class='col-4 form-control' type='text' name='Active' id='Active'
+                                       value='" . $attachment->getURL() . "'>
+                            </div>";
+                            }else{
+                                echo "<div class='form-group'>
+                                <label class='col-md-3' for='AttachmentID'>Afbeelding</label>
+                                <input type='file' name='fileToUpload' id='fileToUpload'>
+                            </div>";
+                            }
+
+
+                            ?>
+
+
                         </div>
 
                     </div>
