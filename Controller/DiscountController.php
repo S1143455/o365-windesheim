@@ -190,29 +190,30 @@ class DiscountController
     }
     public function update()
     {
-
         $this->discount = new discount();
         $this->discount->initialize();
         //ingelogde gebruiker
         $this->discount->setLastEditedBy(1);
-        if ($_POST("StockItemID")) {
+        if (isset($_POST["StockItemID"])) {
             foreach ($_POST["StockItemID"] as $id) {
                 $this->product->retrieve($id);
                 $this->product->setSpecialDealID($this->discount->getSpecialDealID());
                 $this->storeProduct($this->product);
             }
         }
-        if ($_POST("CategoryID")){
+        if (isset($_POST["CategoryID"])){
             foreach ($_POST["CategoryID"] as $id) {
                 $this->category->retrieve($id);
                 $this->category->setSpecialDealID($this->category->getSpecialDealID());
                 $this->storeCategory($this->category);
             }
         }
+        if (isset($_POST["StartDate"])){
+            $this->discount->setStartDate($_POST["StartDate"]);
+        }
+
         $this->storeDiscount($this->discount);
         include $this->admin . 'onderhoudkorting.php';
-        return "";
-
     }
 
     public function stockitems($discount){
@@ -220,7 +221,7 @@ class DiscountController
 
         return "";
     }
-//    }
+
     /**
      * Stores the product in the database.
      *
