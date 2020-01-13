@@ -104,7 +104,6 @@ Class ProductController extends FileController
                 $this->storeStock($AttachmentStockItem);
             }
         }
-        var_dump($_POST);
         if(!empty($_POST['attachmentURL'])){
 
             $attachment = new Attachments();
@@ -272,7 +271,7 @@ Class ProductController extends FileController
 
         $orderlines = $orderlines->where("*","StockItemID","=", $product->getStockItemID());
         $int_var = (int)$product->getTimesVisited();
-
+        //omdat de hoeveelheid bestelde producten niet hoog zijn staat dit hier,
         $amount = count($orderlines) + 10;
         $conversion = $int_var / $amount;
         return $conversion;

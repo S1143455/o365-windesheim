@@ -21,7 +21,6 @@ if (isset($_POST['id'])) {
 
     if ($customerID != 0) {
 
-        var_dump($customerID);
         $customeruniek = $customerController->retrieve($customerID);
         $orders = $customerController->retrieveOrder($customeruniek->getCustomerID());
         $person =  $userController->retrieveUser($customeruniek->getPersonID());

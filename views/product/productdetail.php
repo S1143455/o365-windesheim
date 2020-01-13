@@ -6,7 +6,7 @@ include 'content/frontend/display_message.php';
 
 $pathProdutDetails = 'views/product/isset/';
 $imgCounter = 1;
-//$updateproduct = $fileController->UpdateVisited($prod->getStockItemID());
+$updateproduct = $fileController->UpdateVisited($prod->getStockItemID());
 $productAttachments = $fileController->retrieveWhereStockitemBackwards($prod->getStockItemID());
 $imgMAX = count($productAttachments);
 

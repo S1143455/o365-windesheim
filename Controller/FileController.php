@@ -13,9 +13,16 @@ class FileController
 
     function __construct()
     {
+        $this->productFile = new Product();
         $this->attachment = new Attachments();
         $this->attachmentCategorie = new AttachmentCategorie();
         $this->attachmentStockItem = new AttachmentStockItem();
+    }
+    function UpdateVisited($productid){
+        $product = $this->retrieveProduct($productid);
+        $product->setTimesVisited($product->getTimesVisited() + 1);
+        $this->storeProduct($product);
+        return $product;
     }
     function getAllAttachments($attachments)
     {
@@ -161,6 +168,26 @@ class FileController
 
     }
 
+    /**
+     * Stores the product in the database.
+     *
+     * @param $product Product
+     * @return string
+     */
+    public function storeProduct($product)
+    {
+        if (!$product->initialize())
+        {
+            //print_r($_GET);
+            return false;
+        };
+
+        $this->productFile = $product;
+        if (!$this->productFile->save())
+        {
+            return "Something went wrong.";
+        }
+    }
 
     /**
      * Stores the product in the database.

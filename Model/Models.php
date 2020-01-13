@@ -145,7 +145,7 @@ class Models
             "MarketingComments" => ['LongText', 'Attribute', 'Nullable'],
             "CategoryID" => ['Category', 'HasOne', 'Required'],
             "LastEditedBy" => ['People', 'HasOne', 'Required'],
-            "SpecialDealID" => ['Discount', 'HasOne', 'Nullable'],
+            "SpecialDealID" => ['Discount', 'HasOne', 'Not Required'],
             "StockItemDescription" => ['Varchar', 'Attribute', 'Nullable'],
             "TimesVisited" => ['Integer', 'Attribute', 'Nullable'],
             "RecommendedRetailPrice" => ['decimal', 'Attribute', 'Nullable'],
