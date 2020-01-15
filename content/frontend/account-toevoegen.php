@@ -22,7 +22,7 @@ use Model\Customer;
     if (isset($_POST['submit'])) {
         include 'loader.php';
 
-        if ($_POST['pwd'] == $_POST['pwd2']) {
+        if ($_POST['HashedPassword1'] == $_POST['HashedPassword2']) {
             $email = $customerController->Test_Input($_POST["EmailAddress"]);
             // check if e-mail address is well-formed
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -126,12 +126,12 @@ use Model\Customer;
                 </div>
                 <div class="form-group">
                 <label for="InputPassword">Wachtwoord</label>
-                <input type="password" name="pwd" class="form-control" id="pwd" placeholder="Wachtwoord">
+                <input type="password" name="HashedPassword1" class="form-control" id="HashedPassword1" placeholder="Wachtwoord">
                     <span class="error">* <?php echo $passwordErr;?>
         </div>
                 <div class="form-group">
                     <label for="InputRepeatPassword">Herhaal wachtwoord</label>
-                    <input type="password" name="pwd2" class="form-control" id="pwd2" placeholder="Herhaal Wachtwoord">
+                    <input type="password" name="HashedPassword2" class="form-control" id="HashedPassword2" placeholder="Herhaal Wachtwoord">
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" name="NewsLetter" class="form-check-input" id="NewsLetter">
