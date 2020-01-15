@@ -28,9 +28,9 @@ if (isset($_POST['id'])) {
 include_once 'content/backend/sidebar-admin.php';
 ?>
 
-    <div class="col-md-8">
+
     <div class="row" style="min-height: 50px;">
-        <div class="col-12 col-md-9 col-lg-10">
+        <div class="col-12 col-md-10">
         <h3 class="mb-4">
             Bestelling Overzicht
         </h3>
@@ -44,15 +44,17 @@ include_once 'content/backend/sidebar-admin.php';
 
     <div class="col-md-12">
         <form role="form" id="table" method="POST" action="">
-            <div class="table-fixed">
+            <div  class="table-fixed">
                 <table id="OrderTable" class="table table-bordered">
                     <thead>
                     <tr>
                         <th class="col-md-1">Details</th>
-                        <th class="col-md-2">Bestel nummer</th>
-                        <th class="col-md-3">Klant nummer</th>
-                        <th class="col-md-3">Bestel datum</th>
-                        <th class="col-md-3">Bedrag</th>
+                        <th class="col-md-1">Bestel nummer</th>
+                        <th class="col-md-2">Klant nummer</th>
+                        <th class="col-md-2">Klantnaam</th>
+                        <th class="col-md-2">Emailadres</th>
+                        <th class="col-md-2">Bestel datum</th>
+                        <th class="col-md-2">Bedrag</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -76,32 +78,40 @@ include_once 'content/backend/sidebar-admin.php';
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="customerID">customer Name: </label>
+                        <label for="customerID"></label>
                         <p><?php echo $person->getFullName() ?></p>
                     </div>
                     <div class="table-fixed">
                         <table id="OrderTable" class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th class="col-md-1">omschrijving</th>
-                            <th class="col-md-2">hoeveelheid</th>
-                            <th class="col-md-3">belastings percentage</th>
-                            <th class="col-md-3">prijs Excl btw</th>
-                            <th class="col-md-3">prijs Incl btw</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        foreach ($orderlines as $orderline) {
-                            $products = $orderController->retrievestockitemwhere($orderline->getStockItemID());
-                            foreach ($products as $prod) {
-//                                var_dump($orderline);
-                                $orderController->DisplayProduct($prod, $orderline);
+                            <thead>
+                                <tr>
+                                    <th class="col-md-1">omschrijving</th>
+                                    <th class="col-md-2">hoeveelheid</th>
+                                    <th class="col-md-3">belastings percentage</th>
+                                    <th class="col-md-3">prijs Excl btw</th>
+                                    <th class="col-md-3">prijs Incl btw</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $totalPrice = 0;
+                            foreach ($orderlines as $orderline) {
+                                $products = $orderController->retrievestockitemwhere($orderline->getStockItemID());
+                                $totalPrice += $orderController->Calculate($orderline);
+                                foreach ($products as $prod) {
+                                    $orderController->DisplayProduct($prod, $orderline);
+                                }
                             }
-                        }
-                        ?>
-                        </tbody>
-                    </table>
+                            ?>
+                            <tr style="height:40px;">
+                                <td class="col-md-1"></td>
+                                <td class="col-md-2"></td>
+                                <td class="col-md-3"></td>
+                                <td class="col-md-3">Totaalprijs</td>
+                                <td class="col-md-3">€<?php echo $totalPrice ?></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">
