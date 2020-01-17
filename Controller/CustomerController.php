@@ -227,7 +227,8 @@ class CustomerController
                 case "Gender":
                     $this->customer->setGender($value);
                     break;
-                case "HashedPassword":
+                case "HashedPassword1":
+
                     $this->people->setHashedPassword(password_hash($value,PASSWORD_BCRYPT));
                     break;
                 case  "dateofbirth":
@@ -261,7 +262,8 @@ class CustomerController
         $this->storePeople($this->people);
         $this->customer->setPersonID($this->people->getPersonID());
         $this->store($this->customer);
-        include $this->route . 'account-toevoegen.php';
+        echo '<script>window.location.replace("/");</script>';
+        ////include $this->route . 'account-toevoegen.php';
     }
 
     /**
